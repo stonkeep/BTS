@@ -15,4 +15,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/premio-vigencia/create', 'VigenciasPremioController@store');
+Route::post('/premio-vigencia/store', 'VigenciasPremioController@store');

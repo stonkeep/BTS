@@ -35,16 +35,9 @@ class VigenciasPremioController extends Controller
      */
     public function store(Request $request)
     {
-        
-        VigenciasPremio::create([
-            'edicao' => 2017,
-            'data_abertura' => Carbon::now()->toDateTimeString(),
-            'data_encerramento' => Carbon::now()->toDateTimeString(),
-            'encerrado' => false
-        ]);
-        
-        
-        
+        $premio = VigenciasPremio::create($request->all());
+
+        return view('premios.show', compact('premio'));
     }
 
     /**
