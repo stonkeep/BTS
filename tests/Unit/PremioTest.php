@@ -11,10 +11,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class PremioTest extends TestCase
 {
-
     use DatabaseMigrations;
-    
-    
 
     /**
      * @return void
@@ -25,7 +22,7 @@ class PremioTest extends TestCase
         $this->disableExceptionHandling();
 
         VigenciasPremio::create([
-            'edicao'            => 2017,
+            'edicao'            => Carbon::now()->year,
             'data_abertura'     => Carbon::now()->toDateTimeString(),
             'data_encerramento' => Carbon::now()->addYear(1)->toDateTimeString(),
             'encerrado'         => false
@@ -51,7 +48,7 @@ class PremioTest extends TestCase
         $dataEncerramento = Carbon::now()->addYear(1)->toDateTimeString();
         
         $response = $this->json('POST', "/premio-vigencia/store", [
-            'edicao'            => 2017,
+            'edicao'            => Carbon::now()->year,
             'data_abertura'     => $dataAbertura, 
             'data_encerramento' => $dataEncerramento,
             'encerrado'         => false
@@ -71,6 +68,36 @@ class PremioTest extends TestCase
         $response->assertSee('2017');
         $response->assertSee($dataAbertura);
         $response->assertSee($dataEncerramento);
+    }
+    
+    /** @test */
+    function  pode_listar_todos_os_premios()
+    {
+        $this->disableExceptionHandling();
+
+        $premio1 = factory(VigenciasPremio::class)->create();
+        $premio2 = factory(VigenciasPremio::class)->create([
+            'edicao'            => 2018,
+            'encerrado'         => true
+        ]);
         
+        $response = $this->get('/premios');
+        
+        //dd($response);
+
+        //Verifica se retorna o premio gravado na view
+        $response->assertStatus(200);
+        $response->assertSee(strval($premio1->edicao));
+        $response->assertSee($premio1->data_abertura);
+        $response->assertSee($premio1->data_encerramento);
+        $response->assertSee('Não');
+
+
+        $response->assertSee(strval($premio2->edicao));
+        $response->assertSee($premio2->data_abertura);
+        $response->assertSee($premio2->data_encerramento);
+        $response->assertSee('Sim');
+
+
     }
 }

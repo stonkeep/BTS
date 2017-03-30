@@ -18,7 +18,7 @@ class CreateVigenciasPremiosTable extends Migration
             $table->integer('edicao');
             $table->timestamp('data_abertura');
             $table->timestamp('data_encerramento');
-            $table->boolean('encerrado')->default(false);
+            $table->boolean('encerrado')->default(true);
             $table->timestamps();
         });
     }

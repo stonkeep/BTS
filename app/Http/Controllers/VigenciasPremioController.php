@@ -35,9 +35,15 @@ class VigenciasPremioController extends Controller
      */
     public function store(Request $request)
     {
-        $premio = VigenciasPremio::create($request->all());
-
-        return view('premios.show', compact('premio'));
+        $this->validate(request(), [
+            'edicao' => 'required',
+            'data_abertura' => 'required',
+            'data_encerramento' => 'required',
+        ]);
+        
+        VigenciasPremio::create($request->all());
+        $premios = VigenciasPremio::all();
+        return view('premios.show', compact('premios'));
     }
 
     /**
@@ -48,7 +54,10 @@ class VigenciasPremioController extends Controller
      */
     public function show(VigenciasPremio $vigenciasPremio)
     {
-        //
+      
+        $premios = VigenciasPremio::all();
+
+        return view('premios.show', compact('premios'));
     }
 
     /**

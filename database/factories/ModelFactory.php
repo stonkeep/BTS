@@ -30,9 +30,9 @@ $factory->define(App\VigenciasPremio::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
-        'edicao' => 2017,
-        'data_abertura' => Carbon::now(),
-        'data_encerramento' => Carbon::now()->addYear(1),
+        'edicao' =>  Carbon::now()->year,
+        'data_abertura' => Carbon::now()->toDateTimeString(),
+        'data_encerramento' => Carbon::now()->addYear(1)->toDateTimeString(),
         'encerrado' => false
     ];
 });

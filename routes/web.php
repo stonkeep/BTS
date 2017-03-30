@@ -16,3 +16,4 @@ Route::get('/', function () {
 });
 
 Route::post('/premio-vigencia/store', 'VigenciasPremioController@store');
+Route::get('/premios/', 'VigenciasPremioController@show');

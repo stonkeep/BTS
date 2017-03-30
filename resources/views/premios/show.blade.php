@@ -12,10 +12,12 @@
         </thead>
         <tbody>
         <tr>
-            <th scope="row">{{$premio->edicao}}</th>
-            <td>{{$premio->data_abertura}}</td>
-            <td>{{$premio->data_encerramento}}</td>
-            <td>{{$premio->encerramento}}</td>
+            @foreach($premios as $premio)
+                <th scope="row">{{$premio->edicao}}</th>
+                <td>{{$premio->data_abertura}}</td>
+                <td>{{$premio->data_encerramento}}</td>
+                <td>{{$premio->encerrado ? 'Sim' : 'Não'}}</td>
+            @endforeach
         </tr>
         </tbody>
     </table>
