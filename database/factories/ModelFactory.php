@@ -40,3 +40,11 @@ $factory->define(App\Temas::class, function (Faker\Generator $faker) {
         'nome' => 'Alimentação',
     ];
 });
+
+
+$factory->define(App\Regioes::class, function (Faker\Generator $faker) {
+    return [
+        'sigla' => 'CO',
+        'descricao' => 'Centro - Oeste'
+    ];
+});

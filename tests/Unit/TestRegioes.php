@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Regioes;
+use RegioesTableSeed;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -84,6 +85,16 @@ class TestRegioes extends TestCase
     /** @test */
     function testa_seed_de_regioes()
     {
-    	//test code
+        $regioesSeed = new RegioesTableSeed;
+        $regioesSeed->run();
+
+        $regioes = Regioes::get();
+
+        $this->assertTrue($regioes->pluck('sigla')->contains('N'));
+        $this->assertTrue($regioes->pluck('sigla')->contains('NE'));
+        $this->assertTrue($regioes->pluck('sigla')->contains('S'));
+        $this->assertTrue($regioes->pluck('sigla')->contains('SE'));
+        $this->assertTrue($regioes->pluck('sigla')->contains('CO'));
+        $this->assertTrue($regioes->pluck('descricao')->contains('Centro - Oeste'));
     }
 }
