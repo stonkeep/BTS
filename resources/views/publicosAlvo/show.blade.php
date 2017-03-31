@@ -12,13 +12,12 @@
         </thead>
         <tbody>
         <tr>
-            @foreach($regioes as $regiao)
-                <th scope="row">{{$regiao->edicao}}</th>
-                <td>{{$regiao->sigla}}</td>
-                <td>{{$regiao->descricao}}</td>
+            @foreach($publicos as $publico)
+                <th scope="row">{{$publico->id}}</th>
+                <td>{{$publico->descricao}}</td>
+                <td>{{$publico->created_at}}</td>
             @endforeach
         </tr>
         </tbody>
     </table>
-
-@endsection
+    @endsection

@@ -15,6 +15,7 @@ class CreatePublicosAlvosTable extends Migration
     {
         Schema::create('publicos_alvos', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('descricao');
             $table->timestamps();
         });
     }

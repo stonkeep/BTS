@@ -25,3 +25,7 @@ Route::post('/temas/create', 'TemasController@store');
 //Regioes
 Route::post('/regioes/create', 'RegioesController@store');
 Route::get('/regioes', 'RegioesController@show');
+
+//Publico alvo
+Route::post('publicosAlvo/create', 'PublicosAlvoController@store');
+Route::get('publicosAlvo', 'PublicosAlvoController@show');

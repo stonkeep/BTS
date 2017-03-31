@@ -35,7 +35,11 @@ class PublicosAlvoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        PublicosAlvo::create($request->all());
+
+        $publicos = PublicosAlvo::all();
+
+        return view('publicosAlvo.show', compact('publicos'));
     }
 
     /**
@@ -46,7 +50,9 @@ class PublicosAlvoController extends Controller
      */
     public function show(PublicosAlvo $publicosAlvo)
     {
-        //
+        $publicos = PublicosAlvo::all();
+
+        return view('publicosAlvo.show', compact('publicos'));
     }
 
     /**
