@@ -15,5 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//Premios
 Route::post('/premio-vigencia/store', 'VigenciasPremioController@store');
 Route::get('/premios/', 'VigenciasPremioController@show');
+
+//Temas
+Route::post('/temas/create', 'TemasController@store');

@@ -35,7 +35,7 @@ class TemasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Temas::create($request->all());
     }
 
     /**

@@ -27,12 +27,16 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 
 
 $factory->define(App\VigenciasPremio::class, function (Faker\Generator $faker) {
-    static $password;
-
     return [
         'edicao' =>  Carbon::now()->year,
         'data_abertura' => Carbon::now()->toDateTimeString(),
         'data_encerramento' => Carbon::now()->addYear(1)->toDateTimeString(),
         'encerrado' => false
+    ];
+});
+
+$factory->define(App\Temas::class, function (Faker\Generator $faker) {
+    return [
+        'nome' => 'Alimentação',
     ];
 });
