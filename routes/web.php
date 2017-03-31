@@ -21,3 +21,7 @@ Route::get('/premios/', 'VigenciasPremioController@show');
 
 //Temas
 Route::post('/temas/create', 'TemasController@store');
+
+//Regioes
+Route::post('/regioes/create', 'RegioesController@store');
+Route::get('/regioes', 'RegioesController@show');

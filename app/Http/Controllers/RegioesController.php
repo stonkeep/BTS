@@ -35,7 +35,10 @@ class RegioesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Regioes::create($request->all());
+        $regioes = Regioes::all();
+
+        return view('regioes.show', compact('regioes'));
     }
 
     /**
@@ -46,7 +49,9 @@ class RegioesController extends Controller
      */
     public function show(Regioes $regioes)
     {
-        //
+        $regioes = Regioes::all();
+
+        return view('regioes.show', compact('regioes'));
     }
 
     /**
