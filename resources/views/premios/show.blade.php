@@ -21,12 +21,4 @@
         </tr>
         </tbody>
     </table>
-
-    <ul>
-        <li></li>
-        <li></li>
-        <li></li>
-    </ul>
-
-
 @endsection

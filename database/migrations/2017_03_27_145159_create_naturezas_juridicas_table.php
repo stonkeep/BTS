@@ -15,6 +15,7 @@ class CreateNaturezasJuridicasTable extends Migration
     {
         Schema::create('naturezas_juridicas', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('descricao');
             $table->timestamps();
         });
     }

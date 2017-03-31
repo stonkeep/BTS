@@ -35,7 +35,11 @@ class NaturezasJuridicasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        NaturezasJuridicas::create($request->all());
+
+        $naturezas = NaturezasJuridicas::all();
+
+        return view('naturezasJuridicas.show', compact('naturezas'));
     }
 
     /**
