@@ -97,7 +97,5 @@ class PremioTest extends TestCase
         $response->assertSee($premio2->data_abertura);
         $response->assertSee($premio2->data_encerramento);
         $response->assertSee('Sim');
-
-
     }
 }
