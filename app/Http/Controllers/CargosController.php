@@ -35,7 +35,7 @@ class CargosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Cargos::create($request->all());
     }
 
     /**
