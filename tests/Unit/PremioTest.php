@@ -98,4 +98,6 @@ class PremioTest extends TestCase
         $response->assertSee($premio2->data_encerramento);
         $response->assertSee('Sim');
     }
+    //TODO criar teste de delete
+    //TODO criar teste de update
 }

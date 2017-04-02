@@ -75,6 +75,7 @@ class TestPublicoAlvo extends TestCase
         $response->assertSee('Povos Tradicionais');
         
     }
-    
+    //TODO criar teste de delete
+    //TODO criar teste de update
     
 }

@@ -55,4 +55,8 @@ class NaturezaJuridica extends TestCase
         $response->assertSee('2017-03-31 19:27:54');
         $response->assertSee('2017-03-31 19:27:55');
     }
+
+    //TODO criar teste de delete
+
+    //TODO criar teste de update
 }

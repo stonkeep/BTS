@@ -98,4 +98,7 @@ class TestRegioes extends TestCase
         $this->assertTrue($regioes->pluck('sigla')->contains('CO'));
         $this->assertTrue($regioes->pluck('descricao')->contains('Centro - Oeste'));
     }
+
+    //TODO criar teste de delete
+    //TODO criar teste de update
 }

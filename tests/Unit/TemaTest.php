@@ -65,4 +65,6 @@ class TemaTest extends TestCase
         $response->assertStatus(200);
 
     }
+    //TODO criar teste de delete
+    //TODO criar teste de update
 }
