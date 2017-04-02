@@ -35,4 +35,6 @@ Route::post('naturezasJuridicas/create', 'NaturezasJuridicasController@store');
 
 //Cargos
 Route::post('cargos/create', 'CargosController@store');
-
+Route::get('cargos', 'CargosController@show');
+Route::delete('cargos/delete/{cargo}', 'CargosController@destroy');
+Route::put('cargos/update/{cargo}', 'CargosController@update');

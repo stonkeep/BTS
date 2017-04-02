@@ -30,19 +30,20 @@ class CargosTest extends TestCase
     /** @test */
     function testa_criacao_de_cago_por_post()
     {
-        $this->json('POST', "cargos/create", [
+        $response = $this->json('POST', "cargos/create", [
             'descricao' => 'Técnico',
         ]);
 
-        $cargos = Cargos::firstOrFail();
+        $response->assertStatus(200);
 
-        $this->assertEquals('Técnico', $cargos->descricao);
+        $response->assertSee('Técnico');
     }
 
-    //TODO criar teste de READ com list
     /** @test */
     function teste_se_consegue_ler_uma_lista_de_cargos()
     {
+        //$this->disableExceptionHandling();
+
         $this->json('POST', "cargos/create", [
             'descricao' => 'Técnico',
         ]);
@@ -50,7 +51,58 @@ class CargosTest extends TestCase
         $this->json('POST', "cargos/create", [
             'descricao' => 'Vice-Presidente',
         ]);
+
+        $response = $this->get('/cargos');
+
+        $response->assertStatus(200);
+
+        $response->assertSee('Técnico');
+        $response->assertSee('Vice-Presidente');
+
     }
-    //TODO criar teste de UPDATE
-    //TODO criar teste de DELETE
+
+    /** @test */
+    function testa_delete_de_cargo()
+    {
+        //$this->disableExceptionHandling();
+
+        $this->json('POST', "cargos/create", [
+            'descricao' => 'Técnico',
+        ]);
+
+        $this->json('POST', "cargos/create", [
+            'descricao' => 'Vice-Presidente',
+        ]);
+
+        $cargo = Cargos::findOrFail(1);
+
+        $response = $this->json('DELETE',"cargos/delete/{$cargo->id}");
+
+        $response->assertStatus(200);
+
+        $response->assertSee('Vice-Presidente');
+        $response->assertDontSee('Técnico');
+
+    }
+
+    
+    /** @test */
+    function testa_update_cargo()
+    {
+        $this->json('POST', "cargos/create", [
+            'descricao' => 'Técnico',
+        ]);
+
+        $cargo = Cargos::findOrFail(1);
+
+        $cargo->descricao = 'Outra descrição';
+
+        $response = $this->json('PUT', "cargos/create/{$cargo}");
+
+        $response->assertStatus(200);
+
+        $response->assertDontSee('Técnico');
+        $response->assertSee('Outra descrição');
+
+    }
 }

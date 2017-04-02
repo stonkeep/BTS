@@ -36,6 +36,10 @@ class CargosController extends Controller
     public function store(Request $request)
     {
         Cargos::create($request->all());
+
+        $cargos = Cargos::all();
+        return view('cargos.show', compact('cargos'));
+
     }
 
     /**
@@ -46,7 +50,9 @@ class CargosController extends Controller
      */
     public function show(Cargos $cargos)
     {
-        //
+        $cargos = Cargos::all();
+
+        return view('cargos.show', compact('cargos'));
     }
 
     /**
@@ -69,7 +75,10 @@ class CargosController extends Controller
      */
     public function update(Request $request, Cargos $cargos)
     {
-        //
+        $cargos->save();
+        $cargos = Cargos::all();
+
+        return view('cargos.show', compact('cargos'));
     }
 
     /**
@@ -78,8 +87,12 @@ class CargosController extends Controller
      * @param  \App\Cargos  $cargos
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cargos $cargos)
+    public function destroy(Cargos $cargo)
     {
-        //
+        $cargo->delete();
+
+        $cargos = Cargos::all();
+
+        return view('cargos.show', compact('cargos'));
     }
 }
