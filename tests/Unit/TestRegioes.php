@@ -85,6 +85,7 @@ class TestRegioes extends TestCase
     /** @test */
     function testa_seed_de_regioes()
     {
+        //Se não funcionar tentar o comando 'composer dump-autoload'
         $regioesSeed = new RegioesTableSeed;
         $regioesSeed->run();
 
