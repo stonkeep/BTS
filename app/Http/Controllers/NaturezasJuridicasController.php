@@ -50,7 +50,8 @@ class NaturezasJuridicasController extends Controller
      */
     public function show(NaturezasJuridicas $naturezasJuridicas)
     {
-        //
+        $naturezas = NaturezasJuridicas::all();
+        return view('naturezasJuridicas.show', compact('naturezas'));
     }
 
     /**
@@ -71,9 +72,13 @@ class NaturezasJuridicasController extends Controller
      * @param  \App\NaturezasJuridicas  $naturezasJuridicas
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, NaturezasJuridicas $naturezasJuridicas)
+    public function update(Request $request, NaturezasJuridicas $natureza)
     {
-        //
+
+        $natureza->update($request->all());
+        $naturezas = NaturezasJuridicas::all();
+
+        return view('naturezasJuridicas.show', compact('naturezas'));
     }
 
     /**
@@ -82,8 +87,11 @@ class NaturezasJuridicasController extends Controller
      * @param  \App\NaturezasJuridicas  $naturezasJuridicas
      * @return \Illuminate\Http\Response
      */
-    public function destroy(NaturezasJuridicas $naturezasJuridicas)
+    public function destroy(NaturezasJuridicas $natureza)
     {
-        //
+        $natureza->delete();
+        $naturezas = NaturezasJuridicas::all();
+
+        return view('naturezasJuridicas.show', compact('naturezas'));
     }
 }

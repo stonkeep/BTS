@@ -32,6 +32,9 @@ Route::get('publicosAlvo', 'PublicosAlvoController@show');
 
 //Naturezas Juridicas
 Route::post('naturezasJuridicas/create', 'NaturezasJuridicasController@store');
+Route::get('naturezasJuridicas', 'NaturezasJuridicasController@show');
+Route::delete('naturezasJuridicas/delete/{natureza}', 'NaturezasJuridicasController@destroy');
+Route::put('naturezasJuridicas/update/{natureza}', 'NaturezasJuridicasController@update');
 
 //Cargos
 Route::post('cargos/create', 'CargosController@store');
