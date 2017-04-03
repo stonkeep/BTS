@@ -94,7 +94,6 @@ class TestPublicoAlvo extends TestCase
         $this->assertValidationError('descricao');
     }
 
-    //TODO criar teste de delete
     /** @test */
     function teste_de_delete()
     {
@@ -123,7 +122,6 @@ class TestPublicoAlvo extends TestCase
         
     }
     
-    //TODO criar teste de update
     /** @test */
     function teste_de_update()
     {

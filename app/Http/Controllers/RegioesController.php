@@ -35,6 +35,10 @@ class RegioesController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'sigla' => 'required|unique:regioes'
+        ]);
+            
         Regioes::create($request->all());
         $regioes = Regioes::all();
 
@@ -72,9 +76,12 @@ class RegioesController extends Controller
      * @param  \App\Regioes  $regioes
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Regioes $regioes)
+    public function update(Request $request, Regioes $regiao)
     {
-        //
+        $regiao->update($request->all());
+
+        $regioes = Regioes::all();
+        return view('regioes.show', compact('regioes'));
     }
 
     /**
@@ -83,8 +90,11 @@ class RegioesController extends Controller
      * @param  \App\Regioes  $regioes
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Regioes $regioes)
+    public function destroy(Regioes $regiao)
     {
-        //
+        $regiao->delete();
+
+        $regioes = Regioes::all();
+        return view('regioes.show', compact('regioes'));        
     }
 }

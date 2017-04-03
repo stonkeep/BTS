@@ -7,10 +7,12 @@ use RegioesTableSeed;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\ValidationsFields;
 
 class TestRegioes extends TestCase
 {
     use DatabaseMigrations;
+    use ValidationsFields;
     /**
      * A basic test example.
      *
@@ -98,8 +100,66 @@ class TestRegioes extends TestCase
         $this->assertTrue($regioes->pluck('sigla')->contains('CO'));
         $this->assertTrue($regioes->pluck('descricao')->contains('Centro - Oeste'));
     }
+    
+    
+    /** @test */
+    function testa_validacao()
+    {
+        $this->json('POST', "regioes/create", [
+            'sigla' => 'CO',
+            'Descricao' => 'Centro - Oeste',
+        ]);
 
-    //TODO criar teste de delete
-    //TODO criar teste de update
-    //TODO testar validações
+        $this->response =  $this->json('POST', "regioes/create", [
+            'sigla' => 'CO',
+            'Descricao' => 'Centro - Oeste',
+        ]);
+
+        $this->assertValidationError('sigla');
+    }
+
+
+    /** @test */
+    function testa_delete()
+    {
+        $regioesSeed = new RegioesTableSeed;
+        $regioesSeed->run();
+
+        $regioes = Regioes::get();
+
+        $this->assertTrue($regioes->pluck('sigla')->contains('N'));
+        $this->assertTrue($regioes->pluck('sigla')->contains('NE'));
+        
+        $regiao = Regioes::firstOrFail();
+        
+        $response = $this->json('DELETE', "/regioes/delete/{$regiao->id}");
+
+        $response->assertStatus(200);
+        $response->assertSee('NE');
+        $response->assertDontSee('Centro - Oeste');
+    }
+    
+    /** @test */
+    function testa_update()
+    {
+        $regioesSeed = new RegioesTableSeed;
+        $regioesSeed->run();
+
+        $regioes = Regioes::get();
+
+        $this->assertTrue($regioes->pluck('sigla')->contains('N'));
+        $this->assertTrue($regioes->pluck('sigla')->contains('NE'));
+        $this->assertTrue($regioes->pluck('descricao')->contains('Centro - Oeste'));
+
+        $regiao = Regioes::firstOrFail();
+
+        $response = $this->json('PUT', "/regioes/update/{$regiao->id}", ['sigla' => 'TT',]);
+
+        $response->assertStatus(200);
+        $response->assertSee('TT');
+        $response->assertDontSee('CO');
+        
+
+    }
+ 
 }

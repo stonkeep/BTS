@@ -30,6 +30,8 @@ Route::put('/temas/update/{tema}', 'TemasController@update');
 //Regioes
 Route::post('/regioes/create', 'RegioesController@store');
 Route::get('/regioes', 'RegioesController@show');
+Route::delete('/regioes/delete/{regiao}', 'RegioesController@destroy');
+Route::put('/regioes/update/{regiao}', 'RegioesController@update');
 
 //Publico alvo
 Route::post('publicosAlvo/create', 'PublicosAlvoController@store');
