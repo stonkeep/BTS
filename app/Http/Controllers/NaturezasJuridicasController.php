@@ -35,6 +35,10 @@ class NaturezasJuridicasController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'descricao' => 'required|unique:naturezas_juridicas',
+        ]);
+        
         NaturezasJuridicas::create($request->all());
 
         $naturezas = NaturezasJuridicas::all();

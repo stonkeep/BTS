@@ -6,10 +6,23 @@ use App\Temas;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\ValidationsFields;
 
 class TemaTest extends TestCase
 {
     use DatabaseMigrations;
+    use ValidationsFields;
+
+    private function cria_lista_de_temas()
+    {
+        $this->json('POST', "/temas/create", [
+            'nome' => 'Alimentação'
+        ]);
+
+        $this->json('POST', "/temas/create", [
+            'nome' => 'Educação'
+        ]);
+    }
     /**
      * A basic test example.
      *
@@ -58,14 +71,71 @@ class TemaTest extends TestCase
     /** @test */
     function cria_tema_por_post_recebe_view()
     {
-        $response = $this->json('POST', "/temas/create", [
+        $this->json('POST', "/temas/create", [
             'nome' => 'Alimentação'
         ]);
 
+        $response = $this->json('POST', "/temas/create", [
+            'nome' => 'Educação'
+        ]);
+
         $response->assertStatus(200);
+        $response->assertSee('Educação');
+        $response->assertSee('Alimentação');
 
     }
-    //TODO criar teste de delete
+    
+    /** @test */
+    function teste_visualiza_lista_de_temas()
+    {
+                
+        $this->cria_lista_de_temas();
+        
+        $response = $this->get('temas');
+
+        $response->assertStatus(200);
+        $response->assertSee('Alimentação');
+        $response->assertSee('Educação');
+        
+        
+        //Testa a validação
+        $this->response = $this->json('POST', "/temas/create", [
+            'nome' => 'Alimentação'
+        ]);
+
+        $this->assertValidationError('nome');
+        
+    }
+
+    /** @test */
+    function testa_delete()
+    {
+        $this->cria_lista_de_temas();
+
+        $tema = Temas::findOrFail(1);
+        
+        $response = $this->json('DELETE', "temas/delete/{$tema->id}");
+
+        $response->assertStatus(200);
+        $response->assertDontSee('Alimentação');
+        $response->assertSee('Educação');
+        
+    }
+    
     //TODO criar teste de update
-    //TODO testar validações
+    /** @test */
+    function testa_update()
+    {
+        $this->cria_lista_de_temas();
+
+        $tema = Temas::findOrFail(1);
+
+        $response = $this->json('PUT', "temas/update/{$tema->id}", ['nome' => 'Energia']);
+
+        $response->assertStatus(200);
+        $response->assertSee('Energia');
+        $response->assertSee('Educação');
+        $response->assertDontSee('Alimentação');
+        
+    }
 }

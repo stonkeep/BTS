@@ -6,10 +6,13 @@ use App\Cargos;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\ValidationsFields;
 
 class CargosTest extends TestCase
 {
     use DatabaseMigrations;
+    use ValidationsFields; //Trait que trata das validações
+    
     /**
      * A basic test example.
      *
@@ -30,6 +33,8 @@ class CargosTest extends TestCase
     /** @test */
     function testa_criacao_de_cago_por_post()
     {
+        $this->disableExceptionHandling();
+        
         $response = $this->json('POST', "cargos/create", [
             'descricao' => 'Técnico',
         ]);
@@ -52,8 +57,17 @@ class CargosTest extends TestCase
             'descricao' => 'Vice-Presidente',
         ]);
 
-        $response = $this->get('/cargos');
+        $this->response = $this->json('POST', "cargos/create", [
+            'descricao' => 'Técnico',
+        ]);
 
+        
+        //verifica se a validação do campo deu certo
+        $this->assertValidationError('descricao');
+        
+
+        $response = $this->get('/cargos');
+        
         $response->assertStatus(200);
 
         $response->assertSee('Técnico');
@@ -104,5 +118,4 @@ class CargosTest extends TestCase
         $response->assertDontSee('Técnico');
         $response->assertSee('Outra descrição');
     }
-    //TODO testar validações
 }

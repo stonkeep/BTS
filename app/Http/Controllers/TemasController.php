@@ -35,7 +35,14 @@ class TemasController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'nome' => 'required|unique:temas',
+        ]);
+                
         Temas::create($request->all());
+        $temas = Temas::all();
+        
+        return view('temas.show', compact('temas'));
     }
 
     /**
@@ -46,7 +53,9 @@ class TemasController extends Controller
      */
     public function show(Temas $temas)
     {
-        //
+        $temas = Temas::all();
+        return view('temas.show', compact('temas'));
+
     }
 
     /**
@@ -67,9 +76,12 @@ class TemasController extends Controller
      * @param  \App\Temas  $temas
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Temas $temas)
+    public function update(Request $request, Temas $tema)
     {
-        //
+        $tema->update($request->all());
+        $temas = Temas::all();
+        
+        return view('temas.show', compact('temas'));
     }
 
     /**
@@ -78,8 +90,10 @@ class TemasController extends Controller
      * @param  \App\Temas  $temas
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Temas $temas)
+    public function destroy(Temas $tema)
     {
-        //
+        $tema->delete();
+        $temas = Temas::all();
+        return view('temas.show', compact('temas'));
     }
 }

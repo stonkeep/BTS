@@ -8,11 +8,14 @@ use Illuminate\Support\Facades\View;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\ValidationsFields;
 
 class PremioTest extends TestCase
 {
-    use DatabaseMigrations;
 
+    use DatabaseMigrations;
+    use ValidationsFields;
+    
     /**
      * @return void
      * @test
@@ -37,27 +40,24 @@ class PremioTest extends TestCase
     }
 
 
-
-
     /** @test */
     function can_post_a_technology()
     {
         $this->disableExceptionHandling();
-        
+
         $dataAbertura = Carbon::now()->toDateTimeString();
         $dataEncerramento = Carbon::now()->addYear(1)->toDateTimeString();
-        
+
         $response = $this->json('POST', "/premio-vigencia/store", [
             'edicao'            => Carbon::now()->year,
-            'data_abertura'     => $dataAbertura, 
+            'data_abertura'     => $dataAbertura,
             'data_encerramento' => $dataEncerramento,
             'encerrado'         => false
         ]);
 
-               
         //veirifca se foi gravado
         $premio = VigenciasPremio::firstOrFail();
-        
+
         $this->assertEquals(0, $premio['encerrado']);
         $this->assertEquals(2017, $premio->edicao);
         $this->assertEquals($dataAbertura, $premio->data_abertura);
@@ -69,20 +69,54 @@ class PremioTest extends TestCase
         $response->assertSee($dataAbertura);
         $response->assertSee($dataEncerramento);
     }
-    
+
     /** @test */
-    function  pode_listar_todos_os_premios()
+    function testa_validacao()
+    {
+        $dataAbertura = Carbon::now()->toDateTimeString();
+        $dataEncerramento = Carbon::now()->addYear(1)->toDateTimeString();
+
+        $this->json('POST', "/premio-vigencia/store", [
+            'edicao'            => Carbon::now()->year,
+            'data_abertura'     => $dataAbertura,
+            'data_encerramento' => $dataEncerramento,
+            'encerrado'         => false
+        ]);
+
+        $this->response = $this->json('POST', "/premio-vigencia/store", [
+            'edicao'            => Carbon::now()->year,
+            'data_abertura'     => $dataAbertura,
+            'data_encerramento' => $dataEncerramento,
+            'encerrado'         => false
+        ]);
+
+        $this->assertValidationError('edicao');
+
+        $this->response = $this->json('POST', "/premio-vigencia/store", [
+            'edicao'            => Carbon::now()->year,
+            //'data_encerramento' => $dataEncerramento,
+            'encerrado'         => false
+        ]);
+
+        $this->assertValidationError('data_abertura');
+        $this->assertValidationError('data_encerramento');
+        
+    }
+
+
+    /** @test */
+    function pode_listar_todos_os_premios()
     {
         $this->disableExceptionHandling();
 
         $premio1 = factory(VigenciasPremio::class)->create();
         $premio2 = factory(VigenciasPremio::class)->create([
-            'edicao'            => 2018,
-            'encerrado'         => true
+            'edicao'    => 2018,
+            'encerrado' => true
         ]);
-        
+
         $response = $this->get('/premios');
-        
+
         //dd($response);
 
         //Verifica se retorna o premio gravado na view
@@ -92,20 +126,20 @@ class PremioTest extends TestCase
         $response->assertSee($premio1->data_encerramento);
         $response->assertSee('Não');
 
-
         $response->assertSee(strval($premio2->edicao));
         $response->assertSee($premio2->data_abertura);
         $response->assertSee($premio2->data_encerramento);
         $response->assertSee('Sim');
     }
 
+
     /** @test */
     function testa_delete()
     {
         $premio1 = factory(VigenciasPremio::class)->create();
         $premio2 = factory(VigenciasPremio::class)->create([
-            'edicao'            => 2018,
-            'encerrado'         => true
+            'edicao'    => 2018,
+            'encerrado' => true
         ]);
 
         $premio = VigenciasPremio::findOrFail(1);
@@ -119,13 +153,14 @@ class PremioTest extends TestCase
         //$response->assertDontSee('2017');
     }
 
+
     /** @test */
     function testa_update()
     {
         $premio1 = factory(VigenciasPremio::class)->create();
         $premio2 = factory(VigenciasPremio::class)->create([
-            'edicao'            => 2018,
-            'encerrado'         => true
+            'edicao'    => 2018,
+            'encerrado' => true
         ]);
 
         $this->json('PUT', "/premios/update/{$premio2->id}", ['edicao' => 2019,]);
@@ -136,5 +171,5 @@ class PremioTest extends TestCase
         $response->assertDontSee('<th scope="row">2018</th>');
 
     }
-    //TODO testar validações
+
 }

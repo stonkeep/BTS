@@ -6,11 +6,13 @@ use App\NaturezasJuridicas;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\ValidationsFields;
 
 class NaturezaJuridica extends TestCase
 {
 
     use DatabaseMigrations;
+    use ValidationsFields;
 
 
     private function criaListaDeNaturezas()
@@ -61,11 +63,20 @@ class NaturezaJuridica extends TestCase
 
 
     /** @test */
-    function testa_o_retorno_da_gravacao_por_post()
+    function testa_o_retorno_de_lista_da_gravacao_por_post()
     {
         //$this->disableExceptionHandling();
 
         $this->criaListaDeNaturezas();
+
+        //carrega dados repetidos para testar a validação
+        $this->response = $this->json('POST', "naturezasJuridicas/create", [
+            'descricao'  => 'Autarquia Federal',
+            'created_at' => '2017-03-31 19:27:54',
+            'updated_at' => '2017-03-31 19:27:55'
+        ]);
+
+        $this->assertValidationError('descricao');
 
         $response = $this->get("/naturezasJuridicas");
 
@@ -114,5 +125,4 @@ class NaturezaJuridica extends TestCase
         $response->assertSee('Autarquia Estadual2');
 
     }
-    //TODO testar validações
 }

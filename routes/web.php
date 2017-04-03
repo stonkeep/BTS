@@ -23,6 +23,9 @@ Route::put('/premios/update/{premio}', 'VigenciasPremioController@update');
 
 //Temas
 Route::post('/temas/create', 'TemasController@store');
+Route::get('/temas/', 'TemasController@show');
+Route::delete('/temas/delete/{tema}', 'TemasController@destroy');
+Route::put('/temas/update/{tema}', 'TemasController@update');
 
 //Regioes
 Route::post('/regioes/create', 'RegioesController@store');

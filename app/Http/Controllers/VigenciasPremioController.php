@@ -36,7 +36,7 @@ class VigenciasPremioController extends Controller
     public function store(Request $request)
     {
         $this->validate(request(), [
-            'edicao' => 'required',
+            'edicao' => 'required|unique:vigencias_premios',
             'data_abertura' => 'required',
             'data_encerramento' => 'required',
         ]);
