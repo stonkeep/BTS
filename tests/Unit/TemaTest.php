@@ -122,7 +122,6 @@ class TemaTest extends TestCase
         
     }
     
-    //TODO criar teste de update
     /** @test */
     function testa_update()
     {

@@ -35,6 +35,10 @@ class PublicosAlvoController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'descricao' => 'required|unique:publicos_alvos'    
+        ]);
+        
         PublicosAlvo::create($request->all());
 
         $publicos = PublicosAlvo::all();
@@ -51,7 +55,6 @@ class PublicosAlvoController extends Controller
     public function show(PublicosAlvo $publicosAlvo)
     {
         $publicos = PublicosAlvo::all();
-
         return view('publicosAlvo.show', compact('publicos'));
     }
 
@@ -73,9 +76,12 @@ class PublicosAlvoController extends Controller
      * @param  \App\PublicosAlvo  $publicosAlvo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PublicosAlvo $publicosAlvo)
+    public function update(Request $request, PublicosAlvo $publico)
     {
-        //
+        $publico->update($request->all());
+        
+        $publicos = PublicosAlvo::all();
+        return view('publicosAlvo.show', compact('publicos'));
     }
 
     /**
@@ -84,8 +90,11 @@ class PublicosAlvoController extends Controller
      * @param  \App\PublicosAlvo  $publicosAlvo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PublicosAlvo $publicosAlvo)
+    public function destroy(PublicosAlvo $publico)
     {
-        //
+        $publico->delete();
+
+        $publicos = PublicosAlvo::all();
+        return view('publicosAlvo.show', compact('publicos'));
     }
 }

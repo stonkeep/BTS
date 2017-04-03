@@ -6,10 +6,12 @@ use App\PublicosAlvo;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\ValidationsFields;
 
 class TestPublicoAlvo extends TestCase
 {
     use DatabaseMigrations;
+    use ValidationsFields;
     /**
      * A basic test example.
      *
@@ -75,8 +77,78 @@ class TestPublicoAlvo extends TestCase
         $response->assertSee('Povos Tradicionais');
         
     }
+
+    /** @test */
+    function testa_validacao_de_campos_em_lista()
+    {
+        $this->json('POST', "/publicosAlvo/create", [
+            'descricao' => 'Afrodescentes',
+            'created_at' => '2017-03-31 18:58:05'
+        ]);
+
+        $this->response =  $this->json('POST', "/publicosAlvo/create", [
+            'descricao' => 'Afrodescentes',
+            'created_at' => '2017-03-31 18:58:05'
+        ]);
+
+        $this->assertValidationError('descricao');
+    }
+
     //TODO criar teste de delete
+    /** @test */
+    function teste_de_delete()
+    {
+        $this->json('POST', "/publicosAlvo/create", [
+            'descricao' => 'Afrodescentes',
+            'created_at' => '2017-03-31 18:58:05'
+        ]);
+
+        $response = $this->json('POST', "/publicosAlvo/create", [
+            'descricao' => 'Povos Tradicionais',
+            'created_at' => '2017-03-31 18:58:05'
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertSee('Afrodescentes');
+        $response->assertSee('Povos Tradicionais');
+
+        $publico = PublicosAlvo::firstOrFail();
+
+        $response = $this->json('DELETE', "publicosAlvo/delete/{$publico->id}");
+
+        $response->assertStatus(200);
+
+        $response->assertDontSee('Afrodescentes');
+        $response->assertSee('Povos Tradicionais');
+        
+    }
+    
     //TODO criar teste de update
-    //TODO testar validações
+    /** @test */
+    function teste_de_update()
+    {
+        $this->json('POST', "/publicosAlvo/create", [
+            'descricao' => 'Afrodescentes',
+            'created_at' => '2017-03-31 18:58:05'
+        ]);
+
+        $response = $this->json('POST', "/publicosAlvo/create", [
+            'descricao' => 'Povos Tradicionais',
+            'created_at' => '2017-03-31 18:58:05'
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertSee('Afrodescentes');
+        $response->assertSee('Povos Tradicionais');
+
+        $publico = PublicosAlvo::firstOrFail();
+
+        $response = $this->json('PUT', "publicosAlvo/update/{$publico->id}", ['descricao' => 'Mulheres',]);
+
+        $response->assertStatus(200);
+        $response->assertDontSee('Afrodescentes');
+        $response->assertSee('Povos Tradicionais');        
+        $response->assertSee('Mulheres');        
+    }
     
 }

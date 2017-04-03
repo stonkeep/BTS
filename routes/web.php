@@ -34,6 +34,8 @@ Route::get('/regioes', 'RegioesController@show');
 //Publico alvo
 Route::post('publicosAlvo/create', 'PublicosAlvoController@store');
 Route::get('publicosAlvo', 'PublicosAlvoController@show');
+Route::delete('publicosAlvo/delete/{publico}', 'PublicosAlvoController@destroy');
+Route::put('publicosAlvo/update/{publico}', 'PublicosAlvoController@update');
 
 //Naturezas Juridicas
 Route::post('naturezasJuridicas/create', 'NaturezasJuridicasController@store');
