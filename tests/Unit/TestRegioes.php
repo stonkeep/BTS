@@ -101,4 +101,5 @@ class TestRegioes extends TestCase
 
     //TODO criar teste de delete
     //TODO criar teste de update
+    //TODO testar validações
 }

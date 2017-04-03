@@ -114,4 +114,5 @@ class NaturezaJuridica extends TestCase
         $response->assertSee('Autarquia Estadual2');
 
     }
+    //TODO testar validações
 }

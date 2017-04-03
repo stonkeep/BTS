@@ -85,7 +85,7 @@ class CargosTest extends TestCase
 
     }
 
-    
+
     /** @test */
     function testa_update_cargo()
     {
@@ -103,6 +103,6 @@ class CargosTest extends TestCase
 
         $response->assertDontSee('Técnico');
         $response->assertSee('Outra descrição');
-
     }
+    //TODO testar validações
 }

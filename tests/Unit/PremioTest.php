@@ -98,6 +98,43 @@ class PremioTest extends TestCase
         $response->assertSee($premio2->data_encerramento);
         $response->assertSee('Sim');
     }
-    //TODO criar teste de delete
-    //TODO criar teste de update
+
+    /** @test */
+    function testa_delete()
+    {
+        $premio1 = factory(VigenciasPremio::class)->create();
+        $premio2 = factory(VigenciasPremio::class)->create([
+            'edicao'            => 2018,
+            'encerrado'         => true
+        ]);
+
+        $premio = VigenciasPremio::findOrFail(1);
+
+        $this->json('DELETE', "/premios/delete/{$premio->id}");
+
+        $response = $this->get('/premios');
+
+        $response->assertStatus(200);
+        $response->assertSee('2018');
+        //$response->assertDontSee('2017');
+    }
+
+    /** @test */
+    function testa_update()
+    {
+        $premio1 = factory(VigenciasPremio::class)->create();
+        $premio2 = factory(VigenciasPremio::class)->create([
+            'edicao'            => 2018,
+            'encerrado'         => true
+        ]);
+
+        $this->json('PUT', "/premios/update/{$premio2->id}", ['edicao' => 2019,]);
+
+        $response = $response = $this->get('/premios');
+        $response->assertStatus(200);
+        $response->assertSee('<th scope="row">2019</th>');
+        $response->assertDontSee('<th scope="row">2018</th>');
+
+    }
+    //TODO testar validações
 }

@@ -22,4 +22,5 @@ class SubTemasTest extends TestCase
     //TODO criar teste de READ
     //TODO criar teste de UPDATE
     //TODO criar teste de DELETE
+    //TODO testar validações
 }

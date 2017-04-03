@@ -18,6 +18,8 @@ Route::get('/', function () {
 //Premios
 Route::post('/premio-vigencia/store', 'VigenciasPremioController@store');
 Route::get('/premios/', 'VigenciasPremioController@show');
+Route::delete('/premios/delete/{premio}', 'VigenciasPremioController@destroy');
+Route::put('/premios/update/{premio}', 'VigenciasPremioController@update');
 
 //Temas
 Route::post('/temas/create', 'TemasController@store');
