@@ -30,8 +30,8 @@ Route::put('/temas/update/{tema}', 'TemasController@update');
 //SubTemas
 Route::post('/subtemas/create', 'SubTemasController@store');
 Route::get('/subtemas/', 'SubTemasController@show');
-Route::delete('/subtemas/delete/{subtema}', 'SubTemasController@destroy');
-Route::put('/subtemas/update/{subtema}', 'SubTemasController@update');
+Route::delete('/subtemas/delete/{subTema}', 'SubTemasController@destroy');
+Route::put('/subtemas/update/{subTema}', 'SubTemasController@update');
 
 //Regioes
 Route::post('/regioes/create', 'RegioesController@store');

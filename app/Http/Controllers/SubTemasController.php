@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\SubTemas;
+use App\Temas;
 use Illuminate\Http\Request;
 
 class SubTemasController extends Controller
@@ -35,10 +36,15 @@ class SubTemasController extends Controller
      */
     public function store(Request $request)
     {
-        SubTemas::create($request->all());
+        $tema = Temas::find($request->tema_id);
 
+        if ($tema) {
+            SubTemas::create($request->all());
+        }else{
+            return 'Não foi possível encontrar tema para vincular';
+        }        
+            
         $subTemas = SubTemas::all();
-
         return view('subTemas.show', compact('subTemas'));
     }
 
@@ -50,7 +56,8 @@ class SubTemasController extends Controller
      */
     public function show(SubTemas $subTemas)
     {
-        //
+        $subTemas = SubTemas::all();
+        return view('subTemas.show', compact('subTemas'));
     }
 
     /**
@@ -71,9 +78,12 @@ class SubTemasController extends Controller
      * @param  \App\SubTemas  $subTemas
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SubTemas $subTemas)
+    public function update(Request $request, SubTemas $subTema)
     {
-        //
+        //dd($subTema);
+        $subTema->update($request->all());
+        $subTemas = SubTemas::all();
+        return view('subTemas.show', compact('subTemas'));
     }
 
     /**
@@ -82,8 +92,10 @@ class SubTemasController extends Controller
      * @param  \App\SubTemas  $subTemas
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SubTemas $subTemas)
+    public function destroy(SubTemas $subTema)
     {
-        //
+        $subTema->delete();
+        $subTemas = SubTemas::all();
+        return view('subTemas.show', compact('subTemas'));
     }
 }

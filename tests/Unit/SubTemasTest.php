@@ -15,6 +15,17 @@ class SubTemasTest extends TestCase
     use ValidationsFields;
 
 
+    public function cria_subtema()
+    {
+        $tema = Temas::create([
+            'nome' => 'Alimentação'
+        ]);
+
+        $this->json('POST', "subtemas/create",[
+            'tema_id' => $tema->id,
+            'descricao' => 'Higienização dos alimentos',
+        ]);
+    }
     /**
      * A basic test example.
      *
@@ -41,35 +52,70 @@ class SubTemasTest extends TestCase
         $this->assertNotNull($tema->subtemas());
     }
 
-    //TODO criar teste de CREATE por post
     /** @test */
-    function teste_crete_por_post()
+    function teste_create_por_post()
     {
-        $tema = Temas::create([
-            'nome' => 'Alimentação'
-        ]);
+        $this->cria_subtema();
         
-    	$this->json('POST', "subtemas/create",[
-            'tema_id' => $tema->id,
+    	$response = $this->json('POST', "subtemas/create",[
+            'tema_id' => 1,
             'descricao' => 'Alimentação Escolar',
         ]);
 
-        $response = $this->json('POST', "subtemas/create",[
-            'tema_id' => $tema->id,
-            'descricao' => 'Higienização dos alimentos',
-        ]);
-
-        dd($response);
-        
         $response->assertStatus(200);
         $response->assertSee('Alimentação');
         $response->assertSee('Alimentação Escolar');
         $response->assertSee('Higienização dos alimentos');
-    }   
+    }
 
 
-    //TODO criar teste de READ
-    //TODO criar teste de UPDATE
-    //TODO criar teste de DELETE
+    /** @test */
+    function teste_reade()
+    {
+        $this->cria_subtema();
+
+        $response = $this->get("subtemas");
+
+        $response->assertStatus(200);
+        $response->assertSee('Alimentação');
+        $response->assertSee('Higienização dos alimentos');
+    }
+
+    /** @test */
+    function teste_update()
+    {
+        $this->cria_subtema();
+
+        $subTema = SubTemas::firstOrFail();
+        
+        $response = $this->json('PUT', "subtemas/update/{$subTema->id}",[
+            'descricao' => 'Outro Subtema',
+        ]);
+        
+        $response->assertStatus(200);
+        $response->assertSee('Outro Subtema');
+        $response->assertDontSee('Higienização dos alimentos');
+
+    }
+    
+    /** @test */
+    function teste_delete()
+    {
+        $this->cria_subtema();
+
+        $this->json('POST', "subtemas/create",[
+            'tema_id' => 1,
+            'descricao' => 'Alimentação Escolar',
+        ]);
+
+        $subTema = SubTemas::firstOrFail();
+
+        $response = $this->json('DELETE', "subtemas/delete/{$subTema->id}");
+
+        $response->assertStatus(200);
+        $response->assertDontSee('Higienização dos alimentos');
+        $response->assertSee('Alimentação Escolar');
+    }
+    
     //TODO testar validações
 }
