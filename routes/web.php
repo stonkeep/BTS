@@ -27,6 +27,12 @@ Route::get('/temas/', 'TemasController@show');
 Route::delete('/temas/delete/{tema}', 'TemasController@destroy');
 Route::put('/temas/update/{tema}', 'TemasController@update');
 
+//SubTemas
+Route::post('/subtemas/create', 'SubTemasController@store');
+Route::get('/subtemas/', 'SubTemasController@show');
+Route::delete('/subtemas/delete/{subtema}', 'SubTemasController@destroy');
+Route::put('/subtemas/update/{subtema}', 'SubTemasController@update');
+
 //Regioes
 Route::post('/regioes/create', 'RegioesController@store');
 Route::get('/regioes', 'RegioesController@show');

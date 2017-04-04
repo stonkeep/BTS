@@ -8,4 +8,10 @@ class Temas extends Model
 {
 
     protected $guarded = [];
+
+
+    public function subTemas()
+    {
+        return $this->hasMany(SubTemas::class);
+    }
 }

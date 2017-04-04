@@ -35,7 +35,11 @@ class SubTemasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        SubTemas::create($request->all());
+
+        $subTemas = SubTemas::all();
+
+        return view('subTemas.show', compact('subTemas'));
     }
 
     /**
