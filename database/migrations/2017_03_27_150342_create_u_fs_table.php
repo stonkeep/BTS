@@ -13,7 +13,7 @@ class CreateUFsTable extends Migration
      */
     public function up()
     {
-        Schema::create('u_fs', function (Blueprint $table) {
+        Schema::create('ufs', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
         });

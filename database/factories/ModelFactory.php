@@ -48,3 +48,25 @@ $factory->define(App\Regioes::class, function (Faker\Generator $faker) {
         'descricao' => 'Centro - Oeste'
     ];
 });
+
+$factory->define(App\Insticuicao::class, function (Faker\Generator $faker) {
+    return [
+        'CNPJ' => '01612089000100',
+        'razaoSocial' => 'PREFEITURA DO MUNICIPIO DE TANGUA',
+        'naturezas_juridicas_id' => '1',
+        'nomeDaArea' => 'SECRETARIA MUNICIPAL DE AGRICULTURA',
+        'ddd' => '',
+        'telefone' => '',
+        'emai' => '',
+        'UF' => '',
+        'cidade' => '',
+        'endereco' => '',
+        'bairro' => '',
+        'CEP' => '',
+        'site' => '',
+        'nomeCompleto' => '',
+        'cargos_id' => '',
+        'sexo' => '',
+        'CPF' => '',
+    ];
+});

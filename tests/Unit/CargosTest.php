@@ -109,11 +109,13 @@ class CargosTest extends TestCase
 
         $cargo = Cargos::findOrFail(1);
 
-        $cargo->descricao = 'Outra descrição';
-
-        $response = $this->json('PUT', "cargos/create/{$cargo}");
+        $response = $this->json('PUT', "cargos/update/{$cargo->id}",[
+            'descricao' => 'Outra descrição'
+        ]);
 
         $response->assertStatus(200);
+
+        //dd($response);
 
         $response->assertDontSee('Técnico');
         $response->assertSee('Outra descrição');

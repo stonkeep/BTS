@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Cargos;
+use App\Insticuicao;
 use Illuminate\Http\Request;
 
-class CargosController extends Controller
+class InsticuicaoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -35,37 +35,27 @@ class CargosController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'descricao' => 'required|unique:cargos',
-        ]);
-
-        Cargos::create($request->all());
-
-        $cargos = Cargos::all();
-        return view('cargos.show', compact('cargos'));
-
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Cargos  $cargos
+     * @param  \App\Insticuicao  $insticuicao
      * @return \Illuminate\Http\Response
      */
-    public function show(Cargos $cargos)
+    public function show(Insticuicao $insticuicao)
     {
-        $cargos = Cargos::all();
-
-        return view('cargos.show', compact('cargos'));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Cargos  $cargos
+     * @param  \App\Insticuicao  $insticuicao
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cargos $cargos)
+    public function edit(Insticuicao $insticuicao)
     {
         //
     }
@@ -74,29 +64,22 @@ class CargosController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Cargos  $cargos
+     * @param  \App\Insticuicao  $insticuicao
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cargos $cargo)
+    public function update(Request $request, Insticuicao $insticuicao)
     {
-        $cargo->update($request->all());
-        $cargos = Cargos::all();
-
-        return view('cargos.show', compact('cargos'));
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Cargos  $cargos
+     * @param  \App\Insticuicao  $insticuicao
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cargos $cargo)
+    public function destroy(Insticuicao $insticuicao)
     {
-        $cargo->delete();
-
-        $cargos = Cargos::all();
-
-        return view('cargos.show', compact('cargos'));
+        //
     }
 }

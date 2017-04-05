@@ -119,7 +119,7 @@ class NaturezaJuridica extends TestCase
 
         $response = $this->json('PUT', "naturezasJuridicas/update/{$natureza->id}", [ 'descricao'  => 'Autarquia Estadual2']);
 
-        dd($response);
+        //dd($response);
         $response->assertStatus(200);
         $response->assertDontSee('Autarquia Federal');
         $response->assertSee('Autarquia Estadual2');
