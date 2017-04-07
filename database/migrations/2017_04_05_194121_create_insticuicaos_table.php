@@ -13,7 +13,7 @@ class CreateInsticuicaosTable extends Migration
      */
     public function up()
     {
-        Schema::create('insticuicoes', function (Blueprint $table) {
+        Schema::create('instituicoes', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('CNPJ');
             $table->string('razaoSocial');
@@ -21,7 +21,7 @@ class CreateInsticuicaosTable extends Migration
             $table->string('nomeDaArea');
             $table->unsignedInteger('ddd');
             $table->unsignedInteger('telefone');
-            $table->string('emai');
+            $table->string('email');
             $table->string('UF', 2);
             $table->string('cidade');
             $table->string('endereco');
@@ -32,10 +32,8 @@ class CreateInsticuicaosTable extends Migration
             $table->string('nomeCompleto');
             $table->unsignedInteger('cargos_id');
             $table->string('sexo', 1);
-            $table->unsignedInteger('CPF', 11);
+            $table->unsignedInteger('CPF');
             $table->timestamps();
-            
-            $table->unique('CNPJ');
         });
     }
 
@@ -46,6 +44,6 @@ class CreateInsticuicaosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('insticuicoes');
+        Schema::dropIfExists('instituicoes');
     }
 }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Tecnologia;
 use Illuminate\Http\Request;
 
-class TecnologiaController extends Controller
+class TecnologiasController extends Controller
 {
     /**
      * Display a listing of the resource.

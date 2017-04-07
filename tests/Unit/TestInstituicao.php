@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Insticuicao;
+use App\Instituicao;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -16,7 +16,7 @@ class TestInstituicao extends TestCase
      */
     public function teste_create()
     {
-        Insticuicao::create([
+        Instituicao::create([
             
         ]);
     }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Insticuicao;
+use App\Instituicao;
 use Illuminate\Http\Request;
 
-class InsticuicaoController extends Controller
+class InstituicaoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class InsticuicaoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Insticuicao  $insticuicao
+     * @param  \App\Instituicao  $insticuicao
      * @return \Illuminate\Http\Response
      */
-    public function show(Insticuicao $insticuicao)
+    public function show(Instituicao $insticuicao)
     {
         //
     }
@@ -52,10 +52,10 @@ class InsticuicaoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Insticuicao  $insticuicao
+     * @param  \App\Instituicao  $insticuicao
      * @return \Illuminate\Http\Response
      */
-    public function edit(Insticuicao $insticuicao)
+    public function edit(Instituicao $insticuicao)
     {
         //
     }
@@ -64,10 +64,10 @@ class InsticuicaoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Insticuicao  $insticuicao
+     * @param  \App\Instituicao  $insticuicao
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Insticuicao $insticuicao)
+    public function update(Request $request, Instituicao $insticuicao)
     {
         //
     }
@@ -75,10 +75,10 @@ class InsticuicaoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Insticuicao  $insticuicao
+     * @param  \App\Instituicao  $insticuicao
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Insticuicao $insticuicao)
+    public function destroy(Instituicao $insticuicao)
     {
         //
     }
