@@ -36,6 +36,13 @@ class SubTemasController extends Controller
      */
     public function store(Request $request)
     {
+//        dd($request->all());
+
+        $this->validate($request, [
+            'tema_id' => 'required|exists:temas,id',
+            'descricao' => 'required|unique:sub_temas'
+        ]);
+
         $tema = Temas::find($request->tema_id);
 
         if ($tema) {

@@ -21,16 +21,17 @@ class SubTemasTest extends TestCase
             'nome' => 'Alimentação'
         ]);
 
-        $this->json('POST', "subtemas/create",[
+        $this->json('POST', "subtemas/create", [
             'tema_id' => $tema->id,
             'descricao' => 'Higienização dos alimentos',
         ]);
     }
+
     /**
      * A basic test example.
      *
      * @return void
-     * @test 
+     * @test
      */
     public function teste_de_create()
     {
@@ -38,15 +39,15 @@ class SubTemasTest extends TestCase
         $tema = Temas::create([
             'nome' => 'Alimentação'
         ]);
-        
+
         $subtema = SubTemas::create([
             'tema_id' => $tema->id,
             'descricao' => 'Alimentação Escolar',
         ]);
-        
+
         //Faz o teste para verificar se a ligação de tema e subTema esta ok
         $subTemaConf = SubTemas::firstOrFail();
-        
+
         $this->assertEquals($subtema->descricao, $subTemaConf->descricao);
         $this->assertEquals($tema->nome, $subTemaConf->tema->nome);
         $this->assertNotNull($tema->subtemas());
@@ -56,8 +57,8 @@ class SubTemasTest extends TestCase
     function teste_create_por_post()
     {
         $this->cria_subtema();
-        
-    	$response = $this->json('POST', "subtemas/create",[
+
+        $response = $this->json('POST', "subtemas/create", [
             'tema_id' => 1,
             'descricao' => 'Alimentação Escolar',
         ]);
@@ -87,23 +88,23 @@ class SubTemasTest extends TestCase
         $this->cria_subtema();
 
         $subTema = SubTemas::firstOrFail();
-        
-        $response = $this->json('PUT', "subtemas/update/{$subTema->id}",[
+
+        $response = $this->json('PUT', "subtemas/update/{$subTema->id}", [
             'descricao' => 'Outro Subtema',
         ]);
-        
+
         $response->assertStatus(200);
         $response->assertSee('Outro Subtema');
         $response->assertDontSee('Higienização dos alimentos');
 
     }
-    
+
     /** @test */
     function teste_delete()
     {
         $this->cria_subtema();
 
-        $this->json('POST', "subtemas/create",[
+        $this->json('POST', "subtemas/create", [
             'tema_id' => 1,
             'descricao' => 'Alimentação Escolar',
         ]);
@@ -116,6 +117,66 @@ class SubTemasTest extends TestCase
         $response->assertDontSee('Higienização dos alimentos');
         $response->assertSee('Alimentação Escolar');
     }
-    
-    //TODO testar validações
+
+
+    /** @test */
+    public function testa_validacao_id_tema_exist()
+    {
+        $tema = Temas::create([
+            'nome' => 'Alimentação'
+        ]);
+
+        //testa validacao de id do tema
+        $this->response = $this->json('POST', "subtemas/create", [
+            'tema_id' => 2,
+            'descricao' => 'Alimentação Escolar',
+        ]);
+        $this->assertValidationError('tema_id');
+    }
+
+
+    /** @test */
+    public function testa_validacao_de_descricao_unica()
+    {
+        $tema = Temas::create([
+            'nome' => 'Alimentação'
+        ]);
+
+        //testa validacao unica da descricao
+        $this->response = $this->json('POST', "subtemas/create", [
+            'tema_id' => 1,
+            'descricao' => 'Alimentação Escolar',
+        ]);
+
+        $this->response = $this->json('POST', "subtemas/create", [
+            'tema_id' => 1,
+            'descricao' => 'Alimentação Escolar',
+        ]);
+
+        $this->assertValidationError('descricao');
+    }
+
+
+    /** @test */
+    public function testa_campos_requeridos()
+    {
+        $tema = Temas::create([
+            'nome' => 'Alimentação'
+        ]);
+
+        $this->response = $this->json('POST', "subtemas/create", [
+//            'tema_id' => 1,
+            'descricao' => 'Alimentação Escolar',
+        ]);
+        $this->assertValidationError('tema_id');
+
+
+        $this->response = $this->json('POST', "subtemas/create", [
+            'tema_id' => 1,
+//            'descricao' => 'Alimentação Escolar',
+        ]);
+        $this->assertValidationError('descricao');
+    }
+
+
 }
