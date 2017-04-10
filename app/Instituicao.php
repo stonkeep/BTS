@@ -14,4 +14,13 @@ class Instituicao extends Model
         $this->hasMany(Tecnologia::class);
     }
 
+    public function natureza()
+    {
+        return $this->belongsTo(NaturezasJuridicas::class, 'naturezaJuridica');
+    }
+
+    public function cargo()
+    {
+        return $this->belongsTo(Cargos::class);
+    }
 }

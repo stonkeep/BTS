@@ -13,11 +13,11 @@ class CreateInsticuicaosTable extends Migration
      */
     public function up()
     {
-        Schema::create('instituicoes', function (Blueprint $table) {
+        Schema::create('instituicaos', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('CNPJ');
             $table->string('razaoSocial');
-            $table->unsignedInteger('naturezas_juridicas_id');
+            $table->unsignedInteger('naturezaJuridica');
             $table->string('nomeDaArea');
             $table->unsignedInteger('ddd');
             $table->unsignedInteger('telefone');
@@ -27,10 +27,10 @@ class CreateInsticuicaosTable extends Migration
             $table->string('endereco');
             $table->string('bairro');
             $table->unsignedInteger('CEP');
-            $table->string('site');
+            $table->string('site')->nullable();
             // talvez outra tabela
             $table->string('nomeCompleto');
-            $table->unsignedInteger('cargos_id');
+            $table->unsignedInteger('cargo_id');
             $table->string('sexo', 1);
             $table->unsignedInteger('CPF');
             $table->timestamps();

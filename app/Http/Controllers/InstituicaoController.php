@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Cargos;
 use App\Instituicao;
+use App\NaturezasJuridicas;
 use Illuminate\Http\Request;
 
 class InstituicaoController extends Controller
@@ -35,7 +37,10 @@ class InstituicaoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Instituicao::create($request->all());
+
+        $instituicoes = Instituicao::all();
+        return view('instituicoes.show', compact('instituicoes'));
     }
 
     /**
@@ -46,7 +51,8 @@ class InstituicaoController extends Controller
      */
     public function show(Instituicao $insticuicao)
     {
-        //
+        $instituicoes = Instituicao::all();
+        return view('instituicoes.show', compact('instituicoes'));
     }
 
     /**

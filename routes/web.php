@@ -56,3 +56,10 @@ Route::post('cargos/create', 'CargosController@store');
 Route::get('cargos', 'CargosController@show');
 Route::delete('cargos/delete/{cargo}', 'CargosController@destroy');
 Route::put('cargos/update/{cargo}', 'CargosController@update');
+
+//instituicoes
+Route::post('instituicoes/create', 'InstituicaoController@store');
+Route::get('instituicoes', 'InstituicaoController@show');
+Route::delete('instituicoes/delete/{cargo}', 'InstituicaoController@destroy');
+Route::put('instituicoes/update/{cargo}', 'InstituicaoController@update');
+
