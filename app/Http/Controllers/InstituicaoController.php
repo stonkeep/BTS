@@ -46,10 +46,10 @@ class InstituicaoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Instituicao  $insticuicao
+     * @param  \App\Instituicao  $instituicao
      * @return \Illuminate\Http\Response
      */
-    public function show(Instituicao $insticuicao)
+    public function show(Instituicao $instituicao)
     {
         $instituicoes = Instituicao::all();
         return view('instituicoes.show', compact('instituicoes'));
@@ -58,10 +58,10 @@ class InstituicaoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Instituicao  $insticuicao
+     * @param  \App\Instituicao  $instituicao
      * @return \Illuminate\Http\Response
      */
-    public function edit(Instituicao $insticuicao)
+    public function edit(Instituicao $instituicao)
     {
         //
     }
@@ -70,21 +70,24 @@ class InstituicaoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Instituicao  $insticuicao
+     * @param  \App\Instituicao  $instituicao
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Instituicao $insticuicao)
+    public function update(Request $request, Instituicao $instituicao)
     {
-        //
+        $instituicao->update($request->all());
+
+        $instituicoes = Instituicao::all();
+        return view('instituicoes.show', compact('instituicoes'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Instituicao  $insticuicao
+     * @param  \App\Instituicao  $instituicao
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Instituicao $insticuicao)
+    public function destroy(Instituicao $instituicao)
     {
         //
     }

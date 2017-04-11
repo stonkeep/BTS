@@ -105,7 +105,20 @@ class TestInstituicao extends TestCase
         $response->assertStatus(200);
         $response->assertSee('16286169000190');
         $response->assertSee('83745617509');
+    }
 
+    /** @test */
+    function teste_de_update()
+    {
+        $instituicao = factory(Instituicao::class)->create();
+        
+        $response = $this->json('PUT', "instituicoes/update/{$instituicao->id}", ['CNPJ' => 99999999999999, 'CPF' => 11111111111]);
+
+        $response->assertStatus(200);
+        $response->assertSee('99999999999999');
+        $response->assertSee('11111111111');
+        $response->assertDontSee('16286169000190');
+        $response->assertDontSee('83745617509');
     }
 
     //TODO teste update
