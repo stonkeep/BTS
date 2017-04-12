@@ -37,6 +37,26 @@ class InstituicaoController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'CNPJ' => 'required|unique:instituicaos|numeric',
+            'razaoSocial' => 'required',
+            'naturezaJuridica' => 'required|exists:naturezas_juridicas',
+            'nomeDaArea' => 'required',
+            'ddd' => 'required|numeric',
+            'telefone' => 'required|numeric',
+            'email' => 'required|email',
+            'UF' => 'required',
+            'cidade' => 'required',
+            'endereco' => 'required',
+            'bairro' => 'required',
+            'CEP' => 'required|numeric',
+            'site' => 'required',
+            'nomeCompleto' => 'required',
+            'cargo_id' => 'required|exists:cargos,id',
+            'sexo' => 'required|string|size:1',
+            'CPF' => 'required|numeric',
+        ]);
+
         Instituicao::create($request->all());
 
         $instituicoes = Instituicao::all();
@@ -89,6 +109,8 @@ class InstituicaoController extends Controller
      */
     public function destroy(Instituicao $instituicao)
     {
-        //
+        $instituicao->delete();
+        $instituicoes = Instituicao::all();
+        return view('instituicoes.show', compact('instituicoes'));
     }
 }

@@ -29,20 +29,20 @@
                 <th scope="row">{{$instituicao->id}}</th>
                 <td>{{$instituicao->CNPJ}}</td>
                 <td>{{$instituicao->natureza->descricao}}</td>
-                {{--<td>{{$instituicao->nomeDaArea}}</td>--}}
-                {{--<td>{{$instituicao->ddd}}</td>--}}
-                {{--<td>{{$instituicao->telefone}}</td>--}}
-                {{--<td>{{$instituicao->UF}}</td>--}}
-                {{--<td>{{$instituicao->cidade}}</td>--}}
-                {{--<td>{{$instituicao->endereco}}</td>--}}
-                {{--<td>{{$instituicao->bairro}}</td>--}}
-                {{--<td>{{$instituicao->CEP}}</td>--}}
-                {{--<td>{{$instituicao->site}}</td>--}}
-                {{--<td>{{$instituicao->nomeCompleto}}</td>--}}
+                <td>{{$instituicao->nomeDaArea}}</td>
+                <td>{{$instituicao->ddd}}</td>
+                <td>{{$instituicao->telefone}}</td>
+                <td>{{$instituicao->UF}}</td>
+                <td>{{$instituicao->cidade}}</td>
+                <td>{{$instituicao->endereco}}</td>
+                <td>{{$instituicao->bairro}}</td>
+                <td>{{$instituicao->CEP}}</td>
+                <td>{{$instituicao->site}}</td>
+                <td>{{$instituicao->nomeCompleto}}</td>
                 <td>{{$instituicao->cargo->descricao}}</td>
-                {{--<td>{{$instituicao->sexo}}</td>--}}
+                <td>{{$instituicao->sexo}}</td>
                 <td>{{$instituicao->CPF}}</td>
-                {{--<td>{{$instituicao->created_at}}</td>--}}
+                <td>{{$instituicao->created_at}}</td>
             @endforeach
         </tr>
         </tbody>
