@@ -34,9 +34,13 @@ Route::delete('/subtemas/delete/{subTema}', 'SubTemasController@destroy');
 Route::put('/subtemas/update/{subTema}', 'SubTemasController@update');
 
 //Regioes
+Route::get('/regioes/insert', function (){
+    return view('regioes.create');
+});
 Route::post('/regioes/create', 'RegioesController@store');
-Route::get('/regioes', 'RegioesController@show');
-Route::delete('/regioes/delete/{regiao}', 'RegioesController@destroy');
+Route::get('/regioes', 'RegioesController@index');
+//Route::delete('/regioes/delete/{regiao}', 'RegioesController@destroy');
+Route::get('/regioes/delete/{regiao}', 'RegioesController@destroy');
 Route::put('/regioes/update/{regiao}', 'RegioesController@update');
 
 //Publico alvo
@@ -63,3 +67,7 @@ Route::get('instituicoes', 'InstituicaoController@show');
 Route::delete('instituicoes/delete/{instituicao}', 'InstituicaoController@destroy');
 Route::put('instituicoes/update/{instituicao}', 'InstituicaoController@update');
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');

@@ -1,6 +1,14 @@
-@extends('layouts.master')
+{{-- resources/views/admin/dashboard.blade.php --}}
 
-@section('body')
+@extends('adminlte::page')
+
+@section('title', 'Temas')
+
+@section('content_header')
+    <h1>Temas</h1>
+@stop
+
+@section('content')
     <table class="table">
         <thead class="thead-inverse">
         <tr>
@@ -20,5 +28,13 @@
         </tr>
         </tbody>
     </table>
+@stop
 
-@endsection
+
+@section('css')
+    <link rel="stylesheet" href="/css/admin_custom.css">
+@stop
+
+@section('js')
+    <script> console.log('Hi!'); </script>
+@stop

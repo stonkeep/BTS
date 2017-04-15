@@ -16,8 +16,8 @@ class CreateVigenciasPremiosTable extends Migration
         Schema::create('vigencias_premios', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('edicao');
-            $table->timestamp('data_abertura');
-            $table->timestamp('data_encerramento');
+            $table->date('data_abertura');
+            $table->date('data_encerramento');
             $table->boolean('encerrado')->default(true);
             $table->timestamps();
         });

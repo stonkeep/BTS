@@ -14,7 +14,9 @@ class RegioesController extends Controller
      */
     public function index()
     {
-        //
+        $regioes = Regioes::all();
+
+        return view('regioes.show', compact('regioes'));
     }
 
     /**
@@ -24,7 +26,7 @@ class RegioesController extends Controller
      */
     public function create()
     {
-        //
+//        return view('regioes.create');
     }
 
     /**
