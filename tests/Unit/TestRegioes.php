@@ -101,7 +101,6 @@ class TestRegioes extends TestCase
         $this->assertTrue($regioes->pluck('descricao')->contains('Centro - Oeste'));
     }
     
-    
     /** @test */
     function testa_validacao()
     {

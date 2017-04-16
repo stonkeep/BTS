@@ -29,6 +29,7 @@
                 <td>{{$regiao->sigla}}</td>
                 <td>{{$regiao->descricao}}</td>
                 <td><a class="btn btn-danger" href="/regioes/delete/{{$regiao->id}}">Excluir</a></td>
+                <td><a class="btn btn-success" href="/regioes/edit/{{$regiao->id}}">Editar</a></td>
             </tr>
         @endforeach
         </tbody>

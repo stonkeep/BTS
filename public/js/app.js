@@ -12209,6 +12209,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -12221,19 +12222,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             })
         };
     },
+
+    props: ['id', 'sigla', 'descricao'],
     mounted: function mounted() {
         console.log('Component mounted.');
+        this.form.sigla = this.sigla;
+        this.form.descricao = this.descricao;
     },
 
     methods: {
-        login: function login() {
+        submit: function submit() {
             // Submit the form via a POST request
-            this.form.post('/regioes/create')
-            //                    .then(({ data }) => { console.log(data) })
-            .then(function (_ref) {
-                var data = _ref.data;
-                window.location.href = '/regioes';
-            });
+            var location = window.location.href;
+            if (location.indexOf("edit") > -1) {
+                this.form.put('/regioes/update/' + this.id).then(function (_ref) {
+                    var data = _ref.data;
+
+                    window.location.href = '/regioes';
+                });
+            } else {
+                this.form.post('/regioes/create').then(function (_ref2) {
+                    var data = _ref2.data;
+
+                    window.location.href = '/regioes';
+                });
+            }
         }
     }
 
@@ -34969,7 +34982,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "submit": function($event) {
         $event.preventDefault();
-        _vm.login($event)
+        _vm.submit($event)
       },
       "keydown": function($event) {
         _vm.form.errors.clear($event.target.name)
@@ -35063,7 +35076,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "btn btn-primary",
     attrs: {
       "disabled": _vm.form.busy,
-      "type": "submit"
+      "type": "submit",
+      "name": "enviar"
     }
   }, [_vm._v("Enviar")])])], 1)])
 },staticRenderFns: []}

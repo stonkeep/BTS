@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <form @submit.prevent="login" @keydown="form.errors.clear($event.target.name)" class="form-horizontal">
+        <form @submit.prevent="submit" @keydown="form.errors.clear($event.target.name)" class="form-horizontal">
             <alert-error :form="form"></alert-error>
 
             <div class="form-group" :class="{ 'has-error': form.errors.has('sigla') }">
@@ -14,7 +14,8 @@
             <div class="form-group" :class="{ 'has-error': form.errors.has('descricao') }">
                 <label for="descricao" class="col-md-3 control-label">descricao</label>
                 <div class="col-md-6">
-                    <input v-model="form.descricao" type="descricao" name="descricao" id="descricao" class="form-control">
+                    <input v-model="form.descricao" type="descricao" name="descricao" id="descricao"
+                           class="form-control">
                     <has-error :form="form" field="descricao"></has-error>
                 </div>
             </div>
@@ -27,7 +28,7 @@
 </template>
 
 <script>
-    import { Form, HasError, AlertError } from 'vform'
+    import {Form, HasError, AlertError} from 'vform'
     export default {
         data () {
             return {
@@ -39,17 +40,29 @@
                 })
             }
         },
-
+        props: ['id', 'sigla', 'descricao'],
         mounted() {
-            console.log('Component mounted.')
+            console.log('Component mounted.');
+            this.form.sigla = this.sigla;
+            this.form.descricao = this.descricao;
         },
         methods: {
-            login () {
+            submit () {
                 // Submit the form via a POST request
-                this.form.post('/regioes/create')
-//                    .then(({ data }) => { console.log(data) })
-                    .then(({ data }) => { window.location.href = '/regioes' })
-            }
+                var location = window.location.href;
+                if (location.indexOf("edit") > -1) {
+                    this.form.put('/regioes/update/'+ this.id)
+                        .then(({data}) => {
+                            window.location.href = '/regioes'
+                        })
+                } else {
+                    this.form.post('/regioes/create')
+                        .then(({data}) => {
+                            window.location.href = '/regioes'
+                        })
+                }
+
+            },
         }
 
     };

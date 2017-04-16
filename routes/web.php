@@ -33,7 +33,10 @@ Route::get('/subtemas/', 'SubTemasController@show');
 Route::delete('/subtemas/delete/{subTema}', 'SubTemasController@destroy');
 Route::put('/subtemas/update/{subTema}', 'SubTemasController@update');
 
-//Regioes
+
+
+
+//Regioes -------------------------------------------------------------------------
 Route::get('/regioes/insert', function (){
     return view('regioes.create');
 });
@@ -43,6 +46,12 @@ Route::get('/regioes', 'RegioesController@index');
 Route::get('/regioes/delete/{regiao}', 'RegioesController@destroy');
 Route::get('/regioes/check', 'RegioesController@check');
 Route::put('/regioes/update/{regiao}', 'RegioesController@update');
+Route::get('/regioes/edit/{regiao}', 'RegioesController@edit');
+
+
+
+
+
 
 //Publico alvo
 Route::post('publicosAlvo/create', 'PublicosAlvoController@store');

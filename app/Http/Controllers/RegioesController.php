@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Regioes;
 use Illuminate\Http\Request;
+use MongoDB\BSON\Javascript;
 use Psy\Util\Str;
 
 class RegioesController extends Controller
@@ -68,9 +69,9 @@ class RegioesController extends Controller
      * @param  \App\Regioes  $regioes
      * @return \Illuminate\Http\Response
      */
-    public function edit(Regioes $regioes)
+    public function edit(Regioes $regiao)
     {
-        //
+        return view('regioes.edit', compact('regiao'));
     }
 
     /**
@@ -82,6 +83,11 @@ class RegioesController extends Controller
      */
     public function update(Request $request, Regioes $regiao)
     {
+        $this->validate($request, [
+            'sigla' => 'required',
+            'descricao' => 'required',
+        ]);
+
         $regiao->update($request->all());
 
         $regioes = Regioes::all();
