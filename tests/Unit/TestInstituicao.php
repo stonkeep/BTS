@@ -249,6 +249,7 @@ class TestInstituicao extends TestCase
         $this->assertValidationError('naturezaJuridica');
 
         // Cargos
+        
     }
     //TODO testa relacionamento hasMany
 }

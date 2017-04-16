@@ -14,7 +14,9 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        //
+        $categorias = Categoria::all();
+        return view('categorias.show', compact('categorias'));
+
     }
 
     /**
@@ -35,7 +37,12 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'descricao' => 'required|unique:categorias',
+        ]);
+
+        Categoria::create($request->all());
+        return redirect('categorias');
     }
 
     /**
@@ -57,7 +64,7 @@ class CategoriaController extends Controller
      */
     public function edit(Categoria $categoria)
     {
-        //
+        return redirect('categorias');
     }
 
     /**
@@ -69,7 +76,9 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, Categoria $categoria)
     {
-        //
+        $categoria->update($request->all());
+
+
     }
 
     /**
@@ -80,6 +89,7 @@ class CategoriaController extends Controller
      */
     public function destroy(Categoria $categoria)
     {
-        //
+        $categoria->delete();
+        return redirect('categorias');
     }
 }
