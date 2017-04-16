@@ -41,6 +41,7 @@ Route::post('/regioes/create', 'RegioesController@store');
 Route::get('/regioes', 'RegioesController@index');
 //Route::delete('/regioes/delete/{regiao}', 'RegioesController@destroy');
 Route::get('/regioes/delete/{regiao}', 'RegioesController@destroy');
+Route::get('/regioes/check', 'RegioesController@check');
 Route::put('/regioes/update/{regiao}', 'RegioesController@update');
 
 //Publico alvo

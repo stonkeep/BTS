@@ -23,14 +23,14 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            @foreach($regioes as $regiao)
+        @foreach($regioes as $regiao)
+            <tr>
                 <th scope="row">{{$regiao->id}}</th>
                 <td>{{$regiao->sigla}}</td>
                 <td>{{$regiao->descricao}}</td>
                 <td><a class="btn btn-danger" href="/regioes/delete/{{$regiao->id}}">Excluir</a></td>
-            @endforeach
-        </tr>
+            </tr>
+        @endforeach
         </tbody>
     </table>
 

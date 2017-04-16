@@ -182,7 +182,6 @@ class TestInstituicao extends TestCase
     /** @test */
     function testa_validacoes()
     {
-        //TODO Validação de campos requeridos
         //$this->disableExceptionHandling();
         //
         //factory(Instituicao::class)->create();
@@ -242,7 +241,6 @@ class TestInstituicao extends TestCase
         
         
         
-        //TODO Validação de relacionamentos
         //Verifica campo existe na relação naturezaJuridica
         $instituicao = Instituicao::find(1);
         $instituicaoTeste = $instituicao;

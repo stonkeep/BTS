@@ -36,5 +36,10 @@ class RegioesTableSeed extends Seeder
             'sigla' => 'SE',
             'descricao' => 'Sudeste'
         ]);
+
+//        DB::table('regioes')->insert([
+//            'sigla' => 'CO',
+//           'descricao' => 'Centro - Oeste'
+//        ]);
     }
 }

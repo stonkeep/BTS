@@ -15,6 +15,14 @@ class CreateTecnologiasTable extends Migration
     {
         Schema::create('tecnologias', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('numeroInscricao');
+            $table->string('titulo');
+            $table->boolean('fimLucrativo');
+            $table->boolean('tempoImplantacao');
+            $table->boolean('emAtividade');
+            $table->boolean('inscricaoAnterior');
+            $table->boolean('investimentoFBB');
+            $table->boolean('categoria_id');
             $table->timestamps();
         });
     }

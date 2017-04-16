@@ -15,5 +15,6 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+    <!-- Scripts -->
+    <script src="/js/app.js"></script>
 @stop

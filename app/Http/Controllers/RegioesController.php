@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Regioes;
 use Illuminate\Http\Request;
+use Psy\Util\Str;
 
 class RegioesController extends Controller
 {
@@ -38,13 +39,14 @@ class RegioesController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'sigla' => 'required|unique:regioes'
+            'sigla' => 'required|unique:regioes',
+            'descricao' => 'required'
         ]);
             
         Regioes::create($request->all());
         $regioes = Regioes::all();
 
-        return view('regioes.show', compact('regioes'));
+        return redirect('/regioes');
     }
 
     /**
@@ -98,5 +100,16 @@ class RegioesController extends Controller
 
         $regioes = Regioes::all();
         return view('regioes.show', compact('regioes'));        
+    }
+
+    /**
+     * Verifica se a região já existe no banco de dados
+     */
+    public function check(Request $request)
+    {
+        $regiao = Regioes::where('sigla', $request->sigla);
+        if ($regiao) {
+            return $erro = 'Esta região já existe';
+        }
     }
 }

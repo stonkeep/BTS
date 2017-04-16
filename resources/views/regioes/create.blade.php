@@ -9,19 +9,23 @@
 @stop
 
 @section('content')
+
+    @include('layouts.erros')
+    <div id="app">
     <form action="/regioes/create" method="POST">
         {{ csrf_field() }}
-        <div>
-            <label for="sigla">Sigla: </label>
-            <input type="text" name="sigla">
-        </div>
-        <div>
-            <label for="sigla">Descricao: </label>
-            <input type="text" name="descricao">
-        </div>
+        {{--<div class="form-group">--}}
+        {{--<label for="sigla">Sigla: </label>--}}
+        {{--<input type="text" name="sigla">--}}
+        {{--</div>--}}
+        {{--<div class="form-group">--}}
+        {{--<label for="sigla">Descricao: </label>--}}
+        {{--<input type="text" name="descricao">--}}
+        {{--</div>--}}
+        <regiao></regiao>
 
-        <button type="submit" class="btn btn-primary">Enviar</button>
     </form>
+    </div>
 
 @stop
 
@@ -31,5 +35,6 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+    <!-- Scripts -->
+    <script src="/js/app.js"></script>
 @stop
