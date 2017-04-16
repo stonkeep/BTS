@@ -20,7 +20,7 @@
             </div>
 
             <div class="form-group">
-                <button :disabled="form.busy" type="submit" class="btn btn-primary">Enviar</button>
+                <button :disabled="form.busy" type="submit" class="btn btn-primary" name="enviar">Enviar</button>
             </div>
         </form>
     </div>
