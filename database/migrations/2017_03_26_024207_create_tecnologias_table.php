@@ -22,11 +22,9 @@ class CreateTecnologiasTable extends Migration
             $table->boolean('emAtividade');
             $table->boolean('inscricaoAnterior');
             $table->boolean('investimentoFBB');
-            $table->boolean('categoria_id');
             $table->unsignedInteger('categoria_id');
             $table->text('resumo');
             $table->unsignedInteger('tema_id');
-            $table->unsignedInteger('temaSecundario_id');
             $table->unsignedInteger('temaSecundario_id');
             $table->text('problema');
             $table->text('objetivoGeral');

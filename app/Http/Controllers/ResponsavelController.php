@@ -14,7 +14,9 @@ class ResponsavelController extends Controller
      */
     public function index()
     {
-        //
+        $responsaveis = Responsavel::all();
+
+        return view('responsaveis.show', compact('responsaveis'));
     }
 
     /**
@@ -35,7 +37,14 @@ class ResponsavelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'nome' => 'required',
+            'telefone' => 'required|numeric',
+            'email' => 'required|email',
+        ]);
+
+        Responsavel::create($request->all());
+        
     }
 
     /**
@@ -69,7 +78,7 @@ class ResponsavelController extends Controller
      */
     public function update(Request $request, Responsavel $responsavel)
     {
-        //
+        $responsavel->update($request->all());
     }
 
     /**
@@ -80,6 +89,6 @@ class ResponsavelController extends Controller
      */
     public function destroy(Responsavel $responsavel)
     {
-        //
+        $responsavel->delete();
     }
 }

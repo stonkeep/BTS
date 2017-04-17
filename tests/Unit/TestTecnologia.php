@@ -30,4 +30,6 @@ class TestTecnologia extends TestCase
 
     //TODO model e CRUD Banco de imagens
     //TODO model e CRUD Outros documentos
+    
+    //TODO verificar a paginação no Laravel com VueJS
 }

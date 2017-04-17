@@ -84,6 +84,16 @@ Route::get('categorias', 'CategoriaController@index');
 Route::delete('categorias/delete/{categoria}', 'CategoriaController@destroy');
 Route::put('categorias/update/{categoria}', 'CategoriaController@update');
 
+
+//Responsaveis
+Route::post('responsaveis/create', 'ResponsavelController@store');
+Route::get('responsaveis', 'ResponsavelController@index');
+Route::delete('responsaveis/delete/{responsavel}', 'ResponsavelController@destroy');
+Route::put('responsaveis/update/{responsavel}', 'ResponsavelController@update');
+
+
+//----------------------------------------------------------------------------------------------------------
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
