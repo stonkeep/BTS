@@ -181,7 +181,6 @@ return [
          * Outros
          */
         JeroenNoten\LaravelAdminLte\ServiceProvider::class,
-        Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class
 
     ],
 

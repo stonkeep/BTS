@@ -23,6 +23,20 @@ class CreateTecnologiasTable extends Migration
             $table->boolean('inscricaoAnterior');
             $table->boolean('investimentoFBB');
             $table->boolean('categoria_id');
+            $table->unsignedInteger('categoria_id');
+            $table->text('resumo');
+            $table->unsignedInteger('tema_id');
+            $table->unsignedInteger('temaSecundario_id');
+            $table->unsignedInteger('temaSecundario_id');
+            $table->text('problema');
+            $table->text('objetivoGeral');
+            $table->text('objetivoEspecifico');
+            $table->text('descricao');
+            $table->text('resultadosAlcancados');
+            $table->text('recursosMateriais'); //Recursos materiais necessários para a implementação de uma unidade da tecnologia
+            $table->text('valorEstimado'); //Valor estimando para implementação de uma unidade da tecnologia social
+            $table->text('valorHumanos'); //Recursos Humanos para implementação da tecnologia de uma unidade de TS
+            $table->text('depoimento Livre');
             $table->timestamps();
         });
     }
