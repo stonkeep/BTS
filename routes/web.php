@@ -66,10 +66,14 @@ Route::delete('naturezasJuridicas/delete/{natureza}', 'NaturezasJuridicasControl
 Route::put('naturezasJuridicas/update/{natureza}', 'NaturezasJuridicasController@update');
 
 //Cargos
+Route::get('/cargos/insert', function (){
+    return view('cargos.create');
+});
 Route::post('cargos/create', 'CargosController@store');
-Route::get('cargos', 'CargosController@show');
-Route::delete('cargos/delete/{cargo}', 'CargosController@destroy');
+Route::get('cargos', 'CargosController@index');
+Route::get('cargos/delete/{cargo}', 'CargosController@destroy');
 Route::put('cargos/update/{cargo}', 'CargosController@update');
+Route::get('cargos/edit/{cargo}', 'CargosController@edit');
 
 //instituicoes
 Route::post('instituicoes/create', 'InstituicaoController@store');

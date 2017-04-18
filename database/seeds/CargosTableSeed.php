@@ -1,9 +1,9 @@
 <?php
 
-use App\Regioes;
+use App\Cargos;
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
+class CargosTableSeed extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,7 +12,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(RegioesTableSeed::class);
-        $this->call(CargosTableSeed::class);
+        Cargos::create([
+            'descricao' => 'Tecnico',
+        ]);
     }
 }

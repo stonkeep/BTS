@@ -90,8 +90,8 @@ class RegioesController extends Controller
 
         $regiao->update($request->all());
 
-        $regioes = Regioes::all();
-        return view('regioes.show', compact('regioes'));
+//        $regioes = Regioes::all();
+//        return view('regioes.show', compact('regioes'));
     }
 
     /**

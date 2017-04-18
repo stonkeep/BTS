@@ -14,7 +14,8 @@ class CargosController extends Controller
      */
     public function index()
     {
-        //
+        $cargos = Cargos::all();
+        return view('cargos.show', compact('cargos'));
     }
 
     /**
@@ -54,9 +55,7 @@ class CargosController extends Controller
      */
     public function show(Cargos $cargos)
     {
-        $cargos = Cargos::all();
 
-        return view('cargos.show', compact('cargos'));
     }
 
     /**
@@ -65,9 +64,9 @@ class CargosController extends Controller
      * @param  \App\Cargos  $cargos
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cargos $cargos)
+    public function edit(Cargos $cargo)
     {
-        //
+        return view('cargos.edit', compact('cargo'));
     }
 
     /**
@@ -79,10 +78,12 @@ class CargosController extends Controller
      */
     public function update(Request $request, Cargos $cargo)
     {
-        $cargo->update($request->all());
-        $cargos = Cargos::all();
+        $this->validate($request, [
+            'descricao' => 'required',
+        ]);
 
-        return view('cargos.show', compact('cargos'));
+        $cargo->update($request->all());
+
     }
 
     /**

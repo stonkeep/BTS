@@ -15,6 +15,7 @@ require('./bootstrap');
 
 Vue.component('example', require('./components/Example.vue'));
 Vue.component('regiao', require('./components/Regiao.vue'));
+Vue.component('cargo', require('./components/Cargo.vue'));
 
 const app = new Vue({
     el: '#app'

@@ -126,6 +126,11 @@ return [
             'url'         => 'regioes',
             'icon'        => 'file',
         ],
+        [
+            'text'        => 'Cargos',
+            'url'         => 'cargos',
+            'icon'        => 'file',
+        ],
 
 //        'ACCOUNT SETTINGS',
 //        [
