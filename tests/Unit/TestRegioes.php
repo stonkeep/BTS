@@ -158,4 +158,12 @@ class TestRegioes extends TestCase
         $response->assertSee('TT');
 //        $response->assertDontSee('CO');
     }
+    /** @test */
+    function teste_function()
+    {
+        $regioesSeed = new RegioesTableSeed;
+        $regioesSeed->run();
+        $regiao = Regioes::where('descricao', 'Nordeste')->first()->id;
+        dd($regiao);
+    }
 }

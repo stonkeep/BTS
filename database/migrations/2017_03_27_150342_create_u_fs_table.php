@@ -15,6 +15,9 @@ class CreateUFsTable extends Migration
     {
         Schema::create('ufs', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('sigla');
+            $table->string('descricao');
+            $table->unsignedInteger('regioes_id');
             $table->timestamps();
         });
     }
