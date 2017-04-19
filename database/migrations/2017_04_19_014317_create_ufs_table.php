@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUFsTable extends Migration
+class CreateUfsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -29,6 +29,6 @@ class CreateUFsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('u_fs');
+        Schema::dropIfExists('ufs');
     }
 }

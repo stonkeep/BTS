@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\UFs;
+use App\ufs;
 use Illuminate\Http\Request;
 
-class UFsController extends Controller
+class UfsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class UFsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\UFs  $uFs
+     * @param  \App\ufs  $ufs
      * @return \Illuminate\Http\Response
      */
-    public function show(UFs $uFs)
+    public function show(ufs $ufs)
     {
         //
     }
@@ -52,10 +52,10 @@ class UFsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\UFs  $uFs
+     * @param  \App\ufs  $ufs
      * @return \Illuminate\Http\Response
      */
-    public function edit(UFs $uFs)
+    public function edit(ufs $ufs)
     {
         //
     }
@@ -64,10 +64,10 @@ class UFsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\UFs  $uFs
+     * @param  \App\ufs  $ufs
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, UFs $uFs)
+    public function update(Request $request, ufs $ufs)
     {
         //
     }
@@ -75,10 +75,10 @@ class UFsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\UFs  $uFs
+     * @param  \App\ufs  $ufs
      * @return \Illuminate\Http\Response
      */
-    public function destroy(UFs $uFs)
+    public function destroy(ufs $ufs)
     {
         //
     }

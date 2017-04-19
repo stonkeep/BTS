@@ -25,7 +25,7 @@ class TemaTableSeeder extends Seeder
 
         foreach ($temas as $tema) {
             Temas::create([
-                'descricao' => $tema
+                'nome' => $tema
             ]);
         }
     }

@@ -44,6 +44,6 @@ class CreateInsticuicaosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('instituicoes');
+        Schema::dropIfExists('instituicaos');
     }
 }

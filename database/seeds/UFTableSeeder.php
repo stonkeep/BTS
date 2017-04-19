@@ -1,6 +1,7 @@
 <?php
 
 use App\Regioes;
+use App\UFs;
 use Illuminate\Database\Seeder;
 
 class UFTableSeeder extends Seeder
@@ -42,5 +43,13 @@ class UFTableSeeder extends Seeder
             ['sigla' => 'SP','descricao' => 'São Paulo','regioes_id' => Regioes::where('descricao', 'Centro - Oeste')->first()->id],
             ['sigla' => 'TO','descricao' => 'Tocantins','regioes_id' => Regioes::where('descricao', 'Centro - Oeste')->first()->id],
         ];
+
+        foreach ($ufs as $uf) {
+            ufs::create([
+                'sigla' => $uf['sigla'],
+                'descricao' => $uf['descricao'],
+                'regioes_id' => $uf['regioes_id'],
+            ]);
+        }
     }
 }

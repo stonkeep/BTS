@@ -6,6 +6,9 @@ use Illuminate\Database\Seeder;
 class NaturezasJuridicasTableSeeder extends Seeder
 {
 
+    // se der erro nos seed tentar o commando
+    // composer dump-autoload
+
     /**
      * Run the database seeds.
      *
