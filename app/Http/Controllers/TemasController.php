@@ -14,7 +14,8 @@ class TemasController extends Controller
      */
     public function index()
     {
-        //
+        $temas = Temas::all();
+        return view('temas.show', compact('temas'));
     }
 
     /**
@@ -64,9 +65,9 @@ class TemasController extends Controller
      * @param  \App\Temas  $temas
      * @return \Illuminate\Http\Response
      */
-    public function edit(Temas $temas)
+    public function edit(Temas $tema)
     {
-        //
+        return view('temas.edit', compact('tema'));
     }
 
     /**

@@ -14,7 +14,8 @@ class NaturezasJuridicasController extends Controller
      */
     public function index()
     {
-        //
+        $naturezas = NaturezasJuridicas::all();
+        return view('naturezasJuridicas.show', compact('naturezas'));
     }
 
     /**
@@ -64,9 +65,9 @@ class NaturezasJuridicasController extends Controller
      * @param  \App\NaturezasJuridicas  $naturezasJuridicas
      * @return \Illuminate\Http\Response
      */
-    public function edit(NaturezasJuridicas $naturezasJuridicas)
+    public function edit(NaturezasJuridicas $natureza)
     {
-        //
+        return view('naturezasJuridicas.edit', compact('natureza'));
     }
 
     /**

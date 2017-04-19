@@ -9,23 +9,30 @@
 @stop
 
 @section('content')
+    <div>
+        <a href="/temas/insert" class="btn btn-primary">NOVO</a>
+    </div>
     <table class="table">
         <thead class="thead-inverse">
         <tr>
             <th>ID</th>
             <th>Descrição</th>
-            <th>Data de encerramento</th>
-            <th>Status</th>
+            <th>Data de criação</th>
+            <th>Data de Atualização</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            @foreach($temas as $tema)
+        @foreach($temas as $tema)
+            <tr>
                 <th scope="row">{{$tema->id}}</th>
                 <td>{{$tema->nome}}</td>
                 <td>{{$tema->created_at}}</td>
-            @endforeach
-        </tr>
+                <td>{{$tema->updated_at}}
+                <td><a class="btn btn-danger" href="/temas/delete/{{$tema->id}}">Excluir</a></td>
+                <td><a class="btn btn-success" href="/temas/edit/{{$tema->id}}">Editar</a></td>
+            </tr>
+        @endforeach
+
         </tbody>
     </table>
 @stop

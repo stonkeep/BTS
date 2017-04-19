@@ -90,7 +90,7 @@ class CargosTest extends TestCase
 
         $cargo = Cargos::findOrFail(1);
 
-        $response = $this->json('DELETE',"cargos/delete/{$cargo->id}");
+        $response = $this->json('get',"cargos/delete/{$cargo->id}");
 
         $response->assertStatus(200);
 

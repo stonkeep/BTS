@@ -22,10 +22,14 @@ Route::delete('/premios/delete/{premio}', 'VigenciasPremioController@destroy');
 Route::put('/premios/update/{premio}', 'VigenciasPremioController@update');
 
 //Temas
+Route::get('/temas/insert', function (){
+    return view('temas.create');
+});
 Route::post('/temas/create', 'TemasController@store');
-Route::get('/temas/', 'TemasController@show');
-Route::delete('/temas/delete/{tema}', 'TemasController@destroy');
+Route::get('/temas/', 'TemasController@index');
+Route::get('/temas/delete/{tema}', 'TemasController@destroy');
 Route::put('/temas/update/{tema}', 'TemasController@update');
+Route::get('/temas/edit/{tema}', 'TemasController@edit');
 
 //SubTemas
 Route::post('/subtemas/create', 'SubTemasController@store');
@@ -44,7 +48,7 @@ Route::post('/regioes/create', 'RegioesController@store');
 Route::get('/regioes', 'RegioesController@index');
 //Route::delete('/regioes/delete/{regiao}', 'RegioesController@destroy');
 Route::get('/regioes/delete/{regiao}', 'RegioesController@destroy');
-Route::get('/regioes/check', 'RegioesController@check');
+//Route::get('/regioes/check', 'RegioesController@check');
 Route::put('/regioes/update/{regiao}', 'RegioesController@update');
 Route::get('/regioes/edit/{regiao}', 'RegioesController@edit');
 
@@ -54,16 +58,24 @@ Route::get('/regioes/edit/{regiao}', 'RegioesController@edit');
 
 
 //Publico alvo
+Route::get('/publicosAlvo/insert', function (){
+    return view('publicosAlvo.create');
+});
 Route::post('publicosAlvo/create', 'PublicosAlvoController@store');
 Route::get('publicosAlvo', 'PublicosAlvoController@show');
-Route::delete('publicosAlvo/delete/{publico}', 'PublicosAlvoController@destroy');
+Route::get('publicosAlvo/delete/{publico}', 'PublicosAlvoController@destroy');
 Route::put('publicosAlvo/update/{publico}', 'PublicosAlvoController@update');
+Route::get('publicosAlvo/edit/{publico}', 'PublicosAlvoController@edit');
 
 //Naturezas Juridicas
+Route::get('/naturezasJuridicas/insert', function (){
+    return view('naturezasJuridicas.create');
+});
 Route::post('naturezasJuridicas/create', 'NaturezasJuridicasController@store');
-Route::get('naturezasJuridicas', 'NaturezasJuridicasController@show');
-Route::delete('naturezasJuridicas/delete/{natureza}', 'NaturezasJuridicasController@destroy');
+Route::get('naturezasJuridicas', 'NaturezasJuridicasController@index');
+Route::get('naturezasJuridicas/delete/{natureza}', 'NaturezasJuridicasController@destroy');
 Route::put('naturezasJuridicas/update/{natureza}', 'NaturezasJuridicasController@update');
+Route::get('naturezasJuridicas/edit/{natureza}', 'NaturezasJuridicasController@edit');
 
 //Cargos
 Route::get('/cargos/insert', function (){

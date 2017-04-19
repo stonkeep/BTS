@@ -14,7 +14,8 @@ class PublicosAlvoController extends Controller
      */
     public function index()
     {
-        //
+        $publicos = PublicosAlvo::all();
+        return view('publicosAlvo.show', compact('publicos'));
     }
 
     /**
@@ -64,9 +65,9 @@ class PublicosAlvoController extends Controller
      * @param  \App\PublicosAlvo  $publicosAlvo
      * @return \Illuminate\Http\Response
      */
-    public function edit(PublicosAlvo $publicosAlvo)
+    public function edit(PublicosAlvo $publico)
     {
-        //
+        return view('publicosAlvo.edit', compact('publico'));
     }
 
     /**

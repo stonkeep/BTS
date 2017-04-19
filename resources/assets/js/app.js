@@ -16,6 +16,9 @@ require('./bootstrap');
 Vue.component('example', require('./components/Example.vue'));
 Vue.component('regiao', require('./components/Regiao.vue'));
 Vue.component('cargo', require('./components/Cargo.vue'));
+Vue.component('tema', require('./components/Tema.vue'));
+Vue.component('natureza', require('./components/NaturezaJuridica.vue'));
+Vue.component('publicoalvo', require('./components/PublicoAlvo.vue'));
 
 const app = new Vue({
     el: '#app'

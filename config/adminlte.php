@@ -131,6 +131,16 @@ return [
             'url'         => 'cargos',
             'icon'        => 'file',
         ],
+        [
+            'text'        => 'Naturezas Juridicas',
+            'url'         => 'naturezasJuridicas',
+            'icon'        => 'file',
+        ],
+        [
+            'text'        => 'Publico Alvo',
+            'url'         => 'publicosAlvo',
+            'icon'        => 'file',
+        ],
 
 //        'ACCOUNT SETTINGS',
 //        [
