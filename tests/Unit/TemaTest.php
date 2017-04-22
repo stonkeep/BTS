@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Temas;
+use TemaTableSeeder;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -136,5 +137,14 @@ class TemaTest extends TestCase
         $response->assertSee('Educação');
         $response->assertDontSee('Alimentação');
         
+    }
+
+    /** @test */
+    public function teste()
+    {
+        $temasSeed = new TemaTableSeeder;
+        $temasSeed->run();
+
+        $temas = Temas::all();
     }
 }

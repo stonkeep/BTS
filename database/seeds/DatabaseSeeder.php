@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ProfissoesTableSeeder::class);
         $this->call(PublicoTableSeeder::class);
         $this->call(TemaTableSeeder::class);
+        $this->call(SubTemaTableSeeder::class);
         $this->call(UFTableSeeder::class);
     }
 }

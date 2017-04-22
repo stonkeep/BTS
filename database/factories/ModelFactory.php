@@ -86,3 +86,29 @@ $factory->define(App\NaturezasJuridicas::class, function (Faker\Generator $faker
 $factory->define(App\Cargos::class, function (Faker\Generator $faker) {
     return ['descricao' => 'Técnico', 'descricao' => 'Empresário(individual)'];
 });
+
+$factory->define(App\Tecnologia::class, function (Faker\Generator $faker) {
+    return [
+        'numeroInscricao' => '2017/0002',
+        'titulo' => 'Teste GEPEM',
+        'fimLucrativo' => false,
+        'tempoImplantacao' => 2,
+        'emAtividade' => true,
+        'inscricaoAnterior' => false,
+        'investimentoFBB' => true,
+        'categoria_id' => 1,
+        'resumo' => 'Resumao',
+        'tema_id' => 1,
+        'temaSecundario_id' => 2,
+        'problema' => 'Problemao',
+        'objetivoGeral' => 'objetivo  Geral',
+        'objetivoEspecifico' => 'objetivo  Especifico',
+        'descricao' => 'descricao descricao descricao descricao descricao descricao ',
+        'resultadosAlcancados' => 'Muitos resultados alcancados' ,
+        'recursosMateriais' => 'Recursos Materiais',
+        'valorEstimado' => ' valor Estimado ',
+        'valorHumanos' => 'valor Humanos',
+        'depoimentoLivre' => ' depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',
+        'instituicaos_id' => 1,
+    ];
+});

@@ -2,23 +2,43 @@
 
 namespace Tests\Unit;
 
+use App\Instituicao;
 use App\Tecnologia;
+use App\Temas;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class TestTecnologia extends TestCase
 {
+    use DatabaseMigrations;
     /**
      * A basic test example.
      *
      * @return void
+     * @test
      */
     public function teste_create_tecnologia()
     {
-        Tecnologia::create();
+        factory(Tecnologia::class)->create();
+        $tecnologia = Tecnologia::firstOrFail();
+
+        self::assertEquals($tecnologia->titulo, 'Teste GEPEM');
     }
-    //TODO teste create
+
+    /** @test */
+    public function teste_reader()
+    {
+        $this->disableExceptionHandling();
+        factory(Instituicao::class)->create();
+        factory(Tecnologia::class)->create();
+
+
+        $response = $this->get('tecnologias');
+
+        $response->assertStatus(200);
+        $response->assertSee('Teste GEPEM');
+    }
     //TODO teste reader
     //TODO teste update
     //TODO teste delete

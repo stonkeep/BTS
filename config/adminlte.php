@@ -122,6 +122,11 @@ return [
     //            'label_color' => 'success',
         ],
         [
+            'text'        => 'Sub-temas',
+            'url'         => 'subtemas',
+            'icon'        => 'file',
+        ],
+        [
             'text'        => 'Regiões',
             'url'         => 'regioes',
             'icon'        => 'file',
@@ -141,6 +146,13 @@ return [
             'url'         => 'publicosAlvo',
             'icon'        => 'file',
         ],
+        [
+            'text'        => 'Tecnologias',
+            'url'         => 'tecnologias',
+            'icon'        => 'file',
+        ],
+
+
 
 //        'ACCOUNT SETTINGS',
 //        [

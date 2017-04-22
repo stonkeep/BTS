@@ -13,7 +13,6 @@ class UFTableSeeder extends Seeder
      */
     public function run()
     {
-        //TODO verificar como recuperar o id como numérico
         $ufs = [
             ['sigla' => 'AC','descricao' => 'Acre','regioes_id' => Regioes::where('descricao', 'Norte')->first()->id],
             ['sigla' => 'AL','descricao' => 'Alagoas','regioes_id' => Regioes::where('descricao', 'Nordeste')->first()->id],

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSubTemasTable extends Migration
+class CreateImagemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class CreateSubTemasTable extends Migration
      */
     public function up()
     {
-        Schema::create('sub_temas', function (Blueprint $table) {
+        Schema::create('imagems', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('descricao');
-            $table->unsignedInteger('tema_id');
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ class CreateSubTemasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sub_temas');
+        Schema::dropIfExists('imagems');
     }
 }

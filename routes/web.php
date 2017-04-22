@@ -32,10 +32,12 @@ Route::put('/temas/update/{tema}', 'TemasController@update');
 Route::get('/temas/edit/{tema}', 'TemasController@edit');
 
 //SubTemas
+Route::get('/subtemas/insert', 'SubTemasController@create');
 Route::post('/subtemas/create', 'SubTemasController@store');
-Route::get('/subtemas/', 'SubTemasController@show');
-Route::delete('/subtemas/delete/{subTema}', 'SubTemasController@destroy');
+Route::get('/subtemas/', 'SubTemasController@index');
+Route::get('/subtemas/delete/{subTema}', 'SubTemasController@destroy');
 Route::put('/subtemas/update/{subTema}', 'SubTemasController@update');
+Route::get('/subtemas/edit/{subTema}', 'SubTemasController@edit');
 
 
 
@@ -67,6 +69,8 @@ Route::get('publicosAlvo/delete/{publico}', 'PublicosAlvoController@destroy');
 Route::put('publicosAlvo/update/{publico}', 'PublicosAlvoController@update');
 Route::get('publicosAlvo/edit/{publico}', 'PublicosAlvoController@edit');
 
+
+
 //Naturezas Juridicas
 Route::get('/naturezasJuridicas/insert', function (){
     return view('naturezasJuridicas.create');
@@ -77,6 +81,8 @@ Route::get('naturezasJuridicas/delete/{natureza}', 'NaturezasJuridicasController
 Route::put('naturezasJuridicas/update/{natureza}', 'NaturezasJuridicasController@update');
 Route::get('naturezasJuridicas/edit/{natureza}', 'NaturezasJuridicasController@edit');
 
+
+
 //Cargos
 Route::get('/cargos/insert', function (){
     return view('cargos.create');
@@ -86,6 +92,8 @@ Route::get('cargos', 'CargosController@index');
 Route::get('cargos/delete/{cargo}', 'CargosController@destroy');
 Route::put('cargos/update/{cargo}', 'CargosController@update');
 Route::get('cargos/edit/{cargo}', 'CargosController@edit');
+
+
 
 //instituicoes
 Route::post('instituicoes/create', 'InstituicaoController@store');
@@ -107,6 +115,17 @@ Route::get('responsaveis', 'ResponsavelController@index');
 Route::delete('responsaveis/delete/{responsavel}', 'ResponsavelController@destroy');
 Route::put('responsaveis/update/{responsavel}', 'ResponsavelController@update');
 
+
+
+//Tecnologias
+Route::get('/tecnologias/insert', function (){
+    return view('tecnologias.create');
+});
+Route::post('tecnologias/create', 'TecnologiasController@store');
+Route::get('tecnologias', 'TecnologiasController@index');
+Route::get('tecnologias/delete/{cargo}', 'TecnologiasController@destroy');
+Route::put('tecnologias/update/{cargo}', 'TecnologiasController@update');
+Route::get('tecnologias/edit/{cargo}', 'TecnologiasController@edit');
 
 //----------------------------------------------------------------------------------------------------------
 

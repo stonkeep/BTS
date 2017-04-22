@@ -19,6 +19,8 @@ Vue.component('cargo', require('./components/Cargo.vue'));
 Vue.component('tema', require('./components/Tema.vue'));
 Vue.component('natureza', require('./components/NaturezaJuridica.vue'));
 Vue.component('publicoalvo', require('./components/PublicoAlvo.vue'));
+Vue.component('subtema', require('./components/SubTema.vue'));
+Vue.component('tecnologia', require('./components/Tecnologia.vue'));
 
 const app = new Vue({
     el: '#app'

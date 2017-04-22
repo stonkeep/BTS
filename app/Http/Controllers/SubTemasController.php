@@ -15,7 +15,8 @@ class SubTemasController extends Controller
      */
     public function index()
     {
-        //
+        $subTemas = SubTemas::all();
+        return view('subTemas.show', compact('subTemas'));
     }
 
     /**
@@ -25,7 +26,9 @@ class SubTemasController extends Controller
      */
     public function create()
     {
-        //
+        $temas = Temas::all()->toJson();
+
+        return view('subTemas.create', compact('temas'));
     }
 
     /**
@@ -73,9 +76,9 @@ class SubTemasController extends Controller
      * @param  \App\SubTemas  $subTemas
      * @return \Illuminate\Http\Response
      */
-    public function edit(SubTemas $subTemas)
+    public function edit(SubTemas $subTema)
     {
-        //
+        return view('subtemas.edit', compact('subTema'));
     }
 
     /**
@@ -101,8 +104,9 @@ class SubTemasController extends Controller
      */
     public function destroy(SubTemas $subTema)
     {
+//        dd($subTema);
         $subTema->delete();
         $subTemas = SubTemas::all();
-        return view('subTemas.show', compact('subTemas'));
+        return view('subtemas.show', compact('subTemas'));
     }
 }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Tecnologia;
+use App\Imagem;
 use Illuminate\Http\Request;
 
-class TecnologiasController extends Controller
+class ImagemController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,10 +14,7 @@ class TecnologiasController extends Controller
      */
     public function index()
     {
-
-        $tecnologias = Tecnologia::all();
-
-        return view('tecnologias.show', compact('tecnologias'));
+        //
     }
 
     /**
@@ -44,10 +41,10 @@ class TecnologiasController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Tecnologia  $Tecnologia
+     * @param  \App\Imagem  $imagem
      * @return \Illuminate\Http\Response
      */
-    public function show(Tecnologia $Tecnologia)
+    public function show(Imagem $imagem)
     {
         //
     }
@@ -55,10 +52,10 @@ class TecnologiasController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Tecnologia  $Tecnologia
+     * @param  \App\Imagem  $imagem
      * @return \Illuminate\Http\Response
      */
-    public function edit(Tecnologia $Tecnologia)
+    public function edit(Imagem $imagem)
     {
         //
     }
@@ -67,10 +64,10 @@ class TecnologiasController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Tecnologia  $Tecnologia
+     * @param  \App\Imagem  $imagem
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tecnologia $Tecnologia)
+    public function update(Request $request, Imagem $imagem)
     {
         //
     }
@@ -78,10 +75,10 @@ class TecnologiasController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Tecnologia  $Tecnologia
+     * @param  \App\Imagem  $imagem
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tecnologia $Tecnologia)
+    public function destroy(Imagem $imagem)
     {
         //
     }

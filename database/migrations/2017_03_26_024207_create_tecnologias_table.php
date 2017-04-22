@@ -18,7 +18,7 @@ class CreateTecnologiasTable extends Migration
             $table->string('numeroInscricao');
             $table->string('titulo');
             $table->boolean('fimLucrativo');
-            $table->boolean('tempoImplantacao');
+            $table->integer('tempoImplantacao');
             $table->boolean('emAtividade');
             $table->boolean('inscricaoAnterior');
             $table->boolean('investimentoFBB');
@@ -34,7 +34,8 @@ class CreateTecnologiasTable extends Migration
             $table->text('recursosMateriais'); //Recursos materiais necessários para a implementação de uma unidade da tecnologia
             $table->text('valorEstimado'); //Valor estimando para implementação de uma unidade da tecnologia social
             $table->text('valorHumanos'); //Recursos Humanos para implementação da tecnologia de uma unidade de TS
-            $table->text('depoimento Livre');
+            $table->text('depoimentoLivre');
+            $table->unsignedInteger('instituicaos_id');
             $table->timestamps();
         });
     }
