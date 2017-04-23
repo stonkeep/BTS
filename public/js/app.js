@@ -11304,6 +11304,7 @@ Vue.component('natureza', __webpack_require__(46));
 Vue.component('publicoalvo', __webpack_require__(47));
 Vue.component('subtema', __webpack_require__(49));
 Vue.component('tecnologia', __webpack_require__(50));
+Vue.component('categoria', __webpack_require__(72));
 
 var app = new Vue({
   el: '#app'
@@ -12533,7 +12534,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         submit: function submit() {
             // Submit the form via a POST request
             var location = window.location.href;
-            this.form.tema_id = this.selected;
             if (location.indexOf("edit") > -1) {
                 this.form.put('/subtemas/update/' + this.id).then(function (_ref) {
                     var data = _ref.data;
@@ -12595,6 +12595,85 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -12604,16 +12683,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             selected: '',
             // Create a new form instance
             form: new __WEBPACK_IMPORTED_MODULE_0_vform__["Form"]({
+                numeroInscricao: '',
+                titulo: '',
+                fimLucrativo: '',
+                tempoImplantacao: '',
+                emAtividade: '',
+                inscricaoAnterior: '',
+                investimentoFBB: '',
+                categoria_id: '',
+                resumo: '',
+                tema_id: '',
+                temaSecundario_id: '',
+                problema: '',
+                objetivoGeral: '',
+                objetivoEspecifico: '',
                 descricao: '',
-                tema_id: ''
+                resultadosAlcancados: '',
+                recursosMateriais: '',
+                valorEstimado: '',
+                valorHumanos: '',
+                depoimentoLivre: '',
+                instituicaos_id: ''
             })
         };
     },
 
-    props: ['id', 'descricao', 'temas'],
+    props: ['tecnologia', 'categorias'],
     mounted: function mounted() {
-        console.log('Component mounted.');
-        this.form.descricao = this.descricao;
+        console.log('Component Tecnologia.');
     },
 
     methods: {
@@ -12622,16 +12719,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var location = window.location.href;
             this.form.tema_id = this.selected;
             if (location.indexOf("edit") > -1) {
-                this.form.put('/subtemas/update/' + this.id).then(function (_ref) {
+                this.form.put('/tecnologias/update/' + this.id).then(function (_ref) {
                     var data = _ref.data;
 
-                    window.location.href = '/subtemas';
+                    window.location.href = '/tecnologias';
                 });
             } else {
-                this.form.post('/subtemas/create').then(function (_ref2) {
+                this.form.post('/tecnologias/create').then(function (_ref2) {
                     var data = _ref2.data;
 
-                    window.location.href = '/subtemas';
+                    window.location.href = '/tecnologias';
                 });
             }
         }
@@ -35774,12 +35871,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })], 1)]), _vm._v(" "), _c('div', {
     staticClass: "form-group",
     class: {
-      'has-error': _vm.form.errors.has('descricao')
+      'has-error': _vm.form.errors.has('tema_id')
     }
   }, [_c('label', {
     staticClass: "col-md-3 control-label",
     attrs: {
-      "for": "descricao"
+      "for": "tema_id"
     }
   }, [_vm._v("Tema: ")]), _vm._v(" "), _c('div', {
     staticClass: "col-md-6"
@@ -35787,10 +35884,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.selected),
-      expression: "selected"
+      value: (_vm.form.tema_id),
+      expression: "form.tema_id"
     }],
     staticClass: "form-control",
+    attrs: {
+      "name": "tema_id"
+    },
     on: {
       "change": function($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
@@ -35799,7 +35899,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.selected = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        _vm.form.tema_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
   }, _vm._l((_vm.temas), function(tema) {
@@ -35813,7 +35913,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "form": _vm.form,
       "field": "tema_id"
     }
-  })], 1)]), _vm._v("\n        " + _vm._s(_vm.selected) + "\n\n        "), _c('div', {
+  })], 1)]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('button', {
     staticClass: "btn btn-primary",
@@ -35937,62 +36037,378 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _vm._v(" "), _c('div', {
     staticClass: "form-group",
     class: {
-      'has-error': _vm.form.errors.has('descricao')
+      'has-error': _vm.form.errors.has('titulo')
     }
   }, [_c('label', {
     staticClass: "col-md-3 control-label",
     attrs: {
-      "for": "descricao"
+      "for": "titulo"
     }
-  }, [_vm._v("descricao")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Título")]), _vm._v(" "), _c('div', {
     staticClass: "col-md-6"
   }, [_c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.form.descricao),
-      expression: "form.descricao"
+      value: (_vm.form.titulo),
+      expression: "form.titulo"
     }],
     staticClass: "form-control",
     attrs: {
       "type": "descricao",
-      "name": "descricao",
-      "id": "descricao"
+      "name": "titulo",
+      "id": "titulo"
     },
     domProps: {
-      "value": (_vm.form.descricao)
+      "value": (_vm.form.titulo)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.form.descricao = $event.target.value
+        _vm.form.titulo = $event.target.value
       }
     }
   }), _vm._v(" "), _c('has-error', {
     attrs: {
       "form": _vm.form,
-      "field": "descricao"
+      "field": "titulo"
     }
   })], 1)]), _vm._v(" "), _c('div', {
     staticClass: "form-group",
     class: {
-      'has-error': _vm.form.errors.has('descricao')
+      'has-error': _vm.form.errors.has('fimLucrativo')
     }
   }, [_c('label', {
     staticClass: "col-md-3 control-label",
     attrs: {
-      "for": "descricao"
+      "for": "fimLucrativo"
     }
-  }, [_vm._v("Tema: ")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Fím Lucrativo")]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6",
+    attrs: {
+      "id": "fimLucrativo"
+    }
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.form.fimLucrativo),
+      expression: "form.fimLucrativo"
+    }],
+    attrs: {
+      "type": "radio",
+      "name": "fimLucrativo",
+      "id": "fimLucrativoSim",
+      "value": "0"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.form.fimLucrativo, "0")
+    },
+    on: {
+      "__c": function($event) {
+        _vm.form.fimLucrativo = "0"
+      }
+    }
+  }), _vm._v(" "), _c('label', {
+    attrs: {
+      "for": "fimLucrativoSim"
+    }
+  }, [_vm._v("Sim")]), _vm._v(" "), _c('br'), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.form.fimLucrativo),
+      expression: "form.fimLucrativo"
+    }],
+    attrs: {
+      "type": "radio",
+      "name": "fimLucrativo",
+      "id": "fimLucrativoNao",
+      "value": "1"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.form.fimLucrativo, "1")
+    },
+    on: {
+      "__c": function($event) {
+        _vm.form.fimLucrativo = "1"
+      }
+    }
+  }), _vm._v(" "), _c('label', {
+    attrs: {
+      "for": "fimLucrativoNao"
+    }
+  }, [_vm._v("Não")]), _vm._v(" "), _c('has-error', {
+    attrs: {
+      "form": _vm.form,
+      "field": "fimLucrativo"
+    }
+  })], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "form-group",
+    class: {
+      'has-error': _vm.form.errors.has('tempoImplantacao')
+    }
+  }, [_c('label', {
+    staticClass: "col-md-3 control-label",
+    attrs: {
+      "for": "tempoImplantacao"
+    }
+  }, [_vm._v("Tempo de implantação")]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.form.tempoImplantacao),
+      expression: "form.tempoImplantacao"
+    }],
+    attrs: {
+      "type": "number",
+      "name": "tempoImplantacao",
+      "id": "tempoImplantacao",
+      "value": "0"
+    },
+    domProps: {
+      "value": (_vm.form.tempoImplantacao)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.form.tempoImplantacao = $event.target.value
+      },
+      "blur": function($event) {
+        _vm.$forceUpdate()
+      }
+    }
+  }), _vm._v(" "), _c('has-error', {
+    attrs: {
+      "form": _vm.form,
+      "field": "tempoImplantacao"
+    }
+  })], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "form-group",
+    class: {
+      'has-error': _vm.form.errors.has('emAtividade')
+    }
+  }, [_c('label', {
+    staticClass: "col-md-3 control-label",
+    attrs: {
+      "for": "titulo"
+    }
+  }, [_vm._v("Em Atividade:")]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.form.emAtividade),
+      expression: "form.emAtividade"
+    }],
+    attrs: {
+      "type": "radio",
+      "name": "emAtividade",
+      "id": "emAtividadeNao",
+      "value": "0"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.form.emAtividade, "0")
+    },
+    on: {
+      "__c": function($event) {
+        _vm.form.emAtividade = "0"
+      }
+    }
+  }), _vm._v(" "), _c('label', {
+    attrs: {
+      "for": "emAtividadeNao"
+    }
+  }, [_vm._v("Sim")]), _vm._v(" "), _c('br'), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.form.emAtividade),
+      expression: "form.emAtividade"
+    }],
+    attrs: {
+      "type": "radio",
+      "name": "emAtividade",
+      "id": "emAtividadeSim",
+      "value": "1"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.form.emAtividade, "1")
+    },
+    on: {
+      "__c": function($event) {
+        _vm.form.emAtividade = "1"
+      }
+    }
+  }), _vm._v(" "), _c('label', {
+    attrs: {
+      "for": "emAtividadeSim"
+    }
+  }, [_vm._v("Não")]), _vm._v(" "), _c('has-error', {
+    attrs: {
+      "form": _vm.form,
+      "field": "emAtividade"
+    }
+  })], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "form-group",
+    class: {
+      'has-error': _vm.form.errors.has('inscricaoAnterior')
+    }
+  }, [_c('label', {
+    staticClass: "col-md-3 control-label",
+    attrs: {
+      "for": "titulo"
+    }
+  }, [_vm._v("Iscrições Anteriores:")]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.form.inscricaoAnterior),
+      expression: "form.inscricaoAnterior"
+    }],
+    attrs: {
+      "type": "radio",
+      "name": "inscricaoAnterior",
+      "id": "inscricaoAnteriorNao",
+      "value": "0"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.form.inscricaoAnterior, "0")
+    },
+    on: {
+      "__c": function($event) {
+        _vm.form.inscricaoAnterior = "0"
+      }
+    }
+  }), _vm._v(" "), _c('label', {
+    attrs: {
+      "for": "inscricaoAnteriorNao"
+    }
+  }, [_vm._v("Sim")]), _vm._v(" "), _c('br'), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.form.inscricaoAnterior),
+      expression: "form.inscricaoAnterior"
+    }],
+    attrs: {
+      "type": "radio",
+      "name": "emAtividade",
+      "id": "inscricaoAnteriorSim",
+      "value": "1"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.form.inscricaoAnterior, "1")
+    },
+    on: {
+      "__c": function($event) {
+        _vm.form.inscricaoAnterior = "1"
+      }
+    }
+  }), _vm._v(" "), _c('label', {
+    attrs: {
+      "for": "inscricaoAnteriorSim"
+    }
+  }, [_vm._v("Não")]), _vm._v(" "), _c('has-error', {
+    attrs: {
+      "form": _vm.form,
+      "field": "inscricaoAnterior"
+    }
+  })], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "form-group",
+    class: {
+      'has-error': _vm.form.errors.has('investimentoFBB')
+    }
+  }, [_c('label', {
+    staticClass: "col-md-3 control-label",
+    attrs: {
+      "for": "titulo"
+    }
+  }, [_vm._v("Iscrições Anteriores:")]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.form.investimentoFBB),
+      expression: "form.investimentoFBB"
+    }],
+    attrs: {
+      "type": "radio",
+      "name": "investimentoFBB",
+      "id": "investimentoFBBNao",
+      "value": "0"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.form.investimentoFBB, "0")
+    },
+    on: {
+      "__c": function($event) {
+        _vm.form.investimentoFBB = "0"
+      }
+    }
+  }), _vm._v(" "), _c('label', {
+    attrs: {
+      "for": "investimentoFBBNao"
+    }
+  }, [_vm._v("Sim")]), _vm._v(" "), _c('br'), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.form.investimentoFBB),
+      expression: "form.investimentoFBB"
+    }],
+    attrs: {
+      "type": "radio",
+      "name": "emAtividade",
+      "id": "investimentoFBBSim",
+      "value": "1"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.form.investimentoFBB, "1")
+    },
+    on: {
+      "__c": function($event) {
+        _vm.form.investimentoFBB = "1"
+      }
+    }
+  }), _vm._v(" "), _c('label', {
+    attrs: {
+      "for": "investimentoFBBSim"
+    }
+  }, [_vm._v("Não")]), _vm._v(" "), _c('has-error', {
+    attrs: {
+      "form": _vm.form,
+      "field": "investimentoFBB"
+    }
+  })], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "form-group",
+    class: {
+      'has-error': _vm.form.errors.has('categoria_id')
+    }
+  }, [_c('label', {
+    staticClass: "col-md-3 control-label",
+    attrs: {
+      "for": "categoria_id"
+    }
+  }, [_vm._v("Categoria: ")]), _vm._v(" "), _c('div', {
     staticClass: "col-md-6"
   }, [_c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.selected),
-      expression: "selected"
+      value: (_vm.form.categoria_id),
+      expression: "form.categoria_id"
     }],
     staticClass: "form-control",
+    attrs: {
+      "name": "categoria_id"
+    },
     on: {
       "change": function($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
@@ -36001,21 +36417,62 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.selected = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        _vm.form.categoria_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
-  }, _vm._l((_vm.temas), function(tema) {
+  }, _vm._l((_vm.categorias), function(categoria) {
     return _c('option', {
       domProps: {
-        "value": tema.id
+        "value": categoria.id
       }
-    }, [_vm._v("\n                        " + _vm._s(tema.nome) + "\n                    ")])
+    }, [_vm._v("\n                        " + _vm._s(categoria.descricao) + "\n                    ")])
   })), _vm._v(" "), _c('has-error', {
     attrs: {
       "form": _vm.form,
-      "field": "tema_id"
+      "field": "categoria_id"
     }
-  })], 1)]), _vm._v("\n        " + _vm._s(_vm.selected) + "\n\n        "), _c('div', {
+  })], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "form-group",
+    class: {
+      'has-error': _vm.form.errors.has('resumo')
+    }
+  }, [_c('label', {
+    staticClass: "col-md-3 control-label",
+    attrs: {
+      "for": "resumo"
+    }
+  }, [_vm._v("Resumo: ")]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6"
+  }, [_c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.form.resumo),
+      expression: "form.resumo"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "rows": "4",
+      "cols": "50",
+      "type": "descricao",
+      "name": "resumo",
+      "id": "resumo"
+    },
+    domProps: {
+      "value": (_vm.form.resumo)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.form.resumo = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('has-error', {
+    attrs: {
+      "form": _vm.form,
+      "field": "resumo"
+    }
+  })], 1)]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('button', {
     staticClass: "btn btn-primary",
@@ -45705,6 +46162,197 @@ module.exports = function(module) {
 __webpack_require__(13);
 module.exports = __webpack_require__(14);
 
+
+/***/ }),
+/* 63 */,
+/* 64 */,
+/* 65 */,
+/* 66 */,
+/* 67 */,
+/* 68 */,
+/* 69 */,
+/* 70 */,
+/* 71 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vform__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vform___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vform__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            // Create a new form instance
+            form: new __WEBPACK_IMPORTED_MODULE_0_vform__["Form"]({
+                descricao: ''
+            })
+        };
+    },
+
+    props: ['id', 'descricao'],
+    mounted: function mounted() {
+        console.log('Component mounted.');
+        this.form.descricao = this.descricao;
+    },
+
+    methods: {
+        submit: function submit() {
+            // Submit the form via a POST request
+            var location = window.location.href;
+            if (location.indexOf("edit") > -1) {
+                this.form.put('/categorias/update/' + this.id).then(function (_ref) {
+                    var data = _ref.data;
+
+                    window.location.href = '/categorias';
+                });
+            } else {
+                this.form.post('/categorias/create').then(function (_ref2) {
+                    var data = _ref2.data;
+
+                    window.location.href = '/categorias';
+                });
+            }
+        }
+    }
+
+});
+
+/***/ }),
+/* 72 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(2)(
+  /* script */
+  __webpack_require__(71),
+  /* template */
+  __webpack_require__(73),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\BTS\\resources\\assets\\js\\components\\Categoria.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Categoria.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-494164cc", Component.options)
+  } else {
+    hotAPI.reload("data-v-494164cc", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 73 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "container"
+  }, [_c('form', {
+    staticClass: "form-horizontal",
+    on: {
+      "submit": function($event) {
+        $event.preventDefault();
+        _vm.submit($event)
+      },
+      "keydown": function($event) {
+        _vm.form.errors.clear($event.target.name)
+      }
+    }
+  }, [_c('alert-error', {
+    attrs: {
+      "form": _vm.form
+    }
+  }), _vm._v(" "), _c('div', {
+    staticClass: "form-group",
+    class: {
+      'has-error': _vm.form.errors.has('descricao')
+    }
+  }, [_c('label', {
+    staticClass: "col-md-3 control-label",
+    attrs: {
+      "for": "descricao"
+    }
+  }, [_vm._v("Descrição: ")]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.form.descricao),
+      expression: "form.descricao"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "descricao",
+      "name": "descricao",
+      "id": "descricao"
+    },
+    domProps: {
+      "value": (_vm.form.descricao)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.form.descricao = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('has-error', {
+    attrs: {
+      "form": _vm.form,
+      "field": "descricao"
+    }
+  })], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "disabled": _vm.form.busy,
+      "type": "submit",
+      "name": "enviar"
+    }
+  }, [_vm._v("Enviar")])])], 1)])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-494164cc", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

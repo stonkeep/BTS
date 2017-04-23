@@ -2,10 +2,10 @@
 
 @extends('adminlte::page')
 
-@section('title', 'Tecnologias')
+@section('title', 'Regiões')
 
 @section('content_header')
-    <h1>Tecnologias</h1>
+    <h1>Cargo</h1>
 @stop
 
 @section('content')
@@ -13,7 +13,7 @@
     @include('layouts.erros')
     <div id="app">
         {{ csrf_field() }}
-        <tecnologia :tecnologia="{{$tecnologia}}"></tecnologia>
+         <categoria id="{{$categoria->id}}" descricao="{{$categoria->descricao}}"></categoria>
     </div>
 
 @stop

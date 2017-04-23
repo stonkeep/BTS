@@ -2,15 +2,15 @@
 
 @extends('adminlte::page')
 
-@section('title', 'Regiões')
+@section('title', 'Categorias')
 
 @section('content_header')
-    <h1>Regiões</h1>
+    <h1>Categorias</h1>
 @stop
 
 @section('content')
     <div>
-        <a href="/regioes/insert" class="btn btn-primary">NOVO</a>
+        <a href="/categorias/insert" class="btn btn-primary">NOVO</a>
     </div>
     <table class="table">
         <thead class="thead-inverse">
@@ -27,6 +27,8 @@
                 <th scope="row">{{$categoria->id}}</th>
                 <td>{{$categoria->descricao}}</td>
                 <td><a class="btn btn-danger" href="/categorias/delete/{{$categoria->id}}">Excluir</a></td>
+                <td><a class="btn btn-success" href="/categorias/edit/{{$categoria->id}}">Editar</a></td>
+
             </tr>
         @endforeach
         </tbody>

@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\SubTemas;
 use App\Temas;
+use TemaTableSeeder;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -177,6 +178,4 @@ class SubTemasTest extends TestCase
         ]);
         $this->assertValidationError('descricao');
     }
-
-
 }

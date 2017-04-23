@@ -103,10 +103,12 @@ Route::put('instituicoes/update/{instituicao}', 'InstituicaoController@update');
 
 
 //Categorias
+Route::get('/categorias/insert', 'CategoriaController@create');
 Route::post('categorias/create', 'CategoriaController@store');
 Route::get('categorias', 'CategoriaController@index');
-Route::delete('categorias/delete/{categoria}', 'CategoriaController@destroy');
+Route::get('categorias/delete/{categoria}', 'CategoriaController@destroy');
 Route::put('categorias/update/{categoria}', 'CategoriaController@update');
+Route::get('categorias/edit/{categoria}', 'CategoriaController@edit');
 
 
 //Responsaveis
@@ -118,14 +120,13 @@ Route::put('responsaveis/update/{responsavel}', 'ResponsavelController@update');
 
 
 //Tecnologias
-Route::get('/tecnologias/insert', function (){
-    return view('tecnologias.create');
-});
+Route::get('/tecnologias/insert', 'TecnologiasController@create');
+
 Route::post('tecnologias/create', 'TecnologiasController@store');
 Route::get('tecnologias', 'TecnologiasController@index');
-Route::get('tecnologias/delete/{cargo}', 'TecnologiasController@destroy');
-Route::put('tecnologias/update/{cargo}', 'TecnologiasController@update');
-Route::get('tecnologias/edit/{cargo}', 'TecnologiasController@edit');
+Route::get('tecnologias/delete/{tecnologia}', 'TecnologiasController@destroy');
+Route::put('tecnologias/update/{tecnologia}', 'TecnologiasController@update');
+Route::get('tecnologias/edit/{tecnologia}', 'TecnologiasController@edit');
 
 //----------------------------------------------------------------------------------------------------------
 

@@ -147,6 +147,11 @@ return [
             'icon'        => 'file',
         ],
         [
+            'text'        => 'Categorias',
+            'url'         => 'categorias    ',
+            'icon'        => 'file',
+        ],
+        [
             'text'        => 'Tecnologias',
             'url'         => 'tecnologias',
             'icon'        => 'file',

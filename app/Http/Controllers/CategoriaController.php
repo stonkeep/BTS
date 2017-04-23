@@ -26,7 +26,7 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        //
+        return view('categorias.create');
     }
 
     /**
@@ -64,7 +64,7 @@ class CategoriaController extends Controller
      */
     public function edit(Categoria $categoria)
     {
-        return redirect('categorias');
+        return view('categorias.edit', compact('categoria'));
     }
 
     /**
@@ -76,9 +76,10 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, Categoria $categoria)
     {
+        $this->validate($request, [
+            'descricao' => 'required',
+        ]);
         $categoria->update($request->all());
-
-
     }
 
     /**

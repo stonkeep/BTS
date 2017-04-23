@@ -2,18 +2,21 @@
 
 @extends('adminlte::page')
 
-@section('title', 'Tecnologias')
+@section('title', 'Categorias')
 
 @section('content_header')
-    <h1>Tecnologias</h1>
+    <h1>Categorias</h1>
 @stop
 
 @section('content')
 
     @include('layouts.erros')
     <div id="app">
+    <form action="/categorias/create" method="POST">
         {{ csrf_field() }}
-        <tecnologia :tecnologia="{{$tecnologia}}"></tecnologia>
+        <categoria></categoria>
+
+    </form>
     </div>
 
 @stop

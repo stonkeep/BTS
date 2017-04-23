@@ -80,9 +80,9 @@ class TemasController extends Controller
     public function update(Request $request, Temas $tema)
     {
         $tema->update($request->all());
-        $temas = Temas::all();
-        
-        return view('temas.show', compact('temas'));
+//        $temas = Temas::all();
+//
+//        return view('temas.show', compact('temas'));
     }
 
     /**

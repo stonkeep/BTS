@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Categoria;
 use App\SubTemas;
 use App\Temas;
 use Illuminate\Http\Request;

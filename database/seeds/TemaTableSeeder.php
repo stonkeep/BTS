@@ -13,7 +13,7 @@ class TemaTableSeeder extends Seeder
     public function run()
     {
         $temas = [
-        'Alimentação	',
+        'Alimentação',
         'Educação',
         'Energia',
         'Habitação',

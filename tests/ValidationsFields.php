@@ -13,7 +13,7 @@ trait ValidationsFields
     private function assertValidationError($field)
     {
         $this->assertResponseStatus(422);
-        dd($this->decodeResponseJson());
+//        dd($this->decodeResponseJson());
         $this->assertArrayHasKey($field, $this->decodeResponseJson());
     }
     private function decodeResponseJson()

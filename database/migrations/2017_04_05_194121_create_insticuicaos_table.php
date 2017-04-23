@@ -15,7 +15,7 @@ class CreateInsticuicaosTable extends Migration
     {
         Schema::create('instituicaos', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('CNPJ');
+            $table->bigInteger('CNPJ');
             $table->string('razaoSocial');
             $table->unsignedInteger('naturezaJuridica');
             $table->string('nomeDaArea');
@@ -32,7 +32,7 @@ class CreateInsticuicaosTable extends Migration
             $table->string('nomeCompleto');
             $table->unsignedInteger('cargo_id');
             $table->string('sexo', 1);
-            $table->unsignedInteger('CPF');
+            $table->bigInteger('CPF');
             $table->timestamps();
         });
     }
