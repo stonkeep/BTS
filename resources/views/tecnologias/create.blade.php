@@ -13,7 +13,7 @@
     @include('layouts.erros')
     <div id="app">
         {{ csrf_field() }}
-        <tecnologia :categorias="{{$categorias}}"></tecnologia>
+        <tecnologia :categorias="{{$categorias}}" :temas="{{$temas}}" :tecnologia="{{$tecnologia}}"></tecnologia>
     </div>
 
 @stop

@@ -46,7 +46,7 @@ class Tecnologia extends Model
 
     public function temaSecundario($temaSecundario_id)
     {
-        return Temas::find('id', $temaSecundario_id);
+        return $this->hasOne(Temas::class);
     }
 
     public function responsaveis()

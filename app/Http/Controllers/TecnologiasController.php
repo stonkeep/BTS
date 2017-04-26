@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Categoria;
 use App\Tecnologia;
+use App\Temas;
 use Illuminate\Http\Request;
 
 class TecnologiasController extends Controller
@@ -27,7 +28,9 @@ class TecnologiasController extends Controller
     public function create()
     {
         $categorias = Categoria::all();
-        return view('tecnologias.create', compact('categorias'));
+        $temas = Temas::all();
+        $tecnologia = new Tecnologia();
+        return view('tecnologias.create', compact('categorias','temas', 'tecnologia'));
     }
 
     /**
@@ -48,8 +51,8 @@ class TecnologiasController extends Controller
             'investimentoFBB' => 'required|boolean',
             'categoria_id' => 'required',
             'resumo' => 'required',
-            'tema_id' => 'required|exists:temas',
-            'temaSecundario_id' => 'required|exists:temas',
+            'tema_id' => 'required|exists:temas,id',
+            'temaSecundario_id' => 'required|exists:temas,id',
             'problema' => 'required',
             'objetivoGeral' => 'required',
             'objetivoEspecifico' => 'required',
@@ -59,7 +62,7 @@ class TecnologiasController extends Controller
             'valorEstimado' => 'required',
             'valorHumanos' => 'required',
             'depoimentoLivre' => 'required',
-            'instituicaos_id' => 'required|exists:instituicaos',
+            'instituicaos_id' => 'required|exists:instituicaos,id',
         ]);
 
         Tecnologia::create($request->all());
@@ -85,7 +88,9 @@ class TecnologiasController extends Controller
      */
     public function edit(Tecnologia $tecnologia)
     {
-        //
+        $categorias = Categoria::all();
+        $temas = Temas::all();
+        return view('tecnologias.edit', compact('tecnologia', 'categorias', 'temas'));
     }
 
     /**
@@ -109,5 +114,8 @@ class TecnologiasController extends Controller
     public function destroy(Tecnologia $tecnologia)
     {
         $tecnologia->delete();
+
+        $tecnologias = Tecnologia::all();
+        return view('tecnologias.show', compact('tecnologia'));
     }
 }

@@ -3,10 +3,12 @@
         <form @submit.prevent="submit" @keydown="form.errors.clear($event.target.name)" class="form-horizontal">
             <alert-error :form="form"></alert-error>
 
+
             <div class="form-group" :class="{ 'has-error': form.errors.has('titulo') }">
                 <label for="titulo" class="col-md-3 control-label">Título</label>
                 <div class="col-md-6">
-                    <input v-model="form.titulo" type="descricao" name="titulo" id="titulo"
+
+                    <input v-model="form.titulo" type="text" name="titulo" id="titulo"
                            class="form-control">
                     <has-error :form="form" field="titulo"></has-error>
                 </div>
@@ -52,10 +54,12 @@
             <div class="form-group" :class="{ 'has-error': form.errors.has('inscricaoAnterior') }">
                 <label for="titulo" class="col-md-3 control-label">Iscrições Anteriores:</label>
                 <div class="col-md-6">
-                    <input type="radio" name="inscricaoAnterior" id="inscricaoAnteriorNao" value="0" v-model="form.inscricaoAnterior">
+                    <input type="radio" name="inscricaoAnterior" id="inscricaoAnteriorNao" value="0"
+                           v-model="form.inscricaoAnterior">
                     <label for="inscricaoAnteriorNao">Sim</label>
                     <br>
-                    <input type="radio" name="emAtividade" id="inscricaoAnteriorSim" value="1" v-model="form.inscricaoAnterior">
+                    <input type="radio" name="emAtividade" id="inscricaoAnteriorSim" value="1"
+                           v-model="form.inscricaoAnterior">
                     <label for="inscricaoAnteriorSim">Não</label>
                     <has-error :form="form" field="inscricaoAnterior"></has-error>
                 </div>
@@ -64,10 +68,12 @@
             <div class="form-group" :class="{ 'has-error': form.errors.has('investimentoFBB') }">
                 <label for="titulo" class="col-md-3 control-label">Iscrições Anteriores:</label>
                 <div class="col-md-6">
-                    <input type="radio" name="investimentoFBB" id="investimentoFBBNao" value="0" v-model="form.investimentoFBB">
+                    <input type="radio" name="investimentoFBB" id="investimentoFBBNao" value="0"
+                           v-model="form.investimentoFBB">
                     <label for="investimentoFBBNao">Sim</label>
                     <br>
-                    <input type="radio" name="emAtividade" id="investimentoFBBSim" value="1" v-model="form.investimentoFBB">
+                    <input type="radio" name="emAtividade" id="investimentoFBBSim" value="1"
+                           v-model="form.investimentoFBB">
                     <label for="investimentoFBBSim">Não</label>
                     <has-error :form="form" field="investimentoFBB"></has-error>
                 </div>
@@ -91,18 +97,141 @@
             <div class="form-group" :class="{ 'has-error': form.errors.has('resumo') }">
                 <label for="resumo" class="col-md-3 control-label">Resumo: </label>
                 <div class="col-md-6">
-                    <textarea rows="4" cols="50" v-model="form.resumo" type="descricao" name="resumo" id="resumo"
-                           class="form-control">
+                    <textarea rows="4" cols="50" v-model="form.resumo" name="resumo" id="resumo"
+                              class="form-control">
                     </textarea>
                     <has-error :form="form" field="resumo"></has-error>
                 </div>
             </div>
 
 
+            <div class="form-group" :class="{ 'has-error': form.errors.has('tema_id') }">
+                <label for="tema_id" class="col-md-3 control-label">Tema: </label>
+                <div class="col-md-6">
+                    <select class="form-control" v-model="form.tema_id" name="tema_id">
+                        <option v-for="tema in temas" v-bind:value="tema.id">
+                            {{ tema.nome }}
+                        </option>
+                    </select>
+                    <has-error :form="form" field="tema_id"></has-error>
+                </div>
+            </div>
+            <!--TODO SUBTEMAS-->
+
+            <div class="form-group" :class="{ 'has-error': form.errors.has('temaSecundario_id') }">
+                <label for="temaSecundario_id" class="col-md-3 control-label">Tema Secundário: </label>
+                <div class="col-md-6">
+                    <select class="form-control" v-model="form.temaSecundario_id" name="temaSecundario_id">
+                        <option v-for="tema in temas" v-bind:value="tema.id">
+                            {{ tema.nome }}
+                        </option>
+                    </select>
+                    <has-error :form="form" field="temaSecundario_id"></has-error>
+                </div>
+            </div>
+            <!--TODO SUBTEMAS-->
+
+
+            <div class="form-group" :class="{ 'has-error': form.errors.has('problema') }">
+                <label for="problema" class="col-md-3 control-label">Problema: </label>
+                <div class="col-md-6">
+                    <textarea rows="4" cols="50" v-model="form.problema" name="problema" id="problema"
+                              class="form-control">
+                    </textarea>
+                    <has-error :form="form" field="problema"></has-error>
+                </div>
+            </div>
+
+            <div class="form-group" :class="{ 'has-error': form.errors.has('objetivoGeral') }">
+                <label for="objetivoGeral" class="col-md-3 control-label">Objetivo Geral: </label>
+                <div class="col-md-6">
+                    <textarea rows="4" cols="50" v-model="form.objetivoGeral" name="objetivoGeral" id="objetivoGeral"
+                              class="form-control">
+                    </textarea>
+                    <has-error :form="form" field="objetivoGeral"></has-error>
+                </div>
+            </div>
+
+            <div class="form-group" :class="{ 'has-error': form.errors.has('objetivoEspecifico') }">
+                <label for="objetivoEspecifico" class="col-md-3 control-label">Objetivo Especifico: </label>
+                <div class="col-md-6">
+                    <textarea rows="4" cols="50" v-model="form.objetivoEspecifico" name="objetivoEspecifico"
+                              id="objetivoEspecifico"
+                              class="form-control">
+                    </textarea>
+                    <has-error :form="form" field="objetivoEspecifico"></has-error>
+                </div>
+            </div>
+
+            <div class="form-group" :class="{ 'has-error': form.errors.has('descricao') }">
+                <label for="descricao" class="col-md-3 control-label">Descricao: </label>
+                <div class="col-md-6">
+                    <textarea rows="4" cols="50" v-model="form.descricao" name="descricao" id="descricao"
+                              class="form-control">
+                    </textarea>
+                    <has-error :form="form" field="descricao"></has-error>
+                </div>
+            </div>
+
+
+            <div class="form-group" :class="{ 'has-error': form.errors.has('resultadosAlcancados') }">
+                <label for="resultadosAlcancados" class="col-md-3 control-label">Resultados Alcancados: </label>
+                <div class="col-md-6">
+                    <textarea rows="4" cols="50" v-model="form.resultadosAlcancados" name="resultadosAlcancados"
+                              id="resultadosAlcancados"
+                              class="form-control">
+                    </textarea>
+                    <has-error :form="form" field="resultadosAlcancados"></has-error>
+                </div>
+            </div>
+
+
+            <div class="form-group" :class="{ 'has-error': form.errors.has('recursosMateriais') }">
+                <label for="recursosMateriais" class="col-md-3 control-label">Recursos Materiais: </label>
+                <div class="col-md-6">
+                    <textarea rows="4" cols="50" v-model="form.recursosMateriais" name="recursosMateriais"
+                              id="recursosMateriais"
+                              class="form-control">
+                    </textarea>
+                    <has-error :form="form" field="recursosMateriais"></has-error>
+                </div>
+            </div>
+
+            <div class="form-group" :class="{ 'has-error': form.errors.has('valorEstimado') }">
+                <label for="valorEstimado" class="col-md-3 control-label">Valor Estimado: </label>
+                <div class="col-md-6">
+                    <textarea rows="4" cols="50" v-model="form.valorEstimado" name="valorEstimado"
+                              id="valorEstimado"
+                              class="form-control">
+                    </textarea>
+                    <has-error :form="form" field="valorEstimado"></has-error>
+                </div>
+            </div>
+
+
+            <div class="form-group" :class="{ 'has-error': form.errors.has('valorHumanos') }">
+                <label for="valorHumanos" class="col-md-3 control-label">Valor Humanos: </label>
+                <div class="col-md-6">
+                    <textarea rows="4" cols="50" v-model="form.valorHumanos" name="valorHumanos"
+                              id="valorHumanos"
+                              class="form-control">
+                    </textarea>
+                    <has-error :form="form" field="valorHumanos"></has-error>
+                </div>
+            </div>
 
 
 
-
+            <div class="form-group" :class="{ 'has-error': form.errors.has('depoimentoLivre') }">
+                <label for="depoimentoLivre" class="col-md-3 control-label">depoimento Livre: </label>
+                <div class="col-md-6">
+                    <textarea rows="4" cols="50" v-model="form.depoimentoLivre" name="depoimentoLivre"
+                              id="depoimentoLivre"
+                              class="form-control">
+                    </textarea>
+                    <has-error :form="form" field="depoimentoLivre"></has-error>
+                </div>
+            </div>
 
 
             <div class="form-group">
@@ -116,13 +245,12 @@
     import {Form, HasError, AlertError} from 'vform'
     export default {
         data () {
-
             return {
-                selected: '',
                 // Create a new form instance
                 form: new Form({
-                    numeroInscricao: '',
-                    titulo: '',
+                    id: '',
+                    numeroInscricao: '2017',
+                    titulo:  this.tecnologia.titulo,
                     fimLucrativo: '',
                     tempoImplantacao: '',
                     emAtividade: '',
@@ -141,19 +269,18 @@
                     valorEstimado: '',
                     valorHumanos: '',
                     depoimentoLivre: '',
-                    instituicaos_id: '',
+                    instituicaos_id: 1,
                 })
             }
         },
-        props: ['tecnologia', 'categorias'],
+        props: ['tecnologia', 'categorias', 'temas'],
         mounted() {
-            console.log('Component Tecnologia.');
+                console.log(this.tecnologia);
         },
         methods: {
             submit () {
                 // Submit the form via a POST request
                 var location = window.location.href;
-                this.form.tema_id = this.selected;
                 if (location.indexOf("edit") > -1) {
                     this.form.put('/tecnologias/update/' + this.id)
                         .then(({data}) => {
