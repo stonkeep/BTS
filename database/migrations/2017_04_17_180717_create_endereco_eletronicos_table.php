@@ -15,6 +15,8 @@ class CreateEnderecoEletronicosTable extends Migration
     {
         Schema::create('endereco_eletronicos', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('tecnologias_id');
+            $table->string('link');
             $table->timestamps();
         });
     }
