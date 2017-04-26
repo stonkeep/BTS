@@ -15,7 +15,7 @@
         <form action="/subtemas/create" method="POST">
             {{ csrf_field() }}
 
-            <subtema :temas="{{$temas}}"></subtema>
+            <subtema :temas="{{$temas}}" :subTema="{{$subTema}}"></subtema>
 
         </form>
     </div>

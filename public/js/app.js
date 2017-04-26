@@ -12582,22 +12582,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
-
         return {
             selected: '',
             // Create a new form instance
             form: new __WEBPACK_IMPORTED_MODULE_0_vform__["Form"]({
-                descricao: '',
-                tema_id: ''
+                descricao: this.subtema.descricao,
+                tema_id: this.subtema.tema_id
             })
         };
     },
 
-    props: ['id', 'descricao', 'temas'],
-    mounted: function mounted() {
-        console.log('Component mounted.');
-        this.form.descricao = this.descricao;
-    },
+    props: ['subtema', 'temas'],
+    mounted: function mounted() {},
 
     methods: {
         submit: function submit() {
@@ -12872,6 +12868,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -12879,27 +12879,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             // Create a new form instance
             form: new __WEBPACK_IMPORTED_MODULE_0_vform__["Form"]({
-                id: '',
-                numeroInscricao: '2017',
+                id: this.tecnologia.id,
+                numeroInscricao: this.tecnologia.numeroInscricao,
                 titulo: this.tecnologia.titulo,
-                fimLucrativo: '',
-                tempoImplantacao: '',
-                emAtividade: '',
-                inscricaoAnterior: '',
-                investimentoFBB: '',
-                categoria_id: '',
-                resumo: '',
-                tema_id: '',
-                temaSecundario_id: '',
-                problema: '',
-                objetivoGeral: '',
-                objetivoEspecifico: '',
-                descricao: '',
-                resultadosAlcancados: '',
-                recursosMateriais: '',
-                valorEstimado: '',
-                valorHumanos: '',
-                depoimentoLivre: '',
+                fimLucrativo: this.tecnologia.fimLucrativo,
+                tempoImplantacao: this.tecnologia.tempoImplantacao,
+                emAtividade: this.tecnologia.emAtividade,
+                inscricaoAnterior: this.tecnologia.inscricaoAnterior,
+                investimentoFBB: this.tecnologia.investimentoFBB,
+                categoria_id: this.tecnologia.categoria_id,
+                resumo: this.tecnologia.resumo,
+                tema_id: this.tecnologia.tema_id,
+                temaSecundario_id: this.tecnologia.temaSecundario_id,
+                problema: this.tecnologia.problema,
+                objetivoGeral: this.tecnologia.objetivoGeral,
+                objetivoEspecifico: this.tecnologia.objetivoEspecifico,
+                descricao: this.tecnologia.descricao,
+                resultadosAlcancados: this.tecnologia.resultadosAlcancados,
+                recursosMateriais: this.tecnologia.recursosMateriais,
+                valorEstimado: this.tecnologia.valorEstimado,
+                valorHumanos: this.tecnologia.valorHumanos,
+                depoimentoLivre: this.tecnologia.depoimentoLivre,
+                //                    instituicaos_id: this.tecnologia.instituicaos_id,
+                //                    TODO Nao esquecer de tirar depois
                 instituicaos_id: 1
             })
         };
@@ -12915,7 +12917,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             // Submit the form via a POST request
             var location = window.location.href;
             if (location.indexOf("edit") > -1) {
-                this.form.put('/tecnologias/update/' + this.id).then(function (_ref) {
+                this.form.put('/tecnologias/update/' + this.tecnologia.id).then(function (_ref) {
                     var data = _ref.data;
 
                     window.location.href = '/tecnologias';
@@ -13066,7 +13068,7 @@ window.axios.defaults.headers.common = {
 Vue.component(__WEBPACK_IMPORTED_MODULE_1_vform__["HasError"].name, __WEBPACK_IMPORTED_MODULE_1_vform__["HasError"]);
 Vue.component(__WEBPACK_IMPORTED_MODULE_1_vform__["AlertError"].name, __WEBPACK_IMPORTED_MODULE_1_vform__["AlertError"]);
 
-Vue.use(__WEBPACK_IMPORTED_MODULE_0_vee_validate___default.a);
+// Vue.use(VeeValidate);
 
 /***/ }),
 /* 42 */
@@ -36639,7 +36641,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "titulo"
     }
-  }, [_vm._v("Iscrições Anteriores:")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Ja contou com investimento da FBB?:")]), _vm._v(" "), _c('div', {
     staticClass: "col-md-6"
   }, [_c('input', {
     directives: [{
@@ -36675,7 +36677,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     attrs: {
       "type": "radio",
-      "name": "emAtividade",
+      "name": "investimentoFBB",
       "id": "investimentoFBBSim",
       "value": "1"
     },
@@ -36827,6 +36829,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "field": "tema_id"
     }
   })], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "form-group",
+    class: {
+      'has-error': _vm.form.errors.has('tema_id')
+    }
+  }, [_vm._m(0)]), _vm._v(" "), _c('div', {
     staticClass: "form-group",
     class: {
       'has-error': _vm.form.errors.has('temaSecundario_id')
@@ -37241,7 +37248,22 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "enviar"
     }
   }, [_vm._v("Enviar")])])], 1)])
-},staticRenderFns: []}
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('button', {
+    staticClass: "btn btn-default",
+    attrs: {
+      "type": "button"
+    }
+  }, [_c('span', {
+    staticClass: "glyphicon glyphicon-plus",
+    staticStyle: {
+      "color": "green"
+    },
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v(" Adiciona\n            ")])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()

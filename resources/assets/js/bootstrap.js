@@ -53,4 +53,4 @@ import { Form, HasError, AlertError } from 'vform'
 Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
 
-Vue.use(VeeValidate);
+// Vue.use(VeeValidate);

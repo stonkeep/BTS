@@ -31,9 +31,16 @@ class TestTecnologia extends TestCase
     /** @test */
     public function teste_store_por_http()
     {
+        $temasSeed = new \TemaTableSeeder();
+        $temasSeed->run();
+
+        factory(Instituicao::class)->create();
+        factory(Tecnologia::class)->create();
+
+
         $response = $this->json('POST', "tecnologias/create", [
-            'numeroInscricao' => '2017/0002',
-            'titulo' => 'Teste GEPEM',
+//            'numeroInscricao' => '2017/0002',
+            'titulo' => 'Teste GEPEM2',
             'fimLucrativo' => false,
             'tempoImplantacao' => 2,
             'emAtividade' => true,
@@ -55,10 +62,11 @@ class TestTecnologia extends TestCase
             'instituicaos_id' => 1,
         ]);
 
+//        $this->assertValidationError('numeroInscricao');
         $response->assertStatus(200);
 
-        $tecnologia = Tecnologia::first();
-        self::assertEquals($tecnologia->titulo, 'Teste GEPEM');
+        $tecnologia = Tecnologia::find(2);
+        self::assertEquals($tecnologia->titulo, 'Teste GEPEM2');
     }
 
     /** @test */

@@ -37,21 +37,18 @@
     import {Form, HasError, AlertError} from 'vform'
     export default {
         data () {
-
             return {
                 selected: '',
                 // Create a new form instance
                 form: new Form({
-                    descricao: '',
-                    tema_id: '',
+                    descricao: this.subtema.descricao,
+                    tema_id: this.subtema.tema_id,
 //                    remember: false
                 })
             }
         },
-        props: ['id', 'descricao', 'temas'],
+        props: ['subtema', 'temas'],
         mounted() {
-            console.log('Component mounted.');
-            this.form.descricao = this.descricao;
         },
         methods: {
             submit () {

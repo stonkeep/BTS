@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Categoria;
 use App\Tecnologia;
 use App\Temas;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TecnologiasController extends Controller
@@ -65,8 +66,12 @@ class TecnologiasController extends Controller
             'instituicaos_id' => 'required|exists:instituicaos,id',
         ]);
 
-        Tecnologia::create($request->all());
+//       $request['numeroInscricao'] = Carbon::now()->year . '/' . (Tecnologia::all()->last()->id + 1);
+        if (is_null($request['numeroInscricao'])) {
+            $request['numeroInscricao'] = Carbon::now()->year . '/' . (Tecnologia::all()->last()->id + 1);
+        }
 
+        Tecnologia::create($request->all());
     }
 
     /**
@@ -102,6 +107,30 @@ class TecnologiasController extends Controller
      */
     public function update(Request $request, Tecnologia $tecnologia)
     {
+        $this->validate($request, [
+            'numeroInscricao' => 'required',
+            'titulo' => 'required|unique:tecnologias,titulo',
+            'fimLucrativo' => 'required|boolean',
+            'tempoImplantacao' => 'required',
+            'emAtividade' => 'required|boolean',
+            'inscricaoAnterior' => 'required|boolean',
+            'investimentoFBB' => 'required|boolean',
+            'categoria_id' => 'required',
+            'resumo' => 'required',
+            'tema_id' => 'required|exists:temas,id',
+            'temaSecundario_id' => 'required|exists:temas,id',
+            'problema' => 'required',
+            'objetivoGeral' => 'required',
+            'objetivoEspecifico' => 'required',
+            'descricao' => 'required',
+            'resultadosAlcancados' => 'required',
+            'recursosMateriais' => 'required',
+            'valorEstimado' => 'required',
+            'valorHumanos' => 'required',
+            'depoimentoLivre' => 'required',
+            'instituicaos_id' => 'required|exists:instituicaos,id',
+        ]);
+
         $tecnologia->update($request->all());
     }
 

@@ -12,10 +12,9 @@
 
     @include('layouts.erros')
     <div id="app">
-    <form action="/cargo/update/{{$subTema->id}}" method="PUT">
         {{ csrf_field() }}
-         <cargo id="{{$subTema->id}}" descricao="{{$subTema->descricao}}"></cargo>
-    </form>
+
+         <subtema :subtema="{{$subTema}}" :temas="{{$temas}}"></subtema>
     </div>
 
 @stop

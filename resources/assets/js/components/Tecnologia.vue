@@ -66,13 +66,13 @@
             </div>
 
             <div class="form-group" :class="{ 'has-error': form.errors.has('investimentoFBB') }">
-                <label for="titulo" class="col-md-3 control-label">Iscrições Anteriores:</label>
+                <label for="titulo" class="col-md-3 control-label">Ja contou com investimento da FBB?:</label>
                 <div class="col-md-6">
                     <input type="radio" name="investimentoFBB" id="investimentoFBBNao" value="0"
                            v-model="form.investimentoFBB">
                     <label for="investimentoFBBNao">Sim</label>
                     <br>
-                    <input type="radio" name="emAtividade" id="investimentoFBBSim" value="1"
+                    <input type="radio" name="investimentoFBB" id="investimentoFBBSim" value="1"
                            v-model="form.investimentoFBB">
                     <label for="investimentoFBBSim">Não</label>
                     <has-error :form="form" field="investimentoFBB"></has-error>
@@ -117,6 +117,11 @@
                 </div>
             </div>
             <!--TODO SUBTEMAS-->
+            <div class="form-group" :class="{ 'has-error': form.errors.has('tema_id') }">
+                <button type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true" style="color:green"></span> Adiciona
+                </button>
+            </div>
 
             <div class="form-group" :class="{ 'has-error': form.errors.has('temaSecundario_id') }">
                 <label for="temaSecundario_id" class="col-md-3 control-label">Tema Secundário: </label>
@@ -221,7 +226,6 @@
             </div>
 
 
-
             <div class="form-group" :class="{ 'has-error': form.errors.has('depoimentoLivre') }">
                 <label for="depoimentoLivre" class="col-md-3 control-label">depoimento Livre: </label>
                 <div class="col-md-6">
@@ -248,41 +252,43 @@
             return {
                 // Create a new form instance
                 form: new Form({
-                    id: '',
-                    numeroInscricao: '2017',
-                    titulo:  this.tecnologia.titulo,
-                    fimLucrativo: '',
-                    tempoImplantacao: '',
-                    emAtividade: '',
-                    inscricaoAnterior: '',
-                    investimentoFBB: '',
-                    categoria_id: '',
-                    resumo: '',
-                    tema_id: '',
-                    temaSecundario_id: '',
-                    problema: '',
-                    objetivoGeral: '',
-                    objetivoEspecifico: '',
-                    descricao: '',
-                    resultadosAlcancados: '',
-                    recursosMateriais: '',
-                    valorEstimado: '',
-                    valorHumanos: '',
-                    depoimentoLivre: '',
+                    id: this.tecnologia.id,
+                    numeroInscricao: this.tecnologia.numeroInscricao,
+                    titulo: this.tecnologia.titulo,
+                    fimLucrativo: this.tecnologia.fimLucrativo,
+                    tempoImplantacao: this.tecnologia.tempoImplantacao,
+                    emAtividade: this.tecnologia.emAtividade,
+                    inscricaoAnterior: this.tecnologia.inscricaoAnterior,
+                    investimentoFBB: this.tecnologia.investimentoFBB,
+                    categoria_id: this.tecnologia.categoria_id,
+                    resumo: this.tecnologia.resumo,
+                    tema_id: this.tecnologia.tema_id,
+                    temaSecundario_id: this.tecnologia.temaSecundario_id,
+                    problema: this.tecnologia.problema,
+                    objetivoGeral: this.tecnologia.objetivoGeral,
+                    objetivoEspecifico: this.tecnologia.objetivoEspecifico,
+                    descricao: this.tecnologia.descricao,
+                    resultadosAlcancados: this.tecnologia.resultadosAlcancados,
+                    recursosMateriais: this.tecnologia.recursosMateriais,
+                    valorEstimado: this.tecnologia.valorEstimado,
+                    valorHumanos: this.tecnologia.valorHumanos,
+                    depoimentoLivre: this.tecnologia.depoimentoLivre,
+//                    instituicaos_id: this.tecnologia.instituicaos_id,
+//                    TODO Nao esquecer de tirar depois
                     instituicaos_id: 1,
                 })
             }
         },
         props: ['tecnologia', 'categorias', 'temas'],
         mounted() {
-                console.log(this.tecnologia);
+            console.log(this.tecnologia);
         },
         methods: {
             submit () {
                 // Submit the form via a POST request
                 var location = window.location.href;
                 if (location.indexOf("edit") > -1) {
-                    this.form.put('/tecnologias/update/' + this.id)
+                    this.form.put('/tecnologias/update/' + this.tecnologia.id)
                         .then(({data}) => {
                             window.location.href = '/tecnologias'
                         })
