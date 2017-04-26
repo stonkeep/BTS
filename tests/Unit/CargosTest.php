@@ -113,11 +113,13 @@ class CargosTest extends TestCase
             'descricao' => 'Outra descrição'
         ]);
 
+
+        $cargo = Cargos::findOrFail(1);
+        
         $response->assertStatus(200);
 
-        //dd($response);
-
-        $response->assertDontSee('Técnico');
-        $response->assertSee('Outra descrição');
+        $this->assertEquals($cargo->descricao, 'Outra descrição');
+        $this->assertNotEquals($cargo->descricao, 'Técnico');
+        
     }
 }

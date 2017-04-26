@@ -115,7 +115,7 @@ class TemaTest extends TestCase
 
         $tema = Temas::findOrFail(1);
         
-        $response = $this->json('DELETE', "temas/delete/{$tema->id}");
+        $response = $this->get("temas/delete/{$tema->id}");
 
         $response->assertStatus(200);
         $response->assertDontSee('Alimentação');
@@ -132,10 +132,13 @@ class TemaTest extends TestCase
 
         $response = $this->json('PUT', "temas/update/{$tema->id}", ['nome' => 'Energia']);
 
+
+        $tema = Temas::findOrFail(1);
+        
         $response->assertStatus(200);
-        $response->assertSee('Energia');
-        $response->assertSee('Educação');
-        $response->assertDontSee('Alimentação');
+        
+        $this->assertEquals($tema->nome, 'Energia');
+        $this->assertNotEquals($tema->nome, 'Alimentação');
         
     }
 

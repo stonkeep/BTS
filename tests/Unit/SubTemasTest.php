@@ -112,7 +112,7 @@ class SubTemasTest extends TestCase
 
         $subTema = SubTemas::firstOrFail();
 
-        $response = $this->json('DELETE', "subtemas/delete/{$subTema->id}");
+        $response = $this->get("subtemas/delete/{$subTema->id}");
 
         $response->assertStatus(200);
         $response->assertDontSee('Higienização dos alimentos');

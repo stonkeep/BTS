@@ -81,9 +81,7 @@ class CargosController extends Controller
         $this->validate($request, [
             'descricao' => 'required',
         ]);
-
         $cargo->update($request->all());
-
     }
 
     /**

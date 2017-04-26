@@ -100,7 +100,7 @@ class NaturezaJuridica extends TestCase
         $natureza = NaturezasJuridicas::findOrFail(1);
 
         //dd($natureza);
-        $response = $this->json('DELETE', "naturezasJuridicas/delete/{$natureza->id}");
+        $response = $this->get("naturezasJuridicas/delete/{$natureza->id}");
 
         $response->assertStatus(200);
         $response->assertSee('Autarquia Estadual');
