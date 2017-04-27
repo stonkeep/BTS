@@ -12,7 +12,7 @@ class CargosTest extends TestCase
 {
     use DatabaseMigrations;
     use ValidationsFields; //Trait que trata das validações
-    
+
     /**
      * A basic test example.
      *

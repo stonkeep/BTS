@@ -4,10 +4,12 @@ namespace Tests\Unit;
 
 use App\EnderecoEletronico;
 use App\Tecnologia;
+use Illuminate\Support\Facades\Validator;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\ValidationsFields;
+use Illuminate\Validation\Rule;
 
 class TestEnderecoEletronico extends TestCase
 {
@@ -26,7 +28,7 @@ class TestEnderecoEletronico extends TestCase
     {
         factory(Tecnologia::class)->create();
         EnderecoEletronico::create([
-            'tecnologias_id' => 1,
+            'tecnologia_id' => 1,
             'link'           => 'www.google.com.br',
         ]);
 
@@ -42,16 +44,16 @@ class TestEnderecoEletronico extends TestCase
     {
         factory(Tecnologia::class)->create();
         EnderecoEletronico::create([
-            'tecnologias_id' => 1,
+            'tecnologia_id' => 1,
             'link'           => 'www.google.com.br',
         ]);
 
         EnderecoEletronico::create([
-            'tecnologias_id' => 1,
+            'tecnologia_id' => 1,
             'link'           => 'www.fbb.org.br',
         ]);
 
-        $enderecos = EnderecoEletronico::where('tecnologias_id', 1)->get();
+        $enderecos = EnderecoEletronico::where('tecnologia_id', 1)->get();
         //dd($enderecos);
         $this->assertContains('www.google.com.br', $enderecos->pluck('link'));
         $this->assertContains('www.fbb.org.br', $enderecos->pluck('link'));
@@ -64,7 +66,7 @@ class TestEnderecoEletronico extends TestCase
     {
         factory(Tecnologia::class)->create();
         $endereco = EnderecoEletronico::create([
-            'tecnologias_id' => 1,
+            'tecnologia_id' => 1,
             'link'           => 'www.google.com.br',
         ]);
 
@@ -82,7 +84,7 @@ class TestEnderecoEletronico extends TestCase
     {
         factory(Tecnologia::class)->create();
         $endereco = EnderecoEletronico::create([
-            'tecnologias_id' => 1,
+            'tecnologia_id' => 1,
             'link'           => 'www.google.com.br',
         ]);
         $endereco->delete();
@@ -95,11 +97,27 @@ class TestEnderecoEletronico extends TestCase
     /** @test */
     function teste_validacao()
     {
-        factory(Tecnologia::class)->create();
-        $data = ['tecnologias_id' => 1,'link' => 'www.google.com.br'];
+        //Grava tecnologia
+        $tecnologia = factory(Tecnologia::class)->create();
+        
+        //Carrega dados
+        $datas = [
+            ['link' => 'www.google.com.br'],
+            ['link' => 'www.fbb.org.br']
+        ];
+        
+        //faz validação
+        $invalido = EnderecoEletronico::validate($datas);
 
-        $endereco = EnderecoEletronico::find(1);
-        dd($endereco);
+        if (!$invalido) {
+            foreach ( $datas as $data) {
+                $tecnologia->enderecosEletronico()->create($data);        
+            }
+        }
+        
+        $resultado = $tecnologia->enderecosEletronico()->get()->pluck('link');
+        $this->assertContains('www.google.com.br', $resultado);
+        $this->assertContains('www.fbb.org.br', $resultado);
     }
     //TODO teste validações
 
