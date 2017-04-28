@@ -2,25 +2,43 @@
 
 namespace Tests\Unit;
 
+use App\VigenciasPremio;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\ValidationsFields;
 
 class TestVigenciaPremio extends TestCase
 {
+    use DatabaseMigrations;
+    use ValidationsFields;
     /**
      * A basic test example.
      *
      * @return void
      * @test
      */
-    public function testExample()
+    public function teste_create()
     {
-        $this->assertTrue(true);
+        factory(VigenciasPremio::class)->create();
+
+        $vigencia = VigenciasPremio::first();
+
+        $this->assertEquals('2017', $vigencia->edicao);
     }
 
-    //TODO teste create
-    //TODO teste reader
+    /** @test */
+    public function teste_reader()
+    {
+        factory(VigenciasPremio::class)->create();
+
+        $response = $this->get('premios');
+
+        $response->assertStatus(200);
+
+        $response->assertSee('2017');
+    }
+
     //TODO teste update
     //TODO teste delete
     //TODO teste list

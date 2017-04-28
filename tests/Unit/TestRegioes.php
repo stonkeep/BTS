@@ -132,11 +132,12 @@ class TestRegioes extends TestCase
         
         $regiao = Regioes::firstOrFail();
         
-        $response = $this->json('DELETE', "/regioes/delete/{$regiao->id}");
+        $response = $this->json('get', "/regioes/delete/{$regiao->id}");
 
         $response->assertStatus(200);
         $response->assertSee('NE');
         $response->assertDontSee('Centro - Oeste');
+
     }
     
     /** @test */

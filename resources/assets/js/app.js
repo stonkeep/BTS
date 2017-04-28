@@ -22,6 +22,7 @@ Vue.component('publicoalvo', require('./components/PublicoAlvo.vue'));
 Vue.component('subtema', require('./components/SubTema.vue'));
 Vue.component('tecnologia', require('./components/Tecnologia.vue'));
 Vue.component('categoria', require('./components/Categoria.vue'));
+Vue.component('premio', require('./components/Premio.vue'));
 
 const app = new Vue({
     el: '#app'

@@ -14,7 +14,7 @@ class CargosController extends Controller
      */
     public function index()
     {
-        $cargos = Cargos::all();
+        $cargos = Cargos::paginate(10);
         return view('cargos.show', compact('cargos'));
     }
 

@@ -42,8 +42,6 @@ class RegioesTest extends DuskTestCase
                 ->waitForText('Sul maluco')
                 ->assertsee('SS')
                 ->assertsee('Sul maluco');
-//            $browser->visit('regioes')
-//                ->press('Excluir');
         });
     }
 

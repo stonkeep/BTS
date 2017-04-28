@@ -119,6 +119,5 @@ class TestEnderecoEletronico extends TestCase
         $this->assertContains('www.google.com.br', $resultado);
         $this->assertContains('www.fbb.org.br', $resultado);
     }
-    //TODO teste validações
 
 }

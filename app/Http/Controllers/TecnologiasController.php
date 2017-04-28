@@ -109,7 +109,7 @@ class TecnologiasController extends Controller
     {
         $this->validate($request, [
             'numeroInscricao' => 'required',
-            'titulo' => 'required|unique:tecnologias,titulo',
+            'titulo' => 'required',
             'fimLucrativo' => 'required|boolean',
             'tempoImplantacao' => 'required',
             'emAtividade' => 'required|boolean',

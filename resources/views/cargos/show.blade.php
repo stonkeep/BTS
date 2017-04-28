@@ -13,7 +13,7 @@
     <div>
         <a href="/cargos/insert" class="btn btn-primary">NOVO</a>
     </div>
-    <table class="table">
+    <table  id="table_id" class="table">
     <thead class="thead-inverse">
     <tr>
         <th>#</th>
@@ -35,6 +35,7 @@
 
     </tbody>
     </table>
+    {{ $cargos->links() }}
 
 @stop
 
@@ -43,5 +44,5 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+
 @stop

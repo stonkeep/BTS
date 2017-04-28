@@ -17,10 +17,15 @@ Route::get('/', function () {
 
 //Route::group(['middleware' => 'auth'], function () {
 //Premios
-    Route::post('/premio-vigencia/store', 'VigenciasPremioController@store');
-    Route::get('/premios/', 'VigenciasPremioController@show');
-    Route::delete('/premios/delete/{premio}', 'VigenciasPremioController@destroy');
+Route::get('/premios/insert', function () {
+    return view('premios.create');
+});
+    Route::post('/premios/create', 'VigenciasPremioController@store');
+    Route::get('/premios/', 'VigenciasPremioController@index');
+    Route::get('/premios/delete/{premio}', 'VigenciasPremioController@destroy');
     Route::put('/premios/update/{premio}', 'VigenciasPremioController@update');
+Route::get('/premios/edit/{premio}', 'TemasController@edit');
+
 
 //Temas
     Route::get('/temas/insert', function () {

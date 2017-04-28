@@ -11305,6 +11305,7 @@ Vue.component('publicoalvo', __webpack_require__(49));
 Vue.component('subtema', __webpack_require__(51));
 Vue.component('tecnologia', __webpack_require__(52));
 Vue.component('categoria', __webpack_require__(46));
+Vue.component('premio', __webpack_require__(75));
 
 var app = new Vue({
   el: '#app'
@@ -46943,6 +46944,197 @@ module.exports = function(module) {
 __webpack_require__(13);
 module.exports = __webpack_require__(14);
 
+
+/***/ }),
+/* 66 */,
+/* 67 */,
+/* 68 */,
+/* 69 */,
+/* 70 */,
+/* 71 */,
+/* 72 */,
+/* 73 */,
+/* 74 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vform__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vform___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vform__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            // Create a new form instance
+            form: new __WEBPACK_IMPORTED_MODULE_0_vform__["Form"]({
+                nome: ''
+            })
+        };
+    },
+
+    props: ['id', 'nome'],
+    mounted: function mounted() {
+        console.log('Component mounted.');
+        this.form.nome = this.nome;
+    },
+
+    methods: {
+        submit: function submit() {
+            // Submit the form via a POST request
+            var location = window.location.href;
+            if (location.indexOf("edit") > -1) {
+                this.form.put('/temas/update/' + this.id).then(function (_ref) {
+                    var data = _ref.data;
+
+                    window.location.href = '/temas';
+                });
+            } else {
+                this.form.post('/temas/create').then(function (_ref2) {
+                    var data = _ref2.data;
+
+                    window.location.href = '/temas';
+                });
+            }
+        }
+    }
+
+});
+
+/***/ }),
+/* 75 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(2)(
+  /* script */
+  __webpack_require__(74),
+  /* template */
+  __webpack_require__(76),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\BTS\\resources\\assets\\js\\components\\Premio.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Premio.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-429c6679", Component.options)
+  } else {
+    hotAPI.reload("data-v-429c6679", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 76 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "container"
+  }, [_c('form', {
+    staticClass: "form-horizontal",
+    on: {
+      "submit": function($event) {
+        $event.preventDefault();
+        _vm.submit($event)
+      },
+      "keydown": function($event) {
+        _vm.form.errors.clear($event.target.name)
+      }
+    }
+  }, [_c('alert-error', {
+    attrs: {
+      "form": _vm.form
+    }
+  }), _vm._v(" "), _c('div', {
+    staticClass: "form-group",
+    class: {
+      'has-error': _vm.form.errors.has('nome')
+    }
+  }, [_c('label', {
+    staticClass: "col-md-3 control-label",
+    attrs: {
+      "for": "nome"
+    }
+  }, [_vm._v("nome")]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.form.nome),
+      expression: "form.nome"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "nome",
+      "name": "nome",
+      "id": "nome"
+    },
+    domProps: {
+      "value": (_vm.form.nome)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.form.nome = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('has-error', {
+    attrs: {
+      "form": _vm.form,
+      "field": "nome"
+    }
+  })], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "disabled": _vm.form.busy,
+      "type": "submit",
+      "name": "enviar"
+    }
+  }, [_vm._v("Enviar")])])], 1)])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-429c6679", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

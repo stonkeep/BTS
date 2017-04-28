@@ -15,7 +15,9 @@ class VigenciasPremioController extends Controller
      */
     public function index()
     {
-        //
+        $premios = VigenciasPremio::all();
+
+        return view('premios.show', compact('premios'));
     }
 
     /**
@@ -55,9 +57,7 @@ class VigenciasPremioController extends Controller
     public function show(VigenciasPremio $vigenciasPremio)
     {
       
-        $premios = VigenciasPremio::all();
 
-        return view('premios.show', compact('premios'));
     }
 
     /**

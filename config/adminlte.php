@@ -156,7 +156,11 @@ return [
             'url'         => 'tecnologias',
             'icon'        => 'file',
         ],
-
+        [
+            'text'        => 'Premios',
+            'url'         => 'premios',
+            'icon'        => 'file',
+        ],
 
 
 //        'ACCOUNT SETTINGS',

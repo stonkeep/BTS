@@ -100,7 +100,6 @@ class TestTecnologia extends TestCase
         self::assertEquals($tecnologia->titulo, 'Outro teste');
 
     }
-    //TODO teste delete
     /** @test */
     public function teste_delete()
     {
@@ -116,7 +115,6 @@ class TestTecnologia extends TestCase
 
     }
 
-    //TODO teste validações
     /** @test */
     public function teste_validacoes_vazio()
     {
