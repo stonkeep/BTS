@@ -30,14 +30,7 @@ class EnderecoEletronico extends Model
                 'link.*' => 'required',
                 'tecnologias_id.*' => 'required|exists:tecnologias,id',
             ], $messages);
-        //foreach ($datas as $data) {
-        //    
-        //    $validator = Validator::make($data, [
-        //        'link' => 'required',
-        //        'tecnologias_id' => 'required|exists:tecnologias,id',
-        //    ], $messages);
-        //}
-        
+            
         if ($validator->fails()) {
             return $validator->errors();
         };

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\IstituicaoParceira;
+use App\InstituicaoParceira;
 use Illuminate\Http\Request;
 
-class IstituicaoParceiraController extends Controller
+class InstituicaoParceiraController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class IstituicaoParceiraController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\IstituicaoParceira  $istituicaoParceira
+     * @param  \App\InstituicaoParceira  $instituicaoParceira
      * @return \Illuminate\Http\Response
      */
-    public function show(IstituicaoParceira $istituicaoParceira)
+    public function show(InstituicaoParceira $instituicaoParceira)
     {
         //
     }
@@ -52,10 +52,10 @@ class IstituicaoParceiraController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\IstituicaoParceira  $istituicaoParceira
+     * @param  \App\InstituicaoParceira  $instituicaoParceira
      * @return \Illuminate\Http\Response
      */
-    public function edit(IstituicaoParceira $istituicaoParceira)
+    public function edit(InstituicaoParceira $instituicaoParceira)
     {
         //
     }
@@ -64,10 +64,10 @@ class IstituicaoParceiraController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\IstituicaoParceira  $istituicaoParceira
+     * @param  \App\InstituicaoParceira  $instituicaoParceira
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, IstituicaoParceira $istituicaoParceira)
+    public function update(Request $request, InstituicaoParceira $instituicaoParceira)
     {
         //
     }
@@ -75,10 +75,10 @@ class IstituicaoParceiraController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\IstituicaoParceira  $istituicaoParceira
+     * @param  \App\InstituicaoParceira  $instituicaoParceira
      * @return \Illuminate\Http\Response
      */
-    public function destroy(IstituicaoParceira $istituicaoParceira)
+    public function destroy(InstituicaoParceira $instituicaoParceira)
     {
         //
     }

@@ -44,7 +44,7 @@ class Tecnologia extends Model
         return $this->hasOne(Temas::class);
     }
 
-    public function temaSecundario($temaSecundario_id)
+    public function temaSecundario()
     {
         return $this->hasOne(Temas::class);
     }
@@ -57,5 +57,10 @@ class Tecnologia extends Model
     public function categoria()
     {
         return $this->hasOne(Categoria::class);
+    }
+
+    public function instituicoesParceiras()
+    {
+        return $this->hasMany(InstituicaoParceira::class);
     }
 }

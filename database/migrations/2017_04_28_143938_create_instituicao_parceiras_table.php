@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIstituicaoParceirasTable extends Migration
+class CreateInstituicaoParceirasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class CreateIstituicaoParceirasTable extends Migration
      */
     public function up()
     {
-        Schema::create('istituicao_parceiras', function (Blueprint $table) {
+        Schema::create('instituicao_parceiras', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('nome');
+            $table->text('atuacao')->nullable();
+            $table->unsignedInteger('tecnologia_id');
             $table->timestamps();
         });
     }
@@ -26,6 +29,6 @@ class CreateIstituicaoParceirasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('istituicao_parceiras');
+        Schema::dropIfExists('instituicao_parceiras');
     }
 }
