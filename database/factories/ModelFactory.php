@@ -118,3 +118,14 @@ $factory->define(App\Tecnologia::class, function (Faker\Generator $faker) {
         'instituicaos_id'      => 1,
     ];
 });
+
+$factory->define(App\LocalImplantacao::class, function (Faker\Generator $faker) {
+ 
+    return [
+        'ativo' => true, 
+        'uf_id' => 1,
+        'cidade' => 'Taguatinga',
+        'bairro' => 'norte',
+        'dataImplantacao' => Carbon::today()->format('d-m-Y'),
+    ];
+});

@@ -2,21 +2,32 @@
 
 namespace Tests\Unit;
 
+use App\LocalImplantacao;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\ValidationsFields;
 
 class TestLocal extends TestCase
 {
+    use DatabaseMigrations;
+    use ValidationsFields;
     /**
      * Teste unitário de locais de implantação das TSs
      *
      * @return void
-     * @teste
+     * @test
      */
-    public function testExample()
+    public function teste_create()
     {
-        $this->assertTrue(true);
+        factory(LocalImplantacao::class)->create();
+
+        $local = LocalImplantacao::first();
+
+        $this->assertEquals('Taguatinga', $local->cidade);
+
+        dd();
+        
     }
 
     //TODO teste create
