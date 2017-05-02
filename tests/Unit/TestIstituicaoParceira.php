@@ -108,8 +108,5 @@ class TestIstituicaoParceira extends TestCase
         $resultado = $tecnologia->instituicoesParceiras()->get()->pluck('nome');
         $this->assertCount(3, $resultado);
         $this->assertContains('Universidade3', $resultado);
-        
     }
-    //TODO teste validações
-
 }

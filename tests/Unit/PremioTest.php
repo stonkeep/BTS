@@ -43,18 +43,19 @@ class PremioTest extends TestCase
     /** @test */
     function can_post_a_technology()
     {
-        $this->disableExceptionHandling();
+        //$this->disableExceptionHandling();
 
         $dataAbertura = Carbon::now()->toDateTimeString();
         $dataEncerramento = Carbon::now()->addYear(1)->toDateTimeString();
 
-        $response = $this->json('POST', "/premio-vigencia/store", [
+        $response = $this->json('POST', "/premios/create", [
             'edicao'            => Carbon::now()->year,
             'data_abertura'     => $dataAbertura,
             'data_encerramento' => $dataEncerramento,
             'encerrado'         => false
         ]);
 
+        $response->assertStatus(200);
         //veirifca se foi gravado
         $premio = VigenciasPremio::firstOrFail();
 
@@ -76,23 +77,25 @@ class PremioTest extends TestCase
         $dataAbertura = Carbon::now()->toDateTimeString();
         $dataEncerramento = Carbon::now()->addYear(1)->toDateTimeString();
 
-        $this->json('POST', "/premio-vigencia/store", [
+        $this->json('POST', "/premios/create", [
             'edicao'            => Carbon::now()->year,
             'data_abertura'     => $dataAbertura,
             'data_encerramento' => $dataEncerramento,
             'encerrado'         => false
         ]);
 
-        $this->response = $this->json('POST', "/premio-vigencia/store", [
+        //Verifica duplicação de premio
+        $this->response = $this->json('POST', "/premios/create", [
             'edicao'            => Carbon::now()->year,
             'data_abertura'     => $dataAbertura,
             'data_encerramento' => $dataEncerramento,
             'encerrado'         => false
         ]);
 
+        
         $this->assertValidationError('edicao');
 
-        $this->response = $this->json('POST', "/premio-vigencia/store", [
+        $this->response = $this->json('POST', "/premios/create", [
             'edicao'            => Carbon::now()->year,
             //'data_encerramento' => $dataEncerramento,
             'encerrado'         => false

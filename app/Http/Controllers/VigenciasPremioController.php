@@ -44,6 +44,7 @@ class VigenciasPremioController extends Controller
         ]);
         
         VigenciasPremio::create($request->all());
+        
         $premios = VigenciasPremio::all();
         return view('premios.show', compact('premios'));
     }

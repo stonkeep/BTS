@@ -78,7 +78,7 @@ class CargosTest extends TestCase
     /** @test */
     function testa_delete_de_cargo()
     {
-        //$this->disableExceptionHandling();
+        $this->disableExceptionHandling();
 
         $this->json('POST', "cargos/create", [
             'descricao' => 'Técnico',
