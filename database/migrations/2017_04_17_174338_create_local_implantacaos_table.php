@@ -16,10 +16,11 @@ class CreateLocalImplantacaosTable extends Migration
         Schema::create('local_implantacaos', function (Blueprint $table) {
             $table->increments('id');
             $table->boolean('ativo')->default(false);
-            $table->unsignedInteger('uf_id');
+            $table->string('uf', 2);
             $table->string('cidade');
             $table->string('bairro');
             $table->date('dataImplantacao');
+            $table->unsignedInteger('tecnologia_id');
             $table->timestamps();
         });
     }
