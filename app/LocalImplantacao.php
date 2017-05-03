@@ -8,4 +8,9 @@ class LocalImplantacao extends Model
 {
 
     protected $guarded = [];
+
+    public function tecnologia()
+    {
+        $this->belongsTo(Tecnologia::class);
+    }
 }

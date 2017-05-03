@@ -105,6 +105,7 @@
             </div>
 
 
+            <!--Tema principal-->
             <div class="form-group" :class="{ 'has-error': form.errors.has('tema_id') }">
                 <label for="tema_id" class="col-md-3 control-label">Tema: </label>
                 <div class="col-md-6">
@@ -116,13 +117,23 @@
                     <has-error :form="form" field="tema_id"></has-error>
                 </div>
             </div>
-            <!--TODO SUBTEMAS-->
-            <div class="form-group" :class="{ 'has-error': form.errors.has('tema_id') }">
-                <button type="button" class="btn btn-default">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true" style="color:green"></span> Adiciona
-                </button>
+
+            <!--Sub tema 1-->
+            <div class="form-group" :class="{ 'has-error': form.errors.has('subtema1') }">
+                <label for="subtema1" class="col-md-3 control-label">Sub-Temas:</label>
+                <div class="col-md-6">
+                    <select class="form-control" v-model="form.subtema1" name="subtema1" multiple>
+                        <option v-for="subtema1 in subtemas1" v-bind:value="subtema1.id">
+                            {{ subtema1.descricao }}
+                        </option>
+                    </select>
+                    <has-error :form="form" field="subtema1"></has-error>
+                    <p>Hold down the Ctrl (windows) / Command (Mac) button to select multiple options.</p>
+
+                </div>
             </div>
 
+            <!--Tema secundário-->
             <div class="form-group" :class="{ 'has-error': form.errors.has('temaSecundario_id') }">
                 <label for="temaSecundario_id" class="col-md-3 control-label">Tema Secundário: </label>
                 <div class="col-md-6">
@@ -134,8 +145,21 @@
                     <has-error :form="form" field="temaSecundario_id"></has-error>
                 </div>
             </div>
-            <!--TODO SUBTEMAS-->
 
+            <!--Sub Tema 2-->
+            <div class="form-group" :class="{ 'has-error': form.errors.has('subtema2') }">
+                <label for="subtema2" class="col-md-3 control-label">Sub-Temas:</label>
+                <div class="col-md-6">
+                    <select class="form-control" v-model="form.subtema2" name="subtema2" multiple>
+                        <option v-for="subtema2 in subtemas2" v-bind:value="subtema2.id">
+                            {{ subtema2.descricao }}
+                        </option>
+                    </select>
+                    <has-error :form="form" field="subtema2"></has-error>
+                    <p>Hold down the Ctrl (windows) / Command (Mac) button to select multiple options.</p>
+
+                </div>
+            </div>
 
             <div class="form-group" :class="{ 'has-error': form.errors.has('problema') }">
                 <label for="problema" class="col-md-3 control-label">Problema: </label>
@@ -250,6 +274,8 @@
     export default {
         data () {
             return {
+                subtemas1: [],
+                subtemas2: [],
                 // Create a new form instance
                 form: new Form({
                     id: this.tecnologia.id,
@@ -263,7 +289,9 @@
                     categoria_id: this.tecnologia.categoria_id,
                     resumo: this.tecnologia.resumo,
                     tema_id: this.tecnologia.tema_id,
+                    subtema1: [],
                     temaSecundario_id: this.tecnologia.temaSecundario_id,
+                    subtema2: [],
                     problema: this.tecnologia.problema,
                     objetivoGeral: this.tecnologia.objetivoGeral,
                     objetivoEspecifico: this.tecnologia.objetivoEspecifico,
@@ -277,11 +305,10 @@
 //                    TODO Nao esquecer de tirar depois
                     instituicaos_id: 1,
                 })
-            }
+            };
         },
         props: ['tecnologia', 'categorias', 'temas'],
         mounted() {
-            console.log(this.tecnologia);
         },
         methods: {
             submit () {
@@ -298,9 +325,21 @@
                             window.location.href = '/tecnologias'
                         })
                 }
-
             },
-        }
+
+        },
+        watch: {
+            'form.tema_id': function (val, oldVal) {
+                axios.get('../api/subtemas/' + this.form.tema_id)
+                    .then(response => this.subtemas1 = response.data)
+                    .catch(error => console.log(error));
+            },
+            'form.temaSecundario_id': function (val, oldVal) {
+                axios.get('../api/subtemas/' + this.form.temaSecundario_id)
+                    .then(response => this.subtemas2 = response.data)
+                    .catch(error => console.log(error));
+            },
+        },
 
     };
 </script>

@@ -12,6 +12,6 @@ class Temas extends Model
 
     public function subTemas()
     {
-        return $this->hasMany(SubTemas::class);
+        return $this->hasMany(SubTemas::class, 'tema_id', 'id');
     }
 }

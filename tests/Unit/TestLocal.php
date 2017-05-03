@@ -3,6 +3,8 @@
 namespace Tests\Unit;
 
 use App\LocalImplantacao;
+use App\Tecnologia;
+use Carbon\Carbon;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -20,17 +22,20 @@ class TestLocal extends TestCase
      */
     public function teste_create()
     {
-        factory(LocalImplantacao::class)->create();
+        $tecnologia = factory(Tecnologia::class)->create();
+        $tecnologia->locais()->create([
+            'ativo' => true,
+            'uf_id' => 1,
+            'cidade' => 'Taguatinga',
+            'bairro' => 'norte',
+            'dataImplantacao' => Carbon::today()->format('d-m-Y'),
+        ]);
 
         $local = LocalImplantacao::first();
 
         $this->assertEquals('Taguatinga', $local->cidade);
-
-        dd();
-        
     }
 
-    //TODO teste create
     //TODO teste reader
     //TODO teste update
     //TODO teste delete

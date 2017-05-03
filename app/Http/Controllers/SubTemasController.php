@@ -28,7 +28,7 @@ class SubTemasController extends Controller
     public function create()
     {
         $temas = Temas::all()->toJson();
-        $subTema = new SubTemas();
+        $subTema = new SubTemas;
 
         return view('subTemas.create', compact('temas', 'subTema'));
     }
@@ -68,8 +68,6 @@ class SubTemasController extends Controller
      */
     public function show(SubTemas $subTemas)
     {
-        $subTemas = SubTemas::all();
-        return view('subTemas.show', compact('subTemas'));
     }
 
     /**

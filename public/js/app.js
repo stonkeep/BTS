@@ -12873,11 +12873,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
+            subtemas1: [],
+            subtemas2: [],
             // Create a new form instance
             form: new __WEBPACK_IMPORTED_MODULE_0_vform__["Form"]({
                 id: this.tecnologia.id,
@@ -12891,7 +12917,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 categoria_id: this.tecnologia.categoria_id,
                 resumo: this.tecnologia.resumo,
                 tema_id: this.tecnologia.tema_id,
+                subtema1: [],
                 temaSecundario_id: this.tecnologia.temaSecundario_id,
+                subtema2: [],
                 problema: this.tecnologia.problema,
                 objetivoGeral: this.tecnologia.objetivoGeral,
                 objetivoEspecifico: this.tecnologia.objetivoEspecifico,
@@ -12909,9 +12937,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     props: ['tecnologia', 'categorias', 'temas'],
-    mounted: function mounted() {
-        console.log(this.tecnologia);
-    },
+    mounted: function mounted() {},
 
     methods: {
         submit: function submit() {
@@ -12930,6 +12956,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     window.location.href = '/tecnologias';
                 });
             }
+        }
+    },
+    watch: {
+        'form.tema_id': function formTema_id(val, oldVal) {
+            var _this = this;
+
+            axios.get('../api/subtemas/' + this.form.tema_id).then(function (response) {
+                return _this.subtemas1 = response.data;
+            }).catch(function (error) {
+                return console.log(error);
+            });
+        },
+        'form.temaSecundario_id': function formTemaSecundario_id(val, oldVal) {
+            var _this2 = this;
+
+            axios.get('../api/subtemas/' + this.form.temaSecundario_id).then(function (response) {
+                return _this2.subtemas2 = response.data;
+            }).catch(function (error) {
+                return console.log(error);
+            });
         }
     }
 
@@ -36832,9 +36878,50 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })], 1)]), _vm._v(" "), _c('div', {
     staticClass: "form-group",
     class: {
-      'has-error': _vm.form.errors.has('tema_id')
+      'has-error': _vm.form.errors.has('subtema1')
     }
-  }, [_vm._m(0)]), _vm._v(" "), _c('div', {
+  }, [_c('label', {
+    staticClass: "col-md-3 control-label",
+    attrs: {
+      "for": "subtema1"
+    }
+  }, [_vm._v("Sub-Temas:")]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6"
+  }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.form.subtema1),
+      expression: "form.subtema1"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "name": "subtema1",
+      "multiple": ""
+    },
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.form.subtema1 = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, _vm._l((_vm.subtemas1), function(subtema1) {
+    return _c('option', {
+      domProps: {
+        "value": subtema1.id
+      }
+    }, [_vm._v("\n                        " + _vm._s(subtema1.descricao) + "\n                    ")])
+  })), _vm._v(" "), _c('has-error', {
+    attrs: {
+      "form": _vm.form,
+      "field": "subtema1"
+    }
+  }), _vm._v(" "), _c('p', [_vm._v("Hold down the Ctrl (windows) / Command (Mac) button to select multiple options.")])], 1)]), _vm._v(" "), _c('div', {
     staticClass: "form-group",
     class: {
       'has-error': _vm.form.errors.has('temaSecundario_id')
@@ -36880,6 +36967,52 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "field": "temaSecundario_id"
     }
   })], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "form-group",
+    class: {
+      'has-error': _vm.form.errors.has('subtema2')
+    }
+  }, [_c('label', {
+    staticClass: "col-md-3 control-label",
+    attrs: {
+      "for": "subtema2"
+    }
+  }, [_vm._v("Sub-Temas:")]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6"
+  }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.form.subtema2),
+      expression: "form.subtema2"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "name": "subtema2",
+      "multiple": ""
+    },
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.form.subtema2 = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, _vm._l((_vm.subtemas2), function(subtema2) {
+    return _c('option', {
+      domProps: {
+        "value": subtema2.id
+      }
+    }, [_vm._v("\n                        " + _vm._s(subtema2.descricao) + "\n                    ")])
+  })), _vm._v(" "), _c('has-error', {
+    attrs: {
+      "form": _vm.form,
+      "field": "subtema2"
+    }
+  }), _vm._v(" "), _c('p', [_vm._v("Hold down the Ctrl (windows) / Command (Mac) button to select multiple options.")])], 1)]), _vm._v(" "), _c('div', {
     staticClass: "form-group",
     class: {
       'has-error': _vm.form.errors.has('problema')
@@ -37249,22 +37382,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "enviar"
     }
   }, [_vm._v("Enviar")])])], 1)])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('button', {
-    staticClass: "btn btn-default",
-    attrs: {
-      "type": "button"
-    }
-  }, [_c('span', {
-    staticClass: "glyphicon glyphicon-plus",
-    staticStyle: {
-      "color": "green"
-    },
-    attrs: {
-      "aria-hidden": "true"
-    }
-  }), _vm._v(" Adiciona\n            ")])
-}]}
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()

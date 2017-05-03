@@ -34,9 +34,9 @@ class Tecnologia extends Model
         return $this->hasMany(PublicoAtendido::class);
     }
 
-    public function locaisDatas()
+    public function locais()
     {
-        return $this->hasMany(LocalImplantacao::class);
+        return $this->hasMany(LocalImplantacao::class, 'tecnologia_id', 'id');
     }
 
     public function temaPrincipal()
