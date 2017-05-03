@@ -13,8 +13,10 @@ class CreateTecnologiaSubTemas extends Migration
      */
     public function up()
     {
-        Schema::create('TecnologiaSubTemas', function (Blueprint $table) {
+        Schema::create('sub_temas_tecnologia', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('tecnologia_id');
+            $table->unsignedInteger('sub_temas_id');
             $table->timestamps();
 
         });
@@ -27,6 +29,6 @@ class CreateTecnologiaSubTemas extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('TecnologiaSubTemas');
+        Schema::dropIfExists('sub_temas_tecnologia');
     }
 }

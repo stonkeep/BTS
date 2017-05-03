@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Instituicao;
+use App\SubTemas;
 use App\Tecnologia;
 use App\Temas;
 use Tests\TestCase;
@@ -14,6 +15,18 @@ class TestTecnologia extends TestCase
 {
     use DatabaseMigrations;
     use ValidationsFields;
+
+    public function cria_subtema()
+    {
+        $tema = Temas::create([
+            'nome' => 'Alimentação'
+        ]);
+
+        $this->json('POST', "subtemas/create", [
+            'tema_id' => $tema->id,
+            'descricao' => 'Higienização dos alimentos',
+        ]);
+    }
     /**
      * A basic test example.
      *
@@ -188,8 +201,18 @@ class TestTecnologia extends TestCase
         $this->assertValidationError('investimentoFBB');
     }
 
+    /** @test */
+    public function teste_ligacao_tecnologia_com_subtemas()
+    {
+        $tecnologia = factory(Tecnologia::class)->create();
+        $this->cria_subtema();
+        $tecnologia->subtemas()->attach(1);
 
-    //TODO criar ligação hasMany com subtemas
+        $this->assertContains('Higienização dos alimentos', $tecnologia->subtemas->pluck('descricao'));
+    }
+
+
+    //TODO criar ligação hasMany com subtemas (tentar HasMany direto)
     //TODO criar ligação hasMany com subtemas secundarios
     
     //TODO verificar a paginação no Laravel com VueJS

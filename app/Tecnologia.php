@@ -44,6 +44,11 @@ class Tecnologia extends Model
         return $this->hasOne(Temas::class);
     }
 
+    public function subtemas()
+    {
+        return $this->belongsToMany(SubTemas::class);
+    }
+
     public function temaSecundario()
     {
         return $this->hasOne(Temas::class);

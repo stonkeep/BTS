@@ -14,4 +14,9 @@ class SubTemas extends Model
     {
         return $this->belongsTo(Temas::class);
     }
+
+    public function tecnologias()
+    {
+        return $this->belongsToMany(Tecnologia::class);
+    }
 }
