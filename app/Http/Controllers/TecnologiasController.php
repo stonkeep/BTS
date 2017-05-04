@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Categoria;
+use App\Instituicao;
 use App\Tecnologia;
 use App\Temas;
 use Carbon\Carbon;
@@ -63,20 +64,28 @@ class TecnologiasController extends Controller
             'valorEstimado' => 'required',
             'valorHumanos' => 'required',
             'depoimentoLivre' => 'required',
-            'instituicaos_id' => 'required|exists:instituicaos,id',
+            'instituicao_id' => 'required|exists:instituicaos,id',
             'subtema1' => 'required|exists:sub_temas,id',
             'subtema2' => 'required|exists:sub_temas,id',
         ]);
 
+//TODO fazer a validacao para o subtemas sejam diferente um do outro e que o tema também
+        
 //       $request['numeroInscricao'] = Carbon::now()->year . '/' . (Tecnologia::all()->last()->id + 1);
+
+        $instituicaoId = $request['instituicao_id'];
+        $instituicao = Instituicao::find($instituicaoId);
+
+        
+        
         $id = Tecnologia::max('id');
         $id = ($id==null) ? 1 : $id;
         if (is_null($request['numeroInscricao'])) {
             $request['numeroInscricao'] = Carbon::now()->year . '/' . ($id + 1);
         }
 
-        $input = $request->except(['subtema1', 'subtema2']);
-        $tecnologia = Tecnologia::create($input);
+        $input = $request->except(['subtema1', 'subtema2', 'instituicao_id']);
+        $tecnologia = $instituicao->tecnologias()->create($input);
 
         //Grava os subtemas principais
         $inputs = $request->only('subtema1');

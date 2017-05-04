@@ -259,7 +259,7 @@ class TestTecnologia extends TestCase
             "valorEstimado"        => "sdasdsa",
             "valorHumanos"         => "asd",
             "depoimentoLivre"      => "asda",
-            "instituicaos_id"      => 1
+            "instituicao_id"      => 1
         ];
         
         $response = $this->json('POST', "tecnologias/create", $data);
@@ -269,11 +269,12 @@ class TestTecnologia extends TestCase
         $this->assertEquals('dasdas', $tecnologia->titulo);
         
         $subtemas = $tecnologia->subtemas;
-        $this->assertCount(3, $subtemas);
+        $this->assertEquals('Alimentação Escolar', $subtemas->find(1)->descricao);
+        $this->assertEquals('Higienização dos Alimentos', $subtemas->find(2)->descricao);
                 
     }
-
-
+    //TODO criar ligação hasMany com subtemas (tentar HasMany direto)
+    //TODO criar ligação hasMany com subtemas secundarios
 
     //TODO verificar a paginação no Laravel com VueJS
 }
