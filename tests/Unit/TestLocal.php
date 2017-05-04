@@ -60,8 +60,78 @@ class TestLocal extends TestCase
 
         $this->assertEquals('GO', $local->uf);
     }
-    //TODO teste update
-    //TODO teste delete
-    //TODO teste list
-    //TODO teste validações
+    
+    /** @test */
+    function teste_delete()
+    {
+        $this->criaLocal();
+        $tecnologia = Tecnologia::first();
+
+        $locais = LocalImplantacao::where('id', $tecnologia->id)->get();
+        $locais->first()->delete();
+
+        $this->assertEmpty($tecnologia->locais);
+    }
+    
+    /** @test */
+    function teste_validacao()
+    {
+        $tecnologia = factory(Tecnologia::class)->create();
+        $datas = 
+            [
+                'ativo'           => '',
+                'uf'              => '',
+                'cidade'          => '',
+                'bairro'          => '',
+                'dataImplantacao' => '',
+        ];
+
+        $valida = LocalImplantacao::valida($tecnologia, $datas);
+        $valida = $valida->toArray();
+        
+        $this->assertArrayHasKey('ativo', $valida);
+        $this->assertArrayHasKey('uf', $valida);
+        $this->assertArrayHasKey('cidade', $valida);
+        $this->assertArrayHasKey('bairro', $valida);
+        $this->assertArrayHasKey('dataImplantacao', $valida);
+
+        $datas =
+            [
+                'ativo' => true,
+                'uf' => 'DF',
+                'cidade' => 'Brasília',
+                'bairro' => 'Asa norte',
+                'dataImplantacao' => Carbon::today()->format('Y'),
+            ];
+        $valida = LocalImplantacao::valida($tecnologia, $datas);
+        $valida = $valida->toArray();
+        $this->assertArrayHasKey('dataImplantacao', $valida);
+        
+       
+    }
+    /** @test */
+    function teste_validacao_array()
+    {
+        $tecnologia = factory(Tecnologia::class)->create();
+        
+        $datas = [
+            [
+                'ativo' => true,
+                'uf' => 'DF',
+                'cidade' => 'Brasília',
+                'bairro' => 'Asa norte',
+                'dataImplantacao' => Carbon::today()->format('Y'),
+            ],
+            [
+                'ativo' => true,
+                'uf' => 'GO',
+                'cidade' => 'taguatinga',
+                'bairro' => 'Asa norte',
+                'dataImplantacao' => Carbon::today()->format('m-d-Y'),
+            ],
+        ];
+        $valida = LocalImplantacao::valida($tecnologia, $datas);
+        $valida = $valida->toArray();
+        $this->assertArrayHasKey('dataImplantacao', $valida);
+    }
 }
