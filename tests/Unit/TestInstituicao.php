@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Cargos;
 use App\Instituicao;
 use App\NaturezasJuridicas;
+use App\Tecnologia;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -252,5 +253,43 @@ class TestInstituicao extends TestCase
 //        $this->assertValidationError('cargo_id');
     }
 
+    /** @test */
+    function testa_relacionamento_com_tecnologia()
+    {
+        $instituicao = factory(Instituicao::class)->create();
+        //factory(Tecnologia::class)->create();
+        $data = [
+            "numeroInscricao"      => "2017/1",
+            "titulo"               => "dasdas",
+            "fimLucrativo"         => "1",
+            "tempoImplantacao"     => "1",
+            "emAtividade"          => "0",
+            "inscricaoAnterior"    => "0",
+            "investimentoFBB"      => "1",
+            "categoria_id"         => 1,
+            "resumo"               => "dasd",
+            "tema_id"              => 1,
+            //"subtema1"             => [1],
+            "temaSecundario_id"    => 1,
+            //"subtema2"             => [1,2],
+            "problema"             => "das",
+            "objetivoGeral"        => "das",
+            "objetivoEspecifico"   => "dasdas",
+            "descricao"            => "dasd",
+            "resultadosAlcancados" => "asd",
+            "recursosMateriais"    => "s",
+            "valorEstimado"        => "sdasdsa",
+            "valorHumanos"         => "asd",
+            "depoimentoLivre"      => "asda",
+            //"instituicaos_id"      => 1
+        ];
+
+        $instituicao->tecnologias()->create($data);
+        
+        $tecnologia =  $instituicao->tecnologias()->first();
+        $this->assertEquals('2017/1', $tecnologia->numeroInscricao);
+    }
+
+    lte
     //TODO testa relacionamento hasMany
 }

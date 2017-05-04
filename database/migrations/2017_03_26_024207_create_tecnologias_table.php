@@ -35,7 +35,7 @@ class CreateTecnologiasTable extends Migration
             $table->text('valorEstimado'); //Valor estimando para implementação de uma unidade da tecnologia social
             $table->text('valorHumanos'); //Recursos Humanos para implementação da tecnologia de uma unidade de TS
             $table->text('depoimentoLivre');
-            $table->unsignedInteger('instituicaos_id');
+            $table->unsignedInteger('instituicao_id');
             $table->timestamps();
         });
     }
