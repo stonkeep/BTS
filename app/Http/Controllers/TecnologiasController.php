@@ -64,14 +64,32 @@ class TecnologiasController extends Controller
             'valorHumanos' => 'required',
             'depoimentoLivre' => 'required',
             'instituicaos_id' => 'required|exists:instituicaos,id',
+            'subtema1' => 'required|exists:sub_temas,id',
+            'subtema2' => 'required|exists:sub_temas,id',
         ]);
 
 //       $request['numeroInscricao'] = Carbon::now()->year . '/' . (Tecnologia::all()->last()->id + 1);
+        $id = Tecnologia::max('id');
+        $id = ($id==null) ? 1 : $id;
         if (is_null($request['numeroInscricao'])) {
-            $request['numeroInscricao'] = Carbon::now()->year . '/' . (Tecnologia::all()->last()->id + 1);
+            $request['numeroInscricao'] = Carbon::now()->year . '/' . ($id + 1);
         }
 
-        Tecnologia::create($request->all());
+        $input = $request->except(['subtema1', 'subtema2']);
+        $tecnologia = Tecnologia::create($input);
+
+        //Grava os subtemas principais
+        $inputs = $request->only('subtema1');
+        foreach ($inputs as $input) {
+            $tecnologia->subtemas()->attach($input);
+        }
+        
+        //Grava os subtemas secundários 
+        $inputs = $request->only('subtema2');
+        foreach ($inputs as $input) {
+            $tecnologia->subtemas()->attach($input);
+        }
+        
     }
 
     /**

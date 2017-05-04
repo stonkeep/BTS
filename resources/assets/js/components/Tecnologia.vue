@@ -2,6 +2,8 @@
     <div class="container">
         <form @submit.prevent="submit" @keydown="form.errors.clear($event.target.name)" class="form-horizontal">
             <alert-error :form="form"></alert-error>
+            <alert-errors :form="form" message="There were some problems with your input."></alert-errors>
+
 
 
             <div class="form-group" :class="{ 'has-error': form.errors.has('titulo') }">
@@ -39,7 +41,7 @@
 
 
             <div class="form-group" :class="{ 'has-error': form.errors.has('emAtividade') }">
-                <label for="titulo" class="col-md-3 control-label">Em Atividade:</label>
+                <label for="emAtividade" class="col-md-3 control-label">Em Atividade:</label>
                 <div class="col-md-6">
                     <input type="radio" name="emAtividade" id="emAtividadeNao" value="0" v-model="form.emAtividade">
                     <label for="emAtividadeNao">Sim</label>
@@ -52,7 +54,7 @@
 
 
             <div class="form-group" :class="{ 'has-error': form.errors.has('inscricaoAnterior') }">
-                <label for="titulo" class="col-md-3 control-label">Iscrições Anteriores:</label>
+                <label for="inscricaoAnterior" class="col-md-3 control-label">Iscrições Anteriores:</label>
                 <div class="col-md-6">
                     <input type="radio" name="inscricaoAnterior" id="inscricaoAnteriorNao" value="0"
                            v-model="form.inscricaoAnterior">
@@ -66,7 +68,7 @@
             </div>
 
             <div class="form-group" :class="{ 'has-error': form.errors.has('investimentoFBB') }">
-                <label for="titulo" class="col-md-3 control-label">Ja contou com investimento da FBB?:</label>
+                <label for="investimentoFBB" class="col-md-3 control-label">Ja contou com investimento da FBB?:</label>
                 <div class="col-md-6">
                     <input type="radio" name="investimentoFBB" id="investimentoFBBNao" value="0"
                            v-model="form.investimentoFBB">
