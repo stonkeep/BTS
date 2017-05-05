@@ -116,6 +116,9 @@ Route::get('/premios/edit/{premio}', 'TemasController@edit');
     Route::put('tecnologias/update/{tecnologia}', 'TecnologiasController@update');
     Route::get('tecnologias/edit/{tecnologia}', 'TecnologiasController@edit');
 //});
+Route::get('usu', function (){
+    return view('users.show');
+});
 
 //----------------------------------------------------------------------------------------------------------
 
