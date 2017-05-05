@@ -13,7 +13,7 @@ class TecnologiaSeeder extends Seeder
      */
     public function run()
     {
-        factory(Instituicao::class)->create();
+//        factory(Instituicao::class)->create();
         factory(Tecnologia::class)->create();
     }
 }

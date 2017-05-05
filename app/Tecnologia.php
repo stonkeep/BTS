@@ -11,7 +11,7 @@ class Tecnologia extends Model
 
     public function instituicao()
     {
-        return $this->belongsTo(Instituicao::class, 'instituicaos_id', 'id');
+        return $this->belongsTo(Instituicao::class, 'instituicao_id', 'id');
     }
 
     public function enderecosEletronico()

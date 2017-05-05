@@ -33,7 +33,7 @@
             <div class="form-group" :class="{ 'has-error': form.errors.has('tempoImplantacao') }">
                 <label for="tempoImplantacao" class="col-md-3 control-label">Tempo de implantação</label>
                 <div class="col-md-6">
-                    <input type="number" name="tempoImplantacao" id="tempoImplantacao" value="0"
+                    <input type="number" name="tempoImplantacao" id="tempoImplantacao"
                            v-model="form.tempoImplantacao">
                     <has-error :form="form" field="tempoImplantacao"></has-error>
                 </div>
@@ -42,12 +42,12 @@
 
             <div class="form-group" :class="{ 'has-error': form.errors.has('emAtividade') }">
                 <label for="emAtividade" class="col-md-3 control-label">Em Atividade:</label>
-                <div class="col-md-6">
-                    <input type="radio" name="emAtividade" id="emAtividadeNao" value="0" v-model="form.emAtividade">
-                    <label for="emAtividadeNao">Sim</label>
-                    <br>
+                <div class="col-md-6" id="emAtividade">
                     <input type="radio" name="emAtividade" id="emAtividadeSim" value="1" v-model="form.emAtividade">
-                    <label for="emAtividadeSim">Não</label>
+                    <label for="emAtividadeSim">Sim</label>
+                    <br>
+                    <input type="radio" name="emAtividade" id="emAtividadeNao" value="0" v-model="form.emAtividade">
+                    <label for="emAtividadeNao">Não</label>
                     <has-error :form="form" field="emAtividade"></has-error>
                 </div>
             </div>
@@ -55,28 +55,28 @@
 
             <div class="form-group" :class="{ 'has-error': form.errors.has('inscricaoAnterior') }">
                 <label for="inscricaoAnterior" class="col-md-3 control-label">Iscrições Anteriores:</label>
-                <div class="col-md-6">
-                    <input type="radio" name="inscricaoAnterior" id="inscricaoAnteriorNao" value="0"
+                <div class="col-md-6" id="inscricaoAnterior">
+                    <input type="radio" name="inscricaoAnterior" id="inscricaoAnteriorSim" value="1"
                            v-model="form.inscricaoAnterior">
-                    <label for="inscricaoAnteriorNao">Sim</label>
+                    <label for="inscricaoAnteriorSim">Sim</label>
                     <br>
-                    <input type="radio" name="emAtividade" id="inscricaoAnteriorSim" value="1"
-                           v-model="form.inscricaoAnterior">
-                    <label for="inscricaoAnteriorSim">Não</label>
+                    <input type="radio" name="inscricaoAnterior" id="inscricaoAnteriorNao" value="0"
+                    v-model="form.inscricaoAnterior">
+                    <label for="inscricaoAnteriorNao">Não</label>
                     <has-error :form="form" field="inscricaoAnterior"></has-error>
                 </div>
             </div>
 
             <div class="form-group" :class="{ 'has-error': form.errors.has('investimentoFBB') }">
                 <label for="investimentoFBB" class="col-md-3 control-label">Ja contou com investimento da FBB?:</label>
-                <div class="col-md-6">
-                    <input type="radio" name="investimentoFBB" id="investimentoFBBNao" value="0"
-                           v-model="form.investimentoFBB">
-                    <label for="investimentoFBBNao">Sim</label>
-                    <br>
+                <div class="col-md-6" id="investimentoFBB">
                     <input type="radio" name="investimentoFBB" id="investimentoFBBSim" value="1"
                            v-model="form.investimentoFBB">
-                    <label for="investimentoFBBSim">Não</label>
+                    <label for="investimentoFBBSim">Sim</label>
+                    <br>
+                    <input type="radio" name="investimentoFBB" id="investimentoFBBNao" value="0"
+                    v-model="form.investimentoFBB">
+                    <label for="investimentoFBBNao">Não</label>
                     <has-error :form="form" field="investimentoFBB"></has-error>
                 </div>
             </div>
@@ -84,7 +84,7 @@
 
             <div class="form-group" :class="{ 'has-error': form.errors.has('categoria_id') }">
                 <label for="categoria_id" class="col-md-3 control-label">Categoria: </label>
-                <div class="col-md-6">
+                <div class="col-md-6" id="categoria_id">
                     <select class="form-control" v-model="form.categoria_id" name="categoria_id">
                         <option v-for="categoria in categorias" v-bind:value="categoria.id">
                             {{ categoria.descricao }}
@@ -110,7 +110,7 @@
             <!--Tema principal-->
             <div class="form-group" :class="{ 'has-error': form.errors.has('tema_id') }">
                 <label for="tema_id" class="col-md-3 control-label">Tema: </label>
-                <div class="col-md-6">
+                <div class="col-md-6" id="tema_id">
                     <select class="form-control" v-model="form.tema_id" name="tema_id">
                         <option v-for="tema in temas" v-bind:value="tema.id">
                             {{ tema.nome }}
@@ -123,7 +123,7 @@
             <!--Sub tema 1-->
             <div class="form-group" :class="{ 'has-error': form.errors.has('subtema1') }">
                 <label for="subtema1" class="col-md-3 control-label">Sub-Temas:</label>
-                <div class="col-md-6">
+                <div class="col-md-6" id="subtema1">
                     <select class="form-control" v-model="form.subtema1" name="subtema1" multiple>
                         <option v-for="subtema1 in subtemas1" v-bind:value="subtema1.id">
                             {{ subtema1.descricao }}
@@ -138,7 +138,7 @@
             <!--Tema secundário-->
             <div class="form-group" :class="{ 'has-error': form.errors.has('temaSecundario_id') }">
                 <label for="temaSecundario_id" class="col-md-3 control-label">Tema Secundário: </label>
-                <div class="col-md-6">
+                <div class="col-md-6" id="temaSecundario_id">
                     <select class="form-control" v-model="form.temaSecundario_id" name="temaSecundario_id">
                         <option v-for="tema in temas" v-bind:value="tema.id">
                             {{ tema.nome }}
@@ -151,7 +151,7 @@
             <!--Sub Tema 2-->
             <div class="form-group" :class="{ 'has-error': form.errors.has('subtema2') }">
                 <label for="subtema2" class="col-md-3 control-label">Sub-Temas:</label>
-                <div class="col-md-6">
+                <div class="col-md-6" id="subtema2">
                     <select class="form-control" v-model="form.subtema2" name="subtema2" multiple>
                         <option v-for="subtema2 in subtemas2" v-bind:value="subtema2.id">
                             {{ subtema2.descricao }}
@@ -303,9 +303,9 @@
                     valorEstimado: this.tecnologia.valorEstimado,
                     valorHumanos: this.tecnologia.valorHumanos,
                     depoimentoLivre: this.tecnologia.depoimentoLivre,
-//                    instituicaos_id: this.tecnologia.instituicaos_id,
+//                    instituicao_id: this.tecnologia.instituicaos_id,
 //                    TODO Nao esquecer de tirar depois
-                    instituicaos_id: 1,
+                    instituicao_id: 1,
                 })
             };
         },

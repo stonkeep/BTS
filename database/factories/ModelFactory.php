@@ -115,7 +115,7 @@ $factory->define(App\Tecnologia::class, function (Faker\Generator $faker) {
         'valorEstimado'        => ' valor Estimado ',
         'valorHumanos'         => 'valor Humanos',
         'depoimentoLivre'      => 'depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',
-        'instituicaos_id'      => 1,
+        'instituicao_id'      => 1,
     ];
 });
 
