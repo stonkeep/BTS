@@ -12,7 +12,7 @@
     <div>
         <a href="/temas/insert" class="btn btn-primary">NOVO</a>
     </div>
-    <table class="table">
+    <table id="example" class="table">
         <thead class="thead-inverse">
         <tr>
             <th>ID</th>
@@ -35,6 +35,8 @@
 
         </tbody>
     </table>
+
+    <div id="app"> <example></example></div>
 @stop
 
 
@@ -43,5 +45,5 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+
 @stop

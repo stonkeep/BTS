@@ -17,6 +17,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/subtemas/{temas}', function (\App\Temas $temas){
+Route::get('/subtemas/{temas}', function (\App\Temas $temas) {
     return $temas->subTemas()->get();
 });

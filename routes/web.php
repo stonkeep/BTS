@@ -117,7 +117,8 @@ Route::get('/premios/edit/{premio}', 'TemasController@edit');
     Route::get('tecnologias/edit/{tecnologia}', 'TecnologiasController@edit');
 //});
 Route::get('usu', function (){
-    return view('users.show');
+    $categorias = \App\Categoria::all();
+    return view('users.show', compact('categorias'));
 });
 
 //----------------------------------------------------------------------------------------------------------

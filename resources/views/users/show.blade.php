@@ -10,21 +10,24 @@
 
 @section('content')
 
-    @include('layouts.erros')
     <div id="app">
-        {{ csrf_field() }}
-        <my-vuetable></my-vuetable>
 
+        <table-example :categorias="{{$categorias}}"></table-example>
     </div>
 
 @stop
 
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+    {{--<link rel="stylesheet" href="/css/admin_custom.css">--}}
 @stop
 
 @section('js')
-    <!-- Scripts -->
     <script src="/js/app.js"></script>
+    <script>
+
+//        $(document).ready(function () {
+//            $('#example').DataTable();
+//        });
+    </script>
 @stop

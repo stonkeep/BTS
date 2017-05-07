@@ -1,212 +1,153 @@
 <template>
-  <div>
-    <filter-bar></filter-bar>
-    <vuetable ref="vuetable"
-      api-url="http://vuetable.ratiw.net/api/users"
-      :fields="fields"
-      pagination-path=""
-      :css="css.table"
-      :sort-order="sortOrder"
-      :multi-sort="true"
-      detail-row-component="my-detail-row"
-      :append-params="moreParams"
-      @vuetable:cell-clicked="onCellClicked"
-      @vuetable:pagination-data="onPaginationData"
-    ></vuetable> 
-    <div class="vuetable-pagination">
-      <vuetable-pagination-info ref="paginationInfo"
-        info-class="pagination-info"
-      ></vuetable-pagination-info>
-      <vuetable-pagination ref="pagination"
-        :css="css.pagination"
-        :icons="css.icons"
-        @vuetable-pagination:change-page="onChangePage"
-      ></vuetable-pagination>
+    <div>
+        <form id="search">
+            Search <input name="query" v-model="filterKey">
+        </form>
+        <table>
+            <thead>
+            <tr>
+                <th v-for="(val, key) in columns[0]"
+                    @click="sortBy(key)"
+                    :class="{ active: sortKey == key }">
+                    {{key | capitalize }}
+                    <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'"></span>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="linha in filteredData">
+                <td v-for="(val, key) in linha">
+                    {{linha[key]}}
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
-  </div>
 </template>
 
+
 <script>
-import accounting from 'accounting'
-import moment from 'moment'
-import Vuetable from 'vuetable-2/src/components/Vuetable'
-import VuetablePagination from 'vuetable-2/src/components/VuetablePagination'
-import VuetablePaginationInfo from 'vuetable-2/src/components/VuetablePaginationInfo'
-import Vue from 'vue'
-import VueEvents from 'vue-events'
-import CustomActions from './CustomActions'
-import DetailRow from './DetailRow'
-import FilterBar from './FilterBar'
 
-Vue.use(VueEvents)
-Vue.component('custom-actions', CustomActions)
-Vue.component('my-detail-row', DetailRow)
-Vue.component('filter-bar', FilterBar)
+    export default {
+        data () {
+//            this.categorias.forEach(function (key) {
+//                this.sortOrders[key] = 1
+//            });
+            return {
+                sortKey: '',
+//                sortOrders: {},
+                columns: this.categorias,
+                filterKey: '',
+                sortOrders: {id: 1, descricao: 1, created_at: 1, updated_at: 1},
+            }
+        },
+        props: ['categorias'],
+        mounted() {
+//            console.log(Object.keys(this.columns[0]));
+//            let i=0;
+//            Object.keys(this.columns[0]).forEach(function (key) {
+//                this.sortOrders.push = {key: 1};
+//                i++;
+//            });
+        },
+        methods: {
+            sortBy: function (key) {
+                this.sortKey = key;
+                sortOrders.forEach((key) =>
+                    this.sortOrders[key] = 1
+                );
+                this.sortOrders[key] = this.sortOrders[key] * -1;
+            }
+        },
+        filters: {
+            capitalize: function (str) {
+                return str.charAt(0).toUpperCase() + str.slice(1)
+            }
+        },
+        computed: {
+            filteredData: function () {
+                let sortKey = this.sortKey;
+                let filterKey = this.filterKey && this.filterKey.toLowerCase();
+                let order = this.sortOrders[sortKey] || 1;
+                let data = this.columns;
+                if (filterKey) {
+                    data = data.filter(function (row) {
+                        return Object.keys(row).some(function (key) {
+                            return String(row[key]).toLowerCase().indexOf(filterKey) > -1
+                        })
+                    })
+                }
+                if (sortKey) {
+                    data = data.slice().sort(function (a, b) {
+                        a = a[sortKey];
+                        b = b[sortKey];
+                        return (a === b ? 0 : a > b ? 1 : -1) * order
+                    })
+                }
+                return data
+            }
+        },
 
-export default {
-  components: {
-    Vuetable,
-    VuetablePagination,
-    VuetablePaginationInfo,
-  },
-  data () {
-    return {
-      fields: [
-        {
-          name: '__sequence',
-          title: '#',
-          titleClass: 'text-right',
-          dataClass: 'text-right'
-        },
-        {
-          name: '__checkbox',
-          titleClass: 'text-center',
-          dataClass: 'text-center',
-        },
-        {
-          name: 'name',
-          sortField: 'name',
-        },
-        {
-          name: 'email',
-          sortField: 'email'
-        },
-        {
-          name: 'birthdate',
-          sortField: 'birthdate',
-          titleClass: 'text-center',
-          dataClass: 'text-center',
-          callback: 'formatDate|DD-MM-YYYY'
-        },
-        {
-          name: 'nickname',
-          sortField: 'nickname',
-          callback: 'allcap'
-        },
-        {
-          name: 'gender',
-          sortField: 'gender',
-          titleClass: 'text-center',
-          dataClass: 'text-center',
-          callback: 'genderLabel'
-        },
-        {
-          name: 'salary',
-          sortField: 'salary',
-          titleClass: 'text-center',
-          dataClass: 'text-right',
-          callback: 'formatNumber'
-        },
-        {
-          name: '__component:custom-actions',
-          title: 'Actions',
-          titleClass: 'text-center',
-          dataClass: 'text-center'
-        }
-      ],
-      css: {
-        table: {
-          tableClass: 'table table-bordered table-striped table-hover',
-          ascendingIcon: 'glyphicon glyphicon-chevron-up',
-          descendingIcon: 'glyphicon glyphicon-chevron-down'
-        },
-        pagination: {
-          wrapperClass: 'pagination',
-          activeClass: 'active',
-          disabledClass: 'disabled',
-          pageClass: 'page',
-          linkClass: 'link',
-        },
-        icons: {
-          first: 'glyphicon glyphicon-step-backward',
-          prev: 'glyphicon glyphicon-chevron-left',
-          next: 'glyphicon glyphicon-chevron-right',
-          last: 'glyphicon glyphicon-step-forward',
-        },
-      },
-      sortOrder: [
-        { field: 'email', sortField: 'email', direction: 'asc'}
-      ],
-      moreParams: {}
-    }
-  },
-  methods: {
-    allcap (value) {
-      return value.toUpperCase()
-    },
-    genderLabel (value) {
-      return value === 'M'
-        ? '<span class="label label-success"><i class="glyphicon glyphicon-star"></i> Male</span>'
-        : '<span class="label label-danger"><i class="glyphicon glyphicon-heart"></i> Female</span>'
-    },
-    formatNumber (value) {
-      return accounting.formatNumber(value, 2)
-    },
-    formatDate (value, fmt = 'D MMM YYYY') {
-      return (value == null)
-        ? ''
-        : moment(value, 'YYYY-MM-DD').format(fmt)
-    },
-    onPaginationData (paginationData) {
-      this.$refs.pagination.setPaginationData(paginationData)
-      this.$refs.paginationInfo.setPaginationData(paginationData)
-    },
-    onChangePage (page) {
-      this.$refs.vuetable.changePage(page)
-    },
-    onCellClicked (data, field, event) {
-      console.log('cellClicked: ', field.name)
-      this.$refs.vuetable.toggleDetailRow(data.id)
-    },
-  },
-  events: {
-    'filter-set' (filterText) {
-      this.moreParams = {
-        filter: filterText
-      }
-      Vue.nextTick( () => this.$refs.vuetable.refresh() )
-    },
-    'filter-reset' () {
-      this.moreParams = {}
-      Vue.nextTick( () => this.$refs.vuetable.refresh() )
-    }
-  }
-}
+    };
 </script>
 <style>
-.pagination {
-  margin: 0;
-  float: right;
-}
-.pagination a.page {
-  border: 1px solid lightgray;
-  border-radius: 3px;
-  padding: 5px 10px;
-  margin-right: 2px;
-}
-.pagination a.page.active {
-  color: white;
-  background-color: #337ab7;
-  border: 1px solid lightgray;
-  border-radius: 3px;
-  padding: 5px 10px;
-  margin-right: 2px;
-}
-.pagination a.btn-nav {
-  border: 1px solid lightgray;
-  border-radius: 3px;
-  padding: 5px 7px;
-  margin-right: 2px;
-}
-.pagination a.btn-nav.disabled {
-  color: lightgray;
-  border: 1px solid lightgray;
-  border-radius: 3px;
-  padding: 5px 7px;
-  margin-right: 2px;
-  cursor: not-allowed;
-}
-.pagination-info {
-  float: left;
-}
+    body {
+        font-family: Helvetica Neue, Arial, sans-serif;
+        font-size: 14px;
+        color: #444;
+    }
+
+    table {
+        border: 2px solid #42b983;
+        border-radius: 3px;
+        background-color: #fff;
+    }
+
+    th {
+        background-color: #42b983;
+        color: rgba(255, 255, 255, 0.66);
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    td {
+        background-color: #f9f9f9;
+    }
+
+    th, td {
+        min-width: 120px;
+        padding: 10px 20px;
+    }
+
+    th.active {
+        color: #fff;
+    }
+
+    th.active .arrow {
+        opacity: 1;
+    }
+
+    .arrow {
+        display: inline-block;
+        vertical-align: middle;
+        width: 0;
+        height: 0;
+        margin-left: 5px;
+        opacity: 0.66;
+    }
+
+    .arrow.asc {
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        border-bottom: 4px solid #fff;
+    }
+
+    .arrow.dsc {
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        border-top: 4px solid #fff;
+    }
 </style>

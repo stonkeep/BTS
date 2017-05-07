@@ -12,6 +12,8 @@
     <div>
         <a href="/categorias/insert" class="btn btn-primary">NOVO</a>
     </div>
+
+
     <table class="table">
         <thead class="thead-inverse">
         <tr>
@@ -34,13 +36,23 @@
         </tbody>
     </table>
 
+    @include('layouts.erros')
+    {{--<div id="app">--}}
+        {{--{{ csrf_field() }}--}}
+        {{--<table-categorias></table-categorias>--}}
+
+    {{--</div>--}}
+
+
 @stop
 
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.css" media="screen" title="no title" charset="utf-8">
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.js" charset="utf-8"></script>
 @stop
