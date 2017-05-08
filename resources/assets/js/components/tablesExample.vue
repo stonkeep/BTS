@@ -1,66 +1,62 @@
 <template>
     <div class="container">
-        <table id="example" class="display" cellspacing="0" width="100%">
+
+        <table data-toggle="table"
+               data-search="true"
+               data-show-pagination-switch="true"
+               data-search-accent-neutralise="true"
+               data-locale="pt-BR">
             <thead>
             <tr>
-                <th v-for="(val, key) in categorias[0]">
+                <th v-for="(val, key) in data[0]"
+                    :data-field='key'
+                    data-sortable="true">
                     {{key}}
                 </th>
+                <th data-sortable="false"></th>
+                <th data-sortable="false"></th>
             </tr>
+            <!--<tr>-->
+                <!--<th data-field="id" data-sortable="true">Item ID</th>-->
+                <!--<th data-field="descricao" data-sortable="true">descricao</th>-->
+                <!--<th data-sortable="false"></th>-->
+                <!--<th data-sortable="false"></th>-->
+            <!--</tr>-->
+
             </thead>
             <tfoot>
             <tr>
-                <th v-for="(val, key) in categorias[0]">
+                <th v-for="(val, key) in data[0]">
                     {{key}}
                 </th>
             </tr>
             </tfoot>
             <tbody>
-            <tr v-for="linha in categorias">
-                <td v-for="(val, key) in linha">
+            <tr v-for="linha in data">
+                <td v-for="(val, key, index) in linha">
                     {{linha[key]}}
                 </td>
+                <td><a class="btn btn-danger" :href="'/'+tipo+'/delete/' + linha.id">Excluir</a></td>
+                <td><a class="btn btn-success" :href="'/'+tipo+'/edit/' + linha.id">Editar</a></td>
             </tr>
 
             </tbody>
         </table>
+
     </div>
 </template>
 
 <script>
+
     export default {
         data () {
             return {
 //               categorias: [],
-            }
+            };
         },
-        props: ['categorias'],
+        props: ['data', 'tipo'],
         mounted() {
-            $(document).ready(function () {
-                $('#example').DataTable();
 
-//                let table = $('#example').DataTable();
-//                $('input:contains("search")').prevObject["0"].activeElement.id = 'myInput';
-//                // Remove accented character from search input as well
-//                $('#myInput').keyup(function () {
-//                    table
-//                        .search(
-//                            jQuery.fn.DataTable.ext.type.search.string(this.value)
-//                        )
-//                        .draw()
-//                });
-            });
-//            $(document).ready(function () {
-//                let table = $('#example').dataTable();
-//                // Remove accented character from search input as well
-//                $('#myInput').keyup(function () {
-//                    table
-//                        .search(
-//                            jQuery.fn.DataTable.ext.type.search.string(this.value)
-//                        )
-//                        .draw()
-//                });
-//            });
 
         },
     };

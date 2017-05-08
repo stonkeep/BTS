@@ -12,7 +12,6 @@ const {mix} = require('laravel-mix');
  */
 
 mix.js('resources/assets/js/app.js', 'public/js')
-    // .js('resources/assets/js/bootstrap-table/bootstrap-table.js', 'public/js')
-    // .js('resources/assets/js/bootstrap-table/bootstrap-table-locale-all.js', 'public/js')
-    // .js('resources/assets/js/bootstrap-table/extensions/accent-neutralise/bootstrap-table-accent-neutralise.js', 'public/js')
-    .sass('resources/assets/sass/app.scss', 'public/css');
+    .sass('resources/assets/sass/app.scss', 'public/css')
+    .styles('resources/assets/js/bootstrap-table/bootstrap-table.css', 'public/css/all.css');
+
