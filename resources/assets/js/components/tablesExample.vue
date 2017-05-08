@@ -38,6 +38,17 @@
         mounted() {
             $(document).ready(function () {
                 $('#example').DataTable();
+
+//                let table = $('#example').DataTable();
+//                $('input:contains("search")').prevObject["0"].activeElement.id = 'myInput';
+//                // Remove accented character from search input as well
+//                $('#myInput').keyup(function () {
+//                    table
+//                        .search(
+//                            jQuery.fn.DataTable.ext.type.search.string(this.value)
+//                        )
+//                        .draw()
+//                });
             });
 //            $(document).ready(function () {
 //                let table = $('#example').dataTable();
