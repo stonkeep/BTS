@@ -15,6 +15,7 @@ class CreatePublicoAtendidosTable extends Migration
     {
         Schema::create('publico_atendidos', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('descricao');
             $table->timestamps();
         });
     }

@@ -24,4 +24,5 @@ class TestPulicoAtendido extends TestCase
     //TODO teste delete
     //TODO teste list
     //TODO teste validações
+    //TODO seed
 }

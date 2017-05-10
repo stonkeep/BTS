@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class PublicoAtendido extends Model
 {
-    //
+    protected $guarded = [];
 }

@@ -79,6 +79,8 @@ class TestTecnologia extends TestCase
             'resumo'               => 'Resumao',
             'tema_id'              => 1,
             'temaSecundario_id'    => 2,
+            "subtema1"             => [1],
+            "subtema2"             => [1,2],
             'problema'             => 'Problemao',
             'objetivoGeral'        => 'objetivo  Geral',
             'objetivoEspecifico'   => 'objetivo  Especifico',
@@ -88,10 +90,10 @@ class TestTecnologia extends TestCase
             'valorEstimado'        => ' valor Estimado ',
             'valorHumanos'         => 'valor Humanos',
             'depoimentoLivre'      => ' depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',
-            'instituicaos_id'      => 1,
+            'instituicao_id'      => 1,
         ]);
 
-//        $this->assertValidationError('numeroInscricao');
+        //$this->assertValidationError('numeroInscricao');
         $response->assertStatus(200);
 
         $tecnologia = Tecnologia::find(2);
@@ -120,8 +122,9 @@ class TestTecnologia extends TestCase
 
         $tecnologia->titulo = 'Outro teste';
 
-        $response = $this->json('PUT', "tecnologias/update/{$tecnologia->id}", ['titulo' => 'Outro teste']);
+        $response = $this->json('PUT', "tecnologias/update/{$tecnologia->id}", $tecnologia->toArray());
 
+        
         $response->assertStatus(200);
 
         $tecnologia = Tecnologia::firstOrFail();
@@ -134,6 +137,7 @@ class TestTecnologia extends TestCase
     /** @test */
     public function teste_delete()
     {
+        $this->disableExceptionHandling();
         $tecnologia = factory(Tecnologia::class)->create();
 
         $response = $this->get("tecnologias/delete/{$tecnologia->id}");
@@ -174,7 +178,7 @@ class TestTecnologia extends TestCase
             'instituicaos_id'      => '',
         ]);
 
-        $this->assertValidationError('numeroInscricao');
+        //$this->assertValidationError('numeroInscricao');
         $this->assertValidationError('titulo');
         $this->assertValidationError('fimLucrativo');
         $this->assertValidationError('tempoImplantacao');
@@ -194,7 +198,7 @@ class TestTecnologia extends TestCase
         $this->assertValidationError('valorEstimado');
         $this->assertValidationError('valorHumanos');
         $this->assertValidationError('depoimentoLivre');
-        $this->assertValidationError('instituicaos_id');
+        $this->assertValidationError('instituicao_id');
     }
 
 
@@ -205,11 +209,7 @@ class TestTecnologia extends TestCase
 
         //Testa campo unico
         $this->response = $this->json('POST', "tecnologias/create", $tecnologia->toArray());
-        $this->assertValidationError('numeroInscricao');
         $this->assertValidationError('titulo');
-        $this->assertValidationError('tema_id');
-        $this->assertValidationError('temaSecundario_id');
-        $this->assertValidationError('instituicaos_id');
 
         //testa boolean
         $tecnologia->emAtividade = 5;
@@ -228,8 +228,8 @@ class TestTecnologia extends TestCase
         $tecnologia = factory(Tecnologia::class)->create();
         $this->cria_subtema();
         $tecnologia->subtemas()->attach(1);
-
-        $this->assertContains('Higienização dos alimentos', $tecnologia->subtemas->pluck('descricao'));
+        
+        $this->assertContains('Alimentação Escolar', $tecnologia->subtemas->pluck('descricao'));
     }
 
 
@@ -237,6 +237,45 @@ class TestTecnologia extends TestCase
     function teste_sub_tema()
     {
         $this->disableExceptionHandling();
+        $data = [
+            "titulo"               => "dasdas",
+            "fimLucrativo"         => "1",
+            "tempoImplantacao"     => "1",
+            "emAtividade"          => "0",
+            "inscricaoAnterior"    => "0",
+            "investimentoFBB"      => "1",
+            "categoria_id"         => 1,
+            "resumo"               => "dasd",
+            "tema_id"              => 1,
+            "subtema1"             => [1],
+            "temaSecundario_id"    => 2,
+            "subtema2"             => [1,2],
+            "problema"             => "das",
+            "objetivoGeral"        => "das",
+            "objetivoEspecifico"   => "dasdas",
+            "descricao"            => "dasd",
+            "resultadosAlcancados" => "asd",
+            "recursosMateriais"    => "s",
+            "valorEstimado"        => "sdasdsa",
+            "valorHumanos"         => "asd",
+            "depoimentoLivre"      => "asda",
+            "instituicao_id"      => 1
+        ];
+        
+        $response = $this->json('POST', "tecnologias/create", $data);
+        $response->assertStatus(200);
+        
+        $tecnologia = Tecnologia::where('titulo', 'dasdas')->first();
+        $this->assertEquals('dasdas', $tecnologia->titulo);
+        
+        $subtemas = $tecnologia->subtemas;
+        $this->assertEquals('Alimentação Escolar', $subtemas->find(1)->descricao);
+        $this->assertEquals('Higienização dos Alimentos', $subtemas->find(2)->descricao);
+    }
+    
+    /** @test */
+    function temas_nao_podem_ser_os_mesmos()
+    {
         $data = [
             "titulo"               => "dasdas",
             "fimLucrativo"         => "1",
@@ -261,17 +300,11 @@ class TestTecnologia extends TestCase
             "depoimentoLivre"      => "asda",
             "instituicao_id"      => 1
         ];
-        
-        $response = $this->json('POST', "tecnologias/create", $data);
-        $response->assertStatus(200);
-        
-        $tecnologia = Tecnologia::where('titulo', 'dasdas')->first();
-        $this->assertEquals('dasdas', $tecnologia->titulo);
-        
-        $subtemas = $tecnologia->subtemas;
-        $this->assertEquals('Alimentação Escolar', $subtemas->find(1)->descricao);
-        $this->assertEquals('Higienização dos Alimentos', $subtemas->find(2)->descricao);
-                
-    }
+
+        $this->response = $this->json('POST', "tecnologias/create", $data);
+
+        $this->assertValidationError('tema_id');
+        $this->assertValidationError('temaSecundario_id');
+    }   
 
 }

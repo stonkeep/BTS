@@ -53,8 +53,8 @@ class TecnologiasController extends Controller
             'investimentoFBB' => 'required|boolean',
             'categoria_id' => 'required',
             'resumo' => 'required',
-            'tema_id' => 'required|exists:temas,id',
-            'temaSecundario_id' => 'required|exists:temas,id',
+            'tema_id' => 'required|different:temaSecundario_id|exists:temas,id',
+            'temaSecundario_id' => 'required|different:tema_id|exists:temas,id',
             'problema' => 'required',
             'objetivoGeral' => 'required',
             'objetivoEspecifico' => 'required',
@@ -144,8 +144,8 @@ class TecnologiasController extends Controller
             'investimentoFBB' => 'required|boolean',
             'categoria_id' => 'required',
             'resumo' => 'required',
-            'tema_id' => 'required|exists:temas,id',
-            'temaSecundario_id' => 'required|exists:temas,id',
+            'tema_id' => 'required|different:temaSecundario_id|exists:temas,id',
+            'temaSecundario_id' => 'required|different:tema_id|exists:temas,id',
             'problema' => 'required',
             'objetivoGeral' => 'required',
             'objetivoEspecifico' => 'required',
@@ -155,7 +155,7 @@ class TecnologiasController extends Controller
             'valorEstimado' => 'required',
             'valorHumanos' => 'required',
             'depoimentoLivre' => 'required',
-            'instituicaos_id' => 'required|exists:instituicaos,id',
+            'instituicao_id' => 'required|exists:instituicaos,id',
         ]);
 
         $tecnologia->update($request->all());
@@ -172,6 +172,6 @@ class TecnologiasController extends Controller
         $tecnologia->delete();
 
         $tecnologias = Tecnologia::all();
-        return view('tecnologias.show', compact('tecnologia'));
+        return view('tecnologias.show', compact('tecnologias'));
     }
 }
