@@ -74,14 +74,52 @@ class TestVigenciaPremio extends TestCase
 
         $response = $this->get("/premios/delete/{$premio->id}");
 
-        dd($response);
         $response->assertStatus(200);
         $response->assertDontSee('2017');
 
+        $premioVazio = VigenciasPremio::first();
+
+        $this->assertEmpty($premioVazio);
+
     }
-    //TODO teste delete
-    //TODO teste list
-    //TODO teste validações
+    
+    /** @test */
+    function testa_delete()
+    {
+        factory(VigenciasPremio::class)->create();
+
+        VigenciasPremio::create([
+            'edicao'            => '2016',
+            'data_abertura'     => Carbon::now()->toDateTimeString(),
+            'data_encerramento' => Carbon::now()->subYear(1)->toDateTimeString(),
+            'encerrado'         => false
+        ]);
+
+        $response = $this->get('/premios');
+
+        $response->assertStatus(200);
+        $response->assertSee('2016');
+        $response->assertSee('2017');
+    }
+
+    /** @test */
+    function testa_validacoes()
+    {
+        factory(VigenciasPremio::class)->create();
+
+        $data = [
+            'edicao'            => Carbon::now()->year,
+            'data_abertura'     => '',
+            'data_encerramento' => '',
+            'encerrado'         => false
+        ];
+
+         $this->response = $this->json('POST', '/premios/create', $data);
+
+        $this->assertValidationError('edicao');
+        $this->assertValidationError('data_abertura');
+        $this->assertValidationError('data_encerramento');
+    }
 }
 
 
