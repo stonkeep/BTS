@@ -3,9 +3,9 @@
 
         <table data-toggle="table"
                data-search="true"
-               data-show-pagination-switch="true"
                data-search-accent-neutralise="true"
-               data-locale="pt-BR">
+               data-locale="pt-BR"
+               data-pagination="true">
             <thead>
             <tr>
                 <th v-for="(val, key) in data[0]"
@@ -24,13 +24,7 @@
             <!--</tr>-->
 
             </thead>
-            <tfoot>
-            <tr>
-                <th v-for="(val, key) in data[0]">
-                    {{key}}
-                </th>
-            </tr>
-            </tfoot>
+
             <tbody>
             <tr v-for="linha in data">
                 <td v-for="(val, key, index) in linha">

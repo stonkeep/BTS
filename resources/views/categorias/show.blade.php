@@ -12,23 +12,17 @@
     <div>
         <a href="/categorias/insert" class="btn btn-primary">NOVO</a>
     </div>
-
-
     <table data-toggle="table"
            data-search="true"
-           {{--data-show-columns="true"--}}
            data-show-pagination-switch="true"
-           {{--data-show-export="true"--}}
-           {{--data-strict-search="true"--}}
            data-search-accent-neutralise="true"
-           {{--data-show-toggle="true"--}}
            data-locale="pt-BR">
         <thead>
         <tr>
-            <th data-field="id" data-sortable="true">Item ID</th>
-            <th data-field="descricao" data-sortable="true">descricao</th>
-            <th data-field="name" data-sortable="false"></th>
-            <th data-field="price" data-sortable="false"></th>
+            <th  data-sortable="true">Item ID</th>
+            <th data-sortable="true">Descrição</th>
+            <th  data-sortable="false"></th>
+            <th  data-sortable="false"></th>
         </tr>
         </thead>
         <tbody>

@@ -12,20 +12,28 @@
     <div>
         <a href="/subtemas/insert" class="btn btn-primary">NOVO</a>
     </div>
-    <table class="table">
+    <table id="table" data-toggle="table"
+           data-search="true"
+           data-show-columns="true"
+           data-show-refresh="true"
+           data-search-accent-neutralise="true"
+           data-locale="pt-BR"
+           data-pagination="true"
+           data-show-pagination-switch="true">
         <thead class="thead-inverse">
         <tr>
-            <th>ID</th>
-            <th>Descrição</th>
-            <th>Data de encerramento</th>
-            <th>Tema</th>
+            <th data-sortable="true">ID</th>
+            <th data-sortable="true">Descrição</th>
+            <th data-sortable="true">Data de encerramento</th>
+            <th data-sortable="true">Tema</th>
+            <th data-sortable="false"></th>
+            <th data-sortable="false"></th>
         </tr>
         </thead>
         <tbody>
         @foreach($subTemas as $subTema)
-
             <tr>
-                <th scope="row">{{$subTema->id}}</th>
+                <td>{{$subTema->id}}</td>
                 <td>{{$subTema->descricao}}</td>
                 <td>{{$subTema->created_at}}</td>
                 <td>{{$subTema->tema->nome}}</td>
@@ -33,18 +41,42 @@
                 <td><a class="btn btn-success" href="/subtemas/edit/{{$subTema->id}}">Editar</a></td>
             </tr>
         @endforeach
-
         </tbody>
     </table>
+
+    {{--<div id="app">--}}
+    {{--<table-example :data="{{$subTemas}}" :tipo="subtemas"></table-example>--}}
+    {{--</div>--}}
 
 @stop
 
 
 @section('css')
-    {{--<link rel="stylesheet" href="/css/admin_custom.css">--}}
+    <link rel="stylesheet" href="/css/app.css">
+    {{--<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">--}}
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
+
 @stop
 
 @section('js')
-    <!-- Scripts -->
+    {{--<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>--}}
     <script src="/js/app.js"></script>
+    <script>
+        $('#table').bootstrapTable({
+            cache: false,
+            height: 500,
+            striped: true,
+            pagination: true,
+            pageSize: 10,
+            pageList: [All], //list can be specified here
+            searchTimeOut: 10
+        });
+        $('#table').on('show.bs.dropdown', function () {
+            $('#table').css( "overflow", "inherit" );
+        });
+
+        $('#table').on('hide.bs.dropdown', function () {
+            $('#table').css( "overflow", "auto" );
+        })
+    </script>
 @stop
