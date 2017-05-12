@@ -68,9 +68,9 @@ class VigenciasPremioController extends Controller
      * @param  \App\VigenciasPremio  $vigenciasPremio
      * @return \Illuminate\Http\Response
      */
-    public function edit(VigenciasPremio $vigenciasPremio)
+    public function edit(VigenciasPremio $premio)
     {
-        //
+        return view('premios.edit', compact('premio'));
     }
 
     /**
@@ -84,8 +84,9 @@ class VigenciasPremioController extends Controller
     {
         $premio->update($request->all());
 
-        $premios = VigenciasPremio::all();
-        return view('premios.show', compact('premios'));
+
+//        $premios = VigenciasPremio::all();
+//        return view('premios.show', compact('premios'));
     }
 
     /**
@@ -97,5 +98,7 @@ class VigenciasPremioController extends Controller
     public function destroy(VigenciasPremio $premio)
     {
         $premio->delete();
+        $premios = VigenciasPremio::all();
+        return view('premios.show', compact('premios'));
     }
 }

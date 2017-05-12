@@ -42,8 +42,6 @@
                 </div>
             </div>
 
-
-
             <div class="form-group">
                 <button :disabled="form.busy" type="submit" class="btn btn-primary" name="enviar">Enviar</button>
             </div>
@@ -58,10 +56,11 @@
             return {
                 // Create a new form instance
                 form: new Form({
-                    edicao: '',
-                    data_abertura: '',
-                    data_encerramento: '',
-                    encerrado: false,
+                    id: this.premio.id,
+                    edicao: this.premio.edicao,
+                    data_abertura: this.premio.data_abertura,
+                    data_encerramento: this.premio.data_abertura,
+                    encerrado: this.premio.encerrado,
 //                    remember: false
                 })
             }
@@ -76,7 +75,8 @@
                 // Submit the form via a POST request
                 var location = window.location.href;
                 if (location.indexOf("edit") > -1) {
-                    this.form.put('/premios/update/'+ this.id)
+                    console.log(this.form.id);
+                    this.form.put('/premios/update/'+ this.form.id)
                         .then(({data}) => {
                             window.location.href = '/premios'
                         })

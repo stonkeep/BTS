@@ -40,7 +40,7 @@ class TestVigenciaPremio extends TestCase
 
         $response->assertStatus(200);
 
-        dd($response);
+
         $response->assertSee((string)(Carbon::now()->year));
     }
 

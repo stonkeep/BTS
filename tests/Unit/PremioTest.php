@@ -170,8 +170,8 @@ class PremioTest extends TestCase
 
         $response = $response = $this->get('/premios');
         $response->assertStatus(200);
-        $response->assertSee('<th scope="row">2019</th>');
-        $response->assertDontSee('<th scope="row">2018</th>');
+        $response->assertSee('2019</th>');
+        $response->assertDontSee('2018</th>');
 
     }
 

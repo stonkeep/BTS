@@ -26,7 +26,7 @@ Route::get('/premios/insert', function () {
     Route::get('/premios/', 'VigenciasPremioController@index');
     Route::get('/premios/delete/{premio}', 'VigenciasPremioController@destroy');
     Route::put('/premios/update/{premio}', 'VigenciasPremioController@update');
-Route::get('/premios/edit/{premio}', 'TemasController@edit');
+Route::get('/premios/edit/{premio}', 'VigenciasPremioController@edit');
 
 
 //Temas
