@@ -3,14 +3,46 @@
         <form @submit.prevent="submit" @keydown="form.errors.clear($event.target.name)" class="form-horizontal">
             <alert-error :form="form"></alert-error>
 
-            <div class="form-group" :class="{ 'has-error': form.errors.has('nome') }">
-                <label for="nome" class="col-md-3 control-label">nome</label>
+            <div class="form-group" :class="{ 'has-error': form.errors.has('edicao') }">
+                <label for="edicao" class="col-md-3 control-label">Edição: </label>
                 <div class="col-md-6">
-                    <input v-model="form.nome" type="nome" name="nome" id="nome"
+                    <input v-model="form.edicao" type="number" name="edicao" id="edicao"
                            class="form-control">
-                    <has-error :form="form" field="nome"></has-error>
+                    <has-error :form="form" field="edicao"></has-error>
                 </div>
             </div>
+
+
+            <div class="form-group" :class="{ 'has-error': form.errors.has('data_abertura') }">
+                <label for="data_abertura" class="col-md-3 control-label">Data de Abertura: </label>
+                <div class="col-md-6">
+                    <input v-model="form.data_abertura" type="date" name="data_abertura" id="data_abertura"
+                           class="form-control">
+                    <has-error :form="form" field="data_abertura"></has-error>
+                </div>
+            </div>
+
+            <div class="form-group" :class="{ 'has-error': form.errors.has('data_encerramento') }">
+                <label for="data_encerramento" class="col-md-3 control-label">Data de Encerramento: </label>
+                <div class="col-md-6">
+                    <input v-model="form.data_encerramento" type="date" name="data_encerramento" id="data_encerramento"
+                           class="form-control">
+                    <has-error :form="form" field="data_encerramento"></has-error>
+                </div>
+            </div>
+
+
+            <div class="form-group" :class="{ 'has-error': form.errors.has('encerrado') }">
+                <label for="encerrado" class="col-md-3 control-label">Encerrado?: </label>
+                <div class="col-md-6">
+                    <!--<input v-model="form.encerrado" type="checkbox" name="encerrado" id="encerrado"-->
+                           <!--class="form-control">-->
+                    <input v-model="form.encerrado" type="checkbox" name="encerrado" id="encerrado" >
+                    <has-error :form="form" field="encerrado"></has-error>
+                </div>
+            </div>
+
+
 
             <div class="form-group">
                 <button :disabled="form.busy" type="submit" class="btn btn-primary" name="enviar">Enviar</button>
@@ -26,12 +58,15 @@
             return {
                 // Create a new form instance
                 form: new Form({
-                    nome: '',
+                    edicao: '',
+                    data_abertura: '',
+                    data_encerramento: '',
+                    encerrado: false,
 //                    remember: false
                 })
             }
         },
-        props: ['id', 'nome'],
+        props: ['premio'],
         mounted() {
             console.log('Component mounted.');
             this.form.nome = this.nome;
@@ -41,14 +76,14 @@
                 // Submit the form via a POST request
                 var location = window.location.href;
                 if (location.indexOf("edit") > -1) {
-                    this.form.put('/temas/update/'+ this.id)
+                    this.form.put('/premios/update/'+ this.id)
                         .then(({data}) => {
-                            window.location.href = '/temas'
+                            window.location.href = '/premios'
                         })
                 } else {
-                    this.form.post('/temas/create')
+                    this.form.post('/premios/create')
                         .then(({data}) => {
-                            window.location.href = '/temas'
+                            window.location.href = '/premios'
                         })
                 }
 

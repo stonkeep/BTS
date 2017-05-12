@@ -53,7 +53,6 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/app.css">
-    {{--<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">--}}
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
 
 @stop
@@ -71,12 +70,5 @@
             pageList: [All], //list can be specified here
             searchTimeOut: 10
         });
-        $('#table').on('show.bs.dropdown', function () {
-            $('#table').css( "overflow", "inherit" );
-        });
-
-        $('#table').on('hide.bs.dropdown', function () {
-            $('#table').css( "overflow", "auto" );
-        })
     </script>
 @stop

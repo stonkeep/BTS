@@ -17,6 +17,7 @@ class VigenciasPremioController extends Controller
     {
         $premios = VigenciasPremio::all();
 
+
         return view('premios.show', compact('premios'));
     }
 
@@ -38,9 +39,9 @@ class VigenciasPremioController extends Controller
     public function store(Request $request)
     {
         $this->validate(request(), [
-            'edicao' => 'required|unique:vigencias_premios',
-            'data_abertura' => 'required',
-            'data_encerramento' => 'required',
+            'edicao' => 'required|unique:vigencias_premios|date_format:Y',
+            'data_abertura' => 'required|date|after:yesterday',
+            'data_encerramento' => 'required|date|after:yesterday',
         ]);
         
         VigenciasPremio::create($request->all());

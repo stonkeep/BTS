@@ -74,7 +74,7 @@ class TecnologiasController extends Controller
 //       $request['numeroInscricao'] = Carbon::now()->year . '/' . (Tecnologia::all()->last()->id + 1);
 
         $instituicaoId = $request['instituicao_id'];
-        $instituicao = Instituicao::find($instituicaoId);
+        $instituicao = Instituicao::find($instituicaoId); //TODO tratamento de erro
 
         
         
@@ -85,19 +85,21 @@ class TecnologiasController extends Controller
         }
 
         $input = $request->except(['subtema1', 'subtema2', 'instituicao_id']);
-        $tecnologia = $instituicao->tecnologias()->create($input);
+        $tecnologia = $instituicao->tecnologias()->create($input);//TODO tratamento de erro
 
         //Grava os subtemas principais
         $inputs = $request->only('subtema1');
         foreach ($inputs as $input) {
-            $tecnologia->subtemas()->attach($input);
+            $tecnologia->subtemas()->attach($input);//TODO tratamento de erro
         }
         
         //Grava os subtemas secundários 
         $inputs = $request->only('subtema2');
         foreach ($inputs as $input) {
-            $tecnologia->subtemas()->attach($input);
+            $tecnologia->subtemas()->attach($input);//TODO tratamento de erro
         }
+
+        //TODO poderia ser um tratamento de erro geral
         
     }
 
