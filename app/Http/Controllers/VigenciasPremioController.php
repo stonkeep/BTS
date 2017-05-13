@@ -82,9 +82,13 @@ class VigenciasPremioController extends Controller
      */
     public function update(Request $request, VigenciasPremio $premio)
     {
+        $this->validate(request(), [
+            'edicao' => 'required',
+            'data_abertura' => 'required',
+            'data_encerramento' => 'required',
+        ]);
+
         $premio->update($request->all());
-
-
 //        $premios = VigenciasPremio::all();
 //        return view('premios.show', compact('premios'));
     }

@@ -21109,7 +21109,7 @@ if (typeof jQuery === 'undefined') {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(50)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 50 */
@@ -39225,8 +39225,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "data-toggle": "table",
       "data-search": "true",
       "data-search-accent-neutralise": "true",
-      "data-locale": "pt-BR",
-      "data-pagination": "true"
+      "data-pagination": "true",
+      "data-locale": "pt-BR"
     }
   }, [_c('thead', [_c('tr', [_vm._l((_vm.data[0]), function(val, key) {
     return _c('th', {

@@ -4,8 +4,8 @@
         <table data-toggle="table"
                data-search="true"
                data-search-accent-neutralise="true"
-               data-locale="pt-BR"
-               data-pagination="true">
+               data-pagination="true"
+               data-locale="pt-BR">
             <thead>
             <tr>
                 <th v-for="(val, key) in data[0]"
@@ -17,10 +17,10 @@
                 <th data-sortable="false"></th>
             </tr>
             <!--<tr>-->
-                <!--<th data-field="id" data-sortable="true">Item ID</th>-->
-                <!--<th data-field="descricao" data-sortable="true">descricao</th>-->
-                <!--<th data-sortable="false"></th>-->
-                <!--<th data-sortable="false"></th>-->
+            <!--<th data-field="id" data-sortable="true">Item ID</th>-->
+            <!--<th data-field="descricao" data-sortable="true">descricao</th>-->
+            <!--<th data-sortable="false"></th>-->
+            <!--<th data-sortable="false"></th>-->
             <!--</tr>-->
 
             </thead>
@@ -50,7 +50,6 @@
         },
         props: ['data', 'tipo'],
         mounted() {
-
 
         },
     };

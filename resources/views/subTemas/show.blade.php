@@ -9,40 +9,44 @@
 @stop
 
 @section('content')
-    <div>
-        <a href="/subtemas/insert" class="btn btn-primary">NOVO</a>
-    </div>
-    <table id="table" data-toggle="table"
-           data-search="true"
-           data-show-columns="true"
-           data-show-refresh="true"
-           data-search-accent-neutralise="true"
-           data-locale="pt-BR"
-           data-pagination="true"
-           data-show-pagination-switch="true">
-        <thead class="thead-inverse">
-        <tr>
-            <th data-sortable="true">ID</th>
-            <th data-sortable="true">Descrição</th>
-            <th data-sortable="true">Data de encerramento</th>
-            <th data-sortable="true">Tema</th>
-            <th data-sortable="false"></th>
-            <th data-sortable="false"></th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach($subTemas as $subTema)
+    <div id="app">
+        <div>
+            <a href="/subtemas/insert" class="btn btn-primary">NOVO</a>
+        </div>
+        <table id="table" data-toggle="table"
+               data-search="true"
+               data-show-columns="true"
+               data-search-accent-neutralise="true"
+               data-locale="pt-BR"
+               data-page-size="10"
+               data-page-list="[10, 25, 50, 100]"
+               data-pagination="true">
+            <thead class="thead-inverse">
             <tr>
-                <td>{{$subTema->id}}</td>
-                <td>{{$subTema->descricao}}</td>
-                <td>{{$subTema->created_at}}</td>
-                <td>{{$subTema->tema->nome}}</td>
-                <td><a class="btn btn-danger" href="/subtemas/delete/{{$subTema->id}}">Excluir</a></td>
-                <td><a class="btn btn-success" href="/subtemas/edit/{{$subTema->id}}">Editar</a></td>
+                <th data-sortable="true">ID</th>
+                <th data-sortable="true">Descrição</th>
+                <th data-sortable="true">Data de encerramento</th>
+                <th data-sortable="true">Tema</th>
+                <th data-sortable="false"
+                    data-switchable="false"></th>
+                <th data-sortable="false"
+                    data-switchable="false"></th>
             </tr>
-        @endforeach
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            @foreach($subTemas as $subTema)
+                <tr>
+                    <td>{{$subTema->id}}</td>
+                    <td>{{$subTema->descricao}}</td>
+                    <td>{{$subTema->created_at}}</td>
+                    <td>{{$subTema->tema->nome}}</td>
+                    <td><a class="btn btn-danger" href="/subtemas/delete/{{$subTema->id}}">Excluir</a></td>
+                    <td><a class="btn btn-success" href="/subtemas/edit/{{$subTema->id}}">Editar</a></td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+    </div>
 
     {{--<div id="app">--}}
     {{--<table-example :data="{{$subTemas}}" :tipo="subtemas"></table-example>--}}
@@ -65,9 +69,9 @@
             cache: false,
             height: 500,
             striped: true,
-            pagination: true,
-            pageSize: 10,
-            pageList: [All], //list can be specified here
+//            pagination: true,
+//            pageSize: 10,
+//            pageList: [All], //list can be specified here
             searchTimeOut: 10
         });
     </script>

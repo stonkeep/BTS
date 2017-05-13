@@ -161,14 +161,29 @@ class PremioTest extends TestCase
     function testa_update()
     {
         $premio1 = factory(VigenciasPremio::class)->create();
-        $premio2 = factory(VigenciasPremio::class)->create([
-            'edicao'    => 2018,
-            'encerrado' => true
+        $dataAbertura = Carbon::now()->toDateTimeString();
+        $dataEncerramento = Carbon::now()->addYear(1)->toDateTimeString();
+
+       $this->json('POST', "/premios/create", [
+            'edicao'            => 2018,
+            'data_abertura'     => $dataAbertura,
+            'data_encerramento' => $dataEncerramento,
+            'encerrado'         => false
         ]);
 
-        $this->json('PUT', "/premios/update/{$premio2->id}", ['edicao' => 2019,]);
+        $premio2 = VigenciasPremio::find(2);
 
-        $response = $response = $this->get('/premios');
+        $this->json('PUT', "/premios/update/{$premio2->id}", [
+            'edicao' => 2019,
+            'data_abertura'     => $dataAbertura,
+            'data_encerramento' => $dataEncerramento,
+        ]);
+
+        $premios = VigenciasPremio::all();
+
+
+
+        $response = $this->get('/premios');
         $response->assertStatus(200);
         $response->assertSee('2019</th>');
         $response->assertDontSee('2018</th>');

@@ -69,8 +69,7 @@ class TecnologiasController extends Controller
             'subtema2' => 'required|exists:sub_temas,id',
         ]);
 
-//TODO fazer a validacao para o subtemas sejam diferente um do outro e que o tema também
-        
+
 //       $request['numeroInscricao'] = Carbon::now()->year . '/' . (Tecnologia::all()->last()->id + 1);
 
         $instituicaoId = $request['instituicao_id'];
