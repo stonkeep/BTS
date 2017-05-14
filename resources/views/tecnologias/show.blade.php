@@ -9,22 +9,31 @@
 @stop
 
 @section('content')
+
+    @include('flash::message')
     <div>
         <a href="/tecnologias/insert" class="btn btn-primary">NOVO</a>
     </div>
-    <table class="table">
-        <thead class="thead-inverse">
+    <table data-toggle="table"
+           data-search="true"
+           data-show-pagination-switch="true"
+           data-search-accent-neutralise="true"
+           data-locale="pt-BR">
+        <thead >
         <tr>
-            <th>ID</th>
-            <th>Título</th>
-            <th>Data de Criação</th>
-            <th>Instituição</th>
+            <th data-sortable="true">ID</th>
+            <th data-sortable="true">Título</th>
+            <th data-sortable="true">Data de Criação</th>
+            <th data-sortable="true">Instituição</th>
+            <th  data-sortable="false"></th>
+            <th  data-sortable="false"></th>
+
         </tr>
         </thead>
         <tbody>
         @foreach($tecnologias as $tecnologia)
             <tr>
-                <th scope="row">{{$tecnologia->id}}</th>
+                <td>{{$tecnologia->id}}</td>
                 <td>{{$tecnologia->titulo}}</td>
                 <td>{{$tecnologia->created_at}}</td>
                 <td>{{$tecnologia->instituicao->razaoSocial}}</td>
@@ -39,10 +48,17 @@
 
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+    <link rel="stylesheet" href="/css/app.css">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
 @stop
 
 @section('js')
     <!-- Scripts -->
     <script src="/js/app.js"></script>
+
+    <script>
+        $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
+    </script>
 @stop

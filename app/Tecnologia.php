@@ -39,19 +39,25 @@ class Tecnologia extends Model
         return $this->hasMany(LocalImplantacao::class, 'tecnologia_id', 'id');
     }
 
-    public function temaPrincipal()
-    {
-        return $this->hasOne(Temas::class);
-    }
 
     public function subtemas()
     {
         return $this->belongsToMany(SubTemas::class);
     }
 
+    public function subtemasPrincipal()
+    {
+        return $this->subtemas->where('tema_id', strval($this->temaPrincipal()->first()->id));
+    }
+
+    public function temaPrincipal()
+    {
+        return $tema = Temas::where('id', $this->tema_id)->get();
+    }
+
     public function temaSecundario()
     {
-        return $this->hasOne(Temas::class);
+        return $tema = Temas::where('id', $this->temaSecundario_id)->get();
     }
 
     public function responsaveis()

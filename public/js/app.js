@@ -13007,14 +13007,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
+            raiz: location.host,
             subtemas1: [],
             subtemas2: [],
+            temas1: [],
+            temas2: [],
             // Create a new form instance
             form: new __WEBPACK_IMPORTED_MODULE_0_vform__["Form"]({
                 id: this.tecnologia.id,
@@ -13028,7 +13030,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 categoria_id: this.tecnologia.categoria_id,
                 resumo: this.tecnologia.resumo,
                 tema_id: this.tecnologia.tema_id,
-                subtema1: [],
+                subtema1: this.propssubtemas1,
                 temaSecundario_id: this.tecnologia.temaSecundario_id,
                 subtema2: [],
                 problema: this.tecnologia.problema,
@@ -13047,8 +13049,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
 
-    props: ['tecnologia', 'categorias', 'temas'],
-    mounted: function mounted() {},
+    props: ['tecnologia', 'categorias', 'temas', 'propssubtemas1'],
+    mounted: function mounted() {
+        this.temas1 = this.temas;
+        this.temas2 = this.temas;
+
+        //            axios.get('../../api/subtemas/' + this.form.tema_id)
+        //                .then(response => this.subtemas1 = response.data)
+        //                .catch(error => console.log(error));
+
+
+        //            axios.get('../api/subtemas/' + this.form.temaSecundario_id)
+        //                .then(response => this.subtemas2 = response.data)
+        //                .catch(error => console.log(error));
+    },
 
     methods: {
         submit: function submit() {
@@ -13073,23 +13087,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         'form.tema_id': function formTema_id(val, oldVal) {
             var _this = this;
 
-            axios.get('../api/subtemas/' + this.form.tema_id).then(function (response) {
+            axios.get('/api/subtemas/' + this.form.tema_id).then(function (response) {
                 return _this.subtemas1 = response.data;
             }).catch(function (error) {
                 return console.log(error);
             });
+
+            //
+            //                $("#temaSecundario_id option").each(function() {
+            //                    $(this).remove();
+            //                });
+            //
+            //                this.temas.forEach(function(item, index){
+            //                    $("#temaSecundario_id").append('<option value="'+item.id+'" nome="'+tema.nome+'">'+ item.nome + '</option>');
+            //                });
+            //
+            //                let nome = $('#tema_id :selected').attr("nome");
+            //                let teste =  $('#temaSecundario_id option[nome="'+ nome +'"]').remove();
         },
+
         'form.temaSecundario_id': function formTemaSecundario_id(val, oldVal) {
             var _this2 = this;
 
-            axios.get('../api/subtemas/' + this.form.temaSecundario_id).then(function (response) {
+            axios.get('/api/subtemas/' + this.form.temaSecundario_id).then(function (response) {
                 return _this2.subtemas2 = response.data;
             }).catch(function (error) {
                 return console.log(error);
             });
         }
     }
-
 });
 
 /***/ }),
@@ -18689,6 +18715,12 @@ window.Vue = __webpack_require__(77);
  */
 
 window.axios = __webpack_require__(6);
+
+//TODO lembrar de alterar isso antes da producao
+//TODO tentar achar uma maneira mais dinamica de passar os dados
+window.axios.defaults.headers.common = {
+  'baseURL': 'http://127.0.0.1:8000'
+};
 
 window.axios.defaults.headers.common = {
   'X-CSRF-TOKEN': window.Laravel.csrfToken,
@@ -39779,8 +39811,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.form.tema_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
-  }, _vm._l((_vm.temas), function(tema) {
+  }, _vm._l((_vm.temas1), function(tema, index) {
     return _c('option', {
+      attrs: {
+        "nome": tema.nome
+      },
       domProps: {
         "value": tema.id
       }
@@ -39876,8 +39911,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.form.temaSecundario_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
-  }, _vm._l((_vm.temas), function(tema) {
+  }, _vm._l((_vm.temas2), function(tema) {
     return _c('option', {
+      attrs: {
+        "nome": tema.nome
+      },
       domProps: {
         "value": tema.id
       }

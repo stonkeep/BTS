@@ -6,6 +6,7 @@ use App\Categoria;
 use App\Instituicao;
 use App\Tecnologia;
 use App\Temas;
+use App\SubTemas;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -19,6 +20,7 @@ class TecnologiasController extends Controller
     public function index()
     {
         $tecnologias = Tecnologia::all();
+
         return view('tecnologias.show', compact('tecnologias'));
     }
 
@@ -32,7 +34,9 @@ class TecnologiasController extends Controller
         $categorias = Categoria::all();
         $temas = Temas::all();
         $tecnologia = new Tecnologia();
-        return view('tecnologias.create', compact('categorias','temas', 'tecnologia'));
+        $propssubtemas1 = new SubTemas();
+        $propssubtemas2 = new SubTemas();
+        return view('tecnologias.create', compact('categorias','temas', 'tecnologia', 'propssubtemas1','propssubtemas2' ));
     }
 
     /**
@@ -99,6 +103,9 @@ class TecnologiasController extends Controller
         }
 
         //TODO poderia ser um tratamento de erro geral
+
+
+        flash('Tecnologia Gravada com Sucesso')->success();
         
     }
 
@@ -123,7 +130,12 @@ class TecnologiasController extends Controller
     {
         $categorias = Categoria::all();
         $temas = Temas::all();
-        return view('tecnologias.edit', compact('tecnologia', 'categorias', 'temas'));
+//        dd($tecnologia->temaPrincipal());
+//        dd(strval($tecnologia->temaPrincipal()->first()->id));
+//        dd($tecnologia->subtemas->where('tema_id', strval($tecnologia->temaPrincipal()->first()->id)));
+        $subtemasPrincipal = $tecnologia->subtemasPrincipal();
+//        dd($subtemasPrincipal);
+        return view('tecnologias.edit', compact('tecnologia', 'categorias', 'temas', 'subtemasPrincipal'));
     }
 
     /**
@@ -157,9 +169,14 @@ class TecnologiasController extends Controller
             'valorHumanos' => 'required',
             'depoimentoLivre' => 'required',
             'instituicao_id' => 'required|exists:instituicaos,id',
+            'subtema1' => 'required|exists:sub_temas,id',
+            'subtema2' => 'required|exists:sub_temas,id',
         ]);
 
         $tecnologia->update($request->all());
+
+        flash('Tecnologia ' . $tecnologia->titulo . ' atualizada com sucesso')->success();
+
     }
 
     /**
@@ -173,6 +190,7 @@ class TecnologiasController extends Controller
         $tecnologia->delete();
 
         $tecnologias = Tecnologia::all();
+        flash('Tecnologia ' . $tecnologia->titulo . ' deletada com sucesso')->success();
         return view('tecnologias.show', compact('tecnologias'));
     }
 }

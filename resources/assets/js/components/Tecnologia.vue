@@ -5,7 +5,6 @@
             <alert-errors :form="form" message="There were some problems with your input."></alert-errors>
 
 
-
             <div class="form-group" :class="{ 'has-error': form.errors.has('titulo') }">
                 <label for="titulo" class="col-md-3 control-label">Título</label>
                 <div class="col-md-6">
@@ -61,7 +60,7 @@
                     <label for="inscricaoAnteriorSim">Sim</label>
                     <br>
                     <input type="radio" name="inscricaoAnterior" id="inscricaoAnteriorNao" value="0"
-                    v-model="form.inscricaoAnterior">
+                           v-model="form.inscricaoAnterior">
                     <label for="inscricaoAnteriorNao">Não</label>
                     <has-error :form="form" field="inscricaoAnterior"></has-error>
                 </div>
@@ -75,7 +74,7 @@
                     <label for="investimentoFBBSim">Sim</label>
                     <br>
                     <input type="radio" name="investimentoFBB" id="investimentoFBBNao" value="0"
-                    v-model="form.investimentoFBB">
+                           v-model="form.investimentoFBB">
                     <label for="investimentoFBBNao">Não</label>
                     <has-error :form="form" field="investimentoFBB"></has-error>
                 </div>
@@ -112,7 +111,7 @@
                 <label for="tema_id" class="col-md-3 control-label">Tema: </label>
                 <div class="col-md-6" id="tema_id">
                     <select class="form-control" v-model="form.tema_id" name="tema_id">
-                        <option v-for="tema in temas" v-bind:value="tema.id">
+                        <option v-for="(tema, index) in temas1" v-bind:value="tema.id" :nome="tema.nome">
                             {{ tema.nome }}
                         </option>
                     </select>
@@ -140,7 +139,7 @@
                 <label for="temaSecundario_id" class="col-md-3 control-label">Tema Secundário: </label>
                 <div class="col-md-6" id="temaSecundario_id">
                     <select class="form-control" v-model="form.temaSecundario_id" name="temaSecundario_id">
-                        <option v-for="tema in temas" v-bind:value="tema.id">
+                        <option v-for="tema in temas2" v-bind:value="tema.id" :nome="tema.nome">
                             {{ tema.nome }}
                         </option>
                     </select>
@@ -276,8 +275,11 @@
     export default {
         data () {
             return {
+                raiz: location.host,
                 subtemas1: [],
                 subtemas2: [],
+                temas1: [],
+                temas2: [],
                 // Create a new form instance
                 form: new Form({
                     id: this.tecnologia.id,
@@ -291,7 +293,7 @@
                     categoria_id: this.tecnologia.categoria_id,
                     resumo: this.tecnologia.resumo,
                     tema_id: this.tecnologia.tema_id,
-                    subtema1: [],
+                    subtema1: this.propssubtemas1,
                     temaSecundario_id: this.tecnologia.temaSecundario_id,
                     subtema2: [],
                     problema: this.tecnologia.problema,
@@ -309,8 +311,20 @@
                 })
             };
         },
-        props: ['tecnologia', 'categorias', 'temas'],
+        props: ['tecnologia', 'categorias', 'temas', 'propssubtemas1'],
         mounted() {
+            this.temas1 = this.temas
+                this.temas2 = this.temas
+
+//            axios.get('../../api/subtemas/' + this.form.tema_id)
+//                .then(response => this.subtemas1 = response.data)
+//                .catch(error => console.log(error));
+
+
+//            axios.get('../api/subtemas/' + this.form.temaSecundario_id)
+//                .then(response => this.subtemas2 = response.data)
+//                .catch(error => console.log(error));
+
         },
         methods: {
             submit () {
@@ -332,16 +346,28 @@
         },
         watch: {
             'form.tema_id': function (val, oldVal) {
-                axios.get('../api/subtemas/' + this.form.tema_id)
+                axios.get('/api/subtemas/' + this.form.tema_id)
                     .then(response => this.subtemas1 = response.data)
-                    .catch(error => console.log(error));
+                    .catch(error => console.log(error))
+
+//
+//                $("#temaSecundario_id option").each(function() {
+//                    $(this).remove();
+//                });
+//
+//                this.temas.forEach(function(item, index){
+//                    $("#temaSecundario_id").append('<option value="'+item.id+'" nome="'+tema.nome+'">'+ item.nome + '</option>');
+//                });
+//
+//                let nome = $('#tema_id :selected').attr("nome");
+//                let teste =  $('#temaSecundario_id option[nome="'+ nome +'"]').remove();
             },
+
             'form.temaSecundario_id': function (val, oldVal) {
-                axios.get('../api/subtemas/' + this.form.temaSecundario_id)
+                axios.get('/api/subtemas/' + this.form.temaSecundario_id)
                     .then(response => this.subtemas2 = response.data)
                     .catch(error => console.log(error));
             },
         },
-
     };
 </script>

@@ -181,6 +181,7 @@ return [
          * Outros
          */
         JeroenNoten\LaravelAdminLte\ServiceProvider::class,
+        Laracasts\Flash\FlashServiceProvider::class,
 
     ],
 

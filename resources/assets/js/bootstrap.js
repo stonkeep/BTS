@@ -28,6 +28,14 @@ window.Vue = require('vue');
 
 window.axios = require('axios');
 
+
+//TODO lembrar de alterar isso antes da producao
+//TODO tentar achar uma maneira mais dinamica de passar os dados
+window.axios.defaults.headers.common = {
+    'baseURL': 'http://127.0.0.1:8000'
+};
+
+
 window.axios.defaults.headers.common = {
     'X-CSRF-TOKEN': window.Laravel.csrfToken,
     'X-Requested-With': 'XMLHttpRequest'

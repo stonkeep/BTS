@@ -9,6 +9,7 @@
 @stop
 
 @section('content')
+    @include('flash::message')
     <div>
         <a href="/categorias/insert" class="btn btn-primary">NOVO</a>
     </div>

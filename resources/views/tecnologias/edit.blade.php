@@ -13,14 +13,20 @@
     @include('layouts.erros')
     <div id="app">
         {{ csrf_field() }}
-        <tecnologia :categorias="{{$categorias}}" :temas="{{$temas}}" :tecnologia="{{$tecnologia}}"></tecnologia>
+
+        <tecnologia :categorias="{{$categorias}}"
+                    :temas="{{$temas}}"
+                    :propssubtemas1="{{$tecnologia->subtemasPrincipal()}}"
+                    :tecnologia="{{$tecnologia}}">
+
+        </tecnologia>
     </div>
 
 @stop
 
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+    {{--<link rel="stylesheet" href="/css/admin_custom.css">--}}
 @stop
 
 @section('js')
