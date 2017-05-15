@@ -23,4 +23,6 @@ class TestUser extends TestCase
     //TODO teste delete
     //TODO teste list
     //TODO teste validações
+    //TODO verificar acesso do usuário
+    //TODO vincular o uário a instituição
 }

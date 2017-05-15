@@ -261,8 +261,15 @@
                     <has-error :form="form" field="depoimentoLivre"></has-error>
                 </div>
             </div>
-
-
+<!--//TODO Responsáveis pela tecnologia-->
+<!--//TODO Locais e datas onde a Tecnologia Social já foi implementada:-->
+<!--//TODO Público e quantidade total de pessoas atendidos por uma unidade da tecnologia social:-->
+<!--//TODO Recursos humanos necessários para implantação de uma unidade da tecnologia social:-->
+<!--//TODO Instituições parceiras na tecnologia:-->
+<!--//TODO Anexos da tecnologia:-->
+<!--//TODO Endereços eletrônicos associados à tecnologia:-->
+<!--//TODO Banco de Imagens:-->
+<!--//TODO -->
             <div class="form-group">
                 <button :disabled="form.busy" type="submit" class="btn btn-primary" name="enviar">Enviar</button>
             </div>

@@ -336,4 +336,7 @@ class TestInstituicao extends TestCase
         $response = $this->json('POST', "tecnologias/create", $data);
         $response->assertStatus(200);
     }
+
+    //TODO criar ligação do usuário com a instituição
+    
 }

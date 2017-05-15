@@ -118,6 +118,7 @@ class TestTecnologia extends TestCase
     /** @test */
     public function teste_update()
     {
+        //TODO verificar se no teste faz o update nas outras tabelas também
         $tecnologia = factory(Tecnologia::class)->create();
 
         $tecnologia->titulo = 'Outro teste';
@@ -305,6 +306,8 @@ class TestTecnologia extends TestCase
 
         $this->assertValidationError('tema_id');
         $this->assertValidationError('temaSecundario_id');
-    }   
+    }
+    
+    //TODO criar tentes que só pode criar tecnologia se a pessoa estiver logada e ligada a instituição
 
 }

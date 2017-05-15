@@ -174,7 +174,7 @@ class TecnologiasController extends Controller
         ]);
 
         $tecnologia->update($request->all());
-
+    // TODO ajustar edição com as outras tabelas
         flash('Tecnologia ' . $tecnologia->titulo . ' atualizada com sucesso')->success();
 
     }
