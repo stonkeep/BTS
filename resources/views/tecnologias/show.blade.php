@@ -10,7 +10,7 @@
 
 @section('content')
 
-    @include('flash::message')
+    {{--@include('flash::message')--}}
     <div>
         <a href="/tecnologias/insert" class="btn btn-primary">NOVO</a>
     </div>
