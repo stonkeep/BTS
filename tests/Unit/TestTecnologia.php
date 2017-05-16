@@ -120,12 +120,11 @@ class TestTecnologia extends TestCase
     {
         //TODO verificar se no teste faz o update nas outras tabelas também
         $tecnologia = factory(Tecnologia::class)->create();
-
-        $tecnologia->titulo = 'Outro teste';
-
-        $response = $this->json('PUT', "tecnologias/update/{$tecnologia->id}", $tecnologia->toArray());
-
         
+
+        $this->response = $response = $this->json('PUT', "tecnologias/update/{$tecnologia->id}", $tecnologia->toArray());
+
+        $this->assertValidationError('tema_id');
         $response->assertStatus(200);
 
         $tecnologia = Tecnologia::firstOrFail();
