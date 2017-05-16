@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\ValidationsFields;
 
-class TestLocal extends TestCase
+class LocalTest extends TestCase
 {
     use DatabaseMigrations;
     use ValidationsFields;

@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\ValidationsFields;
 use Illuminate\Validation\Rule;
 
-class TestEnderecoEletronico extends TestCase
+class EnderecoEletronicoTest extends TestCase
 {
 
     use DatabaseMigrations;

@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\ValidationsFields;
 
-class TestInstituicao extends TestCase
+class InstituicaoTest extends TestCase
 {
 
     use DatabaseMigrations;

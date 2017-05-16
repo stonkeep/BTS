@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\ValidationsFields;
 
-class TestVigenciaPremio extends TestCase
+class VigenciaPremioTest extends TestCase
 {
     use DatabaseMigrations;
     use ValidationsFields;
@@ -61,10 +61,11 @@ class TestVigenciaPremio extends TestCase
         $premio = factory(VigenciasPremio::class)->create();
         
         $response = $this->json('PUT', "/premios/update/{$premio->id}",['edicao' => '2018']);
+        $response->assertStatus(200);
 
         $response = $this->get('premios');
         $response->assertStatus(200);
-        $response->assertSee("<th scope=\"row\">2018</th>");
+        $response->assertSee("2018</td>");
     }
     
     /** @test */

@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\ValidationsFields;
 
-class TestRegioes extends TestCase
+class RegioesTest extends TestCase
 {
     use DatabaseMigrations;
     use ValidationsFields;

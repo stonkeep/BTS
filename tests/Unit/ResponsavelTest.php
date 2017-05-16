@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\ValidationsFields;
 
-class TestResponsavel extends TestCase
+class ResponsavelTest extends TestCase
 {
     use DatabaseMigrations;
     use ValidationsFields;

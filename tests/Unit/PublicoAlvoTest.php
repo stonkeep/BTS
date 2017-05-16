@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\ValidationsFields;
 
-class TestPublicoAlvo extends TestCase
+class PublicoAlvoTest extends TestCase
 {
     use DatabaseMigrations;
     use ValidationsFields;

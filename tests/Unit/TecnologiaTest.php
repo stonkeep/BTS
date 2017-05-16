@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\ValidationsFields;
 
-class TestTecnologia extends TestCase
+class TecnologiaTest extends TestCase
 {
 
     use DatabaseMigrations;
@@ -120,11 +120,34 @@ class TestTecnologia extends TestCase
     {
         //TODO verificar se no teste faz o update nas outras tabelas também
         $tecnologia = factory(Tecnologia::class)->create();
-        
 
-        $this->response = $response = $this->json('PUT', "tecnologias/update/{$tecnologia->id}", $tecnologia->toArray());
+        $data = [
+            'numeroInscricao' => '2017/0002',
+                'titulo'               => 'Teste GEPEM2',
+                'fimLucrativo'         => false,
+                'tempoImplantacao'     => 2,
+                'emAtividade'          => true,
+                'inscricaoAnterior'    => false,
+                'investimentoFBB'      => true,
+                'categoria_id'         => 1,
+                'resumo'               => 'Resumao',
+                'tema_id'              => 1,
+                'temaSecundario_id'    => 2,
+                "subtema1"             => [1],
+                "subtema2"             => [20,21],
+                'problema'             => 'Problemao',
+                'objetivoGeral'        => 'objetivo  Geral',
+                'objetivoEspecifico'   => 'objetivo  Especifico',
+                'descricao'            => 'descricao descricao descricao descricao descricao descricao ',
+                'resultadosAlcancados' => 'Muitos resultados alcancados',
+                'recursosMateriais'    => 'Recursos Materiais',
+                'valorEstimado'        => ' valor Estimado ',
+                'valorHumanos'         => 'valor Humanos',
+                'depoimentoLivre'      => ' depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',
+                'instituicao_id'      => 1,
+            ];
+        $this->response = $response = $this->json('PUT', "tecnologias/update/{$tecnologia->id}", $data);
 
-        $this->assertValidationError('tema_id');
         $response->assertStatus(200);
 
         $tecnologia = Tecnologia::firstOrFail();

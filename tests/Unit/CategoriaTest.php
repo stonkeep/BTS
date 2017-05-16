@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\ValidationsFields;
 
-class TestCategoria extends TestCase
+class CategoriaTest extends TestCase
 {
     use DatabaseMigrations;
     use ValidationsFields;
@@ -38,7 +38,6 @@ class TestCategoria extends TestCase
         ]);
 
         $response = $this->get('categorias');
-        dd($response);
 
         $response->assertStatus(200);
         $response->assertSee('Água');
