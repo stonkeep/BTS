@@ -60,6 +60,7 @@ class InstituicaoController extends Controller
         Instituicao::create($request->all());
 
         $instituicoes = Instituicao::all();
+        dd($instituicoes);
         return view('instituicoes.show', compact('instituicoes'));
     }
 
@@ -96,9 +97,12 @@ class InstituicaoController extends Controller
      */
     public function update(Request $request, Instituicao $instituicao)
     {
+        //TODO fazer a validação
+
         $instituicao->update($request->all());
 
         $instituicoes = Instituicao::all();
+        
         return view('instituicoes.show', compact('instituicoes'));
     }
 

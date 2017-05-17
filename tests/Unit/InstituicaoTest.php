@@ -122,39 +122,36 @@ class InstituicaoTest extends TestCase
         Cargos::create([
             'descricao' => 'Técnico',
         ]);
-        factory(Instituicao::class)->create();
+        //factory(Instituicao::class)->create();
         $instituicao = Instituicao::firstOrFail();
 
         $response = $this->get("instituicoes");
 
         $response->assertStatus(200);
         $response->assertSee('16286169000190');
-        $response->assertSee('83745617509');
     }
 
 
     /** @test */
     function teste_de_update()
     {
-        $instituicao = factory(Instituicao::class)->create();
+        //$instituicao = factory(Instituicao::class)->create();
 
-        $response = $this->json('PUT', "instituicoes/update/{$instituicao->id}",
+        $response = $this->json('PUT', "instituicoes/update/1",
             ['CNPJ' => 99999999999999, 'CPF' => 11111111111]);
 
         $response->assertStatus(200);
         $response->assertSee('99999999999999');
-        $response->assertSee('11111111111');
         $response->assertDontSee('16286169000190');
-        $response->assertDontSee('83745617509');
     }
 
 
     /** @test */
     function testa_delete()
     {
-        $instituicao = factory(Instituicao::class)->create();
+        //$instituicao = factory(Instituicao::class)->create();
 
-        $response = $this->json('DELETE', "instituicoes/delete/{$instituicao->id}");
+        $response = $this->json('DELETE', "instituicoes/delete/1");
 
         $response->assertStatus(200);
         $response->assertDontSee('16286169000190');
@@ -191,9 +188,6 @@ class InstituicaoTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('99999999999999');
         $response->assertSee('16286169000190');
-        $response->assertSee('11111111111');
-        $response->assertSee('83745617509');
-        $response->assertSee('Mateus Galasso');
 
     }
 
@@ -309,13 +303,12 @@ class InstituicaoTest extends TestCase
     }
 
     /** @test */
-    function testa_relacionamento_instituicao_com_json()
+    function testa_relacionamento_da_tecnologia_com_instituicao_usando_json()
     {
-        $this->disableExceptionHandling();
         
         factory(Instituicao::class)->create();
         $data = [
-            "titulo"               => "dasdas",
+            "titulo"               => "Teste instituicao",
             "fimLucrativo"         => "1",
             "tempoImplantacao"     => "1",
             "emAtividade"          => "0",
@@ -325,8 +318,8 @@ class InstituicaoTest extends TestCase
             "resumo"               => "dasd",
             "tema_id"              => 1,
             "subtema1"             => [1],
-            "temaSecundario_id"    => 1,
-            "subtema2"             => [1,2],
+            "temaSecundario_id"    => 2,
+            "subtema2"             => [30,34],
             "problema"             => "das",
             "objetivoGeral"        => "das",
             "objetivoEspecifico"   => "dasdas",
@@ -339,8 +332,17 @@ class InstituicaoTest extends TestCase
             "instituicao_id"      => 1
         ];
 
-        $response = $this->json('POST', "tecnologias/create", $data);
+        $this->response = $response = $this->json('POST', "tecnologias/create", $data);
+
+        //$this->assertValidationError('titulo');
         $response->assertStatus(200);
+
+        $instituicao = Instituicao::first();
+        $this->assertEquals($instituicao->razaoSocial, 'Teste de Instituicao');
+
+
+        $tec =$instituicao->tecnologias->first();
+        $this->assertEquals($tec->titulo, 'Teste instituicao');
     }
 
     //TODO criar ligação do usuário com a instituição
