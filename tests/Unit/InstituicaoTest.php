@@ -118,7 +118,13 @@ class InstituicaoTest extends TestCase
     /** @test */
     public function testa_leitura()
     {
+        $this->disableExceptionHandling();
+        Cargos::create([
+            'descricao' => 'Técnico',
+        ]);
         factory(Instituicao::class)->create();
+        $instituicao = Instituicao::firstOrFail();
+
         $response = $this->get("instituicoes");
 
         $response->assertStatus(200);

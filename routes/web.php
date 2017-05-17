@@ -90,6 +90,9 @@ Route::get('/premios/edit/{premio}', 'VigenciasPremioController@edit');
     Route::get('cargos/edit/{cargo}', 'CargosController@edit');
 
 //instituicoes
+Route::get('/instituicoes/insert', function () {
+    return view('instituicoes.create');
+});
     Route::post('instituicoes/create', 'InstituicaoController@store');
     Route::get('instituicoes', 'InstituicaoController@show');
     Route::delete('instituicoes/delete/{instituicao}', 'InstituicaoController@destroy');

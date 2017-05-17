@@ -77,7 +77,7 @@ return [
     |
     */
 
-    'locale' => 'pt',
+    'locale' => 'pt-br',
 
     /*
     |--------------------------------------------------------------------------
@@ -182,6 +182,7 @@ return [
          */
         JeroenNoten\LaravelAdminLte\ServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
+        LaravelLegends\PtBrValidator\ValidatorProvider::class
 
     ],
 

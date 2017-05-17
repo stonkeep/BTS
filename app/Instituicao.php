@@ -18,9 +18,9 @@ class Instituicao extends Model
     {
         return $this->belongsTo(NaturezasJuridicas::class, 'naturezaJuridica');
     }
-    //
-    //public function cargo()
-    //{
-    //    return $this->belongsTo(Cargos::class);
-    //}
+
+    public function cargo()
+    {
+        return $this->belongsTo(Cargos::class);
+    }
 }

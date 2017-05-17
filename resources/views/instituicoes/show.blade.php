@@ -1,51 +1,58 @@
-@extends('layouts.master')
+{{-- resources/views/admin/dashboard.blade.php --}}
 
-@section('body')
-    <table class="table">
+@extends('adminlte::page')
+
+@section('title', 'Instituições')
+
+@section('content_header')
+    <h1>Instituições</h1>
+@stop
+
+@section('content')
+
+    <div>
+        <a href="/instituicoes/insert" class="btn btn-primary">NOVO</a>
+    </div>
+    <table data-toggle="table"
+           data-search="true"
+           data-show-pagination-switch="true"
+           data-search-accent-neutralise="true"
+           data-locale="pt-BR">
         <thead class="thead-inverse">
         <tr>
-            <th>ID</th>
-            <th>CNPJ</th>
-            <th>Natureza Juridica</th>
-            <th>Nome da Area</th>
-            <th>ddd</th>
-            <th>telefone</th>
-            <th>email</th>
-            <th>UF</th>
-            <th>cidade</th>
-            <th>endereco</th>
-            <th>bairro</th>
-            <th>CEP</th>
-            <th>site</th>
-            <th>nomeCompleto</th>
-            <th>cargos_id</th>
-            <th>sexo</th>
-            <th>CPF</th>
+            <th data-sortable="true">ID</th>
+            <th data-sortable="true">CNPJ</th>
+            <th data-sortable="true">razaoSocial</th>
+            <th data-sortable="true">Natureza Juridica</th>
+            <th  data-sortable="false"></th>
+            <th  data-sortable="false"></th>
+
         </tr>
         </thead>
         <tbody>
-        <tr>
-            @foreach($instituicoes as $instituicao)
-                <th scope="row">{{$instituicao->id}}</th>
+        @foreach($instituicoes as $instituicao)
+            <tr>
+                <td>{{$instituicao->id}}</td>
                 <td>{{$instituicao->CNPJ}}</td>
+                <td>{{$instituicao->razaoSocial}}</td>
                 <td>{{$instituicao->natureza->descricao}}</td>
-                <td>{{$instituicao->nomeDaArea}}</td>
-                <td>{{$instituicao->ddd}}</td>
-                <td>{{$instituicao->telefone}}</td>
-                <td>{{$instituicao->UF}}</td>
-                <td>{{$instituicao->cidade}}</td>
-                <td>{{$instituicao->endereco}}</td>
-                <td>{{$instituicao->bairro}}</td>
-                <td>{{$instituicao->CEP}}</td>
-                <td>{{$instituicao->site}}</td>
-                <td>{{$instituicao->nomeCompleto}}</td>
-                <td>{{$instituicao->cargo->descricao}}</td>
-                <td>{{$instituicao->sexo}}</td>
-                <td>{{$instituicao->CPF}}</td>
-                <td>{{$instituicao->created_at}}</td>
-            @endforeach
-        </tr>
+                <td><a class="btn btn-danger" href="/instituicoes/delete/{{$instituicao->id}}">Excluir</a></td>
+                <td><a class="btn btn-success" href="/instituicoes/edit/{{$instituicao->id}}">Editar</a></td>
+            </tr>
+        @endforeach
         </tbody>
     </table>
 
-@endsection
+@stop
+
+
+@section('css')
+    <link rel="stylesheet" href="/css/app.css">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
+@stop
+
+@section('js')
+    <script src="/js/app.js"></script>
+@stop

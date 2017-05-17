@@ -161,6 +161,11 @@ return [
             'url'         => 'premios',
             'icon'        => 'file',
         ],
+        [
+            'text'        => 'Instituições',
+            'url'         => 'instituicoes',
+            'icon'        => 'file',
+        ],
 
 
 //        'ACCOUNT SETTINGS',

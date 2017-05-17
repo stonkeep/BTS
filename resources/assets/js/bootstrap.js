@@ -58,11 +58,13 @@ window.axios.defaults.headers.common = {
 
 // import VeeValidate from 'vee-validate';
 import { Form, HasError, AlertError, AlertErrors } from 'vform'
+import VueTheMask from 'vue-the-mask'
 // import {ServerTable, ClientTable, Event} from 'vue-tables-2';
 
 Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
 Vue.component(AlertErrors.name, AlertErrors)
+Vue.use(VueTheMask)
 
 
 

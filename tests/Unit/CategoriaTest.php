@@ -90,13 +90,13 @@ class CategoriaTest extends TestCase
 
         $categoria = Categoria::firstOrFail();
 
-        $this->json('DELETE', "categorias/delete/{$categoria->id}", [
+        $response = $this->json('get', "categorias/delete/{$categoria->id}", [
             'descricao' => 'Terra',
         ]);
 
         $response = $this->get("categorias");
-
         $response->assertStatus(200);
+
         $response->assertDontSee('Água');
 
     }

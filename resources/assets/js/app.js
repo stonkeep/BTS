@@ -27,6 +27,7 @@ Vue.component('publicoalvo', require('./components/PublicoAlvo.vue'));
 Vue.component('subtema', require('./components/SubTema.vue'));
 Vue.component('tecnologia', require('./components/Tecnologia.vue'));
 Vue.component('categoria', require('./components/Categoria.vue'));
+Vue.component('instituicao', require('./components/Instituicao.vue'));
 Vue.component('premio', require('./components/Premio.vue'));
 Vue.component('table-example', require('./components/tablesExample.vue'));
 

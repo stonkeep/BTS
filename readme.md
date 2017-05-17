@@ -1,51 +1,177 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+#Laravel 5 - Validação em Português
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+Essa é uma biblioteca com algumas validações brasileiras.
 
-## About Laravel
+[![Build Status](https://travis-ci.org/LaravelLegends/pt-br-validator.svg?branch=master)](https://travis-ci.org/LaravelLegends/pt-br-validator)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+#Instalação
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+No arquivo `composer.json`, adicione:
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb combination of simplicity, elegance, and innovation give you tools you need to build any application with which you are tasked.
+```json
+{
+	"laravellegends/pt-br-validator" : "5.1.*"
+}
+```
 
-## Learning Laravel
+Rode o comando `composer update --no-scripts`.
 
-Laravel has the most extensive and thorough documentation and video tutorial library of any modern web application framework. The [Laravel documentation](https://laravel.com/docs) is thorough, complete, and makes it a breeze to get started learning the framework.
+Após a instalação, adicione no arquivo `config/app.php` a seguinte linha:
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 900 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+```php
 
-## Laravel Sponsors
+LaravelLegends\PtBrValidator\ValidatorProvider::class
 
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](http://patreon.com/taylorotwell):
+```
 
-- **[Vehikl](http://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Styde](https://styde.net)**
-- **[Codecourse](https://www.codecourse.com)**
-- [Fragrantica](https://www.fragrantica.com)
+Para utilizar a validação agora, basta fazer o procedimento padrão do `Laravel`.
 
-## Contributing
+A diferença é que agora, você terá os seguintes métodos de validação:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+* celular - Valida um celular através do formato 99999-9999 ou 9999-9999
 
-## Security Vulnerabilities
+* celular_com_ddd -  Valida um celular através do formato (99)99999-9999 ou (99)9999-9999
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+* cnpj - Valida se o CNPJ é valido. Para testar, basta utilizar o site http://www.geradorcnpj.com/
+
+* cpf - Valida se o cpf é valido. Para testar, basta utilizar o site http://geradordecpf.
+org
+
+* data - Valida se a data está no formato 31/12/1969
+
+* formato_cnpj - Valida se a mascará do CNPJ é válida
+
+* formato_cpf - Valida se a mascará do cpf está certo. 999.999.999-99
+
+* telefone - Valida um telefone através do formato 9999-9999
+
+* telefone_com_ddd - Valida um telefone através do formato (99)9999-9999
+
+
+Então, podemos usar um simples teste:
+
+
+```php
+$validator = Validator::make(
+	['telefone' => '(77)9999-3333'],
+	['telefone' => 'required|telefone_com_ddd']
+);
+
+dd($validator->fails());
+
+```
+
+
+Já existe nessa biblioteca algumas mensagens padrão para as validações de cada um dos items citados acima. 
+
+Para modificar isso, basta adicionar ao terceiro parâmetro de `Validator::make` um array, contendo o índice com o nome da validação e o valor com a mensagem desejada.
+
+
+Exemplo:
+
+
+```php
+Validator::make($valor, $regras, ['celular_com_ddd' => 'O campo :attribute não é um celular'])
+```
+
+
+
+
+# The Mask
+
+A lightweight (2KB gzipped) and dependency free mask input created specific for Vue.js
+
+## [Docs and Demo](https://vuejs-tips.github.io/vue-the-mask)
+
+### [JsFiddle](https://jsfiddle.net/neves/r8cL3msn/1/)
+
+![The Mask Heart](https://raw.githubusercontent.com/vuejs-tips/vue-the-mask/master/img/the-mask-heart.gif)
+
+## Install
+
+```
+yarn add vue-the-mask
+or
+npm i -S vue-the-mask
+```
+
+## Usage (two flavors)
+
+### Global
+
+```javascript
+import VueTheMask from 'vue-the-mask'
+Vue.use(VueTheMask)
+```
+
+### Local (inside the component)
+
+```javascript
+import TheMask from 'vue-the-mask'
+export default {
+  components: {TheMask}
+}
+```
+
+## Tokens
+
+```javascript
+'#': {pattern: /\d/},
+'X': {pattern: /[0-9a-zA-Z]/},
+'S': {pattern: /[a-zA-Z]/},
+'A': {pattern: /[a-zA-Z]/, transform: v => v.toLocaleUpperCase()},
+'a': {pattern: /[a-zA-Z]/, transform: v => v.toLocaleLowerCase()},
+'!': {escape: true}
+```
+
+![The Mask Money](https://raw.githubusercontent.com/vuejs-tips/vue-the-mask/master/img/the-mask-hammer.gif)
+
+## Properties
+
+| Property    | Required | Type                    | Default | Description                                |
+|-------------|----------|-------------------------|---------|--------------------------------------------|
+| value       | false    | String                  |         | Input value or v-model                     |
+| mask        | **true** | String, Function, Array |         | Mask pattern                               |
+| masked      | false    | Boolean                 | false   | emit value with mask chars, default is raw |
+| placeholder | false    | String                  |         | Same as html input                         |
+| type        | false    | String                  | 'text'  | Input type (email, tel, number, ...)       |
+| tokens      | false    | Object                  | [tokens](#tokens) | Custom tokens for mask           |
+
+## What about money?
+
+We understand that money format is a totally different domain, which needs another specific component. Stay tunned.
+
+![The Mask Money](https://raw.githubusercontent.com/vuejs-tips/vue-the-mask/master/img/the-mask-money.gif)
+
+## Other Solutions
+
+1. ![https://github.com/nosir/cleave.js](https://img.shields.io/github/stars/nosir/cleave.js.svg?style=social&label=Star) https://github.com/nosir/cleave.js
+1. ![https://github.com/text-mask/text-mask](https://img.shields.io/github/stars/text-mask/text-mask.svg?style=social&label=Star) https://github.com/text-mask/text-mask
+1. ![https://github.com/igorescobar/jQuery-Mask-Plugin](https://img.shields.io/github/stars/igorescobar/jQuery-Mask-Plugin.svg?style=social&label=Star) https://github.com/igorescobar/jQuery-Mask-Plugin
+1. ![https://github.com/fernandofleury/vanilla-masker](https://img.shields.io/github/stars/fernandofleury/vanilla-masker.svg?style=social&label=Star) https://github.com/fernandofleury/vanilla-masker
+1. ![https://github.com/angular-ui/ui-mask](https://img.shields.io/github/stars/angular-ui/ui-mask.svg?style=social&label=Star) https://github.com/angular-ui/ui-mask
+1. ![https://github.com/insin/inputmask-core](https://img.shields.io/github/stars/insin/inputmask-core.svg?style=social&label=Star) https://github.com/insin/inputmask-core
+1. ![https://github.com/niksmr/vue-masked-input](https://img.shields.io/github/stars/niksmr/vue-masked-input.svg?style=social&label=Star) https://github.com/niksmr/vue-masked-input
+1. ![https://github.com/probil/v-mask](https://img.shields.io/github/stars/probil/v-mask.svg?style=social&label=Star) https://github.com/probil/v-mask
+1. ![https://github.com/moip/awesome-mask](https://img.shields.io/github/stars/moip/awesome-mask.svg?style=social&label=Star) https://github.com/moip/awesome-mask
+1. ![https://github.com/the-darc/string-mask](https://img.shields.io/github/stars/the-darc/string-mask.svg?style=social&label=Star) https://github.com/the-darc/string-mask
+1. ![https://github.com/romulobrasil/PureMask.js](https://img.shields.io/github/stars/romulobrasil/PureMask.js.svg?style=social&label=Star) https://github.com/romulobrasil/PureMask.js
+1. ![https://github.com/devindex/vue-mask](https://img.shields.io/github/stars/devindex/vue-mask.svg?style=social&label=Star) https://github.com/devindex/vue-mask
+
+## Currency
+
+1. ![https://github.com/plentz/jquery-maskmoney](https://img.shields.io/github/stars/plentz/jquery-maskmoney.svg?style=social&label=Star) https://github.com/plentz/jquery-maskmoney
+1. ![https://github.com/flaviosilveira/Jquery-Price-Format](https://img.shields.io/github/stars/flaviosilveira/Jquery-Price-Format.svg?style=social&label=Star) https://github.com/flaviosilveira/Jquery-Price-Format
+1. ![https://github.com/kevinongko/vue-numeric](https://img.shields.io/github/stars/kevinongko/vue-numeric.svg?style=social&label=Star) https://github.com/kevinongko/vue-numeric
+
+### [Suggest another one here](https://github.com/vuejs-tips/vue-the-mask/issues/new?title=Library+Suggestion)
+
+## Contribution
+
+You're free to contribute to this project by submitting [issues](https://github.com/vuejs-tips/v-tag-input.svg/issues) and/or [pull requests](https://github.com/vuejs-tips/v-tag-input.svg/pulls). This project is test-driven, so keep in mind that every change and new feature should be covered by tests. Your name will be added to the hall of fame ;)
+
+![The Mask Wolf](https://raw.githubusercontent.com/vuejs-tips/vue-the-mask/master/img/the-mask-wolf.gif)
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+This project is licensed under [MIT License](http://en.wikipedia.org/wiki/MIT_License)

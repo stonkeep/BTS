@@ -43,14 +43,14 @@ class InstituicaoController extends Controller
             'naturezaJuridica' => 'required|exists:naturezas_juridicas',
             'nomeDaArea' => 'required',
             'ddd' => 'required|numeric',
-            'telefone' => 'required|numeric',
+            'telefone' => 'required|celular_com_ddd',
             'email' => 'required|email',
             'UF' => 'required',
             'cidade' => 'required',
             'endereco' => 'required',
             'bairro' => 'required',
             'CEP' => 'required|numeric',
-            'site' => 'required',
+            'site' => 'required|url',
             'nomeCompleto' => 'required',
             'cargo_id' => 'required|exists:cargos,id',
             'sexo' => 'required|string|size:1',
@@ -72,6 +72,7 @@ class InstituicaoController extends Controller
     public function show(Instituicao $instituicao)
     {
         $instituicoes = Instituicao::all();
+//        dd($instituicoes);
         return view('instituicoes.show', compact('instituicoes'));
     }
 
@@ -83,7 +84,7 @@ class InstituicaoController extends Controller
      */
     public function edit(Instituicao $instituicao)
     {
-        //
+        return view('instituicoes.edit', compact('instituicao'));
     }
 
     /**
