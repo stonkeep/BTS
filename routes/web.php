@@ -95,7 +95,7 @@ Route::get('/instituicoes/insert', function () {
 });
     Route::post('instituicoes/create', 'InstituicaoController@store');
     Route::get('instituicoes', 'InstituicaoController@show');
-    Route::delete('instituicoes/delete/{instituicao}', 'InstituicaoController@destroy');
+    Route::get('instituicoes/delete/{instituicao}', 'InstituicaoController@destroy');
     Route::put('instituicoes/update/{instituicao}', 'InstituicaoController@update');
 
 //Categorias

@@ -116,6 +116,7 @@ class InstituicaoController extends Controller
     {
         $instituicao->delete();
         $instituicoes = Instituicao::all();
+        flash('Instituição '.$instituicao->razaoSocial.' deletada com sucesso')->success();
         return view('instituicoes.show', compact('instituicoes'));
     }
 }
