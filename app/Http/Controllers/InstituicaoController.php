@@ -38,12 +38,12 @@ class InstituicaoController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'CNPJ' => 'required|unique:instituicaos|numeric',
+            'CNPJ' => 'required|unique:instituicaos|numeric|cnpj',
             'razaoSocial' => 'required',
             'naturezaJuridica' => 'required|exists:naturezas_juridicas',
             'nomeDaArea' => 'required',
             'ddd' => 'required|numeric',
-            'telefone' => 'required|celular_com_ddd',
+            'telefone' => 'required|telefone_com_ddd',
             'email' => 'required|email',
             'UF' => 'required',
             'cidade' => 'required',
@@ -54,7 +54,7 @@ class InstituicaoController extends Controller
             'nomeCompleto' => 'required',
             'cargo_id' => 'required|exists:cargos,id',
             'sexo' => 'required|string|size:1',
-            'CPF' => 'required|numeric',
+            'CPF' => 'required|numeric|cpf',
         ]);
 
         Instituicao::create($request->all());

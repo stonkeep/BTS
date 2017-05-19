@@ -10,6 +10,7 @@ require('./bootstrap-table/bootstrap-table');
 require('./bootstrap-table/bootstrap-table-locale-all');
 require('./bootstrap-table/extensions/accent-neutralise/bootstrap-table-accent-neutralise.min');
 require('./bootstrap-table/bootstrap.min');
+require('./bootstrap/bootstrap.min');
 
 
 /**
@@ -30,6 +31,7 @@ Vue.component('categoria', require('./components/Categoria.vue'));
 Vue.component('instituicao', require('./components/Instituicao.vue'));
 Vue.component('premio', require('./components/Premio.vue'));
 Vue.component('table-example', require('./components/tablesExample.vue'));
+// Vue.component('uf', require('./components/uf.vue'));
 
 const app = new Vue({
     el: '#app'

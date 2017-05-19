@@ -3,11 +3,12 @@
         <form @submit.prevent="submit" @keydown="form.errors.clear($event.target.name)" class="form-horizontal">
             <alert-error :form="form"></alert-error>
 
+
             <div class="form-group" :class="{ 'has-error': form.errors.has('CNPJ') }">
                 <label for="CNPJ" class="col-md-3 control-label">CNPJ: </label>
                 <div class="col-md-6">
-                    <input v-model="form.CNPJ" type="CNPJ" name="CNPJ" id="CNPJ"
-                           class="form-control">
+                    <the-mask v-model="form.CNPJ" type="CNPJ" name="CNPJ" id="CNPJ"
+                              class="form-control" :mask="'##.###.###/####-##'"/>
                     <has-error :form="form" field="CNPJ"></has-error>
                 </div>
             </div>
@@ -54,31 +55,38 @@
             <div class="form-group" :class="{ 'has-error': form.errors.has('telefone') }">
                 <label for="telefone" class="col-md-3 control-label">telefone: </label>
                 <div class="col-md-6">
-                    <the-mask v-model="form.telefone" type="telefone" name="telefone" id="telefone"
-                           class="form-control" :mask="['(##) ####-####', '(##) #####-####']"/>
+                    <the-mask masked="true" v-model="form.telefone" type="telefone" name="telefone" id="telefone"
+                              class="form-control" :mask="['(##)####-####', '(##)####-####']"/>
                     <has-error :form="form" field="telefone"></has-error>
                 </div>
             </div>
-
 
             <div class="form-group" :class="{ 'has-error': form.errors.has('email') }">
                 <label for="email" class="col-md-3 control-label">email: </label>
                 <div class="col-md-6">
                     <the-mask v-model="form.email" type="email" name="email" id="email"
-                           class="form-control"/>
+                              class="form-control"/>
                     <has-error :form="form" field="email"></has-error>
                 </div>
             </div>
 
-
             <div class="form-group" :class="{ 'has-error': form.errors.has('UF') }">
                 <label for="UF" class="col-md-3 control-label">UF: </label>
                 <div class="col-md-6">
-                    <input v-model="form.UF" type="UF" name="UF" id="UF"
-                           class="form-control">
+                    <uf v-on:update="val => form.UF = val"></uf>
                     <has-error :form="form" field="UF"></has-error>
                 </div>
             </div>
+
+
+            <!--<div class="form-group" :class="{ 'has-error': form.errors.has('UF') }">-->
+            <!--<label for="UF" class="col-md-3 control-label">UF: </label>-->
+            <!--<div class="col-md-6">-->
+            <!--<input v-model="form.UF" type="UF" name="UF" id="UF"-->
+            <!--class="form-control">-->
+            <!--<has-error :form="form" field="UF"></has-error>-->
+            <!--</div>-->
+            <!--</div>-->
 
             <div class="form-group" :class="{ 'has-error': form.errors.has('cidade') }">
                 <label for="cidade" class="col-md-3 control-label">cidade: </label>
@@ -144,8 +152,8 @@
                 <label for="CPF" class="col-md-3 control-label">CPF: </label>
                 <div class="col-md-6">
                     <the-mask v-model="form.CPF" type="CPF" name="CPF" id="CPF"
-                           class="form-control"
-                           :mask="['###.###.###-##', '##.###.###/####-##']"/>
+                              class="form-control"
+                              :mask="'###.###.###-##'"/>
                     <has-error :form="form" field="CPF"></has-error>
                 </div>
             </div>
@@ -153,12 +161,17 @@
                 <button :disabled="form.busy" type="submit" class="btn btn-primary" name="enviar">Enviar</button>
             </div>
         </form>
+
+
     </div>
 </template>
 
 <script>
     import {Form, HasError, AlertError} from 'vform'
+    import Uf from '../components/uf.vue'
+
     export default {
+        components: {Uf},
         data () {
             return {
                 // Create a new form instance
@@ -203,6 +216,9 @@
                         })
                 }
 
+            },
+            update(){
+                console.log('teste');
             },
         }
 
