@@ -59,13 +59,13 @@ class VigenciaPremioTest extends TestCase
     function teste_update()
     {
         $premio = factory(VigenciasPremio::class)->create();
-        
-        $response = $this->json('PUT', "/premios/update/{$premio->id}",['edicao' => '2018']);
+        $premio->edicao = '2018';
+        $response = $this->json('PUT', "/premios/update/{$premio->id}",$premio->toArray());
         $response->assertStatus(200);
 
         $response = $this->get('premios');
         $response->assertStatus(200);
-        $response->assertSee("2018</td>");
+        $response->assertSee("<th>2018</th>");
     }
     
     /** @test */

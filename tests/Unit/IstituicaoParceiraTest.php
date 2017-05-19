@@ -20,11 +20,14 @@ class IstituicaoParceiraTest extends TestCase
      * @return void
      * @test
      */
-    public function testExample()
+    public function teste_create()
     {
+        factory(Tecnologia::class)->create();
+        
         InstituicaoParceira::create([
             'nome' => 'Universidade Federal do Paraná UFPR',
             'atuacao' => ' A parceria acontece desde 2004, com o Centro de Estudos em Segurança Pública e Direitos Humanos. Esta entidade, por meio de seu responsável, Prof. Dr. Pedro Rodolfo Bodê de Moraes apoia os trabalhos de intervenção realizados. Além de compartilhar conhecimentos, é por intermédio desta parceria que os cursos ofertados aos educadores de suas escolas parceiras são chancelados como cursos de extensão da UFPR e seus participantes são devidamente certificados.',
+            'tecnologia_id' => 1,
         ]);
 
         $instituicaoParceria = InstituicaoParceira::first();
@@ -34,6 +37,7 @@ class IstituicaoParceiraTest extends TestCase
         InstituicaoParceira::create([
             'nome' => 'Universidade Federal',
             //'atuacao' => '',
+            'tecnologia_id' => 1,
         ]);
 
         $instituicaoParceria = InstituicaoParceira::find(2);
@@ -70,8 +74,11 @@ class IstituicaoParceiraTest extends TestCase
     function teste_list()
     {
         factory(InstituicaoParceira::class)->create();
+        
         InstituicaoParceira::create([
             'nome' => 'Universidade Federal',
+            'atuacao' => ' A parceria acontece desde 2004, com o Centro de Estudos em Segurança Pública e Direitos Humanos. Esta entidade, por meio de seu responsável, Prof. Dr. Pedro Rodolfo Bodê de Moraes apoia os trabalhos de intervenção realizados. Além de compartilhar conhecimentos, é por intermédio desta parceria que os cursos ofertados aos educadores de suas escolas parceiras são chancelados como cursos de extensão da UFPR e seus participantes são devidamente certificados.',
+            'tecnologia_id' => 1,
         ]);
 
         $instituicoes = InstituicaoParceira::all();

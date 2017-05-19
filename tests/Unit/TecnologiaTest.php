@@ -118,12 +118,13 @@ class TecnologiaTest extends TestCase
     /** @test */
     public function teste_update()
     {
+        $this->disableExceptionHandling();
         //TODO verificar se no teste faz o update nas outras tabelas também
         $tecnologia = factory(Tecnologia::class)->create();
 
         $data = [
             'numeroInscricao' => '2017/0002',
-                'titulo'               => 'Teste GEPEM2',
+                'titulo'               => 'Outro teste',
                 'fimLucrativo'         => false,
                 'tempoImplantacao'     => 2,
                 'emAtividade'          => true,
@@ -131,8 +132,8 @@ class TecnologiaTest extends TestCase
                 'investimentoFBB'      => true,
                 'categoria_id'         => 1,
                 'resumo'               => 'Resumao',
-                'tema_id'              => 1,
-                'temaSecundario_id'    => 2,
+                'tema_id'              => 3,
+                'temaSecundario_id'    => 4,
                 "subtema1"             => [1],
                 "subtema2"             => [20,21],
                 'problema'             => 'Problemao',
@@ -153,6 +154,9 @@ class TecnologiaTest extends TestCase
         $tecnologia = Tecnologia::firstOrFail();
 
         self::assertEquals($tecnologia->titulo, 'Outro teste');
+
+        self::assertEquals($tecnologia->temaPrincipal()->id, $data['tema_id']);
+        self::assertEquals($tecnologia->temaSecundario()->id, $data['temaSecundario_id']);
 
     }
 

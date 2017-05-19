@@ -40,14 +40,14 @@ class RegioesController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'sigla' => 'required|unique:regioes',
+            'sigla' => 'required|unique:regioes,sigla',
             'descricao' => 'required'
         ]);
             
         Regioes::create($request->all());
         $regioes = Regioes::all();
-
-        return redirect('/regioes');
+        
+        return view('regioes.show', compact('regioes'));
     }
 
     /**

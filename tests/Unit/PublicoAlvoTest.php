@@ -113,7 +113,7 @@ class PublicoAlvoTest extends TestCase
 
         $publico = PublicosAlvo::firstOrFail();
 
-        $response = $this->json('DELETE', "publicosAlvo/delete/{$publico->id}");
+        $response = $this->json('get', "publicosAlvo/delete/{$publico->id}");
 
         $response->assertStatus(200);
 

@@ -183,6 +183,7 @@ class TecnologiasController extends Controller
         ]);
 
         $input = $request->except(['subtema1', 'subtema2', 'instituicao_id']);
+        
         $tecnologia->update($input);
         // TODO ajustar edição com as outras tabelas
         flash('Tecnologia '.$tecnologia->titulo.' atualizada com sucesso')->success();
@@ -190,10 +191,8 @@ class TecnologiasController extends Controller
         //desfaz todas as ligações anteriores
         $tecnologia->subtemas()->detach();
 
-        //Grava os subtemas principais
-        $subtemas = $request->only('subtema1');
-        $inputs = $subtemas->merge($request->only('subtema2'));
-        dd($inputs);
+        $inputs = array_merge($request->only('subtema1'), $request->only('subtema2'));
+        
         foreach ($inputs as $input) {
             $tecnologia->subtemas()->attach($input);//TODO tratamento de erro
         }

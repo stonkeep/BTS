@@ -81,15 +81,15 @@ class InstituicaoTest extends TestCase
     /** @test */
     public function teste_de_cadastramento_por_post()
     {
-        $this->disableExceptionHandling();
-
+        //$this->disableExceptionHandling();
+        
         $natureza = factory(NaturezasJuridicas::class)->create();
         $cargo = factory(Cargos::class)->create();
 
-        $response = $this->json('POST', "instituicoes/create", [
-            'CNPJ'             => 16286169000190,
+        $this->response = $response = $this->json('POST', "instituicoes/create", [
+            'CNPJ'             => 33216167000143,
             'razaoSocial'      => 'Teste de Instituicao',
-            'naturezaJuridica' => 1,
+            'naturezaJuridica' => 2,
             'nomeDaArea'       => 'nao sei',
             'ddd'              => 061,
             'telefone'         => 231546,
@@ -99,7 +99,7 @@ class InstituicaoTest extends TestCase
             'endereco'         => 'Quadra 107',
             'bairro'           => 'Aguas Claras',
             'CEP'              => 71920700,
-            'site'             => 'fbb.org.br',
+            'site'             => 'http://www.fbb.org.br',
             'nomeCompleto'     => 'Mateus Galasso',
             'cargo_id'         => 1,
             'sexo'             => 'M',
@@ -110,8 +110,6 @@ class InstituicaoTest extends TestCase
         $response->assertSee('16286169000190');
         $response->assertSee($natureza->descricao);
         $response->assertSee($cargo->descricao);
-        $response->assertSee('83745617509');
-
     }
 
 
@@ -151,7 +149,7 @@ class InstituicaoTest extends TestCase
     {
         //$instituicao = factory(Instituicao::class)->create();
 
-        $response = $this->json('DELETE', "instituicoes/delete/1");
+        $response = $this->json('get', "instituicoes/delete/1");
 
         $response->assertStatus(200);
         $response->assertDontSee('16286169000190');

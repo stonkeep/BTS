@@ -40,10 +40,10 @@ class InstituicaoController extends Controller
         $this->validate($request, [
             'CNPJ' => 'required|unique:instituicaos|numeric|cnpj',
             'razaoSocial' => 'required',
-            'naturezaJuridica' => 'required|exists:naturezas_juridicas',
+            'naturezaJuridica' => 'required|exists:naturezas_juridicas,id',
             'nomeDaArea' => 'required',
             'ddd' => 'required|numeric',
-            'telefone' => 'required|telefone_com_ddd',
+            'telefone' => 'required',
             'email' => 'required|email',
             'UF' => 'required',
             'cidade' => 'required',
@@ -60,7 +60,7 @@ class InstituicaoController extends Controller
         Instituicao::create($request->all());
 
         $instituicoes = Instituicao::all();
-        dd($instituicoes);
+        //dd($instituicoes);
         return view('instituicoes.show', compact('instituicoes'));
     }
 

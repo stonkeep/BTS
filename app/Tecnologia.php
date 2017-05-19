@@ -52,12 +52,12 @@ class Tecnologia extends Model
 
     public function temaPrincipal()
     {
-        return $tema = Temas::where('id', $this->tema_id)->get();
+        return $tema = Temas::where('id', $this->tema_id)->first();
     }
 
     public function temaSecundario()
     {
-        return $tema = Temas::where('id', $this->temaSecundario_id)->get();
+        return $tema = Temas::where('id', $this->temaSecundario_id)->first();
     }
 
     public function responsaveis()
