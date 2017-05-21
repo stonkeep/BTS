@@ -97,7 +97,25 @@ class InstituicaoController extends Controller
      */
     public function update(Request $request, Instituicao $instituicao)
     {
-        //TODO fazer a validação
+        $this->validate($request, [
+            'CNPJ' => 'required|numeric|cnpj',
+            'razaoSocial' => 'required',
+            'naturezaJuridica' => 'required|exists:naturezas_juridicas,id',
+            'nomeDaArea' => 'required',
+            'ddd' => 'required|numeric',
+            'telefone' => 'required',
+            'email' => 'required|email',
+            'UF' => 'required',
+            'cidade' => 'required',
+            'endereco' => 'required',
+            'bairro' => 'required',
+            'CEP' => 'required|numeric',
+            'site' => 'required|url',
+            'nomeCompleto' => 'required',
+            'cargo_id' => 'required|exists:cargos,id',
+            'sexo' => 'required|string|size:1',
+            'CPF' => 'required|numeric|cpf',
+        ]);
 
         $instituicao->update($request->all());
 

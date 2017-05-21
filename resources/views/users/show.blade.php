@@ -25,15 +25,15 @@
 
 @section('js')
     <script src="/js/app.js"></script>
-    <script>
-        $('#table').bootstrapTable({
-            cache: false,
-            height: 500,
-            striped: true,
-            pagination: true,
-            pageSize: 10,
-            pageList: [All], //list can be specified here
-            searchTimeOut: 10
-        });
-    </script>
+    {{--<script>--}}
+        {{--$('#table').bootstrapTable({--}}
+            {{--cache: false,--}}
+            {{--height: 500,--}}
+            {{--striped: true,--}}
+            {{--pagination: true,--}}
+            {{--pageSize: 10,--}}
+            {{--pageList: [All], //list can be specified here--}}
+            {{--searchTimeOut: 10--}}
+        {{--});--}}
+    {{--</script>--}}
 @stop

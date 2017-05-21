@@ -12,7 +12,7 @@ class SubTemas extends Model
 
     public function tema()
     {
-        return $this->belongsTo(Temas::class);
+        return $this->belongsTo(Temas::class, 'tema_id', 'id');
     }
 
     public function tecnologias()

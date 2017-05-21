@@ -13,17 +13,24 @@
     <div>
         <a href="/categorias/insert" class="btn btn-primary">NOVO</a>
     </div>
-    <table data-toggle="table"
+    <table id="table" data-toggle="table"
            data-search="true"
-           data-show-pagination-switch="true"
+           data-show-columns="true"
            data-search-accent-neutralise="true"
-           data-locale="pt-BR">
-        <thead>
+           data-locale="pt-BR"
+           data-page-size="10"
+           data-page-list="[10, 25, 50, 100]"
+           data-pagination="true">
+        <thead class="thead-inverse">
         <tr>
             <th  data-sortable="true">Item ID</th>
             <th data-sortable="true">Descrição</th>
             <th  data-sortable="false"></th>
             <th  data-sortable="false"></th>
+            <th data-sortable="false"
+                data-switchable="false"></th>
+            <th data-sortable="false"
+                data-switchable="false"></th>
         </tr>
         </thead>
         <tbody>

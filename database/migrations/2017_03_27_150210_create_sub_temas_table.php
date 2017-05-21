@@ -16,8 +16,16 @@ class CreateSubTemasTable extends Migration
         Schema::create('sub_temas', function (Blueprint $table) {
             $table->increments('id');
             $table->string('descricao');
-            $table->unsignedInteger('tema_id');
+
             $table->timestamps();
+        });
+
+        Schema::table('sub_temas', function($table)
+        {
+            $table->integer('tema_id')->unsigned();
+
+            $table->foreign('tema_id')->references('id')->on('temas')->onDelete('cascade');
+
         });
     }
 

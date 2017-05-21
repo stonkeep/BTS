@@ -14,8 +14,8 @@ class CargosController extends Controller
      */
     public function index()
     {
-        $cargos = Cargos::paginate(10);
-        return view('cargos.show', compact('cargos'));
+        $cargos = Cargos::all();
+        return view('cargos.show', compact('cargos', 'colunas'));
     }
 
     /**
@@ -42,7 +42,7 @@ class CargosController extends Controller
 
         Cargos::create($request->all());
 
-        $cargos = Cargos::paginate(10);
+        $cargos = Cargos::all();
         return view('cargos.show', compact('cargos'));
 
     }
@@ -93,7 +93,7 @@ class CargosController extends Controller
     public function destroy(Cargos $cargo)
     {
         $cargo->delete();
-        $cargos = Cargos::paginate(10);
+        $cargos = Cargos::all();
 
         return view('cargos.show', compact('cargos'));
     }

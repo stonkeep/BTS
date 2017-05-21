@@ -9,40 +9,21 @@
 @stop
 
 @section('content')
-
-    <div>
-        <a href="/cargos/insert" class="btn btn-primary">NOVO</a>
+    @php
+        $colunas = collect(['id', 'Descrição', 'Data de Criação', 'Data de Atualização']);
+    @endphp
+    <div id="app">
+        <bts-table :data="{{$cargos}}" :tipo="'cargos'" :colunas="{{$colunas}}"></bts-table>
     </div>
-    <table  id="table_id" class="table">
-    <thead class="thead-inverse">
-    <tr>
-        <th>#</th>
-        <th>Descrição</th>
-        <th>Data de atualização</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach($cargos as $cargo)
-        <tr>
-
-            <th scope="row">{{$cargo->id}}</th>
-            <td>{{$cargo->descricao}}</td>
-            <td>{{$cargo->updated_at}}</td>
-            <td><a class="btn btn-danger" href="/cargos/delete/{{$cargo->id}}">Excluir</a></td>
-            <td><a class="btn btn-success" href="/cargos/edit/{{$cargo->id}}">Editar</a></td>
-        </tr>
-    @endforeach
-
-    </tbody>
-    </table>
-    {{ $cargos->links() }}
-
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+    <link rel="stylesheet" href="/css/app.css">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
 @stop
 
 @section('js')
-
+    <script src="/js/app.js"></script>
 @stop

@@ -22,10 +22,10 @@
         <tr>
             <th data-sortable="true">ID</th>
             <th data-sortable="true">CNPJ</th>
-            <th data-sortable="true">razaoSocial</th>
-            <th data-sortable="true">Natureza Juridica</th>
-            <th  data-sortable="false"></th>
-            <th  data-sortable="false"></th>
+            <th data-sortable="true">Razão Social</th>
+            <th data-sortable="true">Natureza Jurídica</th>
+            <th data-sortable="false"></th>
+            <th data-sortable="false"></th>
 
         </tr>
         </thead>

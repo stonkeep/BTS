@@ -14,7 +14,7 @@
             </div>
 
             <div class="form-group" :class="{ 'has-error': form.errors.has('razaoSocial') }">
-                <label for="razaoSocial" class="col-md-3 control-label">razaoSocial: </label>
+                <label for="razaoSocial" class="col-md-3 control-label">Razão Social: </label>
                 <div class="col-md-6">
                     <input v-model="form.razaoSocial" type="razaoSocial" name="razaoSocial" id="razaoSocial"
                            class="form-control">
@@ -24,7 +24,7 @@
 
 
             <div class="form-group" :class="{ 'has-error': form.errors.has('naturezaJuridica') }">
-                <label for="naturezaJuridica" class="col-md-3 control-label">naturezaJuridica: </label>
+                <label for="naturezaJuridica" class="col-md-3 control-label">Natureza Juridica: </label>
                 <div class="col-md-6">
                     <input v-model="form.naturezaJuridica" type="naturezaJuridica" name="naturezaJuridica"
                            id="naturezaJuridica"
@@ -34,7 +34,7 @@
             </div>
 
             <div class="form-group" :class="{ 'has-error': form.errors.has('nomeDaArea') }">
-                <label for="nomeDaArea" class="col-md-3 control-label">nomeDaArea: </label>
+                <label for="nomeDaArea" class="col-md-3 control-label">Nome da Area: </label>
                 <div class="col-md-6">
                     <input v-model="form.nomeDaArea" type="nomeDaArea" name="nomeDaArea" id="nomeDaArea"
                            class="form-control">
@@ -43,7 +43,7 @@
             </div>
 
             <div class="form-group" :class="{ 'has-error': form.errors.has('ddd') }">
-                <label for="ddd" class="col-md-3 control-label">ddd: </label>
+                <label for="ddd" class="col-md-3 control-label">DDD: </label>
                 <div class="col-md-6">
                     <input v-model="form.ddd" type="ddd" name="ddd" id="ddd"
                            class="form-control">
@@ -53,7 +53,7 @@
 
 
             <div class="form-group" :class="{ 'has-error': form.errors.has('telefone') }">
-                <label for="telefone" class="col-md-3 control-label">telefone: </label>
+                <label for="telefone" class="col-md-3 control-label">Telefone: </label>
                 <div class="col-md-6">
                     <the-mask masked="true" v-model="form.telefone" type="telefone" name="telefone" id="telefone"
                               class="form-control" :mask="['(##)####-####', '(##)####-####']"/>
@@ -62,7 +62,7 @@
             </div>
 
             <div class="form-group" :class="{ 'has-error': form.errors.has('email') }">
-                <label for="email" class="col-md-3 control-label">email: </label>
+                <label for="email" class="col-md-3 control-label">Email: </label>
                 <div class="col-md-6">
                     <the-mask v-model="form.email" type="email" name="email" id="email"
                               class="form-control"/>
@@ -89,7 +89,7 @@
             <!--</div>-->
 
             <div class="form-group" :class="{ 'has-error': form.errors.has('cidade') }">
-                <label for="cidade" class="col-md-3 control-label">cidade: </label>
+                <label for="cidade" class="col-md-3 control-label">Cidade: </label>
                 <div class="col-md-6">
                     <input v-model="form.cidade" type="cidade" name="cidade" id="cidade"
                            class="form-control">
@@ -98,7 +98,7 @@
             </div>
 
             <div class="form-group" :class="{ 'has-error': form.errors.has('endereco') }">
-                <label for="endereco" class="col-md-3 control-label">endereco: </label>
+                <label for="endereco" class="col-md-3 control-label">Endereço: </label>
                 <div class="col-md-6">
                     <input v-model="form.endereco" type="endereco" name="endereco" id="endereco"
                            class="form-control">
@@ -108,7 +108,7 @@
 
 
             <div class="form-group" :class="{ 'has-error': form.errors.has('bairro') }">
-                <label for="bairro" class="col-md-3 control-label">bairro: </label>
+                <label for="bairro" class="col-md-3 control-label">Bairro: </label>
                 <div class="col-md-6">
                     <input v-model="form.bairro" type="bairro" name="bairro" id="bairro"
                            class="form-control">

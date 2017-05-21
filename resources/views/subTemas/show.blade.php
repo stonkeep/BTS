@@ -47,11 +47,6 @@
             </tbody>
         </table>
     </div>
-
-    {{--<div id="app">--}}
-    {{--<table-example :data="{{$subTemas}}" :tipo="subtemas"></table-example>--}}
-    {{--</div>--}}
-
 @stop
 
 

@@ -9,41 +9,23 @@
 @stop
 
 @section('content')
-    <div>
-        <a href="/temas/insert" class="btn btn-primary">NOVO</a>
+    @php
+        $colunas = collect(['id', 'Descrição', 'Data de Criação', 'Data de Atualização']);
+    @endphp
+    <div id="app">
+        <bts-table :data="{{$temas}}" :tipo="'temas'" :colunas="{{$colunas}}"></bts-table>
     </div>
-    <table id="example" class="table">
-        <thead class="thead-inverse">
-        <tr>
-            <th>ID</th>
-            <th>Descrição</th>
-            <th>Data de criação</th>
-            <th>Data de Atualização</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach($temas as $tema)
-            <tr>
-                <th scope="row">{{$tema->id}}</th>
-                <td>{{$tema->nome}}</td>
-                <td>{{$tema->created_at}}</td>
-                <td>{{$tema->updated_at}}
-                <td><a class="btn btn-danger" href="/temas/delete/{{$tema->id}}">Excluir</a></td>
-                <td><a class="btn btn-success" href="/temas/edit/{{$tema->id}}">Editar</a></td>
-            </tr>
-        @endforeach
 
-        </tbody>
-    </table>
-
-    <div id="app"> <example></example></div>
 @stop
 
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+    <link rel="stylesheet" href="/css/app.css">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
 @stop
 
 @section('js')
-
+    <script src="/js/app.js"></script>
 @stop
