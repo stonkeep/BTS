@@ -13291,11 +13291,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -13306,7 +13301,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     props: ['colunas', 'data', 'tipo'],
-    mounted: function mounted() {}
+    mounted: function mounted() {},
+
+    methods: {
+        apaga: function apaga() {
+            console.log('teste');
+        }
+    }
 });
 
 /***/ }),
@@ -21801,7 +21802,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(12)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 56 */
@@ -41681,10 +41682,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })], 2)]), _vm._v(" "), _c('tbody', _vm._l((_vm.data), function(linha) {
     return _c('tr', [_vm._l((linha), function(val, key, index) {
       return _c('td', [_vm._v("\n                " + _vm._s(linha[key]) + "\n            ")])
-    }), _vm._v(" "), _c('td', [_c('a', {
+    }), _vm._v(" "), _c('td', [_c('button', {
       staticClass: "btn btn-danger",
       attrs: {
         "href": '/' + _vm.tipo + '/delete/' + linha.id
+      },
+      on: {
+        "click": _vm.apaga
       }
     }, [_vm._v("Excluir")])]), _vm._v(" "), _c('td', [_c('a', {
       staticClass: "btn btn-success",

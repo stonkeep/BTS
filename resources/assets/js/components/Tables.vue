@@ -18,12 +18,7 @@
                 <th data-sortable="false"></th>
                 <th data-sortable="false"></th>
             </tr>
-            <!--<tr>-->
-            <!--<th data-field="id" data-sortable="true">Item ID</th>-->
-            <!--<th data-field="descricao" data-sortable="true">descricao</th>-->
-            <!--<th data-sortable="false"></th>-->
-            <!--<th data-sortable="false"></th>-->
-            <!--</tr>-->
+
 
             </thead>
 
@@ -32,7 +27,7 @@
                 <td v-for="(val, key, index) in linha">
                     {{linha[key]}}
                 </td>
-                <td><a class="btn btn-danger" :href="'/'+tipo+'/delete/' + linha.id">Excluir</a></td>
+                <td><button v-on:click="apaga" class="btn btn-danger" :href="'/'+tipo+'/delete/' + linha.id">Excluir</button></td>
                 <td><a class="btn btn-success" :href="'/'+tipo+'/edit/' + linha.id">Editar</a></td>
             </tr>
 
@@ -51,8 +46,12 @@
         },
         props: ['colunas', 'data', 'tipo'],
         mounted() {
-
         },
+        methods: {
+            apaga: function () {
+               console.log('teste')
+            }
+        }
     };
 </script>
 <style>
