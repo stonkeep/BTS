@@ -132,9 +132,17 @@ class InstituicaoController extends Controller
      */
     public function destroy(Instituicao $instituicao)
     {
-        $instituicao->delete();
+        try {
+            $instituicao->delete();
+            flash('Instituição '.$instituicao->razaoSocial.' deletada com sucesso')->success();
+
+        } catch (\Exception $e) {
+            if ($e->getCode() == "23000") { //23000 is sql code for integrity constraint violation
+                flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
+            }
+        }
+
         $instituicoes = Instituicao::all();
-        flash('Instituição '.$instituicao->razaoSocial.' deletada com sucesso')->success();
         return view('instituicoes.show', compact('instituicoes'));
     }
 }

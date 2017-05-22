@@ -6,6 +6,7 @@ use App\Categoria;
 use App\SubTemas;
 use App\Temas;
 use Illuminate\Http\Request;
+use Mockery\CountValidator\Exception;
 
 class SubTemasController extends Controller
 {

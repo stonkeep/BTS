@@ -16,8 +16,12 @@ class TemaTest extends TestCase
 
     private function cria_lista_de_temas()
     {
-        $this->json('POST', "/temas/create", [
+        Temas::create([
             'nome' => 'Alimentação'
+        ]);
+
+        Temas::create([
+            'nome' => 'Educação'
         ]);
 
         $this->json('POST', "/temas/create", [
@@ -112,11 +116,16 @@ class TemaTest extends TestCase
     function testa_delete()
     {
         $this->cria_lista_de_temas();
+        $this->json('POST', "subtemas/create", [
+            'tema_id' => 1,
+            'descricao' => 'Higienização dos alimentos',
+        ]);
 
         $tema = Temas::findOrFail(1);
+
         
         $response = $this->get("temas/delete/{$tema->id}");
-
+        
         $response->assertStatus(200);
         $response->assertDontSee('Alimentação');
         $response->assertSee('Educação');
