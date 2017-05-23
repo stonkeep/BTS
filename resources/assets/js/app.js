@@ -6,7 +6,7 @@
  */
 
 require('./bootstrap');
-require('./bootstrap-table/bootstrap-table');
+require('./bootstrap-table/bootstrap-table.min');
 require('./bootstrap-table/bootstrap-table-locale-all');
 require('./bootstrap-table/extensions/accent-neutralise/bootstrap-table-accent-neutralise.min');
 // require('./bootstrap-table/bootstrap.min');

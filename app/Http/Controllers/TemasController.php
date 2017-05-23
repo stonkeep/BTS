@@ -16,9 +16,9 @@ class TemasController extends Controller
      */
     public function index()
     {
-        $temas = Temas::all();
+        $data = Temas::all();
 
-        return view('temas.show', compact('temas'));
+        return view('temas.show', compact('data'));
     }
 
 
@@ -47,9 +47,9 @@ class TemasController extends Controller
         ]);
 
         Temas::create($request->all());
-        $temas = Temas::all();
+        $data = Temas::all();
 
-        return view('temas.show', compact('temas'));
+        return view('temas.show', compact('data'));
     }
 
 
@@ -62,9 +62,9 @@ class TemasController extends Controller
      */
     public function show(Temas $temas)
     {
-        $temas = Temas::all();
+        $data = Temas::all();
 
-        return view('temas.show', compact('temas'));
+        return view('temas.show', compact('data'));
 
     }
 
@@ -112,13 +112,11 @@ class TemasController extends Controller
             $tema->delete();
         } catch (\Exception $e) {
             if ($e->getCode() == "23000") { //23000 is sql code for integrity constraint violation
-                flash('Erro '.$e.' ocorreu. Favor verificar com a administração do sistema')->error();
+                flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
             }
         }
+        $data = Temas::all();
 
-        $temas = Temas::all();
-        dd($temas);
-
-        return view('temas.show', compact('temas'));
+        return view('temas.show', compact('data'));
     }
 }
