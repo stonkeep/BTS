@@ -11,123 +11,124 @@
 |
 */
 
-use Carbon\Carbon;
-
 Route::get('/', function () {
     return view('welcome');
 });
 
+Route::group(['namespace' => 'Admin'], function () {
+    // Controllers Within The "App\Http\Controllers\Admin" Namespace
+
 //Route::group(['middleware' => 'auth'], function () {
 //Premios
-Route::get('/premios/insert', function () {
-    return view('premios.create');
-});
-    Route::post('/premios/create', 'VigenciasPremioController@store');
-    Route::get('/premios/', 'VigenciasPremioController@index');
-    Route::get('/premios/delete/{premio}', 'VigenciasPremioController@destroy');
-    Route::put('/premios/update/{premio}', 'VigenciasPremioController@update');
-Route::get('/premios/edit/{premio}', 'VigenciasPremioController@edit');
-
+    Route::get('/admin/premios/insert', function () {
+        return view('premios.create');
+    });
+    Route::post('/admin/premios/create', 'VigenciasPremioController@store');
+    Route::get('/admin/premios/', 'VigenciasPremioController@index');
+    Route::get('/admin/premios/delete/{premio}', 'VigenciasPremioController@destroy');
+    Route::put('/admin//premios/update/{premio}', 'VigenciasPremioController@update');
+    Route::get('/admin/premios/edit/{premio}', 'VigenciasPremioController@edit');
 
 //Temas
-    Route::get('/temas/insert', function () {
+    Route::get('/admin/temas/insert', function () {
         return view('temas.create');
     });
-    Route::post('/temas/create', 'TemasController@store');
-    Route::get('/temas/', 'TemasController@index');
-    Route::get('/temas/delete/{tema}', 'TemasController@destroy');
-    Route::put('/temas/update/{tema}', 'TemasController@update');
-    Route::get('/temas/edit/{tema}', 'TemasController@edit');
+    Route::post('/admin/temas/create', 'TemasController@store');
+    Route::get('/admin/temas/', 'TemasController@index');
+    Route::get('/admin/temas/delete/{tema}', 'TemasController@destroy');
+    Route::put('/admin//temas/update/{tema}', 'TemasController@update');
+    Route::get('/admin/temas/edit/{tema}', 'TemasController@edit');
 
 //SubTemas
-    Route::get('/subtemas/insert', 'SubTemasController@create');
-    Route::post('/subtemas/create', 'SubTemasController@store');
-    Route::get('/subtemas/', 'SubTemasController@index');
-    Route::get('/subtemas/delete/{subTema}', 'SubTemasController@destroy');
-    Route::put('/subtemas/update/{subTema}', 'SubTemasController@update');
-    Route::get('/subtemas/edit/{subTema}', 'SubTemasController@edit');
+    Route::get('/admin/subtemas/insert', 'SubTemasController@create');
+    Route::post('/admin/subtemas/create', 'SubTemasController@store');
+    Route::get('/admin/subtemas/', 'SubTemasController@index');
+    Route::get('/admin/subtemas/delete/{subTema}', 'SubTemasController@destroy');
+    Route::put('/admin//subtemas/update/{subTema}', 'SubTemasController@update');
+    Route::get('/admin/subtemas/edit/{subTema}', 'SubTemasController@edit');
 
 //Regioes -------------------------------------------------------------------------
-    Route::get('/regioes/insert', function () {
+    Route::get('/admin/regioes/insert', function () {
         return view('regioes.create');
     });
-    Route::post('/regioes/create', 'RegioesController@store');
-    Route::get('/regioes', 'RegioesController@index');
+    Route::post('/admin/regioes/create', 'RegioesController@store');
+    Route::get('/admin/regioes', 'RegioesController@index');
 //Route::delete('/regioes/delete/{regiao}', 'RegioesController@destroy');
-    Route::get('/regioes/delete/{regiao}', 'RegioesController@destroy');
-//Route::get('/regioes/check', 'RegioesController@check');
-    Route::put('/regioes/update/{regiao}', 'RegioesController@update');
-    Route::get('/regioes/edit/{regiao}', 'RegioesController@edit');
+    Route::get('/admin/regioes/delete/{regiao}', 'RegioesController@destroy');
+//Route::get('/admin/regioes/check', 'RegioesController@check');
+    Route::put('/admin//regioes/update/{regiao}', 'RegioesController@update');
+    Route::get('/admin/regioes/edit/{regiao}', 'RegioesController@edit');
 
 //Publico alvo
-    Route::get('/publicosAlvo/insert', function () {
+    Route::get('/admin/publicosAlvo/insert', function () {
         return view('publicosAlvo.create');
     });
-    Route::post('publicosAlvo/create', 'PublicosAlvoController@store');
-    Route::get('publicosAlvo', 'PublicosAlvoController@show');
-    Route::get('publicosAlvo/delete/{publico}', 'PublicosAlvoController@destroy');
-    Route::put('publicosAlvo/update/{publico}', 'PublicosAlvoController@update');
-    Route::get('publicosAlvo/edit/{publico}', 'PublicosAlvoController@edit');
+    Route::post('/admin/publicosAlvo/create', 'PublicosAlvoController@store');
+    Route::get('/admin/publicosAlvo', 'PublicosAlvoController@show');
+    Route::get('/admin/publicosAlvo/delete/{publico}', 'PublicosAlvoController@destroy');
+    Route::put('/admin/publicosAlvo/update/{publico}', 'PublicosAlvoController@update');
+    Route::get('/admin/publicosAlvo/edit/{publico}', 'PublicosAlvoController@edit');
 
 //Naturezas Juridicas
-    Route::get('/naturezasJuridicas/insert', function () {
+    Route::get('/admin/naturezasJuridicas/insert', function () {
         return view('naturezasJuridicas.create');
     });
-    Route::post('naturezasJuridicas/create', 'NaturezasJuridicasController@store');
-    Route::get('naturezasJuridicas', 'NaturezasJuridicasController@index');
-    Route::get('naturezasJuridicas/delete/{natureza}', 'NaturezasJuridicasController@destroy');
-    Route::put('naturezasJuridicas/update/{natureza}', 'NaturezasJuridicasController@update');
-    Route::get('naturezasJuridicas/edit/{natureza}', 'NaturezasJuridicasController@edit');
+    Route::post('/admin/naturezasJuridicas/create', 'NaturezasJuridicasController@store');
+    Route::get('/admin/naturezasJuridicas', 'NaturezasJuridicasController@index');
+    Route::get('/admin/naturezasJuridicas/delete/{natureza}', 'NaturezasJuridicasController@destroy');
+    Route::put('/admin/naturezasJuridicas/update/{natureza}', 'NaturezasJuridicasController@update');
+    Route::get('/admin/naturezasJuridicas/edit/{natureza}', 'NaturezasJuridicasController@edit');
 
 //Cargos
-    Route::get('/cargos/insert', function () {
+    Route::get('/admin/cargos/insert', function () {
         return view('cargos.create');
     });
-    Route::post('cargos/create', 'CargosController@store');
-    Route::get('cargos', 'CargosController@index');
-    Route::get('cargos/delete/{cargo}', 'CargosController@destroy');
-    Route::put('cargos/update/{cargo}', 'CargosController@update');
-    Route::get('cargos/edit/{cargo}', 'CargosController@edit');
+    Route::post('/admin/cargos/create', 'CargosController@store');
+    Route::get('/admin/cargos', 'CargosController@index');
+    Route::get('/admin/cargos/delete/{cargo}', 'CargosController@destroy');
+    Route::put('/admin/cargos/update/{cargo}', 'CargosController@update');
+    Route::get('/admin/cargos/edit/{cargo}', 'CargosController@edit');
 
 //instituicoes
-Route::get('/instituicoes/insert', function () {
-    return view('instituicoes.create');
-});
-    Route::post('instituicoes/create', 'InstituicaoController@store');
-    Route::get('instituicoes', 'InstituicaoController@show');
-    Route::get('instituicoes/delete/{instituicao}', 'InstituicaoController@destroy');
-    Route::put('instituicoes/update/{instituicao}', 'InstituicaoController@update');
+    Route::get('/admin/instituicoes/insert', function () {
+        return view('instituicoes.create');
+    });
+    Route::post('/admin/instituicoes/create', 'InstituicaoController@store');
+    Route::get('/admin/instituicoes', 'InstituicaoController@show');
+    Route::get('/admin/instituicoes/delete/{instituicao}', 'InstituicaoController@destroy');
+    Route::put('/admin/instituicoes/update/{instituicao}', 'InstituicaoController@update');
 
 //Categorias
-    Route::get('/categorias/insert', 'CategoriaController@create');
-    Route::post('categorias/create', 'CategoriaController@store');
-    Route::get('categorias', 'CategoriaController@index');
-    Route::get('categorias/delete/{categoria}', 'CategoriaController@destroy');
-    Route::put('categorias/update/{categoria}', 'CategoriaController@update');
-    Route::get('categorias/edit/{categoria}', 'CategoriaController@edit');
+    Route::get('/admin/categorias/insert', 'CategoriaController@create');
+    Route::post('/admin/categorias/create', 'CategoriaController@store');
+    Route::get('/admin/categorias', 'CategoriaController@index');
+    Route::get('/admin/categorias/delete/{categoria}', 'CategoriaController@destroy');
+    Route::put('/admin/categorias/update/{categoria}', 'CategoriaController@update');
+    Route::get('/admin/categorias/edit/{categoria}', 'CategoriaController@edit');
 
 //Responsaveis
-    Route::post('responsaveis/create', 'ResponsavelController@store');
-    Route::get('responsaveis', 'ResponsavelController@index');
+    Route::post('/admin/responsaveis/create', 'ResponsavelController@store');
+    Route::get('/admin/responsaveis', 'ResponsavelController@index');
     Route::delete('responsaveis/delete/{responsavel}', 'ResponsavelController@destroy');
-    Route::put('responsaveis/update/{responsavel}', 'ResponsavelController@update');
+    Route::put('/admin/responsaveis/update/{responsavel}', 'ResponsavelController@update');
 
 //Tecnologias
-    Route::get('/tecnologias/insert', 'TecnologiasController@create');
+    Route::get('/admin/tecnologias/insert', 'TecnologiasController@create');
 
-    Route::post('tecnologias/create', 'TecnologiasController@store');
-    Route::get('tecnologias', 'TecnologiasController@index');
-    Route::get('tecnologias/delete/{tecnologia}', 'TecnologiasController@destroy');
-    Route::put('tecnologias/update/{tecnologia}', 'TecnologiasController@update');
-    Route::get('tecnologias/edit/{tecnologia}', 'TecnologiasController@edit');
+    Route::post('/admin/tecnologias/create', 'TecnologiasController@store');
+    Route::get('/admin/tecnologias', 'TecnologiasController@index');
+    Route::get('/admin/tecnologias/delete/{tecnologia}', 'TecnologiasController@destroy');
+    Route::put('/admin/tecnologias/update/{tecnologia}', 'TecnologiasController@update');
+    Route::get('/admin/tecnologias/edit/{tecnologia}', 'TecnologiasController@edit');
 //});
-Route::get('usu', function (){
-    $categorias = \App\Categoria::all();
-    return view('users.show', compact('categorias'));
-});
+    Route::get('/admin/usu', function () {
+        $categorias = \App\Categoria::all();
 
+        return view('users.show', compact('categorias'));
+    });
+});
 //----------------------------------------------------------------------------------------------------------
 
-    Auth::routes();
+Auth::routes();
 
-    Route::get('/home', 'HomeController@index');
+Route::get('/admin/home', 'HomeController@index');
