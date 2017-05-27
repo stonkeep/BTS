@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Cargos;
+use App\Http\Controllers\Controller;
 use App\Instituicao;
 use App\NaturezasJuridicas;
 use Illuminate\Http\Request;

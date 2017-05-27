@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Categoria;
+use App\Http\Controllers\Controller;
 use App\SubTemas;
 use App\Temas;
 use Illuminate\Http\Request;

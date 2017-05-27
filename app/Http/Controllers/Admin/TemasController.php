@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Temas;
 use Illuminate\Http\Request;
 use Mockery\CountValidator\Exception;

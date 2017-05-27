@@ -2,10 +2,10 @@
 
 @extends('adminlte::page')
 
-@section('title', 'Teste')
+@section('title', 'Files Manager')
 
 @section('content_header')
-    <h1>Teste table</h1>
+    <h1>Files Manager</h1>
 @stop
 
 @section('content')

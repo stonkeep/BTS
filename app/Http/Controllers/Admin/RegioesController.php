@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Regioes;
 use Illuminate\Http\Request;
 use MongoDB\BSON\Javascript;

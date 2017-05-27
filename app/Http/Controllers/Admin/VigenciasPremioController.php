@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\VigenciasPremio;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
