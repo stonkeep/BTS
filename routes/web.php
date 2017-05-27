@@ -21,7 +21,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 //Route::group(['middleware' => 'auth'], function () {
 //Premios
     Route::get('/premios/insert', function () {
-        return view('premios.create');
+        return view('admin.premios.create');
     });
     Route::post('/premios/create', 'VigenciasPremioController@store');
     Route::get('/premios/', 'VigenciasPremioController@index');
@@ -31,7 +31,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
 //Temas
     Route::get('/temas/insert', function () {
-        return view('temas.create');
+        return view('admin.temas.create');
     });
     Route::post('/temas/create', 'TemasController@store');
     Route::get('/temas/', 'TemasController@index');
@@ -49,7 +49,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
 //Regioes -------------------------------------------------------------------------
     Route::get('/regioes/insert', function () {
-        return view('regioes.create');
+        return view('admin.regioes.create');
     });
     Route::post('/regioes/create', 'RegioesController@store');
     Route::get('/regioes', 'RegioesController@index');
@@ -61,7 +61,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
 //Publico alvo
     Route::get('/publicosAlvo/insert', function () {
-        return view('publicosAlvo.create');
+        return view('admin.publicosAlvo.create');
     });
     Route::post('/publicosAlvo/create', 'PublicosAlvoController@store');
     Route::get('/publicosAlvo', 'PublicosAlvoController@show');
@@ -71,7 +71,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
 //Naturezas Juridicas
     Route::get('/naturezasJuridicas/insert', function () {
-        return view('naturezasJuridicas.create');
+        return view('admin.naturezasJuridicas.create');
     });
     Route::post('/naturezasJuridicas/create', 'NaturezasJuridicasController@store');
     Route::get('/naturezasJuridicas', 'NaturezasJuridicasController@index');
@@ -81,7 +81,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
 //Cargos
     Route::get('/cargos/insert', function () {
-        return view('cargos.create');
+        return view('admin.cargos.create');
     });
     Route::post('/cargos/create', 'CargosController@store');
     Route::get('/cargos', 'CargosController@index');
@@ -91,7 +91,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
 //instituicoes
     Route::get('/instituicoes/insert', function () {
-        return view('instituicoes.create');
+        return view('admin.instituicoes.create');
     });
     Route::post('/instituicoes/create', 'InstituicaoController@store');
     Route::get('/instituicoes', 'InstituicaoController@show');
@@ -126,7 +126,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::get('/usu', function () {
         $categorias = \App\Categoria::all();
 
-        return view('admin.users.show', compact('categorias'));
+        return view('admin.admin.users.show', compact('categorias'));
     });
 
 
@@ -145,4 +145,4 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
-Route::get('', 'HomeController@index');
+Route::get('/admin', 'HomeController@index');

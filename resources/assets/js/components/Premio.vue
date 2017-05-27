@@ -76,14 +76,14 @@
                 var location = window.location.href;
                 if (location.indexOf("edit") > -1) {
                     console.log(this.form.id);
-                    this.form.put('/premios/update/'+ this.form.id)
+                    this.form.put('/admin/premios/update/'+ this.form.id)
                         .then(({data}) => {
-                            window.location.href = '/premios'
+                            window.location.href = '/admin/premios'
                         })
                 } else {
-                    this.form.post('/premios/create')
+                    this.form.post('/admin/premios/create')
                         .then(({data}) => {
-                            window.location.href = '/premios'
+                            window.location.href = '/admin/premios'
                         })
                 }
 

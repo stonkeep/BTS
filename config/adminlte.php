@@ -117,54 +117,54 @@ return [
         [
             'text'        => 'Temas',
             'url'         => '/admin/temas',
-            'icon'        => 'file',
+            'icon'        => 'paste',
     //            'label'       => 4,
     //            'label_color' => 'success',
         ],
         [
             'text'        => 'Sub-temas',
             'url'         => '/admin/subtemas',
-            'icon'        => 'file',
+            'icon'        => 'paste',
         ],
         [
             'text'        => 'Regiões',
             'url'         => '/admin/regioes',
-            'icon'        => 'file',
+            'icon'        => 'paste',
         ],
         [
             'text'        => 'Cargos',
             'url'         => '/admin/cargos',
-            'icon'        => 'file',
+            'icon'        => 'paste',
         ],
         [
             'text'        => 'Naturezas Juridicas',
             'url'         => '/admin/naturezasJuridicas',
-            'icon'        => 'file',
+            'icon'        => 'paste',
         ],
         [
             'text'        => 'Publico Alvo',
             'url'         => '/admin/publicosAlvo',
-            'icon'        => 'file',
+            'icon'        => 'paste',
         ],
         [
             'text'        => 'Categorias',
             'url'         => '/admin/categorias    ',
-            'icon'        => 'file',
+            'icon'        => 'paste',
         ],
         [
             'text'        => 'Tecnologias',
             'url'         => '/admin/tecnologias',
-            'icon'        => 'file',
+            'icon'        => 'paste',
         ],
         [
             'text'        => 'Premios',
             'url'         => '/admin/premios',
-            'icon'        => 'file',
+            'icon'        => 'paste',
         ],
         [
             'text'        => 'Instituições',
             'url'         => '/admin/instituicoes',
-            'icon'        => 'file',
+            'icon'        => 'paste',
         ],
 
 
@@ -172,7 +172,7 @@ return [
         [
             'text' => 'Files',
             'url'  => '/admin/files',
-            'icon' => 'user',
+            'icon' => 'files-o',
         ],
 //        [
 //            'text' => 'Change Password',

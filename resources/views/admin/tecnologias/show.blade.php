@@ -37,8 +37,8 @@
                 <td>{{$tecnologia->titulo}}</td>
                 <td>{{$tecnologia->created_at}}</td>
                 <td>{{$tecnologia->instituicao->razaoSocial}}</td>
-                <td><a class="btn btn-danger" href="/tecnologias/delete/{{$tecnologia->id}}">Excluir</a></td>
-                <td><a class="btn btn-success" href="/tecnologias/edit/{{$tecnologia->id}}">Editar</a></td>
+                <td><a class="btn btn-danger" href="/admin/tecnologias/delete/{{$tecnologia->id}}">Excluir</a></td>
+                <td><a class="btn btn-success" href="/admin/tecnologias/edit/{{$tecnologia->id}}">Editar</a></td>
             </tr>
         @endforeach
         </tbody>

@@ -28,8 +28,8 @@
                 <td>{{$publico->descricao}}</td>
                 <td>{{$publico->created_at}}</td>
                 <td>{{$publico->updated_at}}</td>
-                <td><a class="btn btn-danger" href="/publicosAlvo/delete/{{$publico->id}}">Excluir</a></td>
-                <td><a class="btn btn-success" href="/publicosAlvo/edit/{{$publico->id}}">Editar</a></td>
+                <td><a class="btn btn-danger" href="/admin/publicosAlvo/delete/{{$publico->id}}">Excluir</a></td>
+                <td><a class="btn btn-success" href="/admin/publicosAlvo/edit/{{$publico->id}}">Editar</a></td>
             </tr>
         @endforeach
         </tbody>

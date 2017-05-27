@@ -55,14 +55,14 @@
                 // Submit the form via a POST request
                 var location = window.location.href;
                 if (location.indexOf("edit") > -1) {
-                    this.form.put('/subtemas/update/'+ this.id)
+                    this.form.put('/admin/subtemas/update/'+ this.id)
                         .then(({data}) => {
-                            window.location.href = '/subtemas'
+                            window.location.href = '/admin/subtemas'
                         })
                 } else {
-                    this.form.post('/subtemas/create')
+                    this.form.post('/admin/subtemas/create')
                         .then(({data}) => {
-                            window.location.href = '/subtemas'
+                            window.location.href = '/admin/subtemas'
                         })
                 }
 

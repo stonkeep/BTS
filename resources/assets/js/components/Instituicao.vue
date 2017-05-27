@@ -205,14 +205,14 @@
                 // Submit the form via a POST request
                 var location = window.location.href;
                 if (location.indexOf("edit") > -1) {
-                    this.form.put('/instituicoes/update/' + this.id)
+                    this.form.put('/admin/instituicoes/update/' + this.id)
                         .then(({data}) => {
-                            window.location.href = '/instituicoes'
+                            window.location.href = '/admin/instituicoes'
                         })
                 } else {
-                    this.form.post('/instituicoes/create')
+                    this.form.post('/admin/instituicoes/create')
                         .then(({data}) => {
-                            window.location.href = '/instituicoes'
+                            window.location.href = '/admin/instituicoes'
                         })
                 }
 

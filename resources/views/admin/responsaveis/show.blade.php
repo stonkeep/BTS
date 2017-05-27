@@ -29,8 +29,8 @@
                 <td>{{$responsavel->nome}}</td>
                 <td>{{$responsavel->telefone}}</td>
                 <td>{{$responsavel->email}}</td>
-                <td><a class="btn btn-danger" href="/regioes/delete/{{$responsavel->id}}">Excluir</a></td>
-                <td><a class="btn btn-success" href="/regioes/edit/{{$responsavel->id}}">Editar</a></td>
+                <td><a class="btn btn-danger" href="/admin/regioes/delete/{{$responsavel->id}}">Excluir</a></td>
+                <td><a class="btn btn-success" href="/admin/regioes/edit/{{$responsavel->id}}">Editar</a></td>
             </tr>
         @endforeach
         </tbody>

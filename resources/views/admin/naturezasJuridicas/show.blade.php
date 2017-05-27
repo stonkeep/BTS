@@ -37,8 +37,8 @@
                 <td>{{$natureza->descricao}}</td>
                 <td>{{$natureza->created_at}}</td>
                 <td>{{$natureza->updated_at}}</td>
-                <td><a class="btn btn-danger" href="/naturezasJuridicas/delete/{{$natureza->id}}">Excluir</a></td>
-                <td><a class="btn btn-success" href="/naturezasJuridicas/edit/{{$natureza->id}}">Editar</a></td>
+                <td><a class="btn btn-danger" href="/admin/naturezasJuridicas/delete/{{$natureza->id}}">Excluir</a></td>
+                <td><a class="btn btn-success" href="/admin/naturezasJuridicas/edit/{{$natureza->id}}">Editar</a></td>
             </tr>
         @endforeach
 

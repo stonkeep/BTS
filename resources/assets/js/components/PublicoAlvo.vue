@@ -41,14 +41,14 @@
                 // Submit the form via a POST request
                 var location = window.location.href;
                 if (location.indexOf("edit") > -1) {
-                    this.form.put('/publicosAlvo/update/'+ this.id)
+                    this.form.put('/admin/publicosAlvo/update/'+ this.id)
                         .then(({data}) => {
-                            window.location.href = '/publicosAlvo'
+                            window.location.href = '/admin/publicosAlvo'
                         })
                 } else {
-                    this.form.post('/publicosAlvo/create')
+                    this.form.post('/admin/publicosAlvo/create')
                         .then(({data}) => {
-                            window.location.href = '/publicosAlvo'
+                            window.location.href = '/admin/publicosAlvo'
                         })
                 }
 

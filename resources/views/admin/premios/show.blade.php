@@ -38,8 +38,8 @@
                 <td>{{$premio->data_abertura}}</td>
                 <td>{{$premio->data_encerramento}}</td>
                 <td>{{$premio->encerrado ? 'Sim' : 'Não'}}</td>
-                <td><a class="btn btn-danger" href="/premios/delete/{{$premio->id}}">Excluir</a></td>
-                <td><a class="btn btn-success" href="/premios/edit/{{$premio->id}}">Editar</a></td>
+                <td><a class="btn btn-danger" href="/admin/premios/delete/{{$premio->id}}">Excluir</a></td>
+                <td><a class="btn btn-success" href="/admin/premios/edit/{{$premio->id}}">Editar</a></td>
             </tr>
         @endforeach
 

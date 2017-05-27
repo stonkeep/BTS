@@ -36,8 +36,8 @@
                 <td>{{$instituicao->CNPJ}}</td>
                 <td>{{$instituicao->razaoSocial}}</td>
                 <td>{{$instituicao->natureza->descricao}}</td>
-                <td><a class="btn btn-danger" href="/instituicoes/delete/{{$instituicao->id}}">Excluir</a></td>
-                <td><a class="btn btn-success" href="/instituicoes/edit/{{$instituicao->id}}">Editar</a></td>
+                <td><a class="btn btn-danger" href="/admin/instituicoes/delete/{{$instituicao->id}}">Excluir</a></td>
+                <td><a class="btn btn-success" href="/admin/instituicoes/edit/{{$instituicao->id}}">Editar</a></td>
             </tr>
         @endforeach
         </tbody>

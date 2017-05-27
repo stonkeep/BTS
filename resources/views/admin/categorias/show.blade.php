@@ -38,8 +38,8 @@
             <tr>
                 <td scope="row">{{$categoria->id}}</td>
                 <td>{{$categoria->descricao}}</td>
-                <td><a class="btn btn-danger" href="/categorias/delete/{{$categoria->id}}">Excluir</a></td>
-                <td><a class="btn btn-success" href="/categorias/edit/{{$categoria->id}}">Editar</a></td>
+                <td><a class="btn btn-danger" href="/admin/categorias/delete/{{$categoria->id}}">Excluir</a></td>
+                <td><a class="btn btn-success" href="/admin/categorias/edit/{{$categoria->id}}">Editar</a></td>
 
             </tr>
         @endforeach

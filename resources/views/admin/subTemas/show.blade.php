@@ -40,8 +40,8 @@
                     <td>{{$subTema->descricao}}</td>
                     <td>{{$subTema->created_at}}</td>
                     <td>{{$subTema->tema->nome}}</td>
-                    <td><a class="btn btn-danger" href="/subtemas/delete/{{$subTema->id}}">Excluir</a></td>
-                    <td><a class="btn btn-success" href="/subtemas/edit/{{$subTema->id}}">Editar</a></td>
+                    <td><a class="btn btn-danger" href="/admin/subtemas/delete/{{$subTema->id}}">Excluir</a></td>
+                    <td><a class="btn btn-success" href="/admin/subtemas/edit/{{$subTema->id}}">Editar</a></td>
                 </tr>
             @endforeach
             </tbody>

@@ -41,14 +41,14 @@
                 // Submit the form via a POST request
                 var location = window.location.href;
                 if (location.indexOf("edit") > -1) {
-                    this.form.put('/categorias/update/'+ this.id)
+                    this.form.put('/admin/categorias/update/'+ this.id)
                         .then(({data}) => {
-                            window.location.href = '/categorias'
+                            window.location.href = '/admin/categorias'
                         })
                 } else {
-                    this.form.post('/categorias/create')
+                    this.form.post('/admin/categorias/create')
                         .then(({data}) => {
-                            window.location.href = '/categorias'
+                            window.location.href = '/admin/categorias'
                         })
                 }
 

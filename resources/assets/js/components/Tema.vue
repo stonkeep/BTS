@@ -41,14 +41,14 @@
                 // Submit the form via a POST request
                 var location = window.location.href;
                 if (location.indexOf("edit") > -1) {
-                    this.form.put('/temas/update/'+ this.id)
+                    this.form.put('/admin/temas/update/'+ this.id)
                         .then(({data}) => {
-                            window.location.href = '/temas'
+                            window.location.href = '/admin/temas'
                         })
                 } else {
-                    this.form.post('/temas/create')
+                    this.form.post('/admin/temas/create')
                         .then(({data}) => {
-                            window.location.href = '/temas'
+                            window.location.href = '/admin/temas'
                         })
                 }
 

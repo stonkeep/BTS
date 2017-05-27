@@ -338,14 +338,14 @@
                 // Submit the form via a POST request
                 var location = window.location.href;
                 if (location.indexOf("edit") > -1) {
-                    this.form.put('/tecnologias/update/' + this.tecnologia.id)
+                    this.form.put('/admin/tecnologias/update/' + this.tecnologia.id)
                         .then(({data}) => {
-                            window.location.href = '/tecnologias'
+                            window.location.href = '/admin/tecnologias'
                         })
                 } else {
-                    this.form.post('/tecnologias/create')
+                    this.form.post('/admin/tecnologias/create')
                         .then(({data}) => {
-                            window.location.href = '/tecnologias'
+                            window.location.href = '/admin/tecnologias'
                         })
                 }
             },
