@@ -49,7 +49,7 @@
             @foreach($posts as $item)
                 <tr>
                     <td>{{$item->id}}</td>
-                    <td>{{$item->title}}</td>
+                    <td><a href="/posts/{{$item->slug}}">{{$item->title}}</a></td>
                     <td>{{$item->created_at}}</td>
                     <td>{{$item->updated_at}}</td>
                     <td><a class="btn btn-danger" href="/admin/{{$tipo}}/delete/{{$item->id}}">Excluir</a></td>
@@ -65,14 +65,12 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/app.css">
-
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
 @stop
 
 @section('js')
-
-
     <!-- Scripts -->
     <script src="/js/app.js"></script>
+    <script src="/js/custom.js"></script>
 @stop

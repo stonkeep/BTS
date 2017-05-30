@@ -67,7 +67,8 @@ class PostController extends Controller
             $message = 'Post published successfully';
         }
         $post->save();
-        return redirect('admin/edit/'.$post->slug)->withMessage($message);
+        flash('Post criado com sucesso')->success();
+        return redirect('admin/posts/')->withMessage($message);
     }
 
     /**
@@ -116,6 +117,7 @@ class PostController extends Controller
         $post = Post::find($post_id);
         if($post && ($post->author_id == $request->user()->id || $request->user()->is_admin()))
         {
+
             $title = $request->input('title');
             $slug = str_slug($title);
             $duplicate = Post::where('slug',$slug)->first();
@@ -123,7 +125,7 @@ class PostController extends Controller
             {
                 if($duplicate->id != $post_id)
                 {
-                    return redirect('edit/'.$post->slug)->withErrors('Title already exists.')->withInput();
+                    return redirect('admin/posts/edit/'.$post->slug)->withErrors('Title already exists.')->withInput();
                 }
                 else
                 {
@@ -136,19 +138,21 @@ class PostController extends Controller
             {
                 $post->active = 0;
                 $message = 'Post saved successfully';
-                $landing = 'edit/'.$post->slug;
+                $landing = 'admin/posts/edit/'.$post->slug;
             }
             else {
                 $post->active = 1;
                 $message = 'Post updated successfully';
-                $landing = $post->slug;
+                //$landing = $post->slug;
+                $landing = '/admin/posts';
             }
             $post->save();
+            flash('Post atualizado com sucesso')->success();
             return redirect($landing)->withMessage($message);
         }
         else
         {
-            return redirect('/')->withErrors('you have not sufficient permissions');
+            return redirect('/admin/posts')->withErrors('you have not sufficient permissions');
         }
     }
 
@@ -160,13 +164,12 @@ class PostController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        //
         $post = Post::find($id);
         if($post && ($post->author_id == $request->user()->id || $request->user()->is_admin()))
         {
             $post->delete();
             $data['message'] = 'Post deleted Successfully';
-            flash('teste');
+            flash('Post deletado com sucesso')->success();
         }
         else
         {

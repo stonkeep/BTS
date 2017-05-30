@@ -163,10 +163,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
 
 
-//users profile
-    Route::get('user/{id}','UserController@profile')->where('id', '[0-9]+');
-// display list of posts
-    Route::get('user/{id}/posts','UserController@user_posts')->where('id', '[0-9]+');
+////users profile
+//    Route::get('user/{id}','UserController@profile')->where('id', '[0-9]+');
+//// display list of posts
+//    Route::get('user/{id}/posts','UserController@user_posts')->where('id', '[0-9]+');
 
 
 });
@@ -180,6 +180,7 @@ Route::get('/admin', 'HomeController@index');
 
 // add comment
 Route::post('comment/add','Admin\CommentsController@store');
+//
+//// display single post
+Route::get('/posts/{slug}',['as' => 'post', 'uses' => 'Admin\PostController@show'])->where('slug', '[A-Za-z0-9-_]+');
 
-// display single post
-Route::get('/{slug}',['as' => 'post', 'uses' => 'Admin\PostController@show'])->where('slug', '[A-Za-z0-9-_]+');
