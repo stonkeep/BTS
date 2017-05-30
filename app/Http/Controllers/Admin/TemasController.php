@@ -112,12 +112,13 @@ class TemasController extends Controller
     {
         try {
             $tema->delete();
+            flash('Tema deletado com sucesso')->success();
         } catch (\Exception $e) {
             if ($e->getCode() == "23000") { //23000 is sql code for integrity constraint violation
                 flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
             }
         }
-        flash('Tema deletado com sucesso')->success();
+
         return redirect(route('indexTemas'));
     }
 }

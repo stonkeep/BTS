@@ -136,6 +136,7 @@
 
 @section('adminlte_js')
     <script src="{{ asset('vendor/adminlte/dist/js/app.min.js') }}"></script>
+    <script src="/js/custom.js"></script>
     @stack('js')
     @yield('js')
 @stop
