@@ -17,13 +17,13 @@ class NaturezaJuridica extends TestCase
 
     private function criaListaDeNaturezas()
     {
-        $this->json('POST', "naturezasJuridicas/create", [
+        $this->json('POST', "/admin/naturezasJuridicas/create", [
             'descricao'  => 'Autarquia Federal',
             'created_at' => '2017-03-31 19:27:54',
             'updated_at' => '2017-03-31 19:27:55'
         ]);
 
-        $this->json('POST', "naturezasJuridicas/create", [
+        $this->json('POST', "/admin/naturezasJuridicas/create", [
             'descricao'  => 'Autarquia Estadual',
             'created_at' => '2017-03-31 19:37:54',
             'updated_at' => '2017-03-31 19:47:55'
@@ -52,7 +52,7 @@ class NaturezaJuridica extends TestCase
     /** @test */
     function testa_se_consegue_gravar_por_post()
     {
-        $this->json('POST', "naturezasJuridicas/create", [
+        $this->json('POST', "/admin/naturezasJuridicas/create", [
             'descricao' => 'Autarquia Estadual'
         ]);
 
@@ -70,7 +70,7 @@ class NaturezaJuridica extends TestCase
         $this->criaListaDeNaturezas();
 
         //carrega dados repetidos para testar a validação
-        $this->response = $this->json('POST', "naturezasJuridicas/create", [
+        $this->response = $this->json('POST', "/admin/naturezasJuridicas/create", [
             'descricao'  => 'Autarquia Federal',
             'created_at' => '2017-03-31 19:27:54',
             'updated_at' => '2017-03-31 19:27:55'
@@ -78,7 +78,7 @@ class NaturezaJuridica extends TestCase
 
         $this->assertValidationError('descricao');
 
-        $response = $this->get("/naturezasJuridicas");
+        $response = $this->get("admin/naturezasJuridicas");
 
         $response->assertStatus(200);
 
@@ -100,7 +100,7 @@ class NaturezaJuridica extends TestCase
         $natureza = NaturezasJuridicas::findOrFail(1);
 
         //dd($natureza);
-        $response = $this->get("naturezasJuridicas/delete/{$natureza->id}");
+        $response = $this->get("admin/naturezasJuridicas/delete/{$natureza->id}");
 
         $response->assertStatus(200);
         $response->assertSee('Autarquia Estadual');
@@ -117,7 +117,7 @@ class NaturezaJuridica extends TestCase
 
         //$natureza->descricao = 'Outro teste';
 
-        $response = $this->json('PUT', "naturezasJuridicas/update/{$natureza->id}", [ 'descricao'  => 'Autarquia Estadual2']);
+        $response = $this->json('PUT', "admin/naturezasJuridicas/update/{$natureza->id}", [ 'descricao'  => 'Autarquia Estadual2']);
 
         //dd($response);
         $response->assertStatus(200);

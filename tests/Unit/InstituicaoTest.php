@@ -86,7 +86,7 @@ class InstituicaoTest extends TestCase
         $natureza = factory(NaturezasJuridicas::class)->create();
         $cargo = factory(Cargos::class)->create();
 
-        $this->response = $response = $this->json('POST', "instituicoes/create", [
+        $this->response = $response = $this->json('POST', "/admin/instituicoes/create", [
             'CNPJ'             => 33216167000143,
             'razaoSocial'      => 'Teste de Instituicao',
             'naturezaJuridica' => 2,
@@ -123,7 +123,7 @@ class InstituicaoTest extends TestCase
         //factory(Instituicao::class)->create();
         $instituicao = Instituicao::firstOrFail();
 
-        $response = $this->get("instituicoes");
+        $response = $this->get("admin/instituicoes");
 
         $response->assertStatus(200);
         $response->assertSee('16286169000190');
@@ -135,7 +135,7 @@ class InstituicaoTest extends TestCase
     {
         //$instituicao = factory(Instituicao::class)->create();
 
-        $response = $this->json('PUT', "instituicoes/update/1",
+        $response = $this->json('PUT', "admin/instituicoes/update/1",
             ['CNPJ' => 99999999999999, 'CPF' => 11111111111]);
 
         $response->assertStatus(200);
@@ -149,7 +149,7 @@ class InstituicaoTest extends TestCase
     {
         //$instituicao = factory(Instituicao::class)->create();
 
-        $response = $this->json('get', "instituicoes/delete/1");
+        $response = $this->json('get', "admin/instituicoes/delete/1");
 
         $response->assertStatus(200);
         $response->assertDontSee('16286169000190');
@@ -181,7 +181,7 @@ class InstituicaoTest extends TestCase
             'CPF'              => 11111111111,
         ]);
 
-        $response = $this->get("instituicoes");
+        $response = $this->get("admin/instituicoes");
 
         $response->assertStatus(200);
         $response->assertSee('99999999999999');
@@ -219,7 +219,7 @@ class InstituicaoTest extends TestCase
         ];
 
         //campos requeridos
-        $this->response = $this->json('POST', "instituicoes/create", $instituicaoTeste);
+        $this->response = $this->json('POST', "/admin/instituicoes/create", $instituicaoTeste);
 //        $this->assertValidationError('CNPJ');
 //        $this->assertValidationError('naturezaJuridica');
 //        $this->assertValidationError('nomeDaArea');
@@ -241,25 +241,25 @@ class InstituicaoTest extends TestCase
 
         //Verifica se CNPJ é numerico
         $instituicaoTeste['CNPJ'] = 'AAAAAAAA';
-        $this->response = $this->json('POST', "instituicoes/create", $instituicaoTeste);
+        $this->response = $this->json('POST', "/admin/instituicoes/create", $instituicaoTeste);
 //        $this->assertValidationError('CNPJ');
         
         //Campo único
         factory(Instituicao::class)->create();
         $instituicaoTeste = Instituicao::find(1);
-        $this->response = $this->json('POST', "instituicoes/create", $instituicaoTeste->toArray());
+        $this->response = $this->json('POST', "/admin/instituicoes/create", $instituicaoTeste->toArray());
 //        $this->assertValidationError('CNPJ');
         
         
         
         //Verifica campo existe na relação naturezaJuridica
         $instituicaoTeste->naturezaJuridica = 2;
-        $this->response = $this->json('POST', "instituicoes/create", $instituicaoTeste->toArray());
+        $this->response = $this->json('POST', "/admin/instituicoes/create", $instituicaoTeste->toArray());
 //        $this->assertValidationError('naturezaJuridica');
 
         // Cargos
         $instituicaoTeste->cargo_id = 99;
-        $this->response = $this->json('POST', "instituicoes/create", $instituicaoTeste->toArray());
+        $this->response = $this->json('POST', "/admin/instituicoes/create", $instituicaoTeste->toArray());
 //        $this->assertValidationError('cargo_id');
     }
 
@@ -330,7 +330,7 @@ class InstituicaoTest extends TestCase
             "instituicao_id"      => 1
         ];
 
-        $this->response = $response = $this->json('POST', "tecnologias/create", $data);
+        $this->response = $response = $this->json('POST', "/admin/tecnologias/create", $data);
 
         //$this->assertValidationError('titulo');
         $response->assertStatus(200);

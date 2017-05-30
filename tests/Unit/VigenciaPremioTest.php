@@ -31,7 +31,7 @@ class VigenciaPremioTest extends TestCase
     /** @test */
     function teste_create_json()
     {
-        $response  = $this->json('POST', "/premios/create", [
+        $response  = $this->json('POST', "/admin/premios/create", [
             'edicao'            => Carbon::now()->year,
             'data_abertura'     => Carbon::now()->toDateTimeString(),
             'data_encerramento' => Carbon::now()->addYear(1)->toDateTimeString(),
@@ -49,7 +49,7 @@ class VigenciaPremioTest extends TestCase
     {
         factory(VigenciasPremio::class)->create();
 
-        $response = $this->get('premios');
+        $response = $this->get('admin/premios');
 
         $response->assertStatus(200);
         $response->assertSee((string)(Carbon::now()->year));
@@ -60,10 +60,10 @@ class VigenciaPremioTest extends TestCase
     {
         $premio = factory(VigenciasPremio::class)->create();
         $premio->edicao = '2018';
-        $response = $this->json('PUT', "/premios/update/{$premio->id}",$premio->toArray());
+        $response = $this->json('PUT', "admin/premios/update/{$premio->id}",$premio->toArray());
         $response->assertStatus(200);
 
-        $response = $this->get('premios');
+        $response = $this->get('admin/premios');
         $response->assertStatus(200);
         $response->assertSee("<th>2018</th>");
     }
@@ -73,7 +73,7 @@ class VigenciaPremioTest extends TestCase
     {
         $premio = factory(VigenciasPremio::class)->create();
 
-        $response = $this->get("/premios/delete/{$premio->id}");
+        $response = $this->get("admin/premios/delete/{$premio->id}");
 
         $response->assertStatus(200);
         $response->assertDontSee('2017');
@@ -96,7 +96,7 @@ class VigenciaPremioTest extends TestCase
             'encerrado'         => false
         ]);
 
-        $response = $this->get('/premios');
+        $response = $this->get('admin/premios');
 
         $response->assertStatus(200);
         $response->assertSee('2016');
@@ -115,7 +115,7 @@ class VigenciaPremioTest extends TestCase
             'encerrado'         => false
         ];
 
-         $this->response = $this->json('POST', '/premios/create', $data);
+         $this->response = $this->json('POST', 'admin/premios/create', $data);
 
         $this->assertValidationError('edicao');
         $this->assertValidationError('data_abertura');

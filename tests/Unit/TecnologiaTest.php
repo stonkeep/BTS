@@ -36,7 +36,7 @@ class TecnologiaTest extends TestCase
             'nome' => 'Alimentação'
         ]);
 
-        $this->json('POST', "subtemas/create", [
+        $this->json('POST', "/admin/subtemas/create", [
             'tema_id'   => $tema->id,
             'descricao' => 'Higienização dos alimentos',
         ]);
@@ -67,7 +67,7 @@ class TecnologiaTest extends TestCase
         //factory(Instituicao::class)->create();
         factory(Tecnologia::class)->create();
 
-        $response = $this->json('POST', "tecnologias/create", [
+        $response = $this->json('POST', "/admin/tecnologias/create", [
 //            'numeroInscricao' => '2017/0002',
             'titulo'               => 'Teste GEPEM2',
             'fimLucrativo'         => false,
@@ -108,7 +108,7 @@ class TecnologiaTest extends TestCase
 //        factory(Instituicao::class)->create();
         factory(Tecnologia::class)->create();
 
-        $response = $this->get('tecnologias');
+        $response = $this->get('admin/tecnologias');
 
         $response->assertStatus(200);
         $response->assertSee('Teste GEPEM');
@@ -147,7 +147,7 @@ class TecnologiaTest extends TestCase
                 'depoimentoLivre'      => ' depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',
                 'instituicao_id'      => 1,
             ];
-        $this->response = $response = $this->json('PUT', "tecnologias/update/{$tecnologia->id}", $data);
+        $this->response = $response = $this->json('PUT', "admin/tecnologias/update/{$tecnologia->id}", $data);
 
         $response->assertStatus(200);
 
@@ -167,7 +167,7 @@ class TecnologiaTest extends TestCase
         $this->disableExceptionHandling();
         $tecnologia = factory(Tecnologia::class)->create();
 
-        $response = $this->get("tecnologias/delete/{$tecnologia->id}");
+        $response = $this->get("admin/tecnologias/delete/{$tecnologia->id}");
 
         $response->assertStatus(200);
 
@@ -181,7 +181,7 @@ class TecnologiaTest extends TestCase
     /** @test */
     public function teste_validacoes_vazio()
     {
-        $this->response = $this->json('POST', "tecnologias/create", [
+        $this->response = $this->json('POST', "/admin/tecnologias/create", [
             'numeroInscricao'      => '',
             'titulo'               => '',
             'fimLucrativo'         => '',
@@ -235,14 +235,14 @@ class TecnologiaTest extends TestCase
         $tecnologia = factory(Tecnologia::class)->create();
 
         //Testa campo unico
-        $this->response = $this->json('POST', "tecnologias/create", $tecnologia->toArray());
+        $this->response = $this->json('POST', "/admin/tecnologias/create", $tecnologia->toArray());
         $this->assertValidationError('titulo');
 
         //testa boolean
         $tecnologia->emAtividade = 5;
         $tecnologia->inscricaoAnterior = 5;
         $tecnologia->investimentoFBB = 5;
-        $this->response = $this->json('POST', "tecnologias/create", $tecnologia->toArray());
+        $this->response = $this->json('POST', "/admin/tecnologias/create", $tecnologia->toArray());
         $this->assertValidationError('emAtividade');
         $this->assertValidationError('inscricaoAnterior');
         $this->assertValidationError('investimentoFBB');
@@ -289,7 +289,7 @@ class TecnologiaTest extends TestCase
             "instituicao_id"      => 1
         ];
         
-        $response = $this->json('POST', "tecnologias/create", $data);
+        $response = $this->json('POST', "/admin/tecnologias/create", $data);
         $response->assertStatus(200);
         
         $tecnologia = Tecnologia::where('titulo', 'dasdas')->first();
@@ -328,7 +328,7 @@ class TecnologiaTest extends TestCase
             "instituicao_id"      => 1
         ];
 
-        $this->response = $this->json('POST', "tecnologias/create", $data);
+        $this->response = $this->json('POST', "/admin/tecnologias/create", $data);
 
         $this->assertValidationError('tema_id');
         $this->assertValidationError('temaSecundario_id');

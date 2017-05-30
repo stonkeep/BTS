@@ -21,6 +21,7 @@ class CargosTest extends TestCase
      */
     public function teste_criar_cargo()
     {
+        $this->disableExceptionHandling();
         Cargos::create([
             'descricao' => 'Técnico',
         ]);
@@ -35,13 +36,15 @@ class CargosTest extends TestCase
     {
         $this->disableExceptionHandling();
         
-        $response = $this->json('POST', "cargos/create", [
+        $response = $this->json('POST', "/admin/cargos/create", [
             'descricao' => 'Técnico',
         ]);
 
         $response->assertStatus(200);
 
-        $response->assertSee('Técnico');
+        $cargo = Cargos::firstOrFail();
+
+        $this->assertEquals('Técnico', $cargo->descricao);
     }
 
     /** @test */
@@ -49,15 +52,15 @@ class CargosTest extends TestCase
     {
         //$this->disableExceptionHandling();
 
-        $this->json('POST', "cargos/create", [
+        $this->json('POST', "/admin/cargos/create", [
             'descricao' => 'Técnico',
         ]);
 
-        $this->json('POST', "cargos/create", [
+        $this->json('POST', "/admin/cargos/create", [
             'descricao' => 'Vice-Presidente',
         ]);
 
-        $this->response = $this->json('POST', "cargos/create", [
+        $this->response = $this->json('POST', "/admin/cargos/create", [
             'descricao' => 'Técnico',
         ]);
 
@@ -66,7 +69,7 @@ class CargosTest extends TestCase
         $this->assertValidationError('descricao');
         
 
-        $response = $this->get('/cargos');
+        $response = $this->get('/admin/cargos');
         
         $response->assertStatus(200);
 
@@ -80,17 +83,17 @@ class CargosTest extends TestCase
     {
         $this->disableExceptionHandling();
 
-        $this->json('POST', "cargos/create", [
+        $this->json('POST', "/admin/cargos/create", [
             'descricao' => 'Técnico',
         ]);
 
-        $this->json('POST', "cargos/create", [
+        $this->json('POST', "/admin/cargos/create", [
             'descricao' => 'Vice-Presidente',
         ]);
 
         $cargo = Cargos::findOrFail(1);
 
-        $response = $this->json('get',"cargos/delete/{$cargo->id}");
+        $response = $this->json('get',"admin/cargos/delete/{$cargo->id}");
 
         $response->assertStatus(200);
 
@@ -103,13 +106,13 @@ class CargosTest extends TestCase
     /** @test */
     function testa_update_cargo()
     {
-        $this->json('POST', "cargos/create", [
+        $this->json('POST', "/admin/cargos/create", [
             'descricao' => 'Técnico',
         ]);
 
         $cargo = Cargos::findOrFail(1);
 
-        $response = $this->json('PUT', "cargos/update/{$cargo->id}",[
+        $response = $this->json('PUT', "admin/cargos/update/{$cargo->id}",[
             'descricao' => 'Outra descrição'
         ]);
 

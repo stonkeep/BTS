@@ -34,7 +34,7 @@ class PublicoAlvoTest extends TestCase
     {
         //$this->disableExceptionHandling();
         
-        $this->json('POST', "/publicosAlvo/create", [
+        $this->json('POST', "/admin/publicosAlvo/create", [
             'descricao' => 'Afrodescentes'
         ]);
 
@@ -47,7 +47,7 @@ class PublicoAlvoTest extends TestCase
     {
         $this->disableExceptionHandling();
         
-    	$response =  $this->json('POST', "/publicosAlvo/create", [
+    	$response =  $this->json('POST', "/admin/publicosAlvo/create", [
             'descricao' => 'Afrodescentes',
             'created_at' => '2017-03-31 18:58:05'
         ]);
@@ -69,7 +69,7 @@ class PublicoAlvoTest extends TestCase
             'descricao' => 'Povos Tradicionais'
         ]);
 
-        $response = $this->get('/publicosAlvo');
+        $response = $this->get('admin/publicosAlvo');
 
         $response->assertStatus(200);
 
@@ -81,12 +81,12 @@ class PublicoAlvoTest extends TestCase
     /** @test */
     function testa_validacao_de_campos_em_lista()
     {
-        $this->json('POST', "/publicosAlvo/create", [
+        $this->json('POST', "/admin/publicosAlvo/create", [
             'descricao' => 'Afrodescentes',
             'created_at' => '2017-03-31 18:58:05'
         ]);
 
-        $this->response =  $this->json('POST', "/publicosAlvo/create", [
+        $this->response =  $this->json('POST', "/admin/publicosAlvo/create", [
             'descricao' => 'Afrodescentes',
             'created_at' => '2017-03-31 18:58:05'
         ]);
@@ -97,12 +97,12 @@ class PublicoAlvoTest extends TestCase
     /** @test */
     function teste_de_delete()
     {
-        $this->json('POST', "/publicosAlvo/create", [
+        $this->json('POST', "/admin/publicosAlvo/create", [
             'descricao' => 'Afrodescentes',
             'created_at' => '2017-03-31 18:58:05'
         ]);
 
-        $response = $this->json('POST', "/publicosAlvo/create", [
+        $response = $this->json('POST', "/admin/publicosAlvo/create", [
             'descricao' => 'Povos Tradicionais',
             'created_at' => '2017-03-31 18:58:05'
         ]);
@@ -113,7 +113,7 @@ class PublicoAlvoTest extends TestCase
 
         $publico = PublicosAlvo::firstOrFail();
 
-        $response = $this->json('get', "publicosAlvo/delete/{$publico->id}");
+        $response = $this->json('get', "admin/publicosAlvo/delete/{$publico->id}");
 
         $response->assertStatus(200);
 
@@ -125,12 +125,12 @@ class PublicoAlvoTest extends TestCase
     /** @test */
     function teste_de_update()
     {
-        $this->json('POST', "/publicosAlvo/create", [
+        $this->json('POST', "/admin/publicosAlvo/create", [
             'descricao' => 'Afrodescentes',
             'created_at' => '2017-03-31 18:58:05'
         ]);
 
-        $response = $this->json('POST', "/publicosAlvo/create", [
+        $response = $this->json('POST', "/admin/publicosAlvo/create", [
             'descricao' => 'Povos Tradicionais',
             'created_at' => '2017-03-31 18:58:05'
         ]);
@@ -141,7 +141,7 @@ class PublicoAlvoTest extends TestCase
 
         $publico = PublicosAlvo::firstOrFail();
 
-        $response = $this->json('PUT', "publicosAlvo/update/{$publico->id}", ['descricao' => 'Mulheres',]);
+        $response = $this->json('PUT', "admin/publicosAlvo/update/{$publico->id}", ['descricao' => 'Mulheres',]);
 
         $response->assertStatus(200);
         $response->assertDontSee('Afrodescentes');

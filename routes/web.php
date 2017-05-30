@@ -85,12 +85,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 //Cargos
     Route::get('/cargos/insert', function () {
         return view('admin.cargos.create');
-    });
-    Route::post('/cargos/create', 'CargosController@store');
-    Route::get('/cargos', 'CargosController@index');
-    Route::get('/cargos/delete/{cargo}', 'CargosController@destroy');
-    Route::put('/cargos/update/{cargo}', 'CargosController@update');
-    Route::get('/cargos/edit/{cargo}', 'CargosController@edit');
+    })->name('insertCargos');;
+    Route::post('/cargos/create', 'CargosController@store')->name('storeCargos');
+    Route::get('/cargos', 'CargosController@index')->name('indexCargos');
+    Route::get('/cargos/delete/{cargo}', 'CargosController@destroy')->name('destroyCargos');
+    Route::put('/cargos/update/{cargo}', 'CargosController@update')->name('updateCargos');
+    Route::get('/cargos/edit/{cargo}', 'CargosController@edit')->name('editCargos');
 
 //instituicoes
     Route::get('/instituicoes/insert', function () {

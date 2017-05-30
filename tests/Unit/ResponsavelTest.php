@@ -36,7 +36,7 @@ class ResponsavelTest extends TestCase
     /** @test */
     function teste_create_por_post()
     {
-        $response = $this->json('POST', "/responsaveis/create", [
+        $response = $this->json('POST', "/admin/responsaveis/create", [
             'nome'     => 'João Carlos',
             'telefone' => '3131313131',
             'email'    => 'joao@algumlugar.com.br',
@@ -67,7 +67,7 @@ class ResponsavelTest extends TestCase
             'email' => 'Eduardo@algumlugar.com.br',
         ]);
         
-        $response = $this->get("/responsaveis");
+        $response = $this->get("admin/responsaveis");
 
         $response->assertStatus(200);
         $response->assertSee('João Carlos');
@@ -87,11 +87,11 @@ class ResponsavelTest extends TestCase
             'email' => 'joao@algumlugar.com.br',
         ]);
 
-        $this->json('PUT', "responsaveis/update/{$responsavel->id}", [
+        $this->json('PUT', "admin/responsaveis/update/{$responsavel->id}", [
             'nome' => 'Eduardo',
         ]);
 
-        $response = $this->get("/responsaveis");
+        $response = $this->get("admin/responsaveis");
 
         $response->assertStatus(200);
         $response->assertDontSee('João Carlos');
@@ -110,7 +110,7 @@ class ResponsavelTest extends TestCase
 
         $this->json('DELETE', "responsaveis/delete/{$responsavel->id}");
         
-        $response = $this->get("/responsaveis");
+        $response = $this->get("admin/responsaveis");
 
         $response->assertStatus(200);
         $response->assertDontSee('João Carlos');
@@ -120,7 +120,7 @@ class ResponsavelTest extends TestCase
     function teste_de_validacao()
     {
         //valida campo requerido
-        $this->response = $this->json('POST', "/responsaveis/create", [
+        $this->response = $this->json('POST', "/admin/responsaveis/create", [
             'nome' => '',
             'telefone' => '',
             'email' => '',
@@ -131,7 +131,7 @@ class ResponsavelTest extends TestCase
 
 
         //verifica compo só numerico e formato de email
-        $this->response = $this->json('POST', "/responsaveis/create", [
+        $this->response = $this->json('POST', "/admin/responsaveis/create", [
             'nome' => 'João Carlos',
             'telefone' => '31313131A31',
             'email' => 'joao@',

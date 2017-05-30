@@ -22,7 +22,7 @@ class SubTemasTest extends TestCase
             'nome' => 'Alimentação'
         ]);
 
-        $this->json('POST', "subtemas/create", [
+        $this->json('POST', "/admin/subtemas/create", [
             'tema_id' => $tema->id,
             'descricao' => 'Higienização dos alimentos',
         ]);
@@ -59,7 +59,7 @@ class SubTemasTest extends TestCase
     {
         $this->cria_subtema();
 
-        $response = $this->json('POST', "subtemas/create", [
+        $response = $this->json('POST', "/admin/subtemas/create", [
             'tema_id' => 1,
             'descricao' => 'Alimentação Escolar',
         ]);
@@ -76,7 +76,7 @@ class SubTemasTest extends TestCase
     {
         $this->cria_subtema();
 
-        $response = $this->get("subtemas");
+        $response = $this->get("admin/subtemas");
 
         $response->assertStatus(200);
         $response->assertSee('Alimentação');
@@ -90,7 +90,7 @@ class SubTemasTest extends TestCase
 
         $subTema = SubTemas::firstOrFail();
 
-        $response = $this->json('PUT', "subtemas/update/{$subTema->id}", [
+        $response = $this->json('PUT', "admin/subtemas/update/{$subTema->id}", [
             'descricao' => 'Outro Subtema',
         ]);
 
@@ -105,14 +105,14 @@ class SubTemasTest extends TestCase
     {
         $this->cria_subtema();
 
-        $this->json('POST', "subtemas/create", [
+        $this->json('POST', "/admin/subtemas/create", [
             'tema_id' => 1,
             'descricao' => 'Alimentação Escolar',
         ]);
 
         $subTema = SubTemas::firstOrFail();
 
-        $response = $this->get("subtemas/delete/{$subTema->id}");
+        $response = $this->get("admin/subtemas/delete/{$subTema->id}");
 
         $response->assertStatus(200);
         $response->assertDontSee('Higienização dos alimentos');
@@ -128,7 +128,7 @@ class SubTemasTest extends TestCase
         ]);
 
         //testa validacao de id do tema
-        $this->response = $this->json('POST', "subtemas/create", [
+        $this->response = $this->json('POST', "/admin/subtemas/create", [
             'tema_id' => 2,
             'descricao' => 'Alimentação Escolar',
         ]);
@@ -144,12 +144,12 @@ class SubTemasTest extends TestCase
         ]);
 
         //testa validacao unica da descricao
-        $this->response = $this->json('POST', "subtemas/create", [
+        $this->response = $this->json('POST', "/admin/subtemas/create", [
             'tema_id' => 1,
             'descricao' => 'Alimentação Escolar',
         ]);
 
-        $this->response = $this->json('POST', "subtemas/create", [
+        $this->response = $this->json('POST', "/admin/subtemas/create", [
             'tema_id' => 1,
             'descricao' => 'Alimentação Escolar',
         ]);
@@ -165,14 +165,14 @@ class SubTemasTest extends TestCase
             'nome' => 'Alimentação'
         ]);
 
-        $this->response = $this->json('POST', "subtemas/create", [
+        $this->response = $this->json('POST', "/admin/subtemas/create", [
 //            'tema_id' => 1,
             'descricao' => 'Alimentação Escolar',
         ]);
         $this->assertValidationError('tema_id');
 
 
-        $this->response = $this->json('POST', "subtemas/create", [
+        $this->response = $this->json('POST', "/admin/subtemas/create", [
             'tema_id' => 1,
 //            'descricao' => 'Alimentação Escolar',
         ]);

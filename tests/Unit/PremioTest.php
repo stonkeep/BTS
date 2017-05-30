@@ -48,7 +48,7 @@ class PremioTest extends TestCase
         $dataAbertura = Carbon::now()->toDateTimeString();
         $dataEncerramento = Carbon::now()->addYear(1)->toDateTimeString();
 
-        $response = $this->json('POST', "/premios/create", [
+        $response = $this->json('POST', "/admin/premios/create", [
             'edicao'            => Carbon::now()->year,
             'data_abertura'     => $dataAbertura,
             'data_encerramento' => $dataEncerramento,
@@ -77,7 +77,7 @@ class PremioTest extends TestCase
         $dataAbertura = Carbon::now()->toDateTimeString();
         $dataEncerramento = Carbon::now()->addYear(1)->toDateTimeString();
 
-        $this->json('POST', "/premios/create", [
+        $this->json('POST', "/admin/premios/create", [
             'edicao'            => Carbon::now()->year,
             'data_abertura'     => $dataAbertura,
             'data_encerramento' => $dataEncerramento,
@@ -85,7 +85,7 @@ class PremioTest extends TestCase
         ]);
 
         //Verifica duplicação de premio
-        $this->response = $this->json('POST', "/premios/create", [
+        $this->response = $this->json('POST', "/admin/premios/create", [
             'edicao'            => Carbon::now()->year,
             'data_abertura'     => $dataAbertura,
             'data_encerramento' => $dataEncerramento,
@@ -95,7 +95,7 @@ class PremioTest extends TestCase
         
         $this->assertValidationError('edicao');
 
-        $this->response = $this->json('POST', "/premios/create", [
+        $this->response = $this->json('POST', "/admin/premios/create", [
             'edicao'            => Carbon::now()->year,
             //'data_encerramento' => $dataEncerramento,
             'encerrado'         => false
@@ -118,7 +118,7 @@ class PremioTest extends TestCase
             'encerrado' => true
         ]);
 
-        $response = $this->get('/premios');
+        $response = $this->get('/admin/premios');
 
         //dd($response);
 
@@ -149,7 +149,7 @@ class PremioTest extends TestCase
 
         $this->json('DELETE', "/premios/delete/{$premio->id}");
 
-        $response = $this->get('/premios');
+        $response = $this->get('admin/premios');
 
         $response->assertStatus(200);
         $response->assertSee('2018');
@@ -164,7 +164,7 @@ class PremioTest extends TestCase
         $dataAbertura = Carbon::now()->toDateTimeString();
         $dataEncerramento = Carbon::now()->addYear(1)->toDateTimeString();
 
-       $this->json('POST', "/premios/create", [
+       $this->json('POST', "/admin/premios/create", [
             'edicao'            => 2018,
             'data_abertura'     => $dataAbertura,
             'data_encerramento' => $dataEncerramento,
@@ -173,7 +173,7 @@ class PremioTest extends TestCase
 
         $premio2 = VigenciasPremio::find(2);
 
-        $this->json('PUT', "/premios/update/{$premio2->id}", [
+        $this->json('PUT', "admin//premios/update/{$premio2->id}", [
             'edicao' => 2019,
             'data_abertura'     => $dataAbertura,
             'data_encerramento' => $dataEncerramento,
@@ -183,7 +183,7 @@ class PremioTest extends TestCase
 
 
 
-        $response = $this->get('/premios');
+        $response = $this->get('admin/premios');
         $response->assertStatus(200);
         $response->assertSee('2019</th>');
         $response->assertDontSee('2018</th>');

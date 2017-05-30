@@ -33,11 +33,11 @@ class CategoriaTest extends TestCase
     {
 //        $this->disableExceptionHandling();
 
-        $this->json('POST', "categorias/create", [
+        $this->json('POST', "/admin/categorias/create", [
             'descricao' => 'Água',
         ]);
 
-        $response = $this->get('categorias');
+        $response = $this->get('admin/categorias');
 
         $response->assertStatus(200);
         $response->assertSee('Água');
@@ -54,7 +54,7 @@ class CategoriaTest extends TestCase
             'descricao' => 'Terra',
         ]);
 
-        $response = $this->get("categorias");
+        $response = $this->get("admin/categorias");
 
         $response->assertStatus(200);
         $response->assertSee('Água');
@@ -64,17 +64,17 @@ class CategoriaTest extends TestCase
     /** @test */
     public function teste_update()
     {
-        $this->json('POST', "categorias/create", [
+        $this->json('POST', "/admin/categorias/create", [
             'descricao' => 'Água',
         ]);
 
         $categoria = Categoria::firstOrFail();
 
-        $this->json('PUT', "categorias/update/{$categoria->id}", [
+        $this->json('PUT', "admin/categorias/update/{$categoria->id}", [
             'descricao' => 'Terra',
         ]);
 
-        $response = $this->get("categorias");
+        $response = $this->get("admin/categorias");
 
         $response->assertStatus(200);
         $response->assertSee('Terra');
@@ -84,17 +84,17 @@ class CategoriaTest extends TestCase
     /** @test */
     public function teste_delete()
     {
-        $this->json('POST', "categorias/create", [
+        $this->json('POST', "/admin/categorias/create", [
             'descricao' => 'Água',
         ]);
 
         $categoria = Categoria::firstOrFail();
 
-        $response = $this->json('get', "categorias/delete/{$categoria->id}", [
+        $response = $this->json('get', "admin/categorias/delete/{$categoria->id}", [
             'descricao' => 'Terra',
         ]);
 
-        $response = $this->get("categorias");
+        $response = $this->get("admin/categorias");
         $response->assertStatus(200);
 
         $response->assertDontSee('Água');
@@ -105,16 +105,16 @@ class CategoriaTest extends TestCase
     public function teste_validacoes()
     {
 
-        $this->response = $this->json('POST', "categorias/create", [
+        $this->response = $this->json('POST', "/admin/categorias/create", [
             'descricao' => '',
         ]);
 
         $this->assertValidationError('descricao');
 
-        $this->json('POST', "categorias/create", [
+        $this->json('POST', "/admin/categorias/create", [
             'descricao' => 'Água',
         ]);
-        $this->response = $this->json('POST', "categorias/create", [
+        $this->response = $this->json('POST', "/admin/categorias/create", [
             'descricao' => 'Água',
         ]);
 

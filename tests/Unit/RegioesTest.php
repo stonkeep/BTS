@@ -37,7 +37,7 @@ class RegioesTest extends TestCase
     {
         //$this->disableExceptionHandling();
         
-        $this->json('POST', "regioes/create", [
+        $this->json('POST', "/admin/regioes/create", [
             'sigla' => 'CO',
             'descricao' => 'Centro - Oeste',
         ]);
@@ -52,7 +52,7 @@ class RegioesTest extends TestCase
     function create_by_post_and_recive_response()
     {
         //$this->disableExceptionHandling();
-    	$response =  $this->json('POST', "regioes/create", [
+    	$response =  $this->json('POST', "/admin/regioes/create", [
             'sigla' => 'CO',
             'descricao' => 'Centro - Oeste',
         ]);
@@ -82,7 +82,7 @@ class RegioesTest extends TestCase
             'Descricao' => 'Norte',
         ]);
 
-        $response = $this->get('regioes');
+        $response = $this->get('admin/regioes');
 
         $response->assertStatus(200);
         $response->assertSee('CO');
@@ -111,12 +111,12 @@ class RegioesTest extends TestCase
     /** @test */
     function testa_validacao()
     {
-        $this->json('POST', "regioes/create", [
+        $this->json('POST', "/admin/regioes/create", [
             'sigla' => 'CO',
             'descricao' => 'Centro - Oeste',
         ]);
 
-        $this->response =  $this->json('POST', "regioes/create", [
+        $this->response =  $this->json('POST', "/admin/regioes/create", [
             'sigla' => 'CO',
             'descricao' => 'Centro - Oeste',
         ]);
@@ -138,7 +138,7 @@ class RegioesTest extends TestCase
         
         $regiao = Regioes::firstOrFail();
         
-        $response = $this->json('get', "/regioes/delete/{$regiao->id}");
+        $response = $this->json('get', "admin/regioes/delete/{$regiao->id}");
 
         $response->assertStatus(200);
         $response->assertSee('NE');
@@ -160,14 +160,14 @@ class RegioesTest extends TestCase
 
         $regiao = Regioes::firstOrFail();
 
-        $response = $this->json('PUT', "/regioes/update/{$regiao->id}", [
+        $response = $this->json('PUT', "admin/regioes/update/{$regiao->id}", [
             'sigla' => 'TT',
             'descricao' => 'Centro - Oeste',
         ]);
 
         $response->assertStatus(200);
 
-        $response = $this->get('regioes');
+        $response = $this->get('admin/regioes');
 
         $response->assertStatus(200);
         $response->assertSee('TT');

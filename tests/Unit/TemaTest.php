@@ -24,7 +24,7 @@ class TemaTest extends TestCase
             'nome' => 'Educação'
         ]);
 
-        $this->json('POST', "/temas/create", [
+        $this->json('POST', "/admin/temas/create", [
             'nome' => 'Educação'
         ]);
     }
@@ -63,7 +63,7 @@ class TemaTest extends TestCase
     {
         //$this->disableExceptionHandling();
 
-    	$this->json('POST', "/temas/create", [
+    	$this->json('POST', "/admin/temas/create", [
     	    'nome' => 'Alimentação'
         ]);
 
@@ -76,11 +76,11 @@ class TemaTest extends TestCase
     /** @test */
     function cria_tema_por_post_recebe_view()
     {
-        $this->json('POST', "/temas/create", [
+        $this->json('POST', "/admin/temas/create", [
             'nome' => 'Alimentação'
         ]);
 
-        $response = $this->json('POST', "/temas/create", [
+        $response = $this->json('POST', "/admin/temas/create", [
             'nome' => 'Educação'
         ]);
 
@@ -96,7 +96,7 @@ class TemaTest extends TestCase
                 
         $this->cria_lista_de_temas();
         
-        $response = $this->get('temas');
+        $response = $this->get('admin/temas');
 
         $response->assertStatus(200);
         $response->assertSee('Alimentação');
@@ -104,7 +104,7 @@ class TemaTest extends TestCase
         
         
         //Testa a validação
-        $this->response = $this->json('POST', "/temas/create", [
+        $this->response = $this->json('POST', "/admin/temas/create", [
             'nome' => 'Alimentação'
         ]);
 
@@ -116,7 +116,7 @@ class TemaTest extends TestCase
     function testa_delete()
     {
         $this->cria_lista_de_temas();
-        $this->json('POST', "subtemas/create", [
+        $this->json('POST', "/admin/subtemas/create", [
             'tema_id' => 1,
             'descricao' => 'Higienização dos alimentos',
         ]);
@@ -124,7 +124,7 @@ class TemaTest extends TestCase
         $tema = Temas::findOrFail(1);
 
         
-        $response = $this->get("temas/delete/{$tema->id}");
+        $response = $this->get("admin/temas/delete/{$tema->id}");
         
         $response->assertStatus(200);
         $response->assertDontSee('Alimentação');
@@ -139,7 +139,7 @@ class TemaTest extends TestCase
 
         $tema = Temas::findOrFail(1);
 
-        $response = $this->json('PUT', "temas/update/{$tema->id}", ['nome' => 'Energia']);
+        $response = $this->json('PUT', "admin/temas/update/{$tema->id}", ['nome' => 'Energia']);
 
 
         $tema = Temas::findOrFail(1);
