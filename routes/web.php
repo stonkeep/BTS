@@ -137,6 +137,33 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     });
 
 
+    Route::get('posts', 'PostController@index');
+    // show new post form
+    Route::get('new-post','PostController@create');
+    // save new post
+    Route::post('new-post','PostController@store');
+    // edit post form
+    Route::get('posts/edit/{slug}','PostController@edit');
+    // update post
+    Route::post('post/update','PostController@update');
+    // delete post
+    Route::get('posts/delete/{id}','PostController@destroy');
+    // display user's all posts
+    Route::get('my-all-posts','UserController@user_posts_all');
+    // display user's drafts
+    Route::get('my-drafts','UserController@user_posts_draft');
+
+    // delete comment
+    Route::post('comment/delete/{id}','CommentsController@destroy');
+
+
+
+
+
+//users profile
+    Route::get('user/{id}','UserController@profile')->where('id', '[0-9]+');
+// display list of posts
+    Route::get('user/{id}/posts','UserController@user_posts')->where('id', '[0-9]+');
 
 
 });
@@ -146,3 +173,10 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 Route::get('/admin', 'HomeController@index');
+
+
+// add comment
+Route::post('comment/add','Admin\CommentsController@store');
+
+// display single post
+Route::get('/{slug}',['as' => 'post', 'uses' => 'Admin\PostController@show'])->where('slug', '[A-Za-z0-9-_]+');

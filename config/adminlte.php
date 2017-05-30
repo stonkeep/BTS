@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 2',
+    'title' => 'BTS 2',
 
     'title_prefix' => '',
 
@@ -117,54 +117,59 @@ return [
         [
             'text'        => 'Temas',
             'url'         => '/admin/temas',
-            'icon'        => 'paste',
+            'icon'        => 'pencil',
     //            'label'       => 4,
     //            'label_color' => 'success',
         ],
         [
             'text'        => 'Sub-temas',
             'url'         => '/admin/subtemas',
-            'icon'        => 'paste',
+            'icon'        => 'pencil-square',
         ],
         [
             'text'        => 'Regiões',
             'url'         => '/admin/regioes',
-            'icon'        => 'paste',
+            'icon'        => 'map',
         ],
         [
             'text'        => 'Cargos',
             'url'         => '/admin/cargos',
-            'icon'        => 'paste',
+            'icon'        => 'briefcase',
         ],
         [
             'text'        => 'Naturezas Juridicas',
             'url'         => '/admin/naturezasJuridicas',
-            'icon'        => 'paste',
+            'icon'        => 'legal',
         ],
         [
             'text'        => 'Publico Alvo',
             'url'         => '/admin/publicosAlvo',
-            'icon'        => 'paste',
+            'icon'        => 'users',
         ],
         [
             'text'        => 'Categorias',
             'url'         => '/admin/categorias    ',
-            'icon'        => 'paste',
+            'icon'        => 'tasks',
         ],
         [
             'text'        => 'Tecnologias',
             'url'         => '/admin/tecnologias',
-            'icon'        => 'paste',
+            'icon'        => 'flask',
         ],
         [
             'text'        => 'Premios',
             'url'         => '/admin/premios',
-            'icon'        => 'paste',
+            'icon'        => 'trophy',
         ],
         [
             'text'        => 'Instituições',
             'url'         => '/admin/instituicoes',
-            'icon'        => 'paste',
+            'icon'        => 'institution',
+        ],
+        [
+            'text'        => 'Posts',
+            'url'         => '/admin/posts',
+            'icon'        => 'newspaper-o',
         ],
 
 
