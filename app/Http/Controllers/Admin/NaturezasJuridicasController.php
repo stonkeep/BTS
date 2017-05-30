@@ -80,11 +80,8 @@ class NaturezasJuridicasController extends Controller
      */
     public function update(Request $request, NaturezasJuridicas $natureza)
     {
-
         $natureza->update($request->all());
-        $naturezas = NaturezasJuridicas::all();
-
-        return view('admin.naturezasJuridicas.show', compact('naturezas'));
+        flash('Natureza Jurídica atualizada com sucesso')->success();
     }
 
     /**
@@ -98,6 +95,8 @@ class NaturezasJuridicasController extends Controller
         $natureza->delete();
         $naturezas = NaturezasJuridicas::all();
 
-        return view('admin.naturezasJuridicas.show', compact('naturezas'));
+        flash('Natureza Jurídica deletada com sucesso')->success();
+        return redirect(route('indexNaturezaJuridica'));
+        
     }
 }

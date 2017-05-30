@@ -119,10 +119,7 @@ class InstituicaoController extends Controller
         ]);
 
         $instituicao->update($request->all());
-
-        $instituicoes = Instituicao::all();
-        
-        return view('admin.instituicoes.show', compact('instituicoes'));
+        flash('Instituição atualizada com sucesso')->success();
     }
 
     /**
@@ -142,8 +139,8 @@ class InstituicaoController extends Controller
                 flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
             }
         }
-
-        $instituicoes = Instituicao::all();
-        return view('admin.instituicoes.show', compact('instituicoes'));
+        
+        flash('Instituição deletado com sucesso')->success();
+        return redirect(route('indexInstituicoes'));
     }
 }

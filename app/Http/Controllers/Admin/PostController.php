@@ -67,8 +67,7 @@ class PostController extends Controller
             $message = 'Post published successfully';
         }
         $post->save();
-        flash('Post criado com sucesso')->success();
-        return redirect('admin/posts/')->withMessage($message);
+        return redirect('admin/posts/edit/'.$post->slug)->withMessage($message);
     }
 
     /**
@@ -129,6 +128,7 @@ class PostController extends Controller
                 }
                 else
                 {
+                    dd('teste3');
                     $post->slug = $slug;
                 }
             }
@@ -136,6 +136,8 @@ class PostController extends Controller
             $post->body = $request->input('body');
             if($request->has('save'))
             {
+                dd('teste3');
+
                 $post->active = 0;
                 $message = 'Post saved successfully';
                 $landing = 'admin/posts/edit/'.$post->slug;
@@ -143,11 +145,9 @@ class PostController extends Controller
             else {
                 $post->active = 1;
                 $message = 'Post updated successfully';
-                //$landing = $post->slug;
-                $landing = '/admin/posts';
+                $landing = $post->slug;
             }
             $post->save();
-            flash('Post atualizado com sucesso')->success();
             return redirect($landing)->withMessage($message);
         }
         else
@@ -164,6 +164,7 @@ class PostController extends Controller
      */
     public function destroy(Request $request, $id)
     {
+        //
         $post = Post::find($id);
         if($post && ($post->author_id == $request->user()->id || $request->user()->is_admin()))
         {

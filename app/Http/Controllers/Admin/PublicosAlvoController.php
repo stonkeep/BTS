@@ -81,9 +81,7 @@ class PublicosAlvoController extends Controller
     public function update(Request $request, PublicosAlvo $publico)
     {
         $publico->update($request->all());
-        
-        $publicos = PublicosAlvo::all();
-        return view('admin.publicosAlvo.show', compact('publicos'));
+        flash('Publico Alvo atualizado com sucesso')->success();
     }
 
     /**
@@ -96,7 +94,7 @@ class PublicosAlvoController extends Controller
     {
         $publico->delete();
 
-        $publicos = PublicosAlvo::all();
-        return view('admin.publicosAlvo.show', compact('publicos'));
+        flash('Publico Alvo deletado com sucesso')->success();
+        return redirect(route('showPublicoAlvo'));
     }
 }

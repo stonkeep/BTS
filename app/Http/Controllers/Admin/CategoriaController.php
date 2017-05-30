@@ -81,6 +81,7 @@ class CategoriaController extends Controller
             'descricao' => 'required',
         ]);
         $categoria->update($request->all());
+        flash('Categoria atualizada com sucesso')->success();
     }
 
     /**
@@ -92,6 +93,7 @@ class CategoriaController extends Controller
     public function destroy(Categoria $categoria)
     {
         $categoria->delete();
-        return redirect('categorias');
+        flash('Categoria deletado com sucesso')->success();
+        return redirect(route('indexCategorias'));
     }
 }
