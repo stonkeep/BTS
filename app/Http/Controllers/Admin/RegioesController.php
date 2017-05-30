@@ -17,9 +17,9 @@ class RegioesController extends Controller
      */
     public function index()
     {
-        $regioes = Regioes::all();
+        $data = Regioes::all();
 
-        return view('admin.regioes.show', compact('regioes'));
+        return view('admin.regioes.show', compact('data'));
     }
 
     /**

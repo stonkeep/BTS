@@ -46,7 +46,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($posts as $item)
+            @foreach($data as $item)
                 <tr>
                     <td>{{$item->id}}</td>
                     <td><a href="/posts/{{$item->slug}}">{{$item->title}}</a></td>
@@ -73,4 +73,12 @@
     <!-- Scripts -->
     <script src="/js/app.js"></script>
     <script src="/js/custom.js"></script>
+    <script>
+        $('#table').bootstrapTable({
+            cache: false,
+            height: 500,
+            striped: true,
+            searchTimeOut: 10
+        });
+    </script>
 @stop

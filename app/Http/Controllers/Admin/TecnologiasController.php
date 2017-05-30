@@ -21,9 +21,9 @@ class TecnologiasController extends Controller
      */
     public function index()
     {
-        $tecnologias = Tecnologia::all();
+        $data = Tecnologia::all();
 
-        return view('admin.tecnologias.show', compact('tecnologias'));
+        return view('admin.tecnologias.show', compact('data'));
     }
 
 

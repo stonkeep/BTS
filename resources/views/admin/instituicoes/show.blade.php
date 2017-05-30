@@ -9,39 +9,51 @@
 @stop
 
 @section('content')
-
-    <div>
-        <a href="/admin/instituicoes/insert" class="btn btn-primary">NOVO</a>
-    </div>
-    <table data-toggle="table"
-           data-search="true"
-           data-show-pagination-switch="true"
-           data-search-accent-neutralise="true"
-           data-locale="pt-BR">
-        <thead class="thead-inverse">
-        <tr>
-            <th data-sortable="true">ID</th>
-            <th data-sortable="true">CNPJ</th>
-            <th data-sortable="true">Razão Social</th>
-            <th data-sortable="true">Natureza Jurídica</th>
-            <th data-sortable="false"></th>
-            <th data-sortable="false"></th>
-
-        </tr>
-        </thead>
-        <tbody>
-        @foreach($instituicoes as $instituicao)
+    @php
+        $colunas = collect(['id', 'Razão Social', 'Data de Criação', 'Data de Atualização']);
+     $tipo = 'instituicoes' ;
+    @endphp
+    <div id="app">
+        <div>
+            <a href="/admin/{{$tipo}}/insert" class="btn btn-primary">NOVO</a>
+        </div>
+        <table id="table" data-toggle="table"
+               data-search="true"
+               data-show-columns="true"
+               data-search-accent-neutralise="true"
+               data-locale="pt-BR"
+               data-page-size="10"
+               data-page-list="[10, 25, 50, 100]"
+               data-pagination="true">
+            <thead class="thead-inverse">
             <tr>
-                <td>{{$instituicao->id}}</td>
-                <td>{{$instituicao->CNPJ}}</td>
-                <td>{{$instituicao->razaoSocial}}</td>
-                <td>{{$instituicao->natureza->descricao}}</td>
-                <td><a class="btn btn-danger" href="/admin/instituicoes/delete/{{$instituicao->id}}">Excluir</a></td>
-                <td><a class="btn btn-success" href="/admin/instituicoes/edit/{{$instituicao->id}}">Editar</a></td>
+                @foreach($colunas as $coluna)
+                    {{--<th data-sortable="true">ID</th>--}}
+                    {{--<th data-sortable="true">Descrição</th>--}}
+                    {{--<th data-sortable="true">Data de encerramento</th>--}}
+                    <th data-sortable="true">{{$coluna}}</th>
+                @endforeach
+
+                <th data-sortable="false"
+                    data-switchable="false"></th>
+                <th data-sortable="false"
+                    data-switchable="false"></th>
             </tr>
-        @endforeach
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            @foreach($data as $item)
+                <tr>
+                    <td>{{$item->id}}</td>
+                    <td>{{$item->razaoSocial}}</td>
+                    <td>{{$item->created_at}}</td>
+                    <td>{{$item->updated_at}}</td>
+                    <td><a class="btn btn-danger" href="/admin/{{$tipo}}/delete/{{$item->id}}">Excluir</a></td>
+                    <td><a class="btn btn-success" href="/admin/{{$tipo}}/edit/{{$item->id}}">Editar</a></td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+    </div>
 
 @stop
 
@@ -55,4 +67,12 @@
 
 @section('js')
     <script src="/js/app.js"></script>
+    <script>
+        $('#table').bootstrapTable({
+            cache: false,
+            height: 500,
+            striped: true,
+            searchTimeOut: 10
+        });
+    </script>
 @stop

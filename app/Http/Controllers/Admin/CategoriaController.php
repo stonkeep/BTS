@@ -15,8 +15,8 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        $categorias = Categoria::all();
-        return view('admin.categorias.show', compact('categorias'));
+        $data = Categoria::all();
+        return view('admin.categorias.show', compact('data'));
 
     }
 

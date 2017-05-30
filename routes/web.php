@@ -67,7 +67,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
         return view('admin.publicosAlvo.create');
     })->name('insertPublicoAlvo');
     Route::post('/publicosAlvo/create', 'PublicosAlvoController@store')->name('storePublicoAlvo');
-    Route::get('/publicosAlvo', 'PublicosAlvoController@show')->name('showPublicoAlvo');
+    Route::get('/publicosAlvo', 'PublicosAlvoController@index')->name('indexPublicoAlvo');
     Route::get('/publicosAlvo/delete/{publico}', 'PublicosAlvoController@destroy')->name('destroyPublicoAlvo');
     Route::put('/publicosAlvo/update/{publico}', 'PublicosAlvoController@update')->name('updatePublicoAlvo');
     Route::get('/publicosAlvo/edit/{publico}', 'PublicosAlvoController@edit')->name('editPublicoAlvo');
@@ -97,7 +97,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
         return view('admin.instituicoes.create');
     })->name('insertInstituicoes');
     Route::post('/instituicoes/create', 'InstituicaoController@store')->name('storeInstituicoes');
-    Route::get('/instituicoes', 'InstituicaoController@show')->name('showInstituicoes');
+    Route::get('/instituicoes', 'InstituicaoController@index')->name('indexInstituicoes');
     Route::get('/instituicoes/delete/{instituicao}', 'InstituicaoController@destroy')->name('destroyInstituicoes');
     Route::put('/instituicoes/update/{instituicao}', 'InstituicaoController@update')->name('updateInstituicoes');
 

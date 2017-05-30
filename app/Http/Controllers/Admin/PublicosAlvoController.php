@@ -15,8 +15,8 @@ class PublicosAlvoController extends Controller
      */
     public function index()
     {
-        $publicos = PublicosAlvo::all();
-        return view('admin.publicosAlvo.show', compact('publicos'));
+        $data = PublicosAlvo::all();
+        return view('admin.publicosAlvo.show', compact('data'));
     }
 
     /**

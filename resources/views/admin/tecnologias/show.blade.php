@@ -9,40 +9,51 @@
 @stop
 
 @section('content')
-
-    {{--@include('flash::message')--}}
-    <div>
-        <a href="/admin/tecnologias/insert" class="btn btn-primary">NOVO</a>
-    </div>
-    <table data-toggle="table"
-           data-search="true"
-           data-show-pagination-switch="true"
-           data-search-accent-neutralise="true"
-           data-locale="pt-BR">
-        <thead >
-        <tr>
-            <th data-sortable="true">ID</th>
-            <th data-sortable="true">Título</th>
-            <th data-sortable="true">Data de Criação</th>
-            <th data-sortable="true">Instituição</th>
-            <th  data-sortable="false"></th>
-            <th  data-sortable="false"></th>
-
-        </tr>
-        </thead>
-        <tbody>
-        @foreach($tecnologias as $tecnologia)
+    @php
+        $colunas = collect(['id', 'Título', 'Data de Criação', 'Data de Atualização']);
+     $tipo = 'tecnologias' ;
+    @endphp
+    <div id="app">
+        <div>
+            <a href="/admin/{{$tipo}}/insert" class="btn btn-primary">NOVO</a>
+        </div>
+        <table id="table" data-toggle="table"
+               data-search="true"
+               data-show-columns="true"
+               data-search-accent-neutralise="true"
+               data-locale="pt-BR"
+               data-page-size="10"
+               data-page-list="[10, 25, 50, 100]"
+               data-pagination="true">
+            <thead class="thead-inverse">
             <tr>
-                <td>{{$tecnologia->id}}</td>
-                <td>{{$tecnologia->titulo}}</td>
-                <td>{{$tecnologia->created_at}}</td>
-                <td>{{$tecnologia->instituicao->razaoSocial}}</td>
-                <td><a class="btn btn-danger" href="/admin/tecnologias/delete/{{$tecnologia->id}}">Excluir</a></td>
-                <td><a class="btn btn-success" href="/admin/tecnologias/edit/{{$tecnologia->id}}">Editar</a></td>
+                @foreach($colunas as $coluna)
+                    {{--<th data-sortable="true">ID</th>--}}
+                    {{--<th data-sortable="true">Descrição</th>--}}
+                    {{--<th data-sortable="true">Data de encerramento</th>--}}
+                    <th data-sortable="true">{{$coluna}}</th>
+                @endforeach
+
+                <th data-sortable="false"
+                    data-switchable="false"></th>
+                <th data-sortable="false"
+                    data-switchable="false"></th>
             </tr>
-        @endforeach
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            @foreach($data as $item)
+                <tr>
+                    <td>{{$item->id}}</td>
+                    <td>{{$item->titulo}}</td>
+                    <td>{{$item->created_at}}</td>
+                    <td>{{$item->updated_at}}</td>
+                    <td><a class="btn btn-danger" href="/admin/{{$tipo}}/delete/{{$item->id}}">Excluir</a></td>
+                    <td><a class="btn btn-success" href="/admin/{{$tipo}}/edit/{{$item->id}}">Editar</a></td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+    </div>
 
 @stop
 
@@ -55,10 +66,13 @@
 @stop
 
 @section('js')
-    <!-- Scripts -->
     <script src="/js/app.js"></script>
-
     <script>
-        $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
+        $('#table').bootstrapTable({
+            cache: false,
+            height: 500,
+            striped: true,
+            searchTimeOut: 10
+        });
     </script>
 @stop

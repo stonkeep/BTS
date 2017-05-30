@@ -16,10 +16,8 @@ class VigenciasPremioController extends Controller
      */
     public function index()
     {
-        $premios = VigenciasPremio::all();
-
-
-        return view('admin.premios.show', compact('premios'));
+        $data = VigenciasPremio::all();
+        return view('admin.premios.show', compact('data'));
     }
 
     /**

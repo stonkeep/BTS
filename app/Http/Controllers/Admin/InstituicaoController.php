@@ -17,7 +17,9 @@ class InstituicaoController extends Controller
      */
     public function index()
     {
-        //
+        $data = Instituicao::all();
+
+        return view('admin.instituicoes.show', compact('data'));
     }
 
     /**

@@ -15,8 +15,8 @@ class NaturezasJuridicasController extends Controller
      */
     public function index()
     {
-        $naturezas = NaturezasJuridicas::all();
-        return view('admin.naturezasJuridicas.show', compact('naturezas'));
+        $data = NaturezasJuridicas::all();
+        return view('admin.naturezasJuridicas.show', compact('data'));
     }
 
     /**
