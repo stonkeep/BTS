@@ -11,6 +11,9 @@
 |
 */
 
+//TODO Colocar route em todos os links do laravel
+//TODO Criar categorias
+
 Route::get('/', function () {
     return view('welcome');
 });
