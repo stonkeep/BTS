@@ -90,6 +90,8 @@ class VigenciasPremioController extends Controller
         ]);
 
         $premio->update($request->all());
+        flash('Vigência atualizado com sucesso')->success();
+
 //        $premios = VigenciasPremio::all();
 //        return view('admin.premios.show', compact('premios'));
     }
@@ -103,7 +105,7 @@ class VigenciasPremioController extends Controller
     public function destroy(VigenciasPremio $premio)
     {
         $premio->delete();
-        $premios = VigenciasPremio::all();
-        return view('admin.premios.show', compact('premios'));
+        flash('Vigência deletado com sucesso')->success();
+        return redirect(route('indexPremios'));
     }
 }

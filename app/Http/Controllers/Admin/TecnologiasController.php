@@ -197,12 +197,14 @@ class TecnologiasController extends Controller
         foreach ($inputs as $input) {
             $tecnologia->subtemas()->attach($input);//TODO tratamento de erro
         }
-
+    
         ////Grava os subtemas secundários
         //$inputs = $request->only('subtema2');
         //foreach ($inputs as $input) {
         //    $tecnologia->subtemas()->attach($input);//TODO tratamento de erro
         //}
+        
+        
     }
 
 
@@ -216,10 +218,9 @@ class TecnologiasController extends Controller
     public function destroy(Tecnologia $tecnologia)
     {
         $tecnologia->delete();
-
-        $tecnologias = Tecnologia::all();
+        
         flash('Tecnologia '.$tecnologia->titulo.' deletada com sucesso')->success();
-
-        return view('admin.tecnologias.show', compact('tecnologias'));
+        
+        return redirect(route('indexTecnologias'));
     }
 }

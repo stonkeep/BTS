@@ -80,6 +80,7 @@ class ResponsavelController extends Controller
     public function update(Request $request, Responsavel $responsavel)
     {
         $responsavel->update($request->all());
+        flash('Responsável atualizado com sucesso')->success();
     }
 
     /**
@@ -91,5 +92,6 @@ class ResponsavelController extends Controller
     public function destroy(Responsavel $responsavel)
     {
         $responsavel->delete();
+        flash('Responsável deletado com sucesso')->success();
     }
 }

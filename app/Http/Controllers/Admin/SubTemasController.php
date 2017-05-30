@@ -95,8 +95,7 @@ class SubTemasController extends Controller
     {
         //dd($subTema);
         $subTema->update($request->all());
-        $subTemas = SubTemas::all();
-        return view('admin.subTemas.show', compact('subTemas'));
+        flash('Sub-Tema atualizado com sucesso')->success();
     }
 
     /**
@@ -107,9 +106,9 @@ class SubTemasController extends Controller
      */
     public function destroy(SubTemas $subTema)
     {
-//        dd($subTema);
+
         $subTema->delete();
-        $subTemas = SubTemas::all();
-        return view('admin.subtemas.show', compact('subTemas'));
+        flash('Sub-Tema deletado com sucesso')->success();
+        return redirect(route('indexSubTemas'));
     }
 }

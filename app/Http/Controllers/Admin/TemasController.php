@@ -94,6 +94,7 @@ class TemasController extends Controller
     public function update(Request $request, Temas $tema)
     {
         $tema->update($request->all());
+        flash('Tema atualizado com sucesso')->success();
 //        $temas = Temas::all();
 //
 //        return view('admin.temas.show', compact('temas'));
@@ -116,8 +117,7 @@ class TemasController extends Controller
                 flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
             }
         }
-        $data = Temas::all();
-
-        return view('admin.temas.show', compact('data'));
+        flash('Tema deletado com sucesso')->success();
+        return redirect(route('indexTemas'));
     }
 }

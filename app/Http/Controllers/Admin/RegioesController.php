@@ -90,7 +90,7 @@ class RegioesController extends Controller
         ]);
 
         $regiao->update($request->all());
-
+        flash('Região atualizada com sucesso')->success();
 //        $regioes = Regioes::all();
 //        return view('admin.regioes.show', compact('regioes'));
     }
@@ -105,8 +105,8 @@ class RegioesController extends Controller
     {
         $regiao->delete();
 
-        $regioes = Regioes::all();
-        return view('admin.regioes.show', compact('regioes'));        
+        flash('Região deletada com sucesso')->success();
+        return redirect(route('indexRegioes'));        
     }
 
     /**
