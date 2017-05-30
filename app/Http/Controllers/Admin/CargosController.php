@@ -15,8 +15,8 @@ class CargosController extends Controller
      */
     public function index()
     {
-        $cargos = Cargos::all();
-        return view('admin.cargos.show', compact('cargos', 'colunas'));
+        $data = Cargos::all();
+        return view('admin.cargos.show', compact('data', 'colunas'));
     }
 
     /**
@@ -43,8 +43,9 @@ class CargosController extends Controller
 
         Cargos::create($request->all());
 
-        $cargos = Cargos::all();
-        return view('admin.cargos.show', compact('cargos'));
+        $data = Cargos::all();
+        flash('Cargo gravado com sucesso')->success();
+        return view('admin.cargos.show', compact('data'));
 
     }
 
@@ -83,6 +84,7 @@ class CargosController extends Controller
             'descricao' => 'required',
         ]);
         $cargo->update($request->all());
+        flash('Cargo atualizado com sucesso')->success();
     }
 
     /**
@@ -94,8 +96,9 @@ class CargosController extends Controller
     public function destroy(Cargos $cargo)
     {
         $cargo->delete();
-        $cargos = Cargos::all();
+        $data = Cargos::all();
 
-        return view('admin.cargos.show', compact('cargos'));
+        flash('Cargo deletado com sucesso')->success();
+        return redirect(route('indexCargos'));
     }
 }
