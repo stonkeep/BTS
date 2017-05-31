@@ -108,7 +108,7 @@ return [
     */
 
     'menu' => [
-        'BTS' ,
+        'BTS SETTINGS' ,
 //        [
 //            'text' => 'Blog',
 //            'url'  => 'admin/blog',
@@ -166,14 +166,20 @@ return [
             'url'         => '/admin/instituicoes',
             'icon'        => 'institution',
         ],
+        'NEWS SETTINGS',
         [
             'text'        => 'Posts',
             'url'         => '/admin/posts',
             'icon'        => 'newspaper-o',
         ],
+        [
+            'text'        => 'Post-Categorias',
+            'url'         => 'admin/post-categorias',
+            'icon'        => 'tasks',
+        ],
 
 
-        'ADMIN SETTINGS',
+        'SETTINGS',
         [
             'text' => 'Files',
             'url'  => '/admin/files',

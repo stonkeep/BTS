@@ -78,9 +78,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     })->name('insertNaturezaJuridica');
     Route::post('/naturezasJuridicas/create', 'NaturezasJuridicasController@store')->name('storeNaturezaJuridica');
     Route::get('/naturezasJuridicas', 'NaturezasJuridicasController@index')->name('indexNaturezaJuridica');
-    Route::get('/naturezasJuridicas/delete/{natureza}', 'NaturezasJuridicasController@destroy')->name('destroyNaturezaJuridica');
-    Route::put('/naturezasJuridicas/update/{natureza}', 'NaturezasJuridicasController@update')->name('updateNaturezaJuridica');
-    Route::get('/naturezasJuridicas/edit/{natureza}', 'NaturezasJuridicasController@edit')->name('editNaturezaJuridica');
+    Route::get('/naturezasJuridicas/delete/{natureza}',
+        'NaturezasJuridicasController@destroy')->name('destroyNaturezaJuridica');
+    Route::put('/naturezasJuridicas/update/{natureza}',
+        'NaturezasJuridicasController@update')->name('updateNaturezaJuridica');
+    Route::get('/naturezasJuridicas/edit/{natureza}',
+        'NaturezasJuridicasController@edit')->name('editNaturezaJuridica');
 
 //Cargos
     Route::get('/cargos/insert', function () {
@@ -124,7 +127,6 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::put('/tecnologias/update/{tecnologia}', 'TecnologiasController@update')->name('updateTecnologias');
     Route::get('/tecnologias/edit/{tecnologia}', 'TecnologiasController@edit')->name('editTecnologias');
 
-
     //users
     Route::get('/usu', function () {
         $categorias = \App\Categoria::all();
@@ -132,42 +134,43 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
         return view('admin.admin.users.show', compact('categorias'));
     });
 
-
     // Settings
     //Files
-    Route::get('files', function (){
+    Route::get('files', function () {
         return view('admin.settings.files');
     });
 
-
     Route::get('posts', 'PostController@index')->name('indexPosts');
     // show new post form
-    Route::get('new-post','PostController@create')->name('createPosts');
+    Route::get('new-post', 'PostController@create')->name('createPosts');
     // save new post
-    Route::post('new-post','PostController@store')->name('storePosts');
+    Route::post('new-post', 'PostController@store')->name('storePosts');
     // edit post form
-    Route::get('posts/edit/{slug}','PostController@edit')->name('editPosts');
+    Route::get('posts/edit/{slug}', 'PostController@edit')->name('editPosts');
     // update post
-    Route::post('post/update','PostController@update')->name('updatePosts');
+    Route::post('post/update', 'PostController@update')->name('updatePosts');
     // delete post
-    Route::get('posts/delete/{id}','PostController@destroy')->name('destroyPosts');
+    Route::get('posts/delete/{id}', 'PostController@destroy')->name('destroyPosts');
     // display user's all posts
-    Route::get('my-all-posts','UserController@user_posts_all');
+    Route::get('my-all-posts', 'UserController@user_posts_all');
     // display user's drafts
-    Route::get('my-drafts','UserController@user_posts_draft');
+    Route::get('my-drafts', 'UserController@user_posts_draft');
 
     // delete comment
-    Route::post('comment/delete/{id}','CommentsController@destroy')->name('destroyComments');
+    Route::post('comment/delete/{id}', 'CommentsController@destroy')->name('destroyComments');
 
-
-
-
+    //Categorias dos Posts
+    //Route::get('/post-categorias/insert', 'CategoriaController@create')->name('insertPostCategorias');
+    Route::post('/post-categorias/create', 'PostCategoriaController@store')->name('storePostCategorias');
+    Route::get('/post-categorias', 'PostCategoriaController@index')->name('indexPostCategorias');
+    Route::get('/post-categorias/delete/{postCategoria}', 'PostCategoriaController@destroy')->name('destroyPostCategorias');
+    Route::put('/post-categorias/update/{postCategoria}', 'PostCategoriaController@update')->name('updatePostCategorias');
+    Route::get('/post-categorias/edit/{postCategoria}', 'PostCategoriaController@edit')->name('editPostCategorias');
 
 ////users profile
 //    Route::get('user/{id}','UserController@profile')->where('id', '[0-9]+');
 //// display list of posts
 //    Route::get('user/{id}/posts','UserController@user_posts')->where('id', '[0-9]+');
-
 
 });
 //----------------------------------------------------------------------------------------------------------
@@ -177,10 +180,9 @@ Auth::routes();
 Route::get('/home', 'HomeController@index');
 Route::get('/admin', 'HomeController@index');
 
-
 // add comment
-Route::post('comment/add','Admin\CommentsController@store')->name('storeComments');
+Route::post('comment/add', 'Admin\CommentsController@store')->name('storeComments');
 //
 //// display single post
-Route::get('/posts/{slug}',['as' => 'post', 'uses' => 'Admin\PostController@show'])->where('slug', '[A-Za-z0-9-_]+');
+Route::get('/posts/{slug}', ['as' => 'post', 'uses' => 'Admin\PostController@show'])->where('slug', '[A-Za-z0-9-_]+');
 
