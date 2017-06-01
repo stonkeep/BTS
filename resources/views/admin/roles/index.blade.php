@@ -64,9 +64,10 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/bootstrap-table.css">
 
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
+    {{--<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">--}}
 @stop
 
 @section('js')
