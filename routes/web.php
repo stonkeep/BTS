@@ -127,12 +127,6 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::put('/tecnologias/update/{tecnologia}', 'TecnologiasController@update')->name('updateTecnologias');
     Route::get('/tecnologias/edit/{tecnologia}', 'TecnologiasController@edit')->name('editTecnologias');
 
-    //users
-    Route::get('/usu', function () {
-        $categorias = \App\Categoria::all();
-
-        return view('admin.admin.users.show', compact('categorias'));
-    });
 
     // Settings
     //Files
@@ -171,6 +165,13 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 //    Route::get('user/{id}','UserController@profile')->where('id', '[0-9]+');
 //// display list of posts
 //    Route::get('user/{id}/posts','UserController@user_posts')->where('id', '[0-9]+');
+
+
+    Route::resource('users', 'UserController');
+
+    Route::resource('roles', 'RoleController');
+
+    Route::resource('permissions', 'PermissionController');
 
 });
 //----------------------------------------------------------------------------------------------------------

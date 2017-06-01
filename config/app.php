@@ -180,13 +180,23 @@ return [
         /*
          * Outros
          */
+        //Template AdminLTE
         JeroenNoten\LaravelAdminLte\ServiceProvider::class,
+        //Flash messenger
         Laracasts\Flash\FlashServiceProvider::class,
+        //Tradução da svalidações para português
         LaravelLegends\PtBrValidator\ValidatorProvider::class,
+        //IDE helper
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        //Debugar
         Barryvdh\Debugbar\ServiceProvider::class,
+        //file Manager
         Unisharp\Laravelfilemanager\LaravelFilemanagerServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        //Permissions
+        Spatie\Permission\PermissionServiceProvider::class,
+        //Laravel Collective HTML Form builder
+        Collective\Html\HtmlServiceProvider::class,
 
     ],
 
@@ -238,6 +248,9 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
+
 
     ],
 
