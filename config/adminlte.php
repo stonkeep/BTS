@@ -85,7 +85,7 @@ return [
     |
     */
 
-    'dashboard_url' => 'home',
+    'dashboard_url' => 'admin',
 
     'logout_url' => 'logout',
 
@@ -108,76 +108,75 @@ return [
     */
 
     'menu' => [
-        'BTS SETTINGS' ,
+        'BTS SETTINGS',
 //        [
 //            'text' => 'Blog',
 //            'url'  => 'admin/blog',
 //            'can'  => 'manage-blog',
 //        ],
         [
-            'text'        => 'Temas',
-            'url'         => '/admin/temas',
-            'icon'        => 'pencil',
-    //            'label'       => 4,
-    //            'label_color' => 'success',
+            'text' => 'Temas',
+            'url'  => '/admin/temas',
+            'icon' => 'pencil',
+            //            'label'       => 4,
+            //            'label_color' => 'success',
         ],
         [
-            'text'        => 'Sub-temas',
-            'url'         => '/admin/subtemas',
-            'icon'        => 'pencil-square',
+            'text' => 'Sub-temas',
+            'url'  => '/admin/subtemas',
+            'icon' => 'pencil-square',
         ],
         [
-            'text'        => 'Regiões',
-            'url'         => '/admin/regioes',
-            'icon'        => 'map',
+            'text' => 'Regiões',
+            'url'  => '/admin/regioes',
+            'icon' => 'map',
         ],
         [
-            'text'        => 'Cargos',
-            'url'         => '/admin/cargos',
-            'icon'        => 'briefcase',
+            'text' => 'Cargos',
+            'url'  => '/admin/cargos',
+            'icon' => 'briefcase',
         ],
         [
-            'text'        => 'Naturezas Juridicas',
-            'url'         => '/admin/naturezasJuridicas',
-            'icon'        => 'legal',
+            'text' => 'Naturezas Juridicas',
+            'url'  => '/admin/naturezasJuridicas',
+            'icon' => 'legal',
         ],
         [
-            'text'        => 'Publico Alvo',
-            'url'         => '/admin/publicosAlvo',
-            'icon'        => 'users',
+            'text' => 'Publico Alvo',
+            'url'  => '/admin/publicosAlvo',
+            'icon' => 'users',
         ],
         [
-            'text'        => 'Categorias',
-            'url'         => '/admin/categorias    ',
-            'icon'        => 'tasks',
+            'text' => 'Categorias',
+            'url'  => '/admin/categorias    ',
+            'icon' => 'tasks',
         ],
         [
-            'text'        => 'Tecnologias',
-            'url'         => '/admin/tecnologias',
-            'icon'        => 'flask',
+            'text' => 'Tecnologias',
+            'url'  => '/admin/tecnologias',
+            'icon' => 'flask',
         ],
         [
-            'text'        => 'Premios',
-            'url'         => '/admin/premios',
-            'icon'        => 'trophy',
+            'text' => 'Premios',
+            'url'  => '/admin/premios',
+            'icon' => 'trophy',
         ],
         [
-            'text'        => 'Instituições',
-            'url'         => '/admin/instituicoes',
-            'icon'        => 'institution',
+            'text' => 'Instituições',
+            'url'  => '/admin/instituicoes',
+            'icon' => 'institution',
         ],
         'NEWS SETTINGS',
         [
-            'text'        => 'Posts',
-            'url'         => '/admin/posts',
-            'icon'        => 'newspaper-o',
+            'text' => 'Posts',
+            'url'  => '/admin/posts',
+            'icon' => 'newspaper-o',
         ],
         [
-            'text'        => 'Post-Categorias',
-            'url'         => 'admin/post-categorias',
-            'icon'        => 'tasks',
+            'text' => 'Post-Categorias',
+            'url'  => 'admin/post-categorias',
+            'icon' => 'tasks',
         ],
-
 
         'SETTINGS',
         [
@@ -185,6 +184,17 @@ return [
             'url'  => '/admin/files',
             'icon' => 'files-o',
         ],
+        [
+            'text'    => 'Control',
+            'icon'    => 'share',
+            'submenu' => [
+                [
+                    'text' => 'Users',
+                    'url'  => '/admin/users',
+                ],
+            ],
+        ],
+
 //        [
 //            'text' => 'Change Password',
 //            'url'  => 'admin/settings',
