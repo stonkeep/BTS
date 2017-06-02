@@ -97,7 +97,7 @@
 
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu">
-                    @each('adminlte::partials.menu-item', $adminlte->menu(), 'item')
+                    @each('adminlte::partials.permission-item', $adminlte->menu(), 'item')
                 </ul>
                 <!-- /.sidebar-menu -->
             </section>

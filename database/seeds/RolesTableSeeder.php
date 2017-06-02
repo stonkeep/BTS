@@ -15,7 +15,7 @@ class RolesTableSeeder extends Seeder
 
         $role = Role::create([
             'name' => 'Admin',
-            'guard_name' => 'web'
+            'guard_name' => 'admin'
         ]);
 
         $permissions = Permission::all();
