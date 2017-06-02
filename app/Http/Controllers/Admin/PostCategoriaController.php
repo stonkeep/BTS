@@ -27,7 +27,7 @@ class PostCategoriaController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.post-categorias.create');
     }
 
     /**
@@ -39,10 +39,16 @@ class PostCategoriaController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'descricao' => 'required|unique:categorias',
+            'descricao' => 'required|unique:post_categorias',
         ]);
 
-        PostCategoria::create($request->all());
+        dd('teste');
+        try {
+            PostCategoria::create($request->all());
+            flash('Categoria de posts atualizada com sucesso')->success();
+        } catch (\Exception $e) {
+            flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
+        }
         return redirect(route('indexPostCategorias'));
     }
 
@@ -65,7 +71,7 @@ class PostCategoriaController extends Controller
      */
     public function edit(PostCategoria $postCategoria)
     {
-        return view('admin.post-categorias.edit.edit', compact('postCategoria'));
+        return view('admin.post-categorias.edit', compact('postCategoria'));
     }
 
     /**

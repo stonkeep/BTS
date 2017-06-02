@@ -12,11 +12,9 @@
 
     @include('admin.layouts.erros')
     <div id="app">
-    <form action="/categorias/create" method="POST">
-        {{ csrf_field() }}
-        <categoria></categoria>
 
-    </form>
+        <post-categoria></post-categoria>
+
     </div>
 
 @stop

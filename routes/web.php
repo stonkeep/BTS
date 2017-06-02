@@ -154,8 +154,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::post('comment/delete/{id}', 'CommentsController@destroy')->name('destroyComments');
 
     //Categorias dos Posts
-    //Route::get('/post-categorias/insert', 'CategoriaController@create')->name('insertPostCategorias');
-    Route::post('/post-categorias/create', 'PostCategoriaController@store')->name('storePostCategorias');
+    Route::get('/post-categorias/insert', 'PostCategoriaController@create')->name('insertPostCategorias');
+    Route::post('/post-categorias/store', 'PostCategoriaController@store')->name('storePostCategorias');
     Route::get('/post-categorias', 'PostCategoriaController@index')->name('indexPostCategorias');
     Route::get('/post-categorias/delete/{postCategoria}', 'PostCategoriaController@destroy')->name('destroyPostCategorias');
     Route::put('/post-categorias/update/{postCategoria}', 'PostCategoriaController@update')->name('updatePostCategorias');
@@ -178,7 +178,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+//Route::get('/home', 'HomeController@index');
 Route::get('/admin', 'HomeController@index');
 
 // add comment

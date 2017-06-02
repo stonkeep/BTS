@@ -23,6 +23,9 @@ class DatabaseSeeder extends Seeder
         $this->call(TecnologiaSeeder::class);
         $this->call(SubTemaTableSeeder::class);
         $this->call(CategoriasSeeder::class);
+        $this->call(PermissionsTableSeeder::class);
+        $this->call(RolesTableSeeder::class);
+        $this->call(PostCategoriasTableSeeder::class);
 
     }
 }

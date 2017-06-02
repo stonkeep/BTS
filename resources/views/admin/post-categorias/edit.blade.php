@@ -13,7 +13,7 @@
     @include('admin.layouts.erros')
     <div id="app">
         {{ csrf_field() }}
-         <categoria id="{{$categoria->id}}" descricao="{{$categoria->descricao}}"></categoria>
+         <post-categoria id="{{$postCategoria->id}}" descricao="{{$postCategoria->descricao}}"></post-categoria>
     </div>
 
 @stop
