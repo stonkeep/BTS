@@ -33,6 +33,7 @@ class PostController extends Controller
     public function create(Request $request)
     {
         // if user can post i.e. user is admin or author
+        
         if($request->user()->can_post())
         {
             return view('admin.posts.create');

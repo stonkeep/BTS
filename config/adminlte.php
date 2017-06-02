@@ -118,7 +118,7 @@ return [
             'text' => 'Temas',
             'url'  => '/admin/temas',
             'icon' => 'pencil',
-            'permission' => 'Create Post',
+            //'permission' => 'Create Post',
             //            'label'       => 4,
             //            'label_color' => 'success',
         ],
