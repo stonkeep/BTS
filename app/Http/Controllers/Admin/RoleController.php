@@ -47,6 +47,7 @@ class RoleController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
+
         //Validate name and permissions field
         $this->validate($request, [
                 'name'=>'required|unique:roles|max:10',

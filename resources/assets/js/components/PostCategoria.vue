@@ -27,13 +27,12 @@
                 // Create a new form instance
                 form: new Form({
                     descricao: '',
-//                    remember: false
                 })
             }
         },
         props: ['id', 'descricao'],
         mounted() {
-            console.log('Component mounted.');
+            console.log(window.location.href);
             this.form.descricao = this.descricao;
         },
         methods: {
@@ -43,12 +42,12 @@
                 if (location.indexOf("edit") > -1) {
                     this.form.put('/admin/post-categorias/update/'+ this.id)
                         .then(({data}) => {
-                            window.location.href = '/admin/categorias'
+                            window.location.href = '/admin/post-categorias'
                         })
                 } else {
-                    this.form.post('/admin/post-categorias/create')
+                    this.form.post('/admin/post-categorias/store')
                         .then(({data}) => {
-                            window.location.href = '/admin/categorias'
+                            window.location.href = '/admin/post-categorias'
                         })
                 }
 

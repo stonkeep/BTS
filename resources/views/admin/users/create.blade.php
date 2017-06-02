@@ -2,10 +2,10 @@
 
 @extends('adminlte::page')
 
-@section('title', 'Teste')
+@section('title', 'BTS Users')
 
 @section('content_header')
-    <h1>Teste table</h1>
+    <h1>Users</h1>
 @stop
 
 @section('content')
@@ -16,7 +16,7 @@
         <h1><i class='fa fa-user-plus'></i> Add User</h1>
         <hr>
 
-        {{ Form::open(array('url' => 'users')) }}
+        {{ Form::open(array('url' => '/admin/users')) }}
 
         <div class="form-group">
             {{ Form::label('name', 'Name') }}

@@ -185,14 +185,9 @@ return [
             'icon' => 'files-o',
         ],
         [
-            'text'    => 'Control',
-            'icon'    => 'share',
-            'submenu' => [
-                [
-                    'text' => 'Users',
-                    'url'  => '/admin/users',
-                ],
-            ],
+            'text' => 'Permissions',
+            'url'  => '/admin/permissions',
+            'icon' => 'files-o',
         ],
 
 //        [
