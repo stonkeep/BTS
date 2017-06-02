@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Post;
+use Auth;
 use Illuminate\Http\Request;
 use Redirect;
 
@@ -33,8 +34,8 @@ class PostController extends Controller
     public function create(Request $request)
     {
         // if user can post i.e. user is admin or author
-        
-        if($request->user()->can_post())
+        $user = Auth::user();
+        if($user->can('Create Post'))
         {
             return view('admin.posts.create');
         }
@@ -129,7 +130,6 @@ class PostController extends Controller
                 }
                 else
                 {
-                    dd('teste3');
                     $post->slug = $slug;
                 }
             }
@@ -137,19 +137,17 @@ class PostController extends Controller
             $post->body = $request->input('body');
             if($request->has('save'))
             {
-                dd('teste3');
-
                 $post->active = 0;
-                $message = 'Post saved successfully';
+                flash('Post saved successfully')->success();
                 $landing = 'admin/posts/edit/'.$post->slug;
             }
             else {
                 $post->active = 1;
-                $message = 'Post updated successfully';
-                $landing = $post->slug;
+                flash('Post updated successfully')->success();
+                $landing = 'posts/' . $post->slug;
             }
             $post->save();
-            return redirect($landing)->withMessage($message);
+            return redirect($landing);
         }
         else
         {
