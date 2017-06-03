@@ -118,7 +118,7 @@ return [
             'text' => 'Temas',
             'url'  => '/admin/temas',
             'icon' => 'pencil',
-            //'permission' => 'Create Post',
+            'permission' => 'Temas',
             //            'label'       => 4,
             //            'label_color' => 'success',
         ],
@@ -126,57 +126,78 @@ return [
             'text' => 'Sub-temas',
             'url'  => '/admin/subtemas',
             'icon' => 'pencil-square',
+            'permission' => 'SubTemas',
+
         ],
         [
             'text' => 'Regiões',
             'url'  => '/admin/regioes',
             'icon' => 'map',
+            'permission' => 'Regioes',
+
         ],
         [
             'text' => 'Cargos',
             'url'  => '/admin/cargos',
             'icon' => 'briefcase',
+            'permission' => 'Cargos',
+
         ],
         [
             'text' => 'Naturezas Juridicas',
             'url'  => '/admin/naturezasJuridicas',
             'icon' => 'legal',
+            'permission' => 'NaturezaJuridica',
+
         ],
         [
             'text' => 'Publico Alvo',
             'url'  => '/admin/publicosAlvo',
             'icon' => 'users',
+            'permission' => 'PublicoAlvo',
+
         ],
         [
             'text' => 'Categorias',
             'url'  => '/admin/categorias    ',
             'icon' => 'tasks',
+            'permission' => 'Categorias',
+
         ],
         [
             'text' => 'Tecnologias',
             'url'  => '/admin/tecnologias',
             'icon' => 'flask',
+            'permission' => 'Tecnologias',
+
         ],
         [
             'text' => 'Premios',
             'url'  => '/admin/premios',
             'icon' => 'trophy',
+            'permission' => 'Premios',
+
         ],
         [
             'text' => 'Instituições',
             'url'  => '/admin/instituicoes',
             'icon' => 'institution',
+            'permission' => 'Instituicoes',
+
         ],
         'NEWS SETTINGS',
         [
             'text' => 'Posts',
             'url'  => '/admin/posts',
             'icon' => 'newspaper-o',
+            'permission' => 'Post',
         ],
         [
             'text' => 'Post-Categorias',
             'url'  => 'admin/post-categorias',
             'icon' => 'tasks',
+            'permission' => 'Post',
+
         ],
 
         'SETTINGS',

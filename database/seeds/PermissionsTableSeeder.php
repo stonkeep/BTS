@@ -13,20 +13,53 @@ class PermissionsTableSeeder extends Seeder
     public function run()
     {
         Permission::create([
-            'name' => 'Create Post',
+            'name' => 'Post',
             'guard_name' => 'admin'
         ]);
         Permission::create([
-            'name' => 'Edit Post',
+            'name' => 'PostCategorias',
             'guard_name' => 'admin'
         ]);
         Permission::create([
-            'name' => 'Delete Post',
+            'name' => 'Temas',
             'guard_name' => 'admin'
         ]);
         Permission::create([
-            'name' => 'Administer roles & permissions',
+            'name' => 'SubTemas',
             'guard_name' => 'admin'
         ]);
+        Permission::create([
+            'name' => 'Regioes',
+            'guard_name' => 'admin'
+        ]);
+        Permission::create([
+            'name' => 'Cargos',
+            'guard_name' => 'admin'
+        ]);
+        Permission::create([
+            'name' => 'NaturezaJuridica',
+            'guard_name' => 'admin'
+        ]);
+        Permission::create([
+            'name' => 'PublicoAlvo',
+            'guard_name' => 'admin'
+        ]);
+        Permission::create([
+            'name' => 'Categorias',
+            'guard_name' => 'admin'
+        ]);
+        Permission::create([
+            'name' => 'Tecnologias',
+            'guard_name' => 'admin'
+        ]);
+        Permission::create([
+            'name' => 'Premios',
+            'guard_name' => 'admin'
+        ]);
+        Permission::create([
+            'name' => 'Instituicoes',
+            'guard_name' => 'admin'
+        ]);
+
     }
 }

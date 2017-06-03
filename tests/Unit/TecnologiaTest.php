@@ -22,10 +22,10 @@ class TecnologiaTest extends TestCase
         parent::setUp();
         $temasSeed = new \TemaTableSeeder();
         $temasSeed->run();
-        
+
         $subTemasSeed = new \SubTemaTableSeeder();
         $subTemasSeed->run();
-        
+
         factory(Instituicao::class)->create();
     }
 
@@ -37,7 +37,7 @@ class TecnologiaTest extends TestCase
         ]);
 
         $this->json('POST', "/admin/subtemas/create", [
-            'tema_id'   => $tema->id,
+            'tema_id' => $tema->id,
             'descricao' => 'Higienização dos alimentos',
         ]);
     }
@@ -69,28 +69,28 @@ class TecnologiaTest extends TestCase
 
         $response = $this->json('POST', "/admin/tecnologias/create", [
 //            'numeroInscricao' => '2017/0002',
-            'titulo'               => 'Teste GEPEM2',
-            'fimLucrativo'         => false,
-            'tempoImplantacao'     => 2,
-            'emAtividade'          => true,
-            'inscricaoAnterior'    => false,
-            'investimentoFBB'      => true,
-            'categoria_id'         => 1,
-            'resumo'               => 'Resumao',
-            'tema_id'              => 1,
-            'temaSecundario_id'    => 2,
-            "subtema1"             => [1],
-            "subtema2"             => [1,2],
-            'problema'             => 'Problemao',
-            'objetivoGeral'        => 'objetivo  Geral',
-            'objetivoEspecifico'   => 'objetivo  Especifico',
-            'descricao'            => 'descricao descricao descricao descricao descricao descricao ',
+            'titulo' => 'Teste GEPEM2',
+            'fimLucrativo' => false,
+            'tempoImplantacao' => 2,
+            'emAtividade' => true,
+            'inscricaoAnterior' => false,
+            'investimentoFBB' => true,
+            'categoria_id' => 1,
+            'resumo' => 'Resumao',
+            'tema_id' => 1,
+            'temaSecundario_id' => 2,
+            "subtema1" => [1],
+            "subtema2" => [1, 2],
+            'problema' => 'Problemao',
+            'objetivoGeral' => 'objetivo  Geral',
+            'objetivoEspecifico' => 'objetivo  Especifico',
+            'descricao' => 'descricao descricao descricao descricao descricao descricao ',
             'resultadosAlcancados' => 'Muitos resultados alcancados',
-            'recursosMateriais'    => 'Recursos Materiais',
-            'valorEstimado'        => ' valor Estimado ',
-            'valorHumanos'         => 'valor Humanos',
-            'depoimentoLivre'      => ' depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',
-            'instituicao_id'      => 1,
+            'recursosMateriais' => 'Recursos Materiais',
+            'valorEstimado' => ' valor Estimado ',
+            'valorHumanos' => 'valor Humanos',
+            'depoimentoLivre' => ' depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',
+            'instituicao_id' => 1,
         ]);
 
         //$this->assertValidationError('numeroInscricao');
@@ -124,29 +124,29 @@ class TecnologiaTest extends TestCase
 
         $data = [
             'numeroInscricao' => '2017/0002',
-                'titulo'               => 'Outro teste',
-                'fimLucrativo'         => false,
-                'tempoImplantacao'     => 2,
-                'emAtividade'          => true,
-                'inscricaoAnterior'    => false,
-                'investimentoFBB'      => true,
-                'categoria_id'         => 1,
-                'resumo'               => 'Resumao',
-                'tema_id'              => 3,
-                'temaSecundario_id'    => 4,
-                "subtema1"             => [1],
-                "subtema2"             => [20,21],
-                'problema'             => 'Problemao',
-                'objetivoGeral'        => 'objetivo  Geral',
-                'objetivoEspecifico'   => 'objetivo  Especifico',
-                'descricao'            => 'descricao descricao descricao descricao descricao descricao ',
-                'resultadosAlcancados' => 'Muitos resultados alcancados',
-                'recursosMateriais'    => 'Recursos Materiais',
-                'valorEstimado'        => ' valor Estimado ',
-                'valorHumanos'         => 'valor Humanos',
-                'depoimentoLivre'      => ' depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',
-                'instituicao_id'      => 1,
-            ];
+            'titulo' => 'Outro teste',
+            'fimLucrativo' => false,
+            'tempoImplantacao' => 2,
+            'emAtividade' => true,
+            'inscricaoAnterior' => false,
+            'investimentoFBB' => true,
+            'categoria_id' => 1,
+            'resumo' => 'Resumao',
+            'tema_id' => 3,
+            'temaSecundario_id' => 4,
+            "subtema1" => [1],
+            "subtema2" => [20, 21],
+            'problema' => 'Problemao',
+            'objetivoGeral' => 'objetivo  Geral',
+            'objetivoEspecifico' => 'objetivo  Especifico',
+            'descricao' => 'descricao descricao descricao descricao descricao descricao ',
+            'resultadosAlcancados' => 'Muitos resultados alcancados',
+            'recursosMateriais' => 'Recursos Materiais',
+            'valorEstimado' => ' valor Estimado ',
+            'valorHumanos' => 'valor Humanos',
+            'depoimentoLivre' => ' depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',
+            'instituicao_id' => 1,
+        ];
         $this->response = $response = $this->json('PUT', "admin/tecnologias/update/{$tecnologia->id}", $data);
 
         $response->assertStatus(200);
@@ -182,27 +182,27 @@ class TecnologiaTest extends TestCase
     public function teste_validacoes_vazio()
     {
         $this->response = $this->json('POST', "/admin/tecnologias/create", [
-            'numeroInscricao'      => '',
-            'titulo'               => '',
-            'fimLucrativo'         => '',
-            'tempoImplantacao'     => '',
-            'emAtividade'          => '',
-            'inscricaoAnterior'    => '',
-            'investimentoFBB'      => '',
-            'categoria_id'         => '',
-            'resumo'               => '',
-            'tema_id'              => '',
-            'temaSecundario_id'    => '',
-            'problema'             => '',
-            'objetivoGeral'        => '',
-            'objetivoEspecifico'   => '',
-            'descricao'            => '',
+            'numeroInscricao' => '',
+            'titulo' => '',
+            'fimLucrativo' => '',
+            'tempoImplantacao' => '',
+            'emAtividade' => '',
+            'inscricaoAnterior' => '',
+            'investimentoFBB' => '',
+            'categoria_id' => '',
+            'resumo' => '',
+            'tema_id' => '',
+            'temaSecundario_id' => '',
+            'problema' => '',
+            'objetivoGeral' => '',
+            'objetivoEspecifico' => '',
+            'descricao' => '',
             'resultadosAlcancados' => '',
-            'recursosMateriais'    => '',
-            'valorEstimado'        => '',
-            'valorHumanos'         => '',
-            'depoimentoLivre'      => '',
-            'instituicaos_id'      => '',
+            'recursosMateriais' => '',
+            'valorEstimado' => '',
+            'valorHumanos' => '',
+            'depoimentoLivre' => '',
+            'instituicaos_id' => '',
         ]);
 
         //$this->assertValidationError('numeroInscricao');
@@ -255,7 +255,7 @@ class TecnologiaTest extends TestCase
         $tecnologia = factory(Tecnologia::class)->create();
         $this->cria_subtema();
         $tecnologia->subtemas()->attach(1);
-        
+
         $this->assertContains('Alimentação Escolar', $tecnologia->subtemas->pluck('descricao'));
     }
 
@@ -265,67 +265,67 @@ class TecnologiaTest extends TestCase
     {
         $this->disableExceptionHandling();
         $data = [
-            "titulo"               => "dasdas",
-            "fimLucrativo"         => "1",
-            "tempoImplantacao"     => "1",
-            "emAtividade"          => "0",
-            "inscricaoAnterior"    => "0",
-            "investimentoFBB"      => "1",
-            "categoria_id"         => 1,
-            "resumo"               => "dasd",
-            "tema_id"              => 1,
-            "subtema1"             => [1],
-            "temaSecundario_id"    => 2,
-            "subtema2"             => [1,2],
-            "problema"             => "das",
-            "objetivoGeral"        => "das",
-            "objetivoEspecifico"   => "dasdas",
-            "descricao"            => "dasd",
+            "titulo" => "dasdas",
+            "fimLucrativo" => "1",
+            "tempoImplantacao" => "1",
+            "emAtividade" => "0",
+            "inscricaoAnterior" => "0",
+            "investimentoFBB" => "1",
+            "categoria_id" => 1,
+            "resumo" => "dasd",
+            "tema_id" => 1,
+            "subtema1" => [1],
+            "temaSecundario_id" => 2,
+            "subtema2" => [1, 2],
+            "problema" => "das",
+            "objetivoGeral" => "das",
+            "objetivoEspecifico" => "dasdas",
+            "descricao" => "dasd",
             "resultadosAlcancados" => "asd",
-            "recursosMateriais"    => "s",
-            "valorEstimado"        => "sdasdsa",
-            "valorHumanos"         => "asd",
-            "depoimentoLivre"      => "asda",
-            "instituicao_id"      => 1
+            "recursosMateriais" => "s",
+            "valorEstimado" => "sdasdsa",
+            "valorHumanos" => "asd",
+            "depoimentoLivre" => "asda",
+            "instituicao_id" => 1
         ];
-        
+
         $response = $this->json('POST', "/admin/tecnologias/create", $data);
         $response->assertStatus(200);
-        
+
         $tecnologia = Tecnologia::where('titulo', 'dasdas')->first();
         $this->assertEquals('dasdas', $tecnologia->titulo);
-        
+
         $subtemas = $tecnologia->subtemas;
         $this->assertEquals('Alimentação Escolar', $subtemas->find(1)->descricao);
         $this->assertEquals('Higienização dos Alimentos', $subtemas->find(2)->descricao);
     }
-    
+
     /** @test */
     function temas_nao_podem_ser_os_mesmos()
     {
         $data = [
-            "titulo"               => "dasdas",
-            "fimLucrativo"         => "1",
-            "tempoImplantacao"     => "1",
-            "emAtividade"          => "0",
-            "inscricaoAnterior"    => "0",
-            "investimentoFBB"      => "1",
-            "categoria_id"         => 1,
-            "resumo"               => "dasd",
-            "tema_id"              => 1,
-            "subtema1"             => [1],
-            "temaSecundario_id"    => 1,
-            "subtema2"             => [1,2],
-            "problema"             => "das",
-            "objetivoGeral"        => "das",
-            "objetivoEspecifico"   => "dasdas",
-            "descricao"            => "dasd",
+            "titulo" => "dasdas",
+            "fimLucrativo" => "1",
+            "tempoImplantacao" => "1",
+            "emAtividade" => "0",
+            "inscricaoAnterior" => "0",
+            "investimentoFBB" => "1",
+            "categoria_id" => 1,
+            "resumo" => "dasd",
+            "tema_id" => 1,
+            "subtema1" => [1],
+            "temaSecundario_id" => 1,
+            "subtema2" => [1, 2],
+            "problema" => "das",
+            "objetivoGeral" => "das",
+            "objetivoEspecifico" => "dasdas",
+            "descricao" => "dasd",
             "resultadosAlcancados" => "asd",
-            "recursosMateriais"    => "s",
-            "valorEstimado"        => "sdasdsa",
-            "valorHumanos"         => "asd",
-            "depoimentoLivre"      => "asda",
-            "instituicao_id"      => 1
+            "recursosMateriais" => "s",
+            "valorEstimado" => "sdasdsa",
+            "valorHumanos" => "asd",
+            "depoimentoLivre" => "asda",
+            "instituicao_id" => 1
         ];
 
         $this->response = $this->json('POST', "/admin/tecnologias/create", $data);
@@ -333,7 +333,15 @@ class TecnologiaTest extends TestCase
         $this->assertValidationError('tema_id');
         $this->assertValidationError('temaSecundario_id');
     }
-    
+
     //TODO criar tentes que só pode criar tecnologia se a pessoa estiver logada e ligada a instituição
+//TODO Responsáveis pela tecnologia-->
+//TODO Locais e datas onde a Tecnologia Social já foi implementada:-->
+//TODO Público e quantidade total de pessoas atendidos por uma unidade da tecnologia social:-->
+//TODO Recursos humanos necessários para implantação de uma unidade da tecnologia social:-->
+//TODO Instituições parceiras na tecnologia:-->
+//TODO Anexos da tecnologia:-->
+//TODO Endereços eletrônicos associados à tecnologia:-->
+//TODO Banco de Imagens:-->
 
 }

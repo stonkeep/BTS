@@ -24,7 +24,7 @@ class RolesTableSeeder extends Seeder
             $role->givePermissionTo($permission);
         }
 
-        $permissions = Permission::find([1, 2, 3]);
+        $permissions = Permission::find([1, 2]);
         $role = Role::create([
             'name' => 'GECOM',
             'guard_name' => 'admin'
