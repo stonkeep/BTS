@@ -205,11 +205,15 @@ return [
             'text' => 'Files',
             'url'  => '/admin/files',
             'icon' => 'files-o',
+            'permission' => 'Files',
+
         ],
         [
             'text' => 'Permissions',
             'url'  => '/admin/permissions',
             'icon' => 'files-o',
+            'permission' => 'Permission',
+
         ],
 
 //        [

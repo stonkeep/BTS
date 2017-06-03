@@ -21,7 +21,7 @@
             {{ Form::label('name', 'Name') }}
             {{ Form::text('name', '', array('class' => 'form-control')) }}
         </div><br>
-        @if(!$roles->isEmpty()) //If no roles exist yet
+        @if(!$roles->isEmpty()) {{--If no roles exist yet--}}
         <h4>Assign Permission to Roles</h4>
 
         @foreach ($roles as $role)
@@ -30,6 +30,11 @@
 
         @endforeach
         @endif
+
+        {{--<h4>Assign Guard Name</h4>--}}
+
+        {{--{{Form::select('guard_name', ['web' => 'Web', 'admin' => 'Admin'])}}<br>--}}
+
         <br>
         {{ Form::submit('Add', array('class' => 'btn btn-primary')) }}
 
