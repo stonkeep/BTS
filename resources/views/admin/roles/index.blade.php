@@ -20,7 +20,8 @@
             <a href="{{ route('permissions.index') }}" class="btn btn-default pull-right">Permissions</a></h1>
         <hr>
         <div class="table-responsive">
-            <table class="table table-bordered table-striped">
+            <table style="table-layout: fixed;"
+                    class="table table-bordered table-striped">
                 <thead>
                 <tr>
                     <th>Role</th>
@@ -35,7 +36,7 @@
 
                         <td>{{ $role->name }}</td>
 
-                        <td>{{ str_replace(array('[',']','"'),'', $role->permissions()->pluck('name')) }}</td>{{-- Retrieve array of permissions associated to a role and convert to string --}}
+                        <td style="word-wrap:break-word">{{ str_replace(array('[',']','"'),'', $role->permissions()->pluck('name')) }}</td>{{-- Retrieve array of permissions associated to a role and convert to string --}}
                         <td>
                             <a href="{{ URL::to('admin/roles/'.$role->id.'/edit') }}" class="btn btn-info pull-left"
                                style="margin-right: 3px;">Edit</a>
