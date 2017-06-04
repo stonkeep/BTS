@@ -27,7 +27,7 @@ class PermissionController extends Controller {
     public function index() {
         $permissions = Permission::all(); //Get all permissions
 
-        return view('admin.permissions.index', compact('permissions'));
+        return view('admin.permissions.index')->with('permissions', $permissions);
     }
 
     /**
@@ -38,7 +38,7 @@ class PermissionController extends Controller {
     public function create() {
         $roles = Role::get(); //Get all roles
 
-        return view('admin.permissions.create', compact('roles'));
+        return view('admin.permissions.create')->with('roles', $roles);
     }
 
     /**

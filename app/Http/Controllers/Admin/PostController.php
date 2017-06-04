@@ -10,6 +10,15 @@ use Redirect;
 
 class PostController extends Controller
 {
+    function __construct()
+    {
+        $user = Auth::user();
+        if (!$user->can('Post')) {
+            flash('Você não tem acesso suficiente')->error();
+            return redirect('/admin');
+        }
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -97,8 +106,8 @@ class PostController extends Controller
             if ($post && ($request->user()->id == $post->author_id || $request->user()->is_admin()))
                 return view('admin.posts.edit', compact('post'));
         } else {
-            flash('Você não tem acesso suficiente');
-            return redirect('/');
+            flash('Você não tem acesso suficiente')->error();
+            return redirect('/admin');
         }
 
     }

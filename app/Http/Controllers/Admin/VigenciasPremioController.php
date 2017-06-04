@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\VigenciasPremio;
+use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -16,6 +17,12 @@ class VigenciasPremioController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+        if (!$user->can('Premios')) {
+            flash('Você não tem acesso suficiente')->error();
+            return redirect('/');
+        }
+
         $data = VigenciasPremio::all();
         return view('admin.premios.show', compact('data'));
     }
@@ -69,6 +76,12 @@ class VigenciasPremioController extends Controller
      */
     public function edit(VigenciasPremio $premio)
     {
+        $user = Auth::user();
+        if (!$user->can('Premios')) {
+            flash('Você não tem acesso suficiente')->error();
+            return redirect('/');
+        }
+
         return view('admin.premios.edit', compact('premio'));
     }
 

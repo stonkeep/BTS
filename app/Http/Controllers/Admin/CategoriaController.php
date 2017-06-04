@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Categoria;
 use App\Http\Controllers\Controller;
+use Auth;
 use Illuminate\Http\Request;
+use Spatie\Permission\Traits\HasRoles;
 
 class CategoriaController extends Controller
 {
@@ -15,6 +17,12 @@ class CategoriaController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+        if (!$user->can('Categorias')) {
+            flash('Você não tem acesso suficiente')->error();
+            return redirect('/');
+        }
+
         $data = Categoria::all();
         return view('admin.categorias.show', compact('data'));
 
@@ -65,6 +73,12 @@ class CategoriaController extends Controller
      */
     public function edit(Categoria $categoria)
     {
+        $user = Auth::user();
+        if (!$user->can('Categorias')) {
+            flash('Você não tem acesso suficiente')->error();
+            return redirect('/');
+        }
+
         return view('admin.categorias.edit', compact('categoria'));
     }
 

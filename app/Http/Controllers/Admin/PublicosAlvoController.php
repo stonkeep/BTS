@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\PublicosAlvo;
+use Auth;
 use Illuminate\Http\Request;
 
 class PublicosAlvoController extends Controller
@@ -15,6 +16,12 @@ class PublicosAlvoController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+        if (!$user->can('PublicoAlvo')) {
+            flash('Você não tem acesso suficiente')->error();
+            return redirect('/');
+        }
+
         $data = PublicosAlvo::all();
         return view('admin.publicosAlvo.show', compact('data'));
     }
@@ -68,6 +75,12 @@ class PublicosAlvoController extends Controller
      */
     public function edit(PublicosAlvo $publico)
     {
+        $user = Auth::user();
+        if (!$user->can('PublicoAlvo')) {
+            flash('Você não tem acesso suficiente')->error();
+            return redirect('/');
+        }
+
         return view('admin.publicosAlvo.edit', compact('publico'));
     }
 

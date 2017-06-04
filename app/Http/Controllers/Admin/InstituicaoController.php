@@ -6,6 +6,7 @@ use App\Cargos;
 use App\Http\Controllers\Controller;
 use App\Instituicao;
 use App\NaturezasJuridicas;
+use Auth;
 use Illuminate\Http\Request;
 
 class InstituicaoController extends Controller
@@ -17,8 +18,13 @@ class InstituicaoController extends Controller
      */
     public function index()
     {
-        $data = Instituicao::all();
+        $user = Auth::user();
+        if (!$user->can('Instituicoes')) {
+            flash('Você não tem acesso suficiente')->error();
+            return redirect('/');
+        }
 
+        $data = Instituicao::all();
         return view('admin.instituicoes.show', compact('data'));
     }
 
@@ -88,6 +94,12 @@ class InstituicaoController extends Controller
      */
     public function edit(Instituicao $instituicao)
     {
+        $user = Auth::user();
+        if (!$user->can('Instituicoes')) {
+            flash('Você não tem acesso suficiente')->error();
+            return redirect('/');
+        }
+
         return view('admin.instituicoes.edit', compact('instituicao'));
     }
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Regioes;
+use Auth;
 use Illuminate\Http\Request;
 use MongoDB\BSON\Javascript;
 use Psy\Util\Str;
@@ -17,8 +18,13 @@ class RegioesController extends Controller
      */
     public function index()
     {
-        $data = Regioes::all();
+        $user = Auth::user();
+        if (!$user->can('Regioes')) {
+            flash('Você não tem acesso suficiente')->error();
+            return redirect('/');
+        }
 
+        $data = Regioes::all();
         return view('admin.regioes.show', compact('data'));
     }
 
@@ -72,6 +78,12 @@ class RegioesController extends Controller
      */
     public function edit(Regioes $regiao)
     {
+        $user = Auth::user();
+        if (!$user->can('Regioes')) {
+            flash('Você não tem acesso suficiente')->error();
+            return redirect('/');
+        }
+
         return view('admin.regioes.edit', compact('regiao'));
     }
 

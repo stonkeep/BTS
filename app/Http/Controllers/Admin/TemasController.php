@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Temas;
+use Auth;
 use Illuminate\Http\Request;
 use Mockery\CountValidator\Exception;
 
@@ -17,8 +18,13 @@ class TemasController extends Controller
      */
     public function index()
     {
-        $data = Temas::all();
+        $user = Auth::user();
+        if (!$user->can('Temas')) {
+            flash('Você não tem acesso suficiente')->error();
+            return redirect('/');
+        }
 
+        $data = Temas::all();
         return view('admin.temas.show', compact('data'));
     }
 
@@ -79,6 +85,12 @@ class TemasController extends Controller
      */
     public function edit(Temas $tema)
     {
+        $user = Auth::user();
+        if (!$user->can('Temas')) {
+            flash('Você não tem acesso suficiente')->error();
+            return redirect('/');
+        }
+
         return view('admin.temas.edit', compact('tema'));
     }
 

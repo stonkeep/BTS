@@ -8,6 +8,7 @@ use App\Instituicao;
 use App\Tecnologia;
 use App\Temas;
 use App\SubTemas;
+use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -34,6 +35,12 @@ class TecnologiasController extends Controller
      */
     public function create()
     {
+        $user = Auth::user();
+        if (!$user->can('Tecnologias')) {
+            flash('Você não tem acesso suficiente')->error();
+            return redirect('/');
+        }
+
         $categorias = Categoria::all();
         $temas = Temas::all();
         $tecnologia = new Tecnologia();
@@ -135,6 +142,12 @@ class TecnologiasController extends Controller
      */
     public function edit(Tecnologia $tecnologia)
     {
+        $user = Auth::user();
+        if (!$user->can('Tecnologias')) {
+            flash('Você não tem acesso suficiente')->error();
+            return redirect('/');
+        }
+
         $categorias = Categoria::all();
         $temas = Temas::all();
 //        dd($tecnologia->temaPrincipal());

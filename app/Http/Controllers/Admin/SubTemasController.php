@@ -6,6 +6,7 @@ use App\Categoria;
 use App\Http\Controllers\Controller;
 use App\SubTemas;
 use App\Temas;
+use Auth;
 use Illuminate\Http\Request;
 use Mockery\CountValidator\Exception;
 
@@ -18,6 +19,12 @@ class SubTemasController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+        if (!$user->can('SubTemas')) {
+            flash('Você não tem acesso suficiente')->error();
+            return redirect('/');
+        }
+
         $subTemas = SubTemas::all();
         return view('admin.subTemas.show', compact('subTemas'));
     }
@@ -80,6 +87,12 @@ class SubTemasController extends Controller
      */
     public function edit(SubTemas $subTema)
     {
+        $user = Auth::user();
+        if (!$user->can('SubTemas')) {
+            flash('Você não tem acesso suficiente')->error();
+            return redirect('/');
+        }
+
         $temas = Temas::all();
         return view('admin.subtemas.edit', compact('subTema', 'temas'));
     }

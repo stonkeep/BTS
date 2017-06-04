@@ -86,9 +86,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
         'NaturezasJuridicasController@edit')->name('editNaturezaJuridica');
 
 //Cargos
-    Route::get('/cargos/insert', function () {
-        return view('admin.cargos.create');
-    })->name('insertCargos');
+    Route::get('/cargos/insert', 'CargosController@create')->name('insertCargos');
     Route::post('/cargos/create', 'CargosController@store')->name('storeCargos');
     Route::get('/cargos', 'CargosController@index')->name('indexCargos');
     Route::get('/cargos/delete/{cargo}', 'CargosController@destroy')->name('destroyCargos');

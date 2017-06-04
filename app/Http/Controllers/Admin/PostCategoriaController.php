@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\PostCategoria;
+use Auth;
 use Illuminate\Http\Request;
 
 class PostCategoriaController extends Controller
@@ -15,8 +16,13 @@ class PostCategoriaController extends Controller
      */
     public function index()
     {
-        $data = PostCategoria::all();
+        $user = Auth::user();
+        if (!$user->can('Post')) {
+            flash('Você não tem acesso suficiente')->error();
+            return redirect('/');
+        }
 
+        $data = PostCategoria::all();
         return view('admin.post-categorias.show', compact('data'));
     }
 
@@ -71,6 +77,12 @@ class PostCategoriaController extends Controller
      */
     public function edit(PostCategoria $postCategoria)
     {
+        $user = Auth::user();
+        if (!$user->can('Post')) {
+            flash('Você não tem acesso suficiente')->error();
+            return redirect('/');
+        }
+
         return view('admin.post-categorias.edit', compact('postCategoria'));
     }
 

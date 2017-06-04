@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Cargos;
 use App\Http\Controllers\Controller;
+use Auth;
 use Illuminate\Http\Request;
 
 class CargosController extends Controller
@@ -15,6 +16,13 @@ class CargosController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+        if (!$user->can('Cargos')) {
+            flash('Você não tem acesso suficiente')->error();
+            return redirect('/admin');
+        }
+
+
         $data = Cargos::all();
         return view('admin.cargos.show', compact('data', 'colunas'));
     }
@@ -26,13 +34,13 @@ class CargosController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.cargos.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -52,7 +60,7 @@ class CargosController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Cargos  $cargos
+     * @param  \App\Cargos $cargos
      * @return \Illuminate\Http\Response
      */
     public function show(Cargos $cargos)
@@ -63,19 +71,25 @@ class CargosController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Cargos  $cargos
+     * @param  \App\Cargos $cargos
      * @return \Illuminate\Http\Response
      */
     public function edit(Cargos $cargo)
     {
+        $user = Auth::user();
+        if (!$user->can('Cargos')) {
+            flash('Você não tem acesso suficiente')->error();
+            return redirect('/admin');
+        }
         return view('admin.cargos.edit', compact('cargo'));
+
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Cargos  $cargos
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Cargos $cargos
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Cargos $cargo)
@@ -90,7 +104,7 @@ class CargosController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Cargos  $cargos
+     * @param  \App\Cargos $cargos
      * @return \Illuminate\Http\Response
      */
     public function destroy(Cargos $cargo)

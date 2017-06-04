@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\NaturezasJuridicas;
+use Auth;
 use Illuminate\Http\Request;
 
 class NaturezasJuridicasController extends Controller
@@ -15,6 +16,12 @@ class NaturezasJuridicasController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+        if (!$user->can('NaturezaJuridica')) {
+            flash('Você não tem acesso suficiente')->error();
+            return redirect('/');
+        }
+
         $data = NaturezasJuridicas::all();
         return view('admin.naturezasJuridicas.show', compact('data'));
     }
@@ -68,6 +75,12 @@ class NaturezasJuridicasController extends Controller
      */
     public function edit(NaturezasJuridicas $natureza)
     {
+        $user = Auth::user();
+        if (!$user->can('NaturezaJuridica')) {
+            flash('Você não tem acesso suficiente')->error();
+            return redirect('/');
+        }
+
         return view('admin.naturezasJuridicas.edit', compact('natureza'));
     }
 
