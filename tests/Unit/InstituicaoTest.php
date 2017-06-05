@@ -343,7 +343,12 @@ class InstituicaoTest extends TestCase
         $this->assertEquals($tec->titulo, 'Teste instituicao');
     }
 
-    
+    /** @test */
+    function teste_function()
+    {
+    	//test code
+    }
     //TODO criar ligação do usuário com a instituição
+    
     
 }

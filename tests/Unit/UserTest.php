@@ -32,6 +32,5 @@ class UserTest extends TestCase
 
         $this->assertEquals($user->instituicoes()->first()->razaoSocial, 'Teste de Instituicao' );
     }
-    //TODO vincular o usuário a instituição
 }
 
