@@ -23,4 +23,10 @@ class Instituicao extends Model
     {
         return $this->belongsTo(Cargos::class);
     }
+
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

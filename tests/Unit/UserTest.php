@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Instituicao;
 use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -10,24 +11,27 @@ use Tests\ValidationsFields;
 
 class UserTest extends TestCase
 {
+
     use DatabaseMigrations;
     use ValidationsFields;
+
+
     /**
      * A basic test example.
      *
      * @return void
      */
-    public function test_create()
+    public function teste_vincula_instituicao_e_usuario()
     {
         factory(User::class)->create();
+        $user = User::first();
+        factory(Instituicao::class)->create();
+        $instituicao = Instituicao::first();
+        //$user->instituicoes()->save($instituicao);
+        $user->instituicoes()->attach($instituicao);
+
+        $this->assertEquals($user->instituicoes()->first()->razaoSocial, 'Teste de Instituicao' );
     }
-    
-    //TODO teste create
-    //TODO teste reader
-    //TODO teste update
-    //TODO teste delete
-    //TODO teste list
-    //TODO teste validações
-    //TODO verificar acesso do usuário
-    //TODO vincular o uário a instituição
+    //TODO vincular o usuário a instituição
 }
+

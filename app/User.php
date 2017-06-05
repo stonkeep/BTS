@@ -57,4 +57,10 @@ class User extends Authenticatable
         }
         return false;
     }
+    
+    //Usuário pertence a instituicao
+    public function instituicoes()
+    {
+        return $this->belongsToMany(Instituicao::class);
+    }
 }
