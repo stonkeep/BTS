@@ -11,6 +11,16 @@ use Illuminate\Http\Request;
 
 class InstituicaoController extends Controller
 {
+    private $autorizado = true;
+    public function __construct()
+    {
+        $user = Auth::user();
+        if (!$user->can('Instituicoes')) {
+            flash('Você não tem acesso suficiente')->error();
+            $this->autorizado = false;
+        }
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -18,10 +28,8 @@ class InstituicaoController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        if (!$user->can('Instituicoes')) {
-            flash('Você não tem acesso suficiente')->error();
-            return redirect('/');
+        if (!$this->autorizado){
+            return back();
         }
 
         $data = Instituicao::all();
@@ -94,12 +102,9 @@ class InstituicaoController extends Controller
      */
     public function edit(Instituicao $instituicao)
     {
-        $user = Auth::user();
-        if (!$user->can('Instituicoes')) {
-            flash('Você não tem acesso suficiente')->error();
-            return redirect('/');
+        if (!$this->autorizado){
+            return back();
         }
-
         return view('admin.instituicoes.edit', compact('instituicao'));
     }
 

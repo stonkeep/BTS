@@ -6,9 +6,22 @@ use App\Cargos;
 use App\Http\Controllers\Controller;
 use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class CargosController extends Controller
 {
+    private $autorizado = true;
+    public function __construct()
+    {
+        $user = Auth::user();
+        if (!$user->can('Cargos')) {
+            flash('Você não tem acesso suficiente')->error();
+            return Redirect::route('adminHome');
+        }
+    }
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -16,13 +29,6 @@ class CargosController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        if (!$user->can('Cargos')) {
-            flash('Você não tem acesso suficiente')->error();
-            return redirect('/admin');
-        }
-
-
         $data = Cargos::all();
         return view('admin.cargos.show', compact('data', 'colunas'));
     }
@@ -76,11 +82,6 @@ class CargosController extends Controller
      */
     public function edit(Cargos $cargo)
     {
-        $user = Auth::user();
-        if (!$user->can('Cargos')) {
-            flash('Você não tem acesso suficiente')->error();
-            return redirect('/admin');
-        }
         return view('admin.cargos.edit', compact('cargo'));
 
     }

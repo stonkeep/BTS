@@ -6,6 +6,8 @@ use App\Cargos;
 use App\Instituicao;
 use App\NaturezasJuridicas;
 use App\Tecnologia;
+use App\User;
+use Auth;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -344,9 +346,31 @@ class InstituicaoTest extends TestCase
     }
 
     /** @test */
-    function teste_function()
+    function teste_ligacao_da_instituicao_com_usuario_nao_logado()
     {
-    	//test code
+        factory(User::class)->create();
+        $user = User::first();
+        factory(Instituicao::class)->create();
+        $instituicao = Instituicao::first();
+
+        $instituicao->users()->attach($user);
+
+        $this->assertEquals($instituicao->users()->first()->name, $user->name);
+    }
+
+    /** @test */
+    function teste_ligacao_da_instituicao_com_usuario_logado()
+    {
+        factory(User::class)->create();
+        $user = User::first();
+        Auth::login($user);
+        $user = Auth::user();
+        factory(Instituicao::class)->create();
+        $instituicao = Instituicao::first();
+
+        $instituicao->users()->attach($user);
+
+        $this->assertEquals($instituicao->users()->first()->name, $user->name);
     }
     //TODO criar ligação do usuário com a instituição
     

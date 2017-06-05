@@ -9,6 +9,17 @@ use Illuminate\Http\Request;
 
 class PostCategoriaController extends Controller
 {
+    private $autorizado = true;
+    public function __construct()
+    {
+        $user = Auth::user();
+        if (!$user->can('Cargos')) {
+            flash('Você não tem acesso suficiente')->error();
+            $this->autorizado = false;
+        }
+    }
+
+
     /**
      * Display a listing of the resource.
      *

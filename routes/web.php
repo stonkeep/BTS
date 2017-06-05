@@ -177,7 +177,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index');
-Route::get('/admin', 'HomeController@index');
+Route::get('/admin', 'HomeController@index')->name('adminHome');
 
 // add comment
 Route::post('comment/add', 'Admin\CommentsController@store')->name('storeComments');

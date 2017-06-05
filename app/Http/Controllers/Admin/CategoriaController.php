@@ -10,6 +10,17 @@ use Spatie\Permission\Traits\HasRoles;
 
 class CategoriaController extends Controller
 {
+    private $autorizado = true;
+    public function __construct()
+    {
+        $user = Auth::user();
+        if (!$user->can('Categorias')) {
+            flash('Você não tem acesso suficiente')->error();
+            $this->autorizado = false;
+        }
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -17,12 +28,9 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        if (!$user->can('Categorias')) {
-            flash('Você não tem acesso suficiente')->error();
-            return redirect('/');
+        if (!$this->autorizado){
+            return back();
         }
-
         $data = Categoria::all();
         return view('admin.categorias.show', compact('data'));
 
