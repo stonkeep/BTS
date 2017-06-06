@@ -14,6 +14,15 @@ use Illuminate\Http\Request;
 
 class TecnologiasController extends Controller
 {
+    private $autorizado = true;
+    public function __construct()
+    {
+        $user = Auth::user();
+        if (!$user->can('Tecnologias')) {
+            flash('Você não tem acesso suficiente')->error();
+            $this->autorizado = false;
+        }
+    }
 
     /**
      * Display a listing of the resource.
@@ -22,8 +31,11 @@ class TecnologiasController extends Controller
      */
     public function index()
     {
+        if (!$this->autorizado){
+            return back();
+        }
+        
         $data = Tecnologia::all();
-
         return view('admin.tecnologias.show', compact('data'));
     }
 
@@ -35,10 +47,8 @@ class TecnologiasController extends Controller
      */
     public function create()
     {
-        $user = Auth::user();
-        if (!$user->can('Tecnologias')) {
-            flash('Você não tem acesso suficiente')->error();
-            return redirect('/');
+        if (!$this->autorizado){
+            return back();
         }
 
         $categorias = Categoria::all();
@@ -142,12 +152,10 @@ class TecnologiasController extends Controller
      */
     public function edit(Tecnologia $tecnologia)
     {
-        $user = Auth::user();
-        if (!$user->can('Tecnologias')) {
-            flash('Você não tem acesso suficiente')->error();
-            return redirect('/');
+        if (!$this->autorizado){
+            return back();
         }
-
+        
         $categorias = Categoria::all();
         $temas = Temas::all();
 //        dd($tecnologia->temaPrincipal());

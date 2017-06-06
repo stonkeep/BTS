@@ -12,6 +12,15 @@ use Mockery\CountValidator\Exception;
 
 class SubTemasController extends Controller
 {
+    private $autorizado = true;
+    public function __construct()
+    {
+        $user = Auth::user();
+        if (!$user->can('SubTemas')) {
+            flash('Você não tem acesso suficiente')->error();
+            $this->autorizado = false;
+        }
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,10 +28,8 @@ class SubTemasController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        if (!$user->can('SubTemas')) {
-            flash('Você não tem acesso suficiente')->error();
-            return redirect('/');
+        if (!$this->autorizado){
+            return back();
         }
 
         $subTemas = SubTemas::all();
@@ -36,6 +43,10 @@ class SubTemasController extends Controller
      */
     public function create()
     {
+        if (!$this->autorizado){
+            return back();
+        }
+        
         $temas = Temas::all()->toJson();
         $subTema = new SubTemas;
 
@@ -87,10 +98,8 @@ class SubTemasController extends Controller
      */
     public function edit(SubTemas $subTema)
     {
-        $user = Auth::user();
-        if (!$user->can('SubTemas')) {
-            flash('Você não tem acesso suficiente')->error();
-            return redirect('/');
+        if (!$this->autorizado){
+            return back();
         }
 
         $temas = Temas::all();

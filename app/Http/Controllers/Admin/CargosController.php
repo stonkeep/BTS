@@ -29,6 +29,10 @@ class CargosController extends Controller
      */
     public function index()
     {
+        if (!$this->autorizado){
+            return back();
+        }
+        
         $data = Cargos::all();
         return view('admin.cargos.show', compact('data', 'colunas'));
     }
@@ -40,6 +44,9 @@ class CargosController extends Controller
      */
     public function create()
     {
+        if (!$this->autorizado){
+            return back();
+        }
         return view('admin.cargos.create');
     }
 
@@ -82,6 +89,9 @@ class CargosController extends Controller
      */
     public function edit(Cargos $cargo)
     {
+        if (!$this->autorizado){
+            return back();
+        }
         return view('admin.cargos.edit', compact('cargo'));
 
     }

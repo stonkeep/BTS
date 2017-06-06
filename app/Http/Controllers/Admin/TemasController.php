@@ -10,6 +10,15 @@ use Mockery\CountValidator\Exception;
 
 class TemasController extends Controller
 {
+    private $autorizado = true;
+    public function __construct()
+    {
+        $user = Auth::user();
+        if (!$user->can('Temas')) {
+            flash('Você não tem acesso suficiente')->error();
+            $this->autorizado = false;
+        }
+    }
 
     /**
      * Display a listing of the resource.
@@ -18,10 +27,8 @@ class TemasController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        if (!$user->can('Temas')) {
-            flash('Você não tem acesso suficiente')->error();
-            return redirect('/');
+        if (!$this->autorizado){
+            return back();
         }
 
         $data = Temas::all();
@@ -85,12 +92,9 @@ class TemasController extends Controller
      */
     public function edit(Temas $tema)
     {
-        $user = Auth::user();
-        if (!$user->can('Temas')) {
-            flash('Você não tem acesso suficiente')->error();
-            return redirect('/');
+        if (!$this->autorizado){
+            return back();
         }
-
         return view('admin.temas.edit', compact('tema'));
     }
 

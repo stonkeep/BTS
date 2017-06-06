@@ -10,6 +10,15 @@ use Illuminate\Http\Request;
 
 class VigenciasPremioController extends Controller
 {
+    private $autorizado = true;
+    public function __construct()
+    {
+        $user = Auth::user();
+        if (!$user->can('Premios')) {
+            flash('Você não tem acesso suficiente')->error();
+            $this->autorizado = false;
+        }
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,12 +26,9 @@ class VigenciasPremioController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        if (!$user->can('Premios')) {
-            flash('Você não tem acesso suficiente')->error();
-            return redirect('/');
+        if (!$this->autorizado){
+            return back();
         }
-
         $data = VigenciasPremio::all();
         return view('admin.premios.show', compact('data'));
     }
@@ -76,10 +82,8 @@ class VigenciasPremioController extends Controller
      */
     public function edit(VigenciasPremio $premio)
     {
-        $user = Auth::user();
-        if (!$user->can('Premios')) {
-            flash('Você não tem acesso suficiente')->error();
-            return redirect('/');
+        if (!$this->autorizado){
+            return back();
         }
 
         return view('admin.premios.edit', compact('premio'));

@@ -11,6 +11,16 @@ use Psy\Util\Str;
 
 class RegioesController extends Controller
 {
+    private $autorizado = true;
+    public function __construct()
+    {
+        $user = Auth::user();
+        if (!$user->can('Regioes')) {
+            flash('Você não tem acesso suficiente')->error();
+            $this->autorizado = false;
+        }
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,10 +28,8 @@ class RegioesController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        if (!$user->can('Regioes')) {
-            flash('Você não tem acesso suficiente')->error();
-            return redirect('/');
+        if (!$this->autorizado){
+            return back();
         }
 
         $data = Regioes::all();
@@ -78,10 +86,8 @@ class RegioesController extends Controller
      */
     public function edit(Regioes $regiao)
     {
-        $user = Auth::user();
-        if (!$user->can('Regioes')) {
-            flash('Você não tem acesso suficiente')->error();
-            return redirect('/');
+        if (!$this->autorizado){
+            return back();
         }
 
         return view('admin.regioes.edit', compact('regiao'));

@@ -9,6 +9,17 @@ use Illuminate\Http\Request;
 
 class PublicosAlvoController extends Controller
 {
+    private $autorizado = true;
+    public function __construct()
+    {
+        $user = Auth::user();
+        if (!$user->can('PublicoAlvo')) {
+            flash('Você não tem acesso suficiente')->error();
+            $this->autorizado = false;
+        }
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -16,10 +27,8 @@ class PublicosAlvoController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        if (!$user->can('PublicoAlvo')) {
-            flash('Você não tem acesso suficiente')->error();
-            return redirect('/');
+        if (!$this->autorizado){
+            return back();
         }
 
         $data = PublicosAlvo::all();
@@ -75,10 +84,8 @@ class PublicosAlvoController extends Controller
      */
     public function edit(PublicosAlvo $publico)
     {
-        $user = Auth::user();
-        if (!$user->can('PublicoAlvo')) {
-            flash('Você não tem acesso suficiente')->error();
-            return redirect('/');
+        if (!$this->autorizado){
+            return back();
         }
 
         return view('admin.publicosAlvo.edit', compact('publico'));
