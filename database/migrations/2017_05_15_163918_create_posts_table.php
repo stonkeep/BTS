@@ -22,6 +22,10 @@ class CreatePostsTable extends Migration
             $table->string('title')->unique();
             $table->text('body');
             $table->string('slug')->unique();
+            $table->integer('categoria_id')->unsigned();
+            $table->foreign('categoria_id')
+                ->references('id')->on('categoria')
+                ->onDelete('cascade');
             $table->boolean('active');
             $table->timestamps();
         });

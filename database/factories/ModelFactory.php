@@ -133,11 +133,18 @@ $factory->define(App\LocalImplantacao::class, function (Faker\Generator $faker) 
 $factory->define(App\Post::class, function (Faker\Generator $faker) {
 
     return [
-        'id' => 1,
         'author_id' => 1,
         'title' => 'Teste 1',
         'body' =>  'TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE ',
         'slug' => 'teste-1',
+        'categoria_id' => 1,
         'active' => true,
     ];
 });
+
+$factory->define(App\PostCategoria::class, function (Faker\Generator $faker) {
+    return [
+        'descricao' => 'Notícias'
+    ];
+});
+
