@@ -11,7 +11,7 @@
 @section('content')
 
     @php
-        $colunas = collect(['id', 'Título', 'Data de Criação', 'Data de Atualização']);
+        $colunas = collect(['id', 'Título', 'Categoria', 'Data de Criação', 'Data de Atualização']);
     $tipo = 'posts' ;
     @endphp
     {{--<div id="app">--}}
@@ -50,6 +50,7 @@
                 <tr>
                     <td>{{$item->id}}</td>
                     <td><a href="/posts/{{$item->slug}}">{{$item->title}}</a></td>
+                    <td>{{$item->categoria->descricao}}</td>
                     <td>{{$item->created_at}}</td>
                     <td>{{$item->updated_at}}</td>
                     <td><a class="btn btn-danger" href="/admin/{{$tipo}}/delete/{{$item->id}}">Excluir</a></td>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Post;
+use App\PostCategoria;
 use Auth;
 use Illuminate\Http\Request;
 use Redirect;
@@ -35,7 +36,7 @@ class PostController extends Controller
             return back();
         }
 
-        $data = Post::where('active', 1)->orderBy('created_at', 'desc')->get();
+        $data = Post::with('categoria')->where('active', 1)->orderBy('created_at', 'desc')->get();
         //$data = Post::where('active', 1)->orderBy('created_at', 'desc');
 
         //return home.blade.php template from resources/views folder
@@ -53,8 +54,9 @@ class PostController extends Controller
         if ( ! $this->autorizado) {
             return back();
         }
+        $categorias = PostCategoria::pluck('descricao', 'id');
 
-        return view('admin.posts.create');
+        return view('admin.posts.create', compact('categorias'));
 
     }
 
@@ -71,12 +73,13 @@ class PostController extends Controller
         $this->validate($request, [
             'title' => 'required|unique:posts',
             'body' => 'required',
-            'author_id' => 'required|exists:users,id',
+            'categoria' => 'required',
         ]);
 
         $post = new Post();
         $post->title = $request->get('title');
         $post->body = $request->get('body');
+        $post->categoria_id = $request->get('categoria');
         $post->slug = str_slug($post->title);
         $post->author_id = $request->user()->id;
         if ($request->has('save')) {
@@ -123,9 +126,10 @@ class PostController extends Controller
         if ( ! $this->autorizado) {
             return back();
         }
-        
+        $categorias = PostCategoria::pluck('descricao', 'id');
+
         $post = Post::where('slug', $slug)->first();
-        return view('admin.posts.edit', compact('post'));
+        return view('admin.posts.edit', compact('post', 'categorias'));
         
     }
 
@@ -144,6 +148,7 @@ class PostController extends Controller
         $this->validate($request, [
             'title' => 'required',
             'body' => 'required',
+            'categoria' => 'required'
             //'author_id' => 'required|exists:users,id',
         ]);
         
@@ -152,6 +157,7 @@ class PostController extends Controller
         if ($post) {
 
             $title = $request->input('title');
+            $categoria = $request->input('categoria');
             $slug = str_slug($title);
             $duplicate = Post::where('slug', $slug)->first();
             if ($duplicate) {
@@ -162,6 +168,7 @@ class PostController extends Controller
                 }
             }
             $post->title = $title;
+            $post->categoria_id = $categoria;
             $post->body = $request->input('body');
             if ($request->has('save')) {
                 $post->active = 0;

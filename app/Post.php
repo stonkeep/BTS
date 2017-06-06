@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     //restricts columns from modifying
-    protected $guarded = [];
+    protected $fillable  = ['author_id', 'title', 'body', 'slug', 'categoria_id', 'active'];
     // posts has many comments
     // returns all comments on that post
     public function comments()
