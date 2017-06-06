@@ -129,3 +129,15 @@ $factory->define(App\LocalImplantacao::class, function (Faker\Generator $faker) 
         'dataImplantacao' => Carbon::today()->format('d-m-Y'),
     ];
 });
+
+$factory->define(App\Post::class, function (Faker\Generator $faker) {
+
+    return [
+        'id' => 1,
+        'author_id' => 1,
+        'title' => 'Teste 1',
+        'body' =>  'TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE ',
+        'slug' => 'teste-1',
+        'active' => true,
+    ];
+});

@@ -140,7 +140,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     // edit post form
     Route::get('posts/edit/{slug}', 'PostController@edit')->name('editPosts');
     // update post
-    Route::post('post/update', 'PostController@update')->name('updatePosts');
+    Route::post('post/update/', 'PostController@update')->name('updatePosts');
     // delete post
     Route::get('posts/delete/{id}', 'PostController@destroy')->name('destroyPosts');
     // display user's all posts

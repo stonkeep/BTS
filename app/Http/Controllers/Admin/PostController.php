@@ -35,13 +35,11 @@ class PostController extends Controller
             return back();
         }
 
-        $data = Post::where('active', 1)->orderBy('created_at', 'desc');
-        //page heading
-        $title = 'Latest Posts';
+        $data = Post::where('active', 1)->orderBy('created_at', 'desc')->get();
+        //$data = Post::where('active', 1)->orderBy('created_at', 'desc');
 
         //return home.blade.php template from resources/views folder
         return view('admin.posts.list', compact('data'));
-//        return view('admin.posts.list')->withPosts($posts)->withTitle($title);
     }
 
 
@@ -70,6 +68,12 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'title' => 'required|unique:posts',
+            'body' => 'required',
+            'author_id' => 'required|exists:users,id',
+        ]);
+
         $post = new Post();
         $post->title = $request->get('title');
         $post->body = $request->get('body');
@@ -136,10 +140,16 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        //TODO criar campo alterado por....
+        $this->validate($request, [
+            'title' => 'required',
+            'body' => 'required',
+            //'author_id' => 'required|exists:users,id',
+        ]);
+        
         $post_id = $request->input('post_id');
         $post = Post::find($post_id);
-        if ($post && ($post->author_id == $request->user()->id || $request->user()->is_admin())) {
+        if ($post) {
 
             $title = $request->input('title');
             $slug = str_slug($title);
@@ -165,8 +175,6 @@ class PostController extends Controller
             $post->save();
 
             return redirect($landing);
-        } else {
-            return redirect('/admin/posts')->withErrors('you have not sufficient permissions');
         }
     }
 

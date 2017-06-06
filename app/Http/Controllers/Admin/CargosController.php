@@ -14,9 +14,9 @@ class CargosController extends Controller
     public function __construct()
     {
         $user = Auth::user();
-        if (!$user->can('Cargos')) {
+        if (!$user->can('Categorias')) {
             flash('Você não tem acesso suficiente')->error();
-            return Redirect::route('adminHome');
+            $this->autorizado = false;
         }
     }
 

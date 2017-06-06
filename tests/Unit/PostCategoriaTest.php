@@ -13,7 +13,7 @@ class PostCategoriaTest extends TestCase
 {
     use DatabaseMigrations;
     use ValidationsFields;
-//TODO teste
+
     /**
      * A basic test example.
      *
