@@ -371,8 +371,5 @@ class InstituicaoTest extends TestCase
         $instituicao->users()->attach($user);
 
         $this->assertEquals($instituicao->users()->first()->name, $user->name);
-    }
-    //TODO criar ligação do usuário com a instituição
-    
-    
+    }    
 }

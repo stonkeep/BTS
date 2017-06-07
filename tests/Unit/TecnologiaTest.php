@@ -6,6 +6,8 @@ use App\Instituicao;
 use App\SubTemas;
 use App\Tecnologia;
 use App\Temas;
+use App\User;
+use Auth;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -334,7 +336,55 @@ class TecnologiaTest extends TestCase
         $this->assertValidationError('temaSecundario_id');
     }
 
-    //TODO criar tentes que só pode criar tecnologia se a pessoa estiver logada e ligada a instituição
+    
+    /** @test */
+    function teste_instuicao()
+    {
+        factory(User::class)->create();
+        $user = User::first();
+        Auth::login($user);
+        $user = Auth::user();
+
+        factory(Instituicao::class)->create();
+        $instituicao = Instituicao::first();
+        $instituicao->users()->attach($user);
+
+
+        $user = Auth::user();
+        
+        $response = $this->json('POST', "/admin/tecnologias/create", [
+//            'numeroInscricao' => '2017/0002',
+            'titulo' => 'Teste GEPEM2',
+            'fimLucrativo' => false,
+            'tempoImplantacao' => 2,
+            'emAtividade' => true,
+            'inscricaoAnterior' => false,
+            'investimentoFBB' => true,
+            'categoria_id' => 1,
+            'resumo' => 'Resumao',
+            'tema_id' => 1,
+            'temaSecundario_id' => 2,
+            "subtema1" => [1],
+            "subtema2" => [1, 2],
+            'problema' => 'Problemao',
+            'objetivoGeral' => 'objetivo  Geral',
+            'objetivoEspecifico' => 'objetivo  Especifico',
+            'descricao' => 'descricao descricao descricao descricao descricao descricao ',
+            'resultadosAlcancados' => 'Muitos resultados alcancados',
+            'recursosMateriais' => 'Recursos Materiais',
+            'valorEstimado' => ' valor Estimado ',
+            'valorHumanos' => 'valor Humanos',
+            'depoimentoLivre' => ' depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',
+            'instituicao_id' => $instituicao->id,
+        ]);
+        
+        $response->assertStatus(200);
+        $tecnologia = Tecnologia::find(1);
+        self::assertEquals($tecnologia->titulo, 'Teste GEPEM2');
+        self::assertEquals($tecnologia->instituicao_id, $instituicao->id);
+    }
+    
+    
 //TODO Responsáveis pela tecnologia-->
 //TODO Locais e datas onde a Tecnologia Social já foi implementada:-->
 //TODO Público e quantidade total de pessoas atendidos por uma unidade da tecnologia social:-->

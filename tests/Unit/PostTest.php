@@ -87,6 +87,5 @@ class PostTest extends TestCase
         $this->assertEquals($post->title, 'Teste 1');
         $this->assertEquals($post->categoria->descricao, 'Notícias');
     }
-    //TODO ligar com a categoria
     
 }
