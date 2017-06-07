@@ -18,6 +18,10 @@ class CreateResponsavelsTable extends Migration
             $table->string('nome');
             $table->integer('telefone');
             $table->string('email');
+            $table->integer('tecnologia_id')->unsigned()->nullable();
+            $table->foreign('tecnologia_id')
+                ->references('id')->on('tecnologias')
+                ->onDelete('restrict');
             $table->timestamps();
         });
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Categoria;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreTecnologia;
 use App\Instituicao;
 use App\Tecnologia;
 use App\Temas;
@@ -14,15 +15,20 @@ use Illuminate\Http\Request;
 
 class TecnologiasController extends Controller
 {
+
     private $autorizado = true;
+
+
     public function __construct()
     {
         $user = Auth::user();
-        if (!$user->can('Tecnologias')) {
+
+        if ( ! $user->can('Tecnologias')) {
             flash('Você não tem acesso suficiente')->error();
             $this->autorizado = false;
         }
     }
+
 
     /**
      * Display a listing of the resource.
@@ -31,11 +37,12 @@ class TecnologiasController extends Controller
      */
     public function index()
     {
-        if (!$this->autorizado){
+        if ( ! $this->autorizado) {
             return back();
         }
-        
+
         $data = Tecnologia::all();
+
         return view('admin.tecnologias.show', compact('data'));
     }
 
@@ -47,7 +54,7 @@ class TecnologiasController extends Controller
      */
     public function create()
     {
-        if (!$this->autorizado){
+        if ( ! $this->autorizado) {
             return back();
         }
 
@@ -69,35 +76,8 @@ class TecnologiasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTecnologia $request)
     {
-        $this->validate($request, [
-//            'numeroInscricao' => 'required|unique:tecnologias,numeroInscricao',
-            'titulo'               => 'required|unique:tecnologias,titulo',
-            'fimLucrativo'         => 'required|boolean',
-            'tempoImplantacao'     => 'required',
-            'emAtividade'          => 'required|boolean',
-            'inscricaoAnterior'    => 'required|boolean',
-            'investimentoFBB'      => 'required|boolean',
-            'categoria_id'         => 'required',
-            'resumo'               => 'required',
-            'tema_id'              => 'required|different:temaSecundario_id|exists:temas,id',
-            'temaSecundario_id'    => 'required|different:tema_id|exists:temas,id',
-            'problema'             => 'required',
-            'objetivoGeral'        => 'required',
-            'objetivoEspecifico'   => 'required',
-            'descricao'            => 'required',
-            'resultadosAlcancados' => 'required',
-            'recursosMateriais'    => 'required',
-            'valorEstimado'        => 'required',
-            'valorHumanos'         => 'required',
-            'depoimentoLivre'      => 'required',
-            'instituicao_id'       => 'required|exists:instituicaos,id',
-            'subtema1'             => 'required|exists:sub_temas,id',
-            'subtema2'             => 'required|exists:sub_temas,id',
-        ]);
-
-//       $request['numeroInscricao'] = Carbon::now()->year . '/' . (Tecnologia::all()->last()->id + 1);
 
         $instituicaoId = $request['instituicao_id'];
         $instituicao = Instituicao::find($instituicaoId); //TODO tratamento de erro
@@ -108,7 +88,7 @@ class TecnologiasController extends Controller
             $request['numeroInscricao'] = Carbon::now()->year.'/'.($id + 1);
         }
 
-        $input = $request->except(['subtema1', 'subtema2', 'instituicao_id']);
+        $input = $request->except(['subtema1', 'subtema2', 'instituicao_id', 'responsaveis']);
         $tecnologia = $instituicao->tecnologias()->create($input);//TODO tratamento de erro
 
         //Grava os subtemas principais
@@ -123,6 +103,15 @@ class TecnologiasController extends Controller
             $tecnologia->subtemas()->attach($input);//TODO tratamento de erro
         }
 
+        try {
+            $responsaveis = $request->only('responsaveis');
+            $inputs = $responsaveis['responsaveis'];
+            foreach ($inputs as $input) {
+                $tecnologia->responsaveis()->create($input);//TODO tratamento de erro
+            }
+        } catch (\Exception $e) {
+            dd('Erro'.$e);
+        }
         //TODO poderia ser um tratamento de erro geral
 
         flash('Tecnologia Gravada com Sucesso')->success();
@@ -152,10 +141,10 @@ class TecnologiasController extends Controller
      */
     public function edit(Tecnologia $tecnologia)
     {
-        if (!$this->autorizado){
+        if ( ! $this->autorizado) {
             return back();
         }
-        
+
         $categorias = Categoria::all();
         $temas = Temas::all();
 //        dd($tecnologia->temaPrincipal());
@@ -179,53 +168,30 @@ class TecnologiasController extends Controller
     public function update(Request $request, Tecnologia $tecnologia)
     {
         $this->validate($request, [
-            'numeroInscricao'      => 'required',
-            'titulo'               => 'required',
-            'fimLucrativo'         => 'required|boolean',
-            'tempoImplantacao'     => 'required',
-            'emAtividade'          => 'required|boolean',
-            'inscricaoAnterior'    => 'required|boolean',
-            'investimentoFBB'      => 'required|boolean',
-            'categoria_id'         => 'required',
-            'resumo'               => 'required',
-            'tema_id'              => 'required|different:temaSecundario_id|exists:temas,id',
-            'temaSecundario_id'    => 'required|different:tema_id|exists:temas,id',
-            'problema'             => 'required',
-            'objetivoGeral'        => 'required',
-            'objetivoEspecifico'   => 'required',
-            'descricao'            => 'required',
-            'resultadosAlcancados' => 'required',
-            'recursosMateriais'    => 'required',
-            'valorEstimado'        => 'required',
-            'valorHumanos'         => 'required',
-            'depoimentoLivre'      => 'required',
-            'instituicao_id'       => 'required|exists:instituicaos,id',
-            'subtema1'             => 'required|exists:sub_temas,id',
-            'subtema2'             => 'required|exists:sub_temas,id',
+            'numeroInscricao' => 'required',
         ]);
 
         $input = $request->except(['subtema1', 'subtema2', 'instituicao_id']);
-        
+
         $tecnologia->update($input);
         // TODO ajustar edição com as outras tabelas
         flash('Tecnologia '.$tecnologia->titulo.' atualizada com sucesso')->success();
-        
+
         //desfaz todas as ligações anteriores
         $tecnologia->subtemas()->detach();
 
         $inputs = array_merge($request->only('subtema1'), $request->only('subtema2'));
-        
+
         foreach ($inputs as $input) {
             $tecnologia->subtemas()->attach($input);//TODO tratamento de erro
         }
-    
+
         ////Grava os subtemas secundários
         //$inputs = $request->only('subtema2');
         //foreach ($inputs as $input) {
         //    $tecnologia->subtemas()->attach($input);//TODO tratamento de erro
         //}
-        
-        
+
     }
 
 
@@ -239,9 +205,9 @@ class TecnologiasController extends Controller
     public function destroy(Tecnologia $tecnologia)
     {
         $tecnologia->delete();
-        
+
         flash('Tecnologia '.$tecnologia->titulo.' deletada com sucesso')->success();
-        
+
         return redirect(route('indexTecnologias'));
     }
 }

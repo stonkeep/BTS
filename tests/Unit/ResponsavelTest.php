@@ -139,5 +139,7 @@ class ResponsavelTest extends TestCase
         $this->assertValidationError('telefone');
         $this->assertValidationError('email');
     }
+
+    //TODO ligar os responsaveis na tecnologia
     
 }

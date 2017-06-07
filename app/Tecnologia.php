@@ -62,7 +62,7 @@ class Tecnologia extends Model
 
     public function responsaveis()
     {
-        return $this->hasMany(Responsavel::class);
+        return $this->hasMany(Responsavel::class, 'tecnologia_id', 'id');
     }
 
     public function categoria()
