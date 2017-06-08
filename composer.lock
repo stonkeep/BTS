@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "fe2012477386159ae3b53df7f9834375",
+    "content-hash": "d97b2cb92e253b2eefa909537e8a6c51",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -668,16 +668,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.4.24",
+            "version": "v5.4.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "ec8548db26c1b147570f661128649e98f3ac0f29"
+                "reference": "6bcc9b1f542b3deed16d51f6aa1fe318ab407c2a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/ec8548db26c1b147570f661128649e98f3ac0f29",
-                "reference": "ec8548db26c1b147570f661128649e98f3ac0f29",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/6bcc9b1f542b3deed16d51f6aa1fe318ab407c2a",
+                "reference": "6bcc9b1f542b3deed16d51f6aa1fe318ab407c2a",
                 "shasum": ""
             },
             "require": {
@@ -793,67 +793,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2017-05-30T12:44:32+00:00"
-        },
-        {
-            "name": "laravel/scout",
-            "version": "v3.0.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laravel/scout.git",
-                "reference": "547ff55530a16e31b3b1142dd4dfdb654ad2bae0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laravel/scout/zipball/547ff55530a16e31b3b1142dd4dfdb654ad2bae0",
-                "reference": "547ff55530a16e31b3b1142dd4dfdb654ad2bae0",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/bus": "~5.4",
-                "illuminate/contracts": "~5.4",
-                "illuminate/database": "~5.4",
-                "illuminate/pagination": "~5.4",
-                "illuminate/queue": "~5.4",
-                "illuminate/support": "~5.4",
-                "php": ">=5.6.4"
-            },
-            "require-dev": {
-                "algolia/algoliasearch-client-php": "^1.10",
-                "mockery/mockery": "~0.9",
-                "phpunit/phpunit": "~5.0"
-            },
-            "suggest": {
-                "algolia/algoliasearch-client-php": "Required to use the Algolia engine (^1.10)."
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Laravel\\Scout\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Taylor Otwell",
-                    "email": "taylor@laravel.com"
-                }
-            ],
-            "description": "Laravel Scout provides a driver based solution to searching your Eloquent models.",
-            "keywords": [
-                "algolia",
-                "laravel",
-                "search"
-            ],
-            "time": "2017-06-01T13:21:09+00:00"
+            "time": "2017-06-07T13:35:12+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -974,16 +914,16 @@
         },
         {
             "name": "laravellegends/pt-br-validator",
-            "version": "5.1.1",
+            "version": "5.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/LaravelLegends/pt-br-validator.git",
-                "reference": "5ec1d83f1bce914a3ed6b534fcd4048084f32cd2"
+                "reference": "b7c64586edae32400f088cd2ebbda7799a5103f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/LaravelLegends/pt-br-validator/zipball/5ec1d83f1bce914a3ed6b534fcd4048084f32cd2",
-                "reference": "5ec1d83f1bce914a3ed6b534fcd4048084f32cd2",
+                "url": "https://api.github.com/repos/LaravelLegends/pt-br-validator/zipball/b7c64586edae32400f088cd2ebbda7799a5103f3",
+                "reference": "b7c64586edae32400f088cd2ebbda7799a5103f3",
                 "shasum": ""
             },
             "require": {
@@ -1010,7 +950,7 @@
                 }
             ],
             "description": "Uma biblioteca contendo validações de formatos Brasileiros, para o Laravel 5",
-            "time": "2017-04-26T17:07:30+00:00"
+            "time": "2017-06-07T13:16:44+00:00"
         },
         {
             "name": "league/flysystem",
@@ -1684,16 +1624,16 @@
         },
         {
             "name": "spatie/laravel-permission",
-            "version": "2.1.5",
+            "version": "2.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-permission.git",
-                "reference": "e17787c586fe9e638672887546ac7267c861b838"
+                "reference": "f2f2fb1b2b22c75e55404eec49f4e7089d7deb51"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/e17787c586fe9e638672887546ac7267c861b838",
-                "reference": "e17787c586fe9e638672887546ac7267c861b838",
+                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/f2f2fb1b2b22c75e55404eec49f4e7089d7deb51",
+                "reference": "f2f2fb1b2b22c75e55404eec49f4e7089d7deb51",
                 "shasum": ""
             },
             "require": {
@@ -1738,7 +1678,7 @@
                 "security",
                 "spatie"
             ],
-            "time": "2017-05-17T15:28:29+00:00"
+            "time": "2017-06-06T16:16:04+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
