@@ -88,7 +88,7 @@ class TecnologiasController extends Controller
             $request['numeroInscricao'] = Carbon::now()->year.'/'.($id + 1);
         }
 
-        $input = $request->except(['subtema1', 'subtema2', 'instituicao_id', 'responsaveis']);
+        $input = $request->except(['subtema1', 'subtema2', 'instituicao_id', 'responsaveis', 'locaisImplantacao', 'PublicoAlvo']);
         $tecnologia = $instituicao->tecnologias()->create($input);//TODO tratamento de erro
 
         //Grava os subtemas principais
@@ -110,8 +110,41 @@ class TecnologiasController extends Controller
                 $tecnologia->responsaveis()->create($input);//TODO tratamento de erro
             }
         } catch (\Exception $e) {
-            dd('Erro'.$e);
+            flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
         }
+
+        try {
+            $locais = $request->only('locaisImplantacao');
+            $inputs = $locais['locaisImplantacao'];
+            foreach ($inputs as $input) {
+                $tecnologia->locais()->create($input);
+            }
+        } catch (\Exception $e) {
+            flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
+        }
+
+        try {
+            $locais = $request->only('locaisImplantacao');
+            $inputs = $locais['locaisImplantacao'];
+            foreach ($inputs as $input) {
+                $tecnologia->locais()->create($input);
+            }
+        } catch (\Exception $e) {
+            flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
+        }
+
+
+        try {
+            $publico = $request->only('PublicoAlvo');
+            $inputs = $publico['PublicoAlvo'];
+            foreach ($inputs as $input) {
+                $tecnologia->publicos()->attach($input);
+            }
+        } catch (\Exception $e) {
+            flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
+        }
+
+
         //TODO poderia ser um tratamento de erro geral
 
         flash('Tecnologia Gravada com Sucesso')->success();

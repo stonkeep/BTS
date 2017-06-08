@@ -9,6 +9,7 @@ use App\Tecnologia;
 use App\Temas;
 use App\User;
 use Auth;
+use Carbon\Carbon;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -19,6 +20,10 @@ class TecnologiaTest extends TestCase
 
     use DatabaseMigrations;
     use ValidationsFields;
+
+    private $responsaveis;
+
+    private $locais;
 
 
     public function setUp()
@@ -31,10 +36,55 @@ class TecnologiaTest extends TestCase
         $subTemasSeed->run();
 
         factory(Instituicao::class)->create();
-        
+
         factory(User::class)->create();
         $user = User::first();
         Auth::login($user);
+
+        $responsaveis = [];
+
+        $responsaveis[] = [
+            'nome'     => 'João Carlos',
+            'telefone' => '3131313131',
+            'email'    => 'joao@algumlugar.com.br',
+        ];
+
+        //Cria dois registros para verificar se esta varrendo a lista corretamente
+        $responsaveis[] = [
+            'nome'     => 'Eduardo',
+            'telefone' => '999999',
+            'email'    => 'Eduardo@algumlugar.com.br',
+        ];
+        $this->responsaveis = $responsaveis;
+
+        $locais = [
+            [
+                'ativo'           => true,
+                'uf'              => 'DF',
+                'cidade'          => 'Brasília',
+                'bairro'          => 'Asa Norte',
+                'dataImplantacao' => Carbon::today()->format('Y'),
+            ],
+            [
+                'ativo'           => true,
+                'uf'              => 'GO',
+                'cidade'          => 'Taguatinga',
+                'bairro'          => 'Asa Norte',
+                'dataImplantacao' => Carbon::today()->format('m-d-Y'),
+            ],
+        ];
+
+        $this->locais = $locais;
+
+        $this->json('POST', "/admin/publicosAlvo/create", [
+            'descricao'  => 'Afrodescentes',
+            'created_at' => '2017-03-31 18:58:05'
+        ]);
+
+        $response = $this->json('POST', "/admin/publicosAlvo/create", [
+            'descricao'  => 'Povos Tradicionais',
+            'created_at' => '2017-03-31 18:58:05'
+        ]);
     }
 
 
@@ -394,7 +444,6 @@ class TecnologiaTest extends TestCase
     }
 
 
-//TODO Responsáveis pela tecnologia-->
     /** @test */
     function teste_responsaveis()
     {
@@ -402,25 +451,18 @@ class TecnologiaTest extends TestCase
         $responsaveis = [];
 
         $responsaveis[] = [
-            'nome' => 'João Carlos',
+            'nome'     => 'João Carlos',
             'telefone' => '3131313131',
-            'email' => 'joao@algumlugar.com.br',
+            'email'    => 'joao@algumlugar.com.br',
         ];
 
         //Cria dois registros para verificar se esta varrendo a lista corretamente
         $responsaveis[] = [
-            'nome' => 'Eduardo',
+            'nome'     => 'Eduardo',
             'telefone' => '999999',
-            'email' => 'Eduardo@algumlugar.com.br',
+            'email'    => 'Eduardo@algumlugar.com.br',
         ];
-        
-        //dd($responsaveis);
-        //foreach ($responsaveis as $responsavei)
-        //{
-        //    dd($responsavei);
-        //}
-        
-        
+
         $response = $this->json('POST', "/admin/tecnologias/create", [
 //            'numeroInscricao' => '2017/0002',
             'titulo'               => 'Teste GEPEM2',
@@ -445,17 +487,122 @@ class TecnologiaTest extends TestCase
             'valorHumanos'         => 'valor Humanos',
             'depoimentoLivre'      => ' depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',
             'instituicao_id'       => 1,
-             'responsaveis'        => $responsaveis,
+            'responsaveis'         => $responsaveis,
         ]);
 
         $response->assertStatus(200);
 
         $tecnologia = Tecnologia::first();
-        dd($tecnologia->responsaveis);
+        $this->assertCount(2, $tecnologia->responsaveis);
+        //dd($tecnologia->responsaveis[0]->nome);
+        $this->assertContains('João Carlos', $tecnologia->responsaveis[0]->toArray());
+        $this->assertContains('3131313131', $tecnologia->responsaveis[0]->toArray());
+        $this->assertContains('joao@algumlugar.com.br', $tecnologia->responsaveis[0]->toArray());
+
 
     }
-//TODO Locais e datas onde a Tecnologia Social já foi implementada:-->
-//TODO Público e quantidade total de pessoas atendidos por uma unidade da tecnologia social:-->
+
+
+    /** @test */
+    function teste_local_e_data()
+    {
+        $locais = [
+            [
+                'ativo'           => true,
+                'uf'              => 'DF',
+                'cidade'          => 'Brasília',
+                'bairro'          => 'Asa Norte',
+                'dataImplantacao' => Carbon::today()->format('Y'),
+            ],
+            [
+                'ativo'           => true,
+                'uf'              => 'GO',
+                'cidade'          => 'taguatinga',
+                'bairro'          => 'Asa Norte',
+                'dataImplantacao' => Carbon::today()->format('m-d-Y'),
+            ],
+        ];
+
+        $response = $this->json('POST', "/admin/tecnologias/create", [
+//            'numeroInscricao' => '2017/0002',
+            'titulo'               => 'Teste GEPEM2',
+            'fimLucrativo'         => false,
+            'tempoImplantacao'     => 2,
+            'emAtividade'          => true,
+            'inscricaoAnterior'    => false,
+            'investimentoFBB'      => true,
+            'categoria_id'         => 1,
+            'resumo'               => 'Resumao',
+            'tema_id'              => 1,
+            'temaSecundario_id'    => 2,
+            "subtema1"             => [1],
+            "subtema2"             => [1, 2],
+            'problema'             => 'Problemao',
+            'objetivoGeral'        => 'objetivo  Geral',
+            'objetivoEspecifico'   => 'objetivo  Especifico',
+            'descricao'            => 'descricao descricao descricao descricao descricao descricao ',
+            'resultadosAlcancados' => 'Muitos resultados alcancados',
+            'recursosMateriais'    => 'Recursos Materiais',
+            'valorEstimado'        => ' valor Estimado ',
+            'valorHumanos'         => 'valor Humanos',
+            'depoimentoLivre'      => ' depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',
+            'instituicao_id'       => 1,
+            'responsaveis'         => $this->responsaveis,
+            'locaisImplantacao'    => $locais,
+        ]);
+
+        $response->assertStatus(200);
+
+        $tecnologia = Tecnologia::first();
+        $this->assertCount(2, $tecnologia->locais);
+
+        $this->assertContains('Brasília', $tecnologia->locais[0]->toArray());
+        $this->assertContains('Asa Norte', $tecnologia->locais[0]->toArray());
+
+    }
+
+
+    /** @test */
+    function teste_publico_alvo()
+    {
+        $this->disableExceptionHandling();
+
+        $response = $this->json('POST', "/admin/tecnologias/create", [
+//            'numeroInscricao' => '2017/0002',
+            'titulo'               => 'Teste GEPEM2',
+            'fimLucrativo'         => false,
+            'tempoImplantacao'     => 2,
+            'emAtividade'          => true,
+            'inscricaoAnterior'    => false,
+            'investimentoFBB'      => true,
+            'categoria_id'         => 1,
+            'resumo'               => 'Resumao',
+            'tema_id'              => 1,
+            'temaSecundario_id'    => 2,
+            "subtema1"             => [1],
+            "subtema2"             => [1, 2],
+            'problema'             => 'Problemao',
+            'objetivoGeral'        => 'objetivo  Geral',
+            'objetivoEspecifico'   => 'objetivo  Especifico',
+            'descricao'            => 'descricao descricao descricao descricao descricao descricao ',
+            'resultadosAlcancados' => 'Muitos resultados alcancados',
+            'recursosMateriais'    => 'Recursos Materiais',
+            'valorEstimado'        => ' valor Estimado ',
+            'valorHumanos'         => 'valor Humanos',
+            'depoimentoLivre'      => ' depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',
+            'instituicao_id'       => 1,
+            'responsaveis'         => $this->responsaveis,
+            'locaisImplantacao'    => $this->locais,
+            'PublicoAlvo'          => [1, 2], //Como já foi criado no SetUp os públicos não preciso criar novamente
+        ]);
+
+        $response->assertStatus(200);
+        $tecnologia = Tecnologia::first();
+        $this->assertCount(2, $tecnologia->publicos);
+
+        $this->assertContains('Afrodescentes', $tecnologia->publicos[0]->toArray());
+
+    }
 //TODO Recursos humanos necessários para implantação de uma unidade da tecnologia social:-->
 //TODO Instituições parceiras na tecnologia:-->
 //TODO Anexos da tecnologia:-->

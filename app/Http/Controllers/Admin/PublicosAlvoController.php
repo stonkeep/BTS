@@ -59,9 +59,9 @@ class PublicosAlvoController extends Controller
         
         PublicosAlvo::create($request->all());
 
-        $publicos = PublicosAlvo::all();
+        $data = PublicosAlvo::all();
 
-        return view('admin.publicosAlvo.show', compact('publicos'));
+        return view('admin.publicosAlvo.show', compact('data'));
     }
 
     /**

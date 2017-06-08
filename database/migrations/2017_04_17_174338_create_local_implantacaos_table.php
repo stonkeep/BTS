@@ -20,7 +20,10 @@ class CreateLocalImplantacaosTable extends Migration
             $table->string('cidade');
             $table->string('bairro');
             $table->date('dataImplantacao');
-            $table->unsignedInteger('tecnologia_id');
+            $table->integer('tecnologia_id')->unsigned();
+            $table->foreign('tecnologia_id')
+                ->references('id')->on('tecnologias')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

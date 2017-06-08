@@ -31,7 +31,7 @@ class Tecnologia extends Model
 
     public function publicos()
     {
-        return $this->hasMany(PublicoAtendido::class);
+        return $this->belongsToMany(PublicosAlvo::class);
     }
 
     public function locais()
