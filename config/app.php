@@ -197,7 +197,8 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         //Laravel Collective HTML Form builder
         Collective\Html\HtmlServiceProvider::class,
-        //Laravel Scout ( para fazer as buscas no banco de dados)
+        //Laravel searchable)
+        Sofa\Eloquence\ServiceProvider::class,
 
 
     ],

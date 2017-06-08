@@ -178,4 +178,13 @@ class SubTemasTest extends TestCase
         ]);
         $this->assertValidationError('descricao');
     }
+    
+    /** @test */
+    function teste_pesquisa()
+    {
+        $this->teste_de_create();
+        
+        $subtemas = SubTemas::search('alimentacao')->get()->first();
+        $this->assertEquals($subtemas->descricao, 'Alimentação Escolar');
+    }
 }
