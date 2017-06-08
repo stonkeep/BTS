@@ -198,7 +198,6 @@ return [
         //Laravel Collective HTML Form builder
         Collective\Html\HtmlServiceProvider::class,
         //Laravel Scout ( para fazer as buscas no banco de dados)
-        Laravel\Scout\ScoutServiceProvider::class,
 
 
     ],

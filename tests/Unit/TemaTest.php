@@ -159,4 +159,14 @@ class TemaTest extends TestCase
 
         $temas = Temas::all();
     }
+
+    /** @test */
+    function teste_pesquisa()
+    {
+        $temasSeed = new TemaTableSeeder;
+        $temasSeed->run();
+
+        $temas = Temas::search("Alimentação", null, true)->get();
+        dd($temas->nome);
+    }
 }
