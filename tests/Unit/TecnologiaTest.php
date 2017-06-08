@@ -3,6 +3,8 @@
 namespace Tests\Unit;
 
 use App\Instituicao;
+use App\InstituicaoParceira;
+use App\PublicosAlvo;
 use App\Responsavel;
 use App\SubTemas;
 use App\Tecnologia;
@@ -24,6 +26,8 @@ class TecnologiaTest extends TestCase
     private $responsaveis;
 
     private $locais;
+
+    private $instituicoesParceiras;
 
 
     public function setUp()
@@ -76,15 +80,31 @@ class TecnologiaTest extends TestCase
 
         $this->locais = $locais;
 
+        //Publico Alvo
         $this->json('POST', "/admin/publicosAlvo/create", [
             'descricao'  => 'Afrodescentes',
             'created_at' => '2017-03-31 18:58:05'
         ]);
 
-        $response = $this->json('POST', "/admin/publicosAlvo/create", [
+        $this->json('POST', "/admin/publicosAlvo/create", [
             'descricao'  => 'Povos Tradicionais',
             'created_at' => '2017-03-31 18:58:05'
         ]);
+
+        //Instituicoes Parceiras
+        $instituicoesParceiras = [
+            [
+                'nome'          => 'Universidade Federal',
+                'atuacao'       => ' A parceria acontece desde 2004, com o Centro de Estudos em Segurança Pública e Direitos Humanos. Esta entidade, por meio de seu responsável, Prof. Dr. Pedro Rodolfo Bodê de Moraes apoia os trabalhos de intervenção realizados. Além de compartilhar conhecimentos, é por intermédio desta parceria que os cursos ofertados aos educadores de suas escolas parceiras são chancelados como cursos de extensão da UFPR e seus participantes são devidamente certificados.',
+                'tecnologia_id' => 1,
+            ],
+            [
+                'nome'          => 'Universidade Estadual',
+                'atuacao'       => ' A parceria acontece desde 2004, com o Centro de Estudos em Segurança Pública e Direitos Humanos. Esta entidade, por meio de seu responsável, Prof. Dr. Pedro Rodolfo Bodê de Moraes apoia os trabalhos de intervenção realizados. Além de compartilhar conhecimentos, é por intermédio desta parceria que os cursos ofertados aos educadores de suas escolas parceiras são chancelados como cursos de extensão da UFPR e seus participantes são devidamente certificados.',
+                'tecnologia_id' => 1,
+            ]
+        ];
+        $this->instituicoesParceiras = $instituicoesParceiras;
     }
 
 
@@ -569,31 +589,33 @@ class TecnologiaTest extends TestCase
 
         $response = $this->json('POST', "/admin/tecnologias/create", [
 //            'numeroInscricao' => '2017/0002',
-            'titulo'               => 'Teste GEPEM2',
-            'fimLucrativo'         => false,
-            'tempoImplantacao'     => 2,
-            'emAtividade'          => true,
-            'inscricaoAnterior'    => false,
-            'investimentoFBB'      => true,
-            'categoria_id'         => 1,
-            'resumo'               => 'Resumao',
-            'tema_id'              => 1,
-            'temaSecundario_id'    => 2,
-            "subtema1"             => [1],
-            "subtema2"             => [1, 2],
-            'problema'             => 'Problemao',
-            'objetivoGeral'        => 'objetivo  Geral',
-            'objetivoEspecifico'   => 'objetivo  Especifico',
-            'descricao'            => 'descricao descricao descricao descricao descricao descricao ',
-            'resultadosAlcancados' => 'Muitos resultados alcancados',
-            'recursosMateriais'    => 'Recursos Materiais',
-            'valorEstimado'        => ' valor Estimado ',
-            'valorHumanos'         => 'valor Humanos',
-            'depoimentoLivre'      => ' depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',
-            'instituicao_id'       => 1,
-            'responsaveis'         => $this->responsaveis,
-            'locaisImplantacao'    => $this->locais,
-            'PublicoAlvo'          => [1, 2], //Como já foi criado no SetUp os públicos não preciso criar novamente
+            'titulo'                => 'Teste GEPEM2',
+            'fimLucrativo'          => false,
+            'tempoImplantacao'      => 2,
+            'emAtividade'           => true,
+            'inscricaoAnterior'     => false,
+            'investimentoFBB'       => true,
+            'categoria_id'          => 1,
+            'resumo'                => 'Resumao',
+            'tema_id'               => 1,
+            'temaSecundario_id'     => 2,
+            "subtema1"              => [1],
+            "subtema2"              => [1, 2],
+            'problema'              => 'Problemao',
+            'objetivoGeral'         => 'objetivo  Geral',
+            'objetivoEspecifico'    => 'objetivo  Especifico',
+            'descricao'             => 'descricao descricao descricao descricao descricao descricao ',
+            'resultadosAlcancados'  => 'Muitos resultados alcancados',
+            'recursosMateriais'     => 'Recursos Materiais',
+            'recursosHumanos'       => 'Recursos Materiais',
+            'valorEstimado'         => ' valor Estimado ',
+            'valorHumanos'          => 'valor Humanos',
+            'depoimentoLivre'       => ' depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',
+            'instituicao_id'        => 1,
+            'responsaveis'          => $this->responsaveis,
+            'locaisImplantacao'     => $this->locais,
+            'PublicoAlvo'           => [1, 2], //Como já foi criado no SetUp os públicos não preciso criar novamente
+
         ]);
 
         $response->assertStatus(200);
@@ -601,10 +623,55 @@ class TecnologiaTest extends TestCase
         $this->assertCount(2, $tecnologia->publicos);
 
         $this->assertContains('Afrodescentes', $tecnologia->publicos[0]->toArray());
-
     }
-//TODO Recursos humanos necessários para implantação de uma unidade da tecnologia social:-->
+
 //TODO Instituições parceiras na tecnologia:-->
+    /** @test */
+    function teste_instituicoes_parceiras()
+    {
+        
+         $this->disableExceptionHandling();
+
+        $response = $this->json('POST', "/admin/tecnologias/create", [
+//            'numeroInscricao' => '2017/0002',
+            'titulo'                => 'Teste GEPEM2',
+            'fimLucrativo'          => false,
+            'tempoImplantacao'      => 2,
+            'emAtividade'           => true,
+            'inscricaoAnterior'     => false,
+            'investimentoFBB'       => true,
+            'categoria_id'          => 1,
+            'resumo'                => 'Resumao',
+            'tema_id'               => 1,
+            'temaSecundario_id'     => 2,
+            "subtema1"              => [1],
+            "subtema2"              => [1, 2],
+            'problema'              => 'Problemao',
+            'objetivoGeral'         => 'objetivo  Geral',
+            'objetivoEspecifico'    => 'objetivo  Especifico',
+            'descricao'             => 'descricao descricao descricao descricao descricao descricao ',
+            'resultadosAlcancados'  => 'Muitos resultados alcancados',
+            'recursosMateriais'     => 'Recursos Materiais',
+            'recursosHumanos'       => 'Recursos Materiais',
+            'valorEstimado'         => ' valor Estimado ',
+            'valorHumanos'          => 'valor Humanos',
+            'depoimentoLivre'       => ' depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',
+            'instituicao_id'        => 1,
+            'responsaveis'          => $this->responsaveis,
+            'locaisImplantacao'     => $this->locais,
+            'PublicoAlvo'           => [1, 2], //Como já foi criado no SetUp os públicos não preciso criar novamente
+            'instituicoesParceiras' => $this->instituicoesParceiras,
+        ]);
+
+        $response->assertStatus(200);
+        $tecnologia = Tecnologia::first();
+        $this->assertCount(2, $tecnologia->instituicoesParceiras);
+
+        $this->assertContains('Universidade Federal', $tecnologia->instituicoesParceiras[0]->toArray());
+        $tecnologia->delete();
+        $instituicoes = InstituicaoParceira::all();
+        dd($instituicoes);
+    }
 //TODO Anexos da tecnologia:-->
 //TODO Endereços eletrônicos associados à tecnologia:-->
 //TODO Banco de Imagens:-->

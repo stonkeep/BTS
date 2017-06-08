@@ -6,6 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreTecnologia extends FormRequest
 {
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -16,6 +17,7 @@ class StoreTecnologia extends FormRequest
         //TODO colocar em todos os forms o user_id logado para verificar se tem acesso a request
         return true;
     }
+
 
     /**
      * Get the validation rules that apply to the request.
@@ -41,6 +43,7 @@ class StoreTecnologia extends FormRequest
             'descricao'            => 'required',
             'resultadosAlcancados' => 'required',
             'recursosMateriais'    => 'required',
+            'recursosHumanos'      => 'required',
             'valorEstimado'        => 'required',
             'valorHumanos'         => 'required',
             'depoimentoLivre'      => 'required',

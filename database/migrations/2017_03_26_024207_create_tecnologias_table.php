@@ -32,6 +32,7 @@ class CreateTecnologiasTable extends Migration
             $table->text('descricao');
             $table->text('resultadosAlcancados');
             $table->text('recursosMateriais'); //Recursos materiais necessários para a implementação de uma unidade da tecnologia
+            $table->text('recursosHumanos'); //Recursos materiais necessários para a implementação de uma unidade da tecnologia
             $table->text('valorEstimado'); //Valor estimando para implementação de uma unidade da tecnologia social
             $table->text('valorHumanos'); //Recursos Humanos para implementação da tecnologia de uma unidade de TS
             $table->text('depoimentoLivre');

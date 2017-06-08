@@ -88,7 +88,15 @@ class TecnologiasController extends Controller
             $request['numeroInscricao'] = Carbon::now()->year.'/'.($id + 1);
         }
 
-        $input = $request->except(['subtema1', 'subtema2', 'instituicao_id', 'responsaveis', 'locaisImplantacao', 'PublicoAlvo']);
+        $input = $request->except([
+            'subtema1', 
+            'subtema2', 
+            'instituicao_id', 
+            'responsaveis', 
+            'locaisImplantacao',
+            'PublicoAlvo',
+            'instituicoesParceiras',
+        ]);
         $tecnologia = $instituicao->tecnologias()->create($input);//TODO tratamento de erro
 
         //Grava os subtemas principais
@@ -132,13 +140,22 @@ class TecnologiasController extends Controller
         } catch (\Exception $e) {
             flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
         }
-
-
+        
         try {
             $publico = $request->only('PublicoAlvo');
             $inputs = $publico['PublicoAlvo'];
             foreach ($inputs as $input) {
                 $tecnologia->publicos()->attach($input);
+            }
+        } catch (\Exception $e) {
+            flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
+        }
+
+        try {
+            $publico = $request->only('instituicoesParceiras');
+            $inputs = $publico['instituicoesParceiras'];
+            foreach ($inputs as $input) {
+                $tecnologia->instituicoesParceiras()->create($input);
             }
         } catch (\Exception $e) {
             flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();

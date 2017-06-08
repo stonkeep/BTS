@@ -112,6 +112,7 @@ $factory->define(App\Tecnologia::class, function (Faker\Generator $faker) {
         'descricao'            => 'descricao descricao descricao descricao descricao descricao ',
         'resultadosAlcancados' => 'Muitos resultados alcancados',
         'recursosMateriais'    => 'Recursos Materiais',
+        'recursosHumanos'      => 'Recursos Materiais',
         'valorEstimado'        => ' valor Estimado ',
         'valorHumanos'         => 'valor Humanos',
         'depoimentoLivre'      => 'depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',

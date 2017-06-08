@@ -18,6 +18,8 @@ class CreateInstituicaoParceirasTable extends Migration
             $table->string('nome');
             $table->text('atuacao')->nullable();
             $table->unsignedInteger('tecnologia_id');
+            $table->foreign('tecnologia_id')->references('id')->on('tecnologias')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
