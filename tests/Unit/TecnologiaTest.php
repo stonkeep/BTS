@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\EnderecoEletronico;
 use App\Instituicao;
 use App\InstituicaoParceira;
 use App\PublicosAlvo;
@@ -24,10 +25,9 @@ class TecnologiaTest extends TestCase
     use ValidationsFields;
 
     private $responsaveis;
-
     private $locais;
-
     private $instituicoesParceiras;
+    private $enderecosEletronicos;
 
 
     public function setUp()
@@ -105,6 +105,17 @@ class TecnologiaTest extends TestCase
             ]
         ];
         $this->instituicoesParceiras = $instituicoesParceiras;
+        
+        $this->enderecosEletronicos = $enderecosEletronicos = [
+            [
+                'tecnologia_id' => 1,
+                'link'          => 'www.google.com.br',
+            ],
+            [
+                'tecnologia_id' => 1,
+                'link'          => 'www.fbb.com.br',
+            ],
+        ];
     }
 
 
@@ -589,32 +600,32 @@ class TecnologiaTest extends TestCase
 
         $response = $this->json('POST', "/admin/tecnologias/create", [
 //            'numeroInscricao' => '2017/0002',
-            'titulo'                => 'Teste GEPEM2',
-            'fimLucrativo'          => false,
-            'tempoImplantacao'      => 2,
-            'emAtividade'           => true,
-            'inscricaoAnterior'     => false,
-            'investimentoFBB'       => true,
-            'categoria_id'          => 1,
-            'resumo'                => 'Resumao',
-            'tema_id'               => 1,
-            'temaSecundario_id'     => 2,
-            "subtema1"              => [1],
-            "subtema2"              => [1, 2],
-            'problema'              => 'Problemao',
-            'objetivoGeral'         => 'objetivo  Geral',
-            'objetivoEspecifico'    => 'objetivo  Especifico',
-            'descricao'             => 'descricao descricao descricao descricao descricao descricao ',
-            'resultadosAlcancados'  => 'Muitos resultados alcancados',
-            'recursosMateriais'     => 'Recursos Materiais',
-            'recursosHumanos'       => 'Recursos Materiais',
-            'valorEstimado'         => ' valor Estimado ',
-            'valorHumanos'          => 'valor Humanos',
-            'depoimentoLivre'       => ' depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',
-            'instituicao_id'        => 1,
-            'responsaveis'          => $this->responsaveis,
-            'locaisImplantacao'     => $this->locais,
-            'PublicoAlvo'           => [1, 2], //Como já foi criado no SetUp os públicos não preciso criar novamente
+            'titulo'               => 'Teste GEPEM2',
+            'fimLucrativo'         => false,
+            'tempoImplantacao'     => 2,
+            'emAtividade'          => true,
+            'inscricaoAnterior'    => false,
+            'investimentoFBB'      => true,
+            'categoria_id'         => 1,
+            'resumo'               => 'Resumao',
+            'tema_id'              => 1,
+            'temaSecundario_id'    => 2,
+            "subtema1"             => [1],
+            "subtema2"             => [1, 2],
+            'problema'             => 'Problemao',
+            'objetivoGeral'        => 'objetivo  Geral',
+            'objetivoEspecifico'   => 'objetivo  Especifico',
+            'descricao'            => 'descricao descricao descricao descricao descricao descricao ',
+            'resultadosAlcancados' => 'Muitos resultados alcancados',
+            'recursosMateriais'    => 'Recursos Materiais',
+            'recursosHumanos'      => 'Recursos Materiais',
+            'valorEstimado'        => ' valor Estimado ',
+            'valorHumanos'         => 'valor Humanos',
+            'depoimentoLivre'      => ' depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',
+            'instituicao_id'       => 1,
+            'responsaveis'         => $this->responsaveis,
+            'locaisImplantacao'    => $this->locais,
+            'PublicoAlvo'          => [1, 2], //Como já foi criado no SetUp os públicos não preciso criar novamente
 
         ]);
 
@@ -629,8 +640,8 @@ class TecnologiaTest extends TestCase
     /** @test */
     function teste_instituicoes_parceiras()
     {
-        
-         $this->disableExceptionHandling();
+
+        $this->disableExceptionHandling();
 
         $response = $this->json('POST', "/admin/tecnologias/create", [
 //            'numeroInscricao' => '2017/0002',
@@ -668,12 +679,53 @@ class TecnologiaTest extends TestCase
         $this->assertCount(2, $tecnologia->instituicoesParceiras);
 
         $this->assertContains('Universidade Federal', $tecnologia->instituicoesParceiras[0]->toArray());
-        $tecnologia->delete();
-        $instituicoes = InstituicaoParceira::all();
-        dd($instituicoes);
+    }
+
+//TODO Endereços eletrônicos associados à tecnologia:-->
+    /** @test */
+    function teste_enderecos_eletronicos()
+    {
+        $this->disableExceptionHandling();
+
+        $response = $this->json('POST', "/admin/tecnologias/create", [
+//            'numeroInscricao' => '2017/0002',
+            'titulo'                => 'Teste GEPEM2',
+            'fimLucrativo'          => false,
+            'tempoImplantacao'      => 2,
+            'emAtividade'           => true,
+            'inscricaoAnterior'     => false,
+            'investimentoFBB'       => true,
+            'categoria_id'          => 1,
+            'resumo'                => 'Resumao',
+            'tema_id'               => 1,
+            'temaSecundario_id'     => 2,
+            "subtema1"              => [1],
+            "subtema2"              => [1, 2],
+            'problema'              => 'Problemao',
+            'objetivoGeral'         => 'objetivo  Geral',
+            'objetivoEspecifico'    => 'objetivo  Especifico',
+            'descricao'             => 'descricao descricao descricao descricao descricao descricao ',
+            'resultadosAlcancados'  => 'Muitos resultados alcancados',
+            'recursosMateriais'     => 'Recursos Materiais',
+            'recursosHumanos'       => 'Recursos Materiais',
+            'valorEstimado'         => ' valor Estimado ',
+            'valorHumanos'          => 'valor Humanos',
+            'depoimentoLivre'       => ' depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',
+            'instituicao_id'        => 1,
+            'responsaveis'          => $this->responsaveis,
+            'locaisImplantacao'     => $this->locais,
+            'PublicoAlvo'           => [1, 2], //Como já foi criado no SetUp os públicos não preciso criar novamente
+            'instituicoesParceiras' => $this->instituicoesParceiras,
+            'enderecosEletronicos' => $this->enderecosEletronicos,
+        ]);
+
+        $response->assertStatus(200);
+        $tecnologia = Tecnologia::first();
+        $this->assertCount(2, $tecnologia->enderecosEletronico);
+
+        $this->assertContains('www.google.com.br', $tecnologia->enderecosEletronico[0]->toArray());
     }
 //TODO Anexos da tecnologia:-->
-//TODO Endereços eletrônicos associados à tecnologia:-->
 //TODO Banco de Imagens:-->
 
 }

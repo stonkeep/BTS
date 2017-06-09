@@ -110,6 +110,7 @@ class TecnologiasController extends Controller
             'locaisImplantacao',
             'PublicoAlvo',
             'instituicoesParceiras',
+            'enderecosEletronicos',
         ]);
         $tecnologia = $instituicao->tecnologias()->create($input);//TODO tratamento de erro
 
@@ -170,6 +171,16 @@ class TecnologiasController extends Controller
             $inputs = $publico['instituicoesParceiras'];
             foreach ($inputs as $input) {
                 $tecnologia->instituicoesParceiras()->create($input);
+            }
+        } catch (\Exception $e) {
+            flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
+        }
+
+        try {
+            $publico = $request->only('enderecosEletronicos');
+            $inputs = $publico['enderecosEletronicos'];
+            foreach ($inputs as $input) {
+                $tecnologia->enderecosEletronico()->create($input);
             }
         } catch (\Exception $e) {
             flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
