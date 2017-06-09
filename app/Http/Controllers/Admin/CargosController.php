@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Spatie\Permission\Models\Role;
 
 class CargosController extends Controller
 {
@@ -14,9 +15,12 @@ class CargosController extends Controller
     public function __construct()
     {
         $user = Auth::user();
-        if (!$user->can('Categorias')) {
-            flash('Você não tem acesso suficiente')->error();
-            $this->autorizado = false;
+        if ($user) {
+            if (!$user->hasPermissionTo('Cargos')) {
+            //if (!$user->can('Cargos')) {
+                flash('Você não tem acesso suficiente')->error();
+                $this->autorizado = false;
+            }
         }
     }
 
@@ -67,7 +71,6 @@ class CargosController extends Controller
         $data = Cargos::all();
         flash('Cargo gravado com sucesso')->success();
         return view('admin.cargos.show', compact('data'));
-
     }
 
     /**

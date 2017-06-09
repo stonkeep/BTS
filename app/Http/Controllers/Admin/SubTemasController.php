@@ -16,9 +16,11 @@ class SubTemasController extends Controller
     public function __construct()
     {
         $user = Auth::user();
-        if (!$user->can('SubTemas')) {
-            flash('Você não tem acesso suficiente')->error();
-            $this->autorizado = false;
+        if ($user) {
+            if ( ! $user->can('SubTemas')) {
+                flash('Você não tem acesso suficiente')->error();
+                $this->autorizado = false;
+            }
         }
     }
     /**

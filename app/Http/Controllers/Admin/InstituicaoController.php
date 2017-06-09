@@ -15,9 +15,11 @@ class InstituicaoController extends Controller
     public function __construct()
     {
         $user = Auth::user();
-        if (!$user->can('Instituicoes')) {
-            flash('Você não tem acesso suficiente')->error();
-            $this->autorizado = false;
+        if ($user) {
+            if ( ! $user->can('Instituicoes')) {
+                flash('Você não tem acesso suficiente')->error();
+                $this->autorizado = false;
+            }
         }
     }
     

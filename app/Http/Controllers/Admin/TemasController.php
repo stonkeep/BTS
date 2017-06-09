@@ -14,9 +14,11 @@ class TemasController extends Controller
     public function __construct()
     {
         $user = Auth::user();
-        if (!$user->can('Temas')) {
-            flash('Você não tem acesso suficiente')->error();
-            $this->autorizado = false;
+        if ($user) {
+            if ( ! $user->can('Temas')) {
+                flash('Você não tem acesso suficiente')->error();
+                $this->autorizado = false;
+            }
         }
     }
 
