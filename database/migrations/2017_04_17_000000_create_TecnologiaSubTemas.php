@@ -16,7 +16,11 @@ class CreateTecnologiaSubTemas extends Migration
         Schema::create('sub_temas_tecnologia', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('tecnologia_id');
+            $table->foreign('tecnologia_id')->references('id')
+                ->on('tecnologias')->onDelete('restrict');
             $table->unsignedInteger('sub_temas_id');
+            $table->foreign('sub_temas_id')->references('id')
+                ->on('sub_temas')->onDelete('restrict');
             $table->timestamps();
 
         });

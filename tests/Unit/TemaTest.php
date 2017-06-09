@@ -150,13 +150,4 @@ class TemaTest extends TestCase
         $this->assertNotEquals($tema->nome, 'Alimentação');
         
     }
-
-    /** @test */
-    public function teste()
-    {
-        $temasSeed = new TemaTableSeeder;
-        $temasSeed->run();
-
-        $temas = Temas::all();
-    }
 }

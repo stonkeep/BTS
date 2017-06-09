@@ -14,6 +14,8 @@ class TecnologiaSeeder extends Seeder
     public function run()
     {
 //        factory(Instituicao::class)->create();
-        factory(Tecnologia::class)->create();
+        $tecnologia = factory(Tecnologia::class)->create();
+        $tecnologia->publicos()->attach(1);
+        $tecnologia->publicos()->attach(2);
     }
 }

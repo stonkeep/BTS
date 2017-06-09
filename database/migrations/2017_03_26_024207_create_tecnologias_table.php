@@ -39,6 +39,7 @@ class CreateTecnologiasTable extends Migration
             $table->unsignedInteger('instituicao_id');
             $table->timestamps();
             $table->foreign('instituicao_id')->references('id')->on('instituicaos')->onDelete('restrict');
+                $table->foreign('categoria_id')->references('id')->on('categorias')->onDelete('restrict');
         });
     }
 

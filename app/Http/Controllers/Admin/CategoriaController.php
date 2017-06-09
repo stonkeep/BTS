@@ -114,8 +114,18 @@ class CategoriaController extends Controller
      */
     public function destroy(Categoria $categoria)
     {
-        $categoria->delete();
-        flash('Categoria deletado com sucesso')->success();
+        try {
+            $categoria->delete();
+            flash('Categoria deletado com sucesso')->success();
+        } catch (\Exception $e) {
+            if ($e->getCode() == "23000") { //23000 is sql code for integrity constraint violation
+                dd('entrou aqui');
+                flash('Resgistro tem dependência, Favor verificar as ligaçõe')->error();
+            }else{
+                flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
+            }
+
+        }
         return redirect(route('indexCategorias'));
     }
 }

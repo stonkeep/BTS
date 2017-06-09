@@ -4,9 +4,12 @@ namespace App;
 
 use Faker\Documentor;
 use Illuminate\Database\Eloquent\Model;
+use Sofa\Eloquence\Eloquence;
 
 class Tecnologia extends Model
 {
+    use Eloquence;
+    
     protected $guarded = [];
 
     public function instituicao()
@@ -52,12 +55,13 @@ class Tecnologia extends Model
 
     public function temaPrincipal()
     {
-        return $tema = Temas::where('id', $this->tema_id)->first();
+        return $this->belongsTo(Temas::class, 'tema_id', 'id');
+        //return Temas::find($this->tema_id);
     }
 
     public function temaSecundario()
     {
-        return $tema = Temas::where('id', $this->temaSecundario_id)->first();
+        return $this->belongsTo(Temas::class, 'temaSecundario_id', 'id');
     }
 
     public function responsaveis()
@@ -67,7 +71,7 @@ class Tecnologia extends Model
 
     public function categoria()
     {
-        return $this->hasOne(Categoria::class);
+        return $this->belongsTo(Categoria::class);
     }
 
     public function instituicoesParceiras()

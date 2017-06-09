@@ -16,20 +16,34 @@ use Illuminate\Http\Request;
 class TecnologiasController extends Controller
 {
 
-    private $autorizado = true;
+    private $autorizado = false;
 
 
     public function __construct()
     {
         $user = Auth::user();
-
-        if ( ! $user->can('Tecnologias')) {
-            flash('Você não tem acesso suficiente')->error();
-            $this->autorizado = false;
+        if ($user) {
+            if ( $user->can('Tecnologias')) {
+                $this->autorizado = true;
+            } else {
+                flash('Você não tem acesso suficiente')->error();
+            }
         }
     }
 
 
+    public function pesquisa(Request $request)
+    {
+        $tecnologias = Tecnologia::search($request->texto)->with(
+            'subtemas',
+            'categoria',
+            'instituicao',
+            'publicos',
+            'temaPrincipal',
+            'temaSecundario'
+        )->get();
+        dd($tecnologias);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -178,7 +192,7 @@ class TecnologiasController extends Controller
      */
     public function show(Tecnologia $tecnologia)
     {
-        //
+
     }
 
 

@@ -185,3 +185,8 @@ Route::post('comment/add', 'Admin\CommentsController@store')->name('storeComment
 //// display single post
 Route::get('/posts/{slug}', ['as' => 'post', 'uses' => 'Admin\PostController@show'])->where('slug', '[A-Za-z0-9-_]+');
 
+//Procura por tecnologia
+Route::post('/pesquisa', 'Admin\TecnologiasController@pesquisa')->name('pesquisa');
+Route::get('/pesquisa', function () {
+    return view('front.index');
+})->name('insertPremios');
