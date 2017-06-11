@@ -41,7 +41,7 @@
                 // Submit the form via a POST request
                 var location = window.location.href;
                 if (location.indexOf("edit") > -1) {
-                    this.form.put('/admin/cargos/update/'+ this.id)
+                    this.form.put('/admin/cargos/'+ this.id)
                         .then(({data}) => {
                             window.location.href = '/admin/cargos'
                         })

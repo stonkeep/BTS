@@ -90,8 +90,10 @@ class CargosController extends Controller
      * @param  \App\Cargos $cargos
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cargos $cargo)
+    public function edit($id)
     {
+        $cargo = Cargos::find($id);
+
         if (!$this->autorizado){
             return back();
         }
@@ -106,12 +108,18 @@ class CargosController extends Controller
      * @param  \App\Cargos $cargos
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cargos $cargo)
+    public function update(Request $request, $id)
     {
+        $cargo = Cargos::find($id);
+
         $this->validate($request, [
             'descricao' => 'required',
         ]);
+
         $cargo->update($request->all());
+
+        dd($cargo);
+
         flash('Cargo atualizado com sucesso')->success();
     }
 
@@ -121,12 +129,14 @@ class CargosController extends Controller
      * @param  \App\Cargos $cargos
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cargos $cargo)
+    public function destroy($id)
     {
-        $cargo->delete();
+
+        Cargos::find($id)->delete();
+
         $data = Cargos::all();
 
         flash('Cargo deletado com sucesso')->success();
-        return redirect(route('indexCargos'));
+        return redirect(route('cargos.index'));
     }
 }

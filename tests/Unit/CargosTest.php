@@ -4,6 +4,8 @@ namespace Tests\Unit;
 
 use App\Cargos;
 use App\User;
+use Faker\Factory;
+use Illuminate\Support\Facades\Session;
 use PermissionsTableSeeder;
 use RolesTableSeeder;
 use Spatie\Permission\Models\Role;
@@ -124,7 +126,9 @@ class CargosTest extends TestCase
     /** @test */
     function testa_delete_de_cargo()
     {
-        $this->disableExceptionHandling();
+//        $this->disableExceptionHandling();
+        Session::start();
+        $this->faker = Factory::create('en_EN');
 
         $this->json('POST', "/admin/cargos/", [
             'descricao' => 'Técnico',
@@ -136,12 +140,15 @@ class CargosTest extends TestCase
 
         $cargo = Cargos::findOrFail(1);
 
-        $response = $this->json('DELETE', "admin/cargos/{$cargo->id}");
+        $response = $this->delete("admin/cargos/{$cargo->id}");
+//        $response = $this->delete('admin/cargos/', [$cargo->id],  ['_token' => csrf_token()]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(302);
 
-        $response->assertSee('Vice-Presidente');
-        $response->assertDontSee('Técnico');
+        $cargo = Cargos::first();
+
+        $this->assertNotEquals($cargo->descricao, 'Técnico');
+        $this->assertEquals($cargo->descricao, 'Vice-Presidente');
 
     }
 
@@ -155,13 +162,12 @@ class CargosTest extends TestCase
 
         $cargo = Cargos::findOrFail(1);
 
-        $response = $this->json('PUT', "admin/cargos/update/{$cargo->id}", [
+        $response = $this->put("admin/cargos/{$cargo->id}", [
             'descricao' => 'Outra descrição'
         ]);
 
-        $cargo = Cargos::findOrFail(1);
-
         $response->assertStatus(200);
+        $cargo = Cargos::findOrFail(1);
 
         $this->assertEquals($cargo->descricao, 'Outra descrição');
         $this->assertNotEquals($cargo->descricao, 'Técnico');
