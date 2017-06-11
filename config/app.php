@@ -199,6 +199,8 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         //Laravel searchable)
         Sofa\Eloquence\ServiceProvider::class,
+        //Petty Route
+        PrettyRoutes\ServiceProvider::class,
 
 
     ],
