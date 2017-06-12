@@ -115,12 +115,15 @@ class CategoriaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Categoria $categoria)
+    public function update(Request $request, $id)
     {
         $this->validate($request, [
             'descricao' => 'required',
         ]);
+        
+        $categoria = Categoria::find($id);
         $categoria->update($request->all());
+        
         flash('Categoria atualizada com sucesso')->success();
     }
 
@@ -132,9 +135,10 @@ class CategoriaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Categoria $categoria)
+    public function destroy($id)
     {
         try {
+            $categoria = Categoria::find($id);
             $categoria->delete();
             flash('Categoria deletado com sucesso')->success();
         } catch (\Exception $e) {

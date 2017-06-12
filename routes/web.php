@@ -98,12 +98,13 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::put('/instituicoes/update/{instituicao}', 'InstituicaoController@update')->name('updateInstituicoes');
 
 //Categorias
-    Route::get('/categorias/insert', 'CategoriaController@create')->name('insertCategorias');
-    Route::post('/categorias/create', 'CategoriaController@store')->name('storeCategorias');
-    Route::get('/categorias', 'CategoriaController@index')->name('indexCategorias');
-    Route::get('/categorias/delete/{categoria}', 'CategoriaController@destroy')->name('destroyCategorias');
-    Route::put('/categorias/update/{categoria}', 'CategoriaController@update')->name('updateCategorias');
-    Route::get('/categorias/edit/{categoria}', 'CategoriaController@edit')->name('editCategorias');
+    Route::resource('/categorias', 'CategoriaController');
+    //Route::get('/categorias/insert', 'CategoriaController@create')->name('insertCategorias');
+    //Route::post('/categorias/create', 'CategoriaController@store')->name('storeCategorias');
+    //Route::get('/categorias', 'CategoriaController@index')->name('indexCategorias');
+    //Route::get('/categorias/delete/{categoria}', 'CategoriaController@destroy')->name('destroyCategorias');
+    //Route::put('/categorias/update/{categoria}', 'CategoriaController@update')->name('updateCategorias');
+    //Route::get('/categorias/edit/{categoria}', 'CategoriaController@edit')->name('editCategorias');
 
 //Responsaveis
     Route::post('/responsaveis/create', 'ResponsavelController@store')->name('storeResponsaveis');

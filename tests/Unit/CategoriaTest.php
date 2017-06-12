@@ -33,7 +33,7 @@ class CategoriaTest extends TestCase
     {
 //        $this->disableExceptionHandling();
 
-        $this->json('POST', "/admin/categorias/create", [
+        $this->json('POST', "/admin/categorias/", [
             'descricao' => 'Água',
         ]);
 
@@ -64,13 +64,13 @@ class CategoriaTest extends TestCase
     /** @test */
     public function teste_update()
     {
-        $this->json('POST', "/admin/categorias/create", [
+        $this->json('POST', "/admin/categorias", [
             'descricao' => 'Água',
         ]);
 
         $categoria = Categoria::firstOrFail();
 
-        $this->json('PUT', "admin/categorias/update/{$categoria->id}", [
+        $this->put("admin/categorias/{$categoria->id}", [
             'descricao' => 'Terra',
         ]);
 
@@ -84,15 +84,13 @@ class CategoriaTest extends TestCase
     /** @test */
     public function teste_delete()
     {
-        $this->json('POST', "/admin/categorias/create", [
+        $this->json('POST', "/admin/categorias/", [
             'descricao' => 'Água',
         ]);
 
         $categoria = Categoria::firstOrFail();
 
-        $response = $this->json('get', "admin/categorias/delete/{$categoria->id}", [
-            'descricao' => 'Terra',
-        ]);
+        $response = $this->delete("admin/categorias/{$categoria->id}");
 
         $response = $this->get("admin/categorias");
         $response->assertStatus(200);
@@ -105,16 +103,16 @@ class CategoriaTest extends TestCase
     public function teste_validacoes()
     {
 
-        $this->response = $this->json('POST', "/admin/categorias/create", [
+        $this->response = $this->json('POST', "/admin/categorias/", [
             'descricao' => '',
         ]);
 
         $this->assertValidationError('descricao');
 
-        $this->json('POST', "/admin/categorias/create", [
+        $this->json('POST', "/admin/categorias/", [
             'descricao' => 'Água',
         ]);
-        $this->response = $this->json('POST', "/admin/categorias/create", [
+        $this->response = $this->json('POST', "/admin/categorias/", [
             'descricao' => 'Água',
         ]);
 
