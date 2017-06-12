@@ -14,6 +14,7 @@ use Auth;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\TestsUtil;
 use Tests\ValidationsFields;
 
 class CargosTest extends TestCase
@@ -21,6 +22,7 @@ class CargosTest extends TestCase
 
     use DatabaseMigrations;
     use ValidationsFields; //Trait que trata das validações
+    use TestsUtil;
     
     private $user;
 
@@ -28,24 +30,25 @@ class CargosTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        factory(User::class)->create();
-        $user = User::first();
-        Auth::login($user);
-        Permission::create([
-            'name'       => "Cargos",
-            'guard_name' => 'web'
-        ]);
-
-        $role = Role::create([
-            'name'       => 'Admin',
-            'guard_name' => 'web'
-        ]);
-
-        $p = Permission::firstOrFail();
-        $role->givePermissionTo($p);
-
-        $user->roles()->sync(1);//Assigning role to user
-        $this->user = $user;
+        $this->geraUsuario();
+        //factory(User::class)->create();
+        //$user = User::first();
+        //Auth::login($user);
+        //Permission::create([
+        //    'name'       => "Cargos",
+        //    'guard_name' => 'web'
+        //]);
+        //
+        //$role = Role::create([
+        //    'name'       => 'Admin',
+        //    'guard_name' => 'web'
+        //]);
+        //
+        //$p = Permission::firstOrFail();
+        //$role->givePermissionTo($p);
+        //
+        //$user->roles()->sync(1);//Assigning role to user
+        //$this->user = $user;
     }
 
 

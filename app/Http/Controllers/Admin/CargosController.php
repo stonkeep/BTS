@@ -11,20 +11,19 @@ use Spatie\Permission\Models\Role;
 
 class CargosController extends Controller
 {
+
     private $autorizado = true;
+    
     public function __construct()
     {
         $user = Auth::user();
-        if ($user) {
-            if (!$user->hasPermissionTo('Cargos')) {
+        if ( ! $user->hasPermissionTo('Cargos')) {
             //if (!$user->can('Cargos')) {
-                flash('Você não tem acesso suficiente')->error();
-                $this->autorizado = false;
-            }
+            flash('Você não tem acesso suficiente')->error();
+            $this->autorizado = false;
         }
     }
-
-
+    
 
     /**
      * Display a listing of the resource.
@@ -33,13 +32,15 @@ class CargosController extends Controller
      */
     public function index()
     {
-        if (!$this->autorizado){
+        if ( ! $this->autorizado) {
             return back();
         }
-        
+
         $data = Cargos::all();
+
         return view('admin.cargos.show', compact('data', 'colunas'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -48,16 +49,19 @@ class CargosController extends Controller
      */
     public function create()
     {
-        if (!$this->autorizado){
+        if ( ! $this->autorizado) {
             return back();
         }
+
         return view('admin.cargos.create');
     }
+
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -70,13 +74,16 @@ class CargosController extends Controller
 
         $data = Cargos::all();
         flash('Cargo gravado com sucesso')->success();
+
         return view('admin.cargos.show', compact('data'));
     }
+
 
     /**
      * Display the specified resource.
      *
      * @param  \App\Cargos $cargos
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(Cargos $cargos)
@@ -84,28 +91,33 @@ class CargosController extends Controller
 
     }
 
+
     /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Cargos $cargos
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $cargo = Cargos::find($id);
 
-        if (!$this->autorizado){
+        if ( ! $this->autorizado) {
             return back();
         }
+
         return view('admin.cargos.edit', compact('cargo'));
 
     }
+
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \App\Cargos $cargos
+     * @param  \App\Cargos              $cargos
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -118,15 +130,15 @@ class CargosController extends Controller
 
         $cargo->update($request->all());
 
-        dd($cargo);
-
         flash('Cargo atualizado com sucesso')->success();
     }
+
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Cargos $cargos
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -137,6 +149,7 @@ class CargosController extends Controller
         $data = Cargos::all();
 
         flash('Cargo deletado com sucesso')->success();
+
         return redirect(route('cargos.index'));
     }
 }

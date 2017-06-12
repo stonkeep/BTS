@@ -10,22 +10,16 @@ use Spatie\Permission\Traits\HasRoles;
 
 class CategoriaController extends Controller
 {
-
     private $autorizado = true;
-
-
+    
     public function __construct()
     {
         $user = Auth::user();
-        if ($user) {
-            if ( ! $user->can('Categorias')) {
-                flash('Você não tem acesso suficiente')->error();
-                $this->autorizado = false;
-            }
+        if (!$user->hasPermissionTo('Categorias')) {
+            flash('Você não tem acesso suficiente')->error();
+            $this->autorizado = false;
         }
-
     }
-
 
     /**
      * Display a listing of the resource.
@@ -69,7 +63,7 @@ class CategoriaController extends Controller
         ]);
 
         Categoria::create($request->all());
-
+        
         return redirect('categorias');
     }
 
@@ -100,6 +94,7 @@ class CategoriaController extends Controller
         $user = Auth::user();
         if ( ! $user->can('Categorias')) {
             flash('Você não tem acesso suficiente')->error();
+
             return redirect('/');
         }
 
@@ -120,10 +115,10 @@ class CategoriaController extends Controller
         $this->validate($request, [
             'descricao' => 'required',
         ]);
-        
+
         $categoria = Categoria::find($id);
         $categoria->update($request->all());
-        
+
         flash('Categoria atualizada com sucesso')->success();
     }
 
