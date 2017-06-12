@@ -94,12 +94,12 @@ class CategoriaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Categoria $categoria)
+    public function edit($id)
     {
+        $categoria = Categoria::find($id);
         $user = Auth::user();
         if ( ! $user->can('Categorias')) {
             flash('Você não tem acesso suficiente')->error();
-
             return redirect('/');
         }
 
@@ -151,6 +151,6 @@ class CategoriaController extends Controller
 
         }
 
-        return redirect(route('indexCategorias'));
+        return redirect(route('categorias.index'));
     }
 }

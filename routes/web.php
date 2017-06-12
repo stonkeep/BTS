@@ -99,6 +99,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
 //Categorias
     Route::resource('/categorias', 'CategoriaController');
+    Route::get('/categorias/delete/{categoria}', ['as' => 'categorias.delete', 'uses' => 'CategoriaController@destroy']);
     //Route::get('/categorias/insert', 'CategoriaController@create')->name('insertCategorias');
     //Route::post('/categorias/create', 'CategoriaController@store')->name('storeCategorias');
     //Route::get('/categorias', 'CategoriaController@index')->name('indexCategorias');
