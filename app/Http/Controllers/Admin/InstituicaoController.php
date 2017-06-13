@@ -51,7 +51,7 @@ class InstituicaoController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.instituicoes.create');
     }
 
 
@@ -66,15 +66,19 @@ class InstituicaoController extends Controller
     {
         //Valida dados para criacao de instituicao
         $this->validate($request, [
-            'CNPJ' => 'required|unique:instituicaos|numeric|cnpj',
+            'CNPJ' => 'required|numeric|cnpj|unique:instituicaos',
         ]);
-
+        
         try {
-            Instituicao::create($request->all());
-            flash('Instituição Criada com sucesso')->success();
-
+            $instituicao = Instituicao::create($request->all());
+            flash('Instituição '.$instituicao->razaoSocial.' criada com sucesso')->success();
             return redirect(route('instituicoes.index'));
         } catch (\Exception $e) {
+            if ($e->getCode() == "23000") { //23000 is sql code for integrity constraint violation
+                flash('Resgistro tem dependência, Favor verificar as ligaçõe')->error();
+            } else {
+                flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
+            }
         }
     }
 

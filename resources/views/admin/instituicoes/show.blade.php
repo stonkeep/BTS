@@ -15,7 +15,7 @@
     @endphp
     <div id="app">
         <div>
-            <a href="/admin/{{$tipo}}/insert" class="btn btn-primary">NOVO</a>
+            <a href="{{route('instituicoes.create')}}" class="btn btn-primary">NOVO</a>
         </div>
         <table id="table" data-toggle="table"
                data-search="true"

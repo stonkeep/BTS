@@ -40,7 +40,7 @@ class StoreInstituicoesRequest extends FormRequest
             'nomeCompleto'     => 'required',
             'cargo_id'         => 'required|exists:cargos,id',
             'sexo'             => 'required|string|size:1',
-            'CPF'              => 'required|numeric|cpf',   
+            'CPF'              => 'required|numeric|cpf',
         ];
     }
 }
