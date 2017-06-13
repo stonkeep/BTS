@@ -31,10 +31,9 @@ class CategoriaController extends Controller
         if ( ! $this->autorizado) {
             return back();
         }
+
         $data = Categoria::all();
-
         return view('admin.categorias.show', compact('data'));
-
     }
 
 
@@ -138,7 +137,6 @@ class CategoriaController extends Controller
             flash('Categoria deletado com sucesso')->success();
         } catch (\Exception $e) {
             if ($e->getCode() == "23000") { //23000 is sql code for integrity constraint violation
-                dd('entrou aqui');
                 flash('Resgistro tem dependência, Favor verificar as ligaçõe')->error();
             } else {
                 flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
@@ -146,6 +144,8 @@ class CategoriaController extends Controller
 
         }
 
+        //$data = Categoria::all();
+        //return view('admin.categorias.show', compact('data'));
         return redirect(route('categorias.index'));
     }
 }

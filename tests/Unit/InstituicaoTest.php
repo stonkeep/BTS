@@ -88,7 +88,7 @@ class InstituicaoTest extends TestCase
         $natureza = factory(NaturezasJuridicas::class)->create();
         $cargo = factory(Cargos::class)->create();
 
-        $this->response = $response = $this->json('POST', "/admin/instituicoes/create", [
+        $this->response = $response = $this->json('POST', "/admin/instituicoes/", [
             'CNPJ'             => 33216167000143,
             'razaoSocial'      => 'Teste de Instituicao',
             'naturezaJuridica' => 2,

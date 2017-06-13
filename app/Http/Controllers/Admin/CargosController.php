@@ -37,7 +37,6 @@ class CargosController extends Controller
         }
 
         $data = Cargos::all();
-
         return view('admin.cargos.show', compact('data', 'colunas'));
     }
 
