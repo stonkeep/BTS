@@ -14,13 +14,12 @@ class NaturezasJuridicasController extends Controller
     public function __construct()
     {
         $user = Auth::user();
-        if ($user) {
-            if ( ! $user->can('NaturezaJuridica')) {
-                flash('Você não tem acesso suficiente')->error();
-                $this->autorizado = false;
-            }
+        if ( ! $user->hasPermissionTo('NaturezaJuridica')) {
+            flash('Você não tem acesso suficiente')->error();
+            $this->autorizado = false;
         }
     }
+    
     /**
      * Display a listing of the resource.
      *
@@ -59,10 +58,7 @@ class NaturezasJuridicasController extends Controller
         ]);
         
         NaturezasJuridicas::create($request->all());
-
-        $naturezas = NaturezasJuridicas::all();
-
-        return view('admin.naturezasJuridicas.show', compact('naturezas'));
+        return redirect(route('naturezasJuridicas.index'));
     }
 
     /**
@@ -98,8 +94,9 @@ class NaturezasJuridicasController extends Controller
      * @param  \App\NaturezasJuridicas  $naturezasJuridicas
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, NaturezasJuridicas $natureza)
+    public function update(Request $request, $id)
     {
+        $natureza = NaturezasJuridicas::find($id);
         $natureza->update($request->all());
         flash('Natureza Jurídica atualizada com sucesso')->success();
     }
@@ -110,13 +107,19 @@ class NaturezasJuridicasController extends Controller
      * @param  \App\NaturezasJuridicas  $naturezasJuridicas
      * @return \Illuminate\Http\Response
      */
-    public function destroy(NaturezasJuridicas $natureza)
+    public function destroy($id)
     {
-        $natureza->delete();
-        $naturezas = NaturezasJuridicas::all();
+        try {
+            NaturezasJuridicas::find($id)->delete();
+            flash('Natureza Jurídica deletada com sucesso')->success();
+        } catch (\Exception $e) {
+            if ($e->getCode() == "23000") { //23000 is sql code for integrity constraint violation
+                flash('Resgistro tem dependência, Favor verificar as ligaçõe')->error();
+            } else {
+                flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
+            }
+        }
 
-        flash('Natureza Jurídica deletada com sucesso')->success();
-        return redirect(route('indexNaturezaJuridica'));
-        
+        return redirect(route('naturezasJuridicas.index'));
     }
 }

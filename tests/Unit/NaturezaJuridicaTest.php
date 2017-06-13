@@ -6,6 +6,7 @@ use App\NaturezasJuridicas;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\TestsUtil;
 use Tests\ValidationsFields;
 
 class NaturezaJuridica extends TestCase
@@ -13,20 +14,24 @@ class NaturezaJuridica extends TestCase
 
     use DatabaseMigrations;
     use ValidationsFields;
+    use TestsUtil;
+    
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->geraUsuario();
+    }
 
 
     private function criaListaDeNaturezas()
     {
-        $this->json('POST', "/admin/naturezasJuridicas/create", [
+        $this->post("/admin/naturezasJuridicas/", [
             'descricao'  => 'Autarquia Federal',
-            'created_at' => '2017-03-31 19:27:54',
-            'updated_at' => '2017-03-31 19:27:55'
         ]);
 
-        $this->json('POST', "/admin/naturezasJuridicas/create", [
+        $this->post("/admin/naturezasJuridicas/", [
             'descricao'  => 'Autarquia Estadual',
-            'created_at' => '2017-03-31 19:37:54',
-            'updated_at' => '2017-03-31 19:47:55'
         ]);
     }
 
@@ -37,7 +42,7 @@ class NaturezaJuridica extends TestCase
      * @return void
      * @test
      */
-    public function testExample()
+    public function test_create()
     {
         NaturezasJuridicas::create([
             'descricao' => 'Empresário(individual)'
@@ -52,7 +57,7 @@ class NaturezaJuridica extends TestCase
     /** @test */
     function testa_se_consegue_gravar_por_post()
     {
-        $this->json('POST', "/admin/naturezasJuridicas/create", [
+        $this->post("/admin/naturezasJuridicas/", [
             'descricao' => 'Autarquia Estadual'
         ]);
 
@@ -70,7 +75,7 @@ class NaturezaJuridica extends TestCase
         $this->criaListaDeNaturezas();
 
         //carrega dados repetidos para testar a validação
-        $this->response = $this->json('POST', "/admin/naturezasJuridicas/create", [
+        $this->response = $this->post('/admin/naturezasJuridicas/', [
             'descricao'  => 'Autarquia Federal',
             'created_at' => '2017-03-31 19:27:54',
             'updated_at' => '2017-03-31 19:27:55'
@@ -98,31 +103,33 @@ class NaturezaJuridica extends TestCase
         $this->criaListaDeNaturezas();
 
         $natureza = NaturezasJuridicas::findOrFail(1);
-
-        //dd($natureza);
+        
         $response = $this->get("admin/naturezasJuridicas/delete/{$natureza->id}");
 
-        $response->assertStatus(200);
-        $response->assertSee('Autarquia Estadual');
-        $response->assertDontSee('Autarquia Federal');
+        $response->assertStatus(302);
+        $natureza = NaturezasJuridicas::find(1);
+        $this->assertNull($natureza);
+        
     }
 
     /** @test */
     function teste_de_update()
     {
-        $this->disableExceptionHandling();
+        //$this->disableExceptionHandling();
         $this->criaListaDeNaturezas();
 
         $natureza = NaturezasJuridicas::findOrFAil(1);
 
         //$natureza->descricao = 'Outro teste';
 
-        $response = $this->json('PUT', "admin/naturezasJuridicas/update/{$natureza->id}", [ 'descricao'  => 'Autarquia Estadual2']);
+        $response = $this->put("admin/naturezasJuridicas/{$natureza->id}", ['descricao'  => 'Autarquia Estadual2']);
 
         //dd($response);
         $response->assertStatus(200);
-        $response->assertDontSee('Autarquia Federal');
-        $response->assertSee('Autarquia Estadual2');
 
+        $natureza = NaturezasJuridicas::find(1);
+
+        $this->assertEquals('Autarquia Estadual2', $natureza->descricao);
+        
     }
 }
