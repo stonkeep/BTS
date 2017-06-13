@@ -16,6 +16,7 @@ class CargosController extends Controller
     
     public function __construct()
     {
+        //verifica se usuário tem acesso ao controle
         $user = Auth::user();
         if ( ! $user->hasPermissionTo('Cargos')) {
             //if (!$user->can('Cargos')) {
@@ -107,7 +108,6 @@ class CargosController extends Controller
         }
 
         return view('admin.cargos.edit', compact('cargo'));
-
     }
 
 
@@ -127,9 +127,12 @@ class CargosController extends Controller
             'descricao' => 'required',
         ]);
 
-        $cargo->update($request->all());
-
-        flash('Cargo atualizado com sucesso')->success();
+        try {
+            $cargo->update($request->all());
+            flash('Cargo atualizado com sucesso')->success();
+        } catch (\Exception $e) {
+            flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
+        }
     }
 
 
@@ -142,13 +145,18 @@ class CargosController extends Controller
      */
     public function destroy($id)
     {
+        try {
+            Cargos::find($id)->delete();
+            flash('Cargo deletado com sucesso')->success();
+        } catch (\Exception $e) {
+            if ($e->getCode() == "23000") { //23000 is sql code for integrity constraint violation
+                flash('Resgistro tem dependência, Favor verificar as ligaçõe')->error();
+            } else {
+                flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
+            }
 
-        Cargos::find($id)->delete();
-
-        $data = Cargos::all();
-
-        flash('Cargo deletado com sucesso')->success();
-
+        }
+        
         return redirect(route('cargos.index'));
     }
 }

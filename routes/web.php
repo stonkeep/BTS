@@ -89,13 +89,15 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::resource('/cargos', 'CargosController');
 
 //instituicoes
-    Route::get('/instituicoes/insert', function () {
-        return view('admin.instituicoes.create');
-    })->name('insertInstituicoes');
-    Route::post('/instituicoes/create', 'InstituicaoController@store')->name('storeInstituicoes');
-    Route::get('/instituicoes', 'InstituicaoController@index')->name('indexInstituicoes');
-    Route::get('/instituicoes/delete/{instituicao}', 'InstituicaoController@destroy')->name('destroyInstituicoes');
-    Route::put('/instituicoes/update/{instituicao}', 'InstituicaoController@update')->name('updateInstituicoes');
+    Route::resource('/instituicoes', 'InstituicaoController');
+    Route::get('/instituicoes/delete/{instituicao}', ['as' => 'instituicoes.delete', 'uses' => 'InstituicaoController@destroy']);
+    //Route::get('/instituicoes/delete/{instituicao}', 'InstituicaoController@destroy')->name('destroyInstituicoes');
+    //Route::get('/instituicoes/insert', function () {
+    //    return view('admin.instituicoes.create');
+    //})->name('insertInstituicoes');
+    //Route::post('/instituicoes/create', 'InstituicaoController@store')->name('storeInstituicoes');
+    //Route::get('/instituicoes', 'InstituicaoController@index')->name('indexInstituicoes');
+    //Route::put('/instituicoes/update/{instituicao}', 'InstituicaoController@update')->name('updateInstituicoes');
 
 //Categorias
     Route::resource('/categorias', 'CategoriaController');

@@ -14,6 +14,7 @@ class CategoriaController extends Controller
     
     public function __construct()
     {
+        //verifica se usuário tem acesso ao controle
         $user = Auth::user();
         if (!$user->hasPermissionTo('Categorias')) {
             flash('Você não tem acesso suficiente')->error();

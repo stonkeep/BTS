@@ -67,7 +67,7 @@ $factory->define(App\Instituicao::class, function (Faker\Generator $faker) {
         'razaoSocial'      => 'Teste de Instituicao',
         'naturezaJuridica' => 1,
         'nomeDaArea'       => 'nao sei',
-        'ddd'              => 061,
+        'ddd'              => 61,
         'telefone'         => 231546,
         'email'            => 'mateusgalasso@yahoo.com.br',
         'UF'               => 'DF',

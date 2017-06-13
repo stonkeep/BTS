@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Cargos;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreInstituicoesRequest;
 use App\Instituicao;
 use App\NaturezasJuridicas;
 use Auth;
@@ -11,18 +12,21 @@ use Illuminate\Http\Request;
 
 class InstituicaoController extends Controller
 {
+
     private $autorizado = true;
+
+
     public function __construct()
     {
+        //verifica se usuário tem acesso ao controle
         $user = Auth::user();
-        if ($user) {
-            if ( ! $user->can('Instituicoes')) {
-                flash('Você não tem acesso suficiente')->error();
-                $this->autorizado = false;
-            }
+        if ( ! $user->hasPermissionTo('Instituicoes')) {
+            flash('Você não tem acesso suficiente')->error();
+            $this->autorizado = false;
         }
     }
-    
+
+
     /**
      * Display a listing of the resource.
      *
@@ -30,13 +34,15 @@ class InstituicaoController extends Controller
      */
     public function index()
     {
-        if (!$this->autorizado){
+        if ( ! $this->autorizado) {
             return back();
         }
 
         $data = Instituicao::all();
+
         return view('admin.instituicoes.show', compact('data'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -48,120 +54,114 @@ class InstituicaoController extends Controller
         //
     }
 
+
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreInstituicoesRequest $request)
     {
+        //Valida dados para criacao de instituicao
         $this->validate($request, [
             'CNPJ' => 'required|unique:instituicaos|numeric|cnpj',
-            'razaoSocial' => 'required',
-            'naturezaJuridica' => 'required|exists:naturezas_juridicas,id',
-            'nomeDaArea' => 'required',
-            'ddd' => 'required|numeric',
-            'telefone' => 'required',
-            'email' => 'required|email',
-            'UF' => 'required',
-            'cidade' => 'required',
-            'endereco' => 'required',
-            'bairro' => 'required',
-            'CEP' => 'required|numeric',
-            'site' => 'required|url',
-            'nomeCompleto' => 'required',
-            'cargo_id' => 'required|exists:cargos,id',
-            'sexo' => 'required|string|size:1',
-            'CPF' => 'required|numeric|cpf',
         ]);
 
-        Instituicao::create($request->all());
+        try {
+            Instituicao::create($request->all());
+            flash('Instituição Criada com sucesso')->success();
 
-        $instituicoes = Instituicao::all();
-        //dd($instituicoes);
-        return view('admin.instituicoes.show', compact('instituicoes'));
+            return redirect(route('instituicoes.index'));
+        } catch (\Exception $e) {
+        }
     }
+
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Instituicao  $instituicao
+     * @param  \App\Instituicao $instituicao
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(Instituicao $instituicao)
     {
         $instituicoes = Instituicao::all();
+
 //        dd($instituicoes);
         return view('admin.instituicoes.show', compact('instituicoes'));
     }
 
+
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Instituicao  $instituicao
+     * @param  \App\Instituicao $instituicao
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit(Instituicao $instituicao)
     {
-        if (!$this->autorizado){
+        if ( ! $this->autorizado) {
             return back();
         }
+
         return view('admin.instituicoes.edit', compact('instituicao'));
     }
+
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Instituicao  $instituicao
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Instituicao         $instituicao
+     *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Instituicao $instituicao)
+    public function update(StoreInstituicoesRequest $request, $id)
     {
+        //Valida dados para atualização
         $this->validate($request, [
             'CNPJ' => 'required|numeric|cnpj',
-            'razaoSocial' => 'required',
-            'naturezaJuridica' => 'required|exists:naturezas_juridicas,id',
-            'nomeDaArea' => 'required',
-            'ddd' => 'required|numeric',
-            'telefone' => 'required',
-            'email' => 'required|email',
-            'UF' => 'required',
-            'cidade' => 'required',
-            'endereco' => 'required',
-            'bairro' => 'required',
-            'CEP' => 'required|numeric',
-            'site' => 'required|url',
-            'nomeCompleto' => 'required',
-            'cargo_id' => 'required|exists:cargos,id',
-            'sexo' => 'required|string|size:1',
-            'CPF' => 'required|numeric|cpf',
         ]);
 
-        $instituicao->update($request->all());
-        flash('Instituição atualizada com sucesso')->success();
+        try {
+            $instituicao = Instituicao::find($id);
+            $instituicao->update($request->all());
+            flash('Instituição '.$instituicao->razaoSocial.' atualizada com sucesso')->success();
+        } catch (\Exception $e) {
+            if ($e->getCode() == "23000") { //23000 is sql code for integrity constraint violation
+                flash('Resgistro tem dependência, Favor verificar as ligaçõe')->error();
+            } else {
+                flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
+            }
+        }
     }
+
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Instituicao  $instituicao
+     * @param  \App\Instituicao $instituicao
+     *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Instituicao $instituicao)
+    public function destroy($id)
     {
         try {
+            $instituicao = Instituicao::find($id);
             $instituicao->delete();
             flash('Instituição '.$instituicao->razaoSocial.' deletada com sucesso')->success();
-
         } catch (\Exception $e) {
             if ($e->getCode() == "23000") { //23000 is sql code for integrity constraint violation
+                flash('Resgistro tem dependência, Favor verificar as ligaçõe')->error();
+            } else {
                 flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
             }
         }
-        
-        flash('Instituição deletado com sucesso')->success();
-        return redirect(route('indexInstituicoes'));
+
+        return redirect(route('instituicoes.index'));
     }
 }
