@@ -9,6 +9,8 @@ use App\Instituicao;
 use App\NaturezasJuridicas;
 use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules\In;
+use Validator;
 
 class InstituicaoController extends Controller
 {
@@ -65,10 +67,10 @@ class InstituicaoController extends Controller
     public function store(StoreInstituicoesRequest $request)
     {
         //Valida dados para criacao de instituicao
-        $this->validate($request, [
+        Validator::make($request->all(), [
             'CNPJ' => 'required|numeric|cnpj|unique:instituicaos',
-        ]);
-        
+        ])->validate();
+
         try {
             $instituicao = Instituicao::create($request->all());
             flash('Instituição '.$instituicao->razaoSocial.' criada com sucesso')->success();

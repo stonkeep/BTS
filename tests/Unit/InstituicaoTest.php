@@ -49,23 +49,23 @@ class InstituicaoTest extends TestCase
         ]);
 
         Instituicao::create([
-            'CNPJ'             => 16286169000190,
-            'razaoSocial'      => 'Teste de Instituicao',
+            'CNPJ' => 16286169000190,
+            'razaoSocial' => 'Teste de Instituicao',
             'naturezaJuridica' => 1,
-            'nomeDaArea'       => 'nao sei',
-            'ddd'              => 061,
-            'telefone'         => 231546,
-            'email'            => 'mateusgalasso@yahoo.com.br',
-            'UF'               => 'DF',
-            'cidade'           => 'Brasilia',
-            'endereco'         => 'Quadra 107',
-            'bairro'           => 'Aguas Claras',
-            'CEP'              => 71920700,
-            'site'             => 'fbb.org.br',
-            'nomeCompleto'     => 'Mateus Galasso',
-            'cargo_id'         => 1,
-            'sexo'             => 'M',
-            'CPF'              => 83745617509,
+            'nomeDaArea' => 'nao sei',
+            'ddd' => 061,
+            'telefone' => 231546,
+            'email' => 'mateusgalasso@yahoo.com.br',
+            'UF' => 'DF',
+            'cidade' => 'Brasilia',
+            'endereco' => 'Quadra 107',
+            'bairro' => 'Aguas Claras',
+            'CEP' => 71920700,
+            'site' => 'fbb.org.br',
+            'nomeCompleto' => 'Mateus Galasso',
+            'cargo_id' => 1,
+            'sexo' => 'M',
+            'CPF' => 83745617509,
         ]);
     }
 
@@ -94,23 +94,23 @@ class InstituicaoTest extends TestCase
         $natureza = factory(NaturezasJuridicas::class)->create();
         $cargo = factory(Cargos::class)->create();
         $this->response = $response = $this->post('/admin/instituicoes/', [
-            'CNPJ'             => 33216167000143,
-            'razaoSocial'      => 'Teste de Instituicao',
+            'CNPJ' => 33216167000143,
+            'razaoSocial' => 'Teste de Instituicao',
             'naturezaJuridica' => 2,
-            'nomeDaArea'       => 'nao sei',
-            'ddd'              => 061,
-            'telefone'         => 231546,
-            'email'            => 'mateusgalasso@yahoo.com.br',
-            'UF'               => 'DF',
-            'cidade'           => 'Brasilia',
-            'endereco'         => 'Quadra 107',
-            'bairro'           => 'Aguas Claras',
-            'CEP'              => 71920700,
-            'site'             => 'http://www.fbb.org.br',
-            'nomeCompleto'     => 'Mateus Galasso',
-            'cargo_id'         => 1,
-            'sexo'             => 'M',
-            'CPF'              => 83745617509,
+            'nomeDaArea' => 'nao sei',
+            'ddd' => 061,
+            'telefone' => 231546,
+            'email' => 'mateusgalasso@yahoo.com.br',
+            'UF' => 'DF',
+            'cidade' => 'Brasilia',
+            'endereco' => 'Quadra 107',
+            'bairro' => 'Aguas Claras',
+            'CEP' => 71920700,
+            'site' => 'http://www.fbb.org.br',
+            'nomeCompleto' => 'Mateus Galasso',
+            'cargo_id' => 1,
+            'sexo' => 'M',
+            'CPF' => 83745617509,
         ]);
 
         $response->assertStatus(302);
@@ -147,23 +147,23 @@ class InstituicaoTest extends TestCase
         $natureza = factory(NaturezasJuridicas::class)->create();
         $cargo = factory(Cargos::class)->create();
         $this->response = $response = $this->post('/admin/instituicoes/', [
-            'CNPJ'             => 33216167000143,
-            'razaoSocial'      => 'Teste de Instituicao',
+            'CNPJ' => 33216167000143,
+            'razaoSocial' => 'Teste de Instituicao',
             'naturezaJuridica' => 2,
-            'nomeDaArea'       => 'nao sei',
-            'ddd'              => 061,
-            'telefone'         => 231546,
-            'email'            => 'mateusgalasso@yahoo.com.br',
-            'UF'               => 'DF',
-            'cidade'           => 'Brasilia',
-            'endereco'         => 'Quadra 107',
-            'bairro'           => 'Aguas Claras',
-            'CEP'              => 71920700,
-            'site'             => 'http://www.fbb.org.br',
-            'nomeCompleto'     => 'Mateus Galasso',
-            'cargo_id'         => 1,
-            'sexo'             => 'M',
-            'CPF'              => 83745617509,
+            'nomeDaArea' => 'nao sei',
+            'ddd' => 061,
+            'telefone' => 231546,
+            'email' => 'mateusgalasso@yahoo.com.br',
+            'UF' => 'DF',
+            'cidade' => 'Brasilia',
+            'endereco' => 'Quadra 107',
+            'bairro' => 'Aguas Claras',
+            'CEP' => 71920700,
+            'site' => 'http://www.fbb.org.br',
+            'nomeCompleto' => 'Mateus Galasso',
+            'cargo_id' => 1,
+            'sexo' => 'M',
+            'CPF' => 83745617509,
         ]);
 
         $response->assertStatus(302);
@@ -176,10 +176,10 @@ class InstituicaoTest extends TestCase
         //chama controler para atualizar
         $this->response = $response = $this->put("admin/instituicoes/{$instituicao->id}",
             $instituicao->toArray()); //Precisa ser um Array
-        
+
         //busca instituicao
         $instituicao = Instituicao::find(2);
-        
+
         //assert
         $response->assertStatus(200);
         $this->assertEquals($instituicao->CNPJ, '31918082000181');
@@ -204,23 +204,23 @@ class InstituicaoTest extends TestCase
     function testa_consulta_que_retorna_lista()
     {
         Instituicao::create([
-            'CNPJ'             => 99999999999999,
-            'razaoSocial'      => 'Teste de Instituicao2',
+            'CNPJ' => 99999999999999,
+            'razaoSocial' => 'Teste de Instituicao2',
             'naturezaJuridica' => 1,
-            'nomeDaArea'       => 'nao sei',
-            'ddd'              => 061,
-            'telefone'         => 231546,
-            'email'            => 'mateusgalasso@yahoo.com.br',
-            'UF'               => 'DF',
-            'cidade'           => 'Brasilia',
-            'endereco'         => 'Quadra 107',
-            'bairro'           => 'Aguas Claras',
-            'CEP'              => 71920700,
-            'site'             => 'fbb.org.br',
-            'nomeCompleto'     => 'Mateus Galasso',
-            'cargo_id'         => 1,
-            'sexo'             => 'M',
-            'CPF'              => 11111111111,
+            'nomeDaArea' => 'nao sei',
+            'ddd' => 061,
+            'telefone' => 231546,
+            'email' => 'mateusgalasso@yahoo.com.br',
+            'UF' => 'DF',
+            'cidade' => 'Brasilia',
+            'endereco' => 'Quadra 107',
+            'bairro' => 'Aguas Claras',
+            'CEP' => 71920700,
+            'site' => 'fbb.org.br',
+            'nomeCompleto' => 'Mateus Galasso',
+            'cargo_id' => 1,
+            'sexo' => 'M',
+            'CPF' => 11111111111,
         ]);
 
         $response = $this->get("admin/instituicoes");
@@ -239,23 +239,23 @@ class InstituicaoTest extends TestCase
         //$this->disableExceptionHandling();
 
         $instituicaoTeste = [
-            'CNPJ'             => '',
-            'razaoSocial'      => '',
+            'CNPJ' => '',
+            'razaoSocial' => '',
             'naturezaJuridica' => '',
-            'nomeDaArea'       => '',
-            'ddd'              => '',
-            'telefone'         => '',
-            'email'            => '',
-            'UF'               => '',
-            'cidade'           => '',
-            'endereco'         => '',
-            'bairro'           => '',
-            'CEP'              => '',
-            'site'             => '',
-            'nomeCompleto'     => '',
-            'cargo_id'         => '',
-            'sexo'             => '',
-            'CPF'              => '',
+            'nomeDaArea' => '',
+            'ddd' => '',
+            'telefone' => '',
+            'email' => '',
+            'UF' => '',
+            'cidade' => '',
+            'endereco' => '',
+            'bairro' => '',
+            'CEP' => '',
+            'site' => '',
+            'nomeCompleto' => '',
+            'cargo_id' => '',
+            'sexo' => '',
+            'CPF' => '',
         ];
 
         //campos requeridos
@@ -276,8 +276,8 @@ class InstituicaoTest extends TestCase
         $this->assertValidationError('cargo_id');
         $this->assertValidationError('sexo');
         $this->assertValidationError('CPF');
-        
-        
+
+
         factory(Instituicao::class)->create();
         $instituicaoTeste = Instituicao::find(1);
         //Verifica campo existe na relação naturezaJuridica
@@ -289,26 +289,26 @@ class InstituicaoTest extends TestCase
         $instituicaoTeste->cargo_id = 99;
         $this->response = $this->json('POST', "/admin/instituicoes/", $instituicaoTeste->toArray());
         $this->assertValidationError('cargo_id');
-        
+
         //Testa CNPJ vazio
         $instituicaoTeste = [
-            'CNPJ'             => '',
-            'razaoSocial'      => 'Teste de Instituicao',
+            'CNPJ' => '',
+            'razaoSocial' => 'Teste de Instituicao',
             'naturezaJuridica' => 2,
-            'nomeDaArea'       => 'nao sei',
-            'ddd'              => 061,
-            'telefone'         => 231546,
-            'email'            => 'mateusgalasso@yahoo.com.br',
-            'UF'               => 'DF',
-            'cidade'           => 'Brasilia',
-            'endereco'         => 'Quadra 107',
-            'bairro'           => 'Aguas Claras',
-            'CEP'              => 71920700,
-            'site'             => 'http://www.fbb.org.br',
-            'nomeCompleto'     => 'Mateus Galasso',
-            'cargo_id'         => 1,
-            'sexo'             => 'M',
-            'CPF'              => 83745617509,
+            'nomeDaArea' => 'nao sei',
+            'ddd' => 061,
+            'telefone' => 231546,
+            'email' => 'mateusgalasso@yahoo.com.br',
+            'UF' => 'DF',
+            'cidade' => 'Brasilia',
+            'endereco' => 'Quadra 107',
+            'bairro' => 'Aguas Claras',
+            'CEP' => 71920700,
+            'site' => 'http://www.fbb.org.br',
+            'nomeCompleto' => 'Mateus Galasso',
+            'cargo_id' => 1,
+            'sexo' => 'M',
+            'CPF' => 83745617509,
         ];
         $this->response = $this->json('POST', "/admin/instituicoes/", $instituicaoTeste);
         $this->assertValidationError('CNPJ');
@@ -317,61 +317,45 @@ class InstituicaoTest extends TestCase
         $instituicaoTeste['CNPJ'] = 'AAAAAAAA';
         $this->response = $this->json('POST', "/admin/instituicoes/", $instituicaoTeste);
         $this->assertValidationError('CNPJ');
-        
+
     }
-    
+
     /** @test */
     function testa_cnpj_unico()
     {
-        $natureza = factory(NaturezasJuridicas::class)->create();
-        $cargo = factory(Cargos::class)->create();
-        $this->response = $response = $this->post('/admin/instituicoes/', [
-            'CNPJ'             => 33216167000143,
-            'razaoSocial'      => 'Teste de Instituicao',
-            'naturezaJuridica' => 2,
-            'nomeDaArea'       => 'nao sei',
-            'ddd'              => 061,
-            'telefone'         => 231546,
-            'email'            => 'mateusgalasso@yahoo.com.br',
-            'UF'               => 'DF',
-            'cidade'           => 'Brasilia',
-            'endereco'         => 'Quadra 107',
-            'bairro'           => 'Aguas Claras',
-            'CEP'              => 71920700,
-            'site'             => 'http://www.fbb.org.br',
-            'nomeCompleto'     => 'Mateus Galasso',
-            'cargo_id'         => 1,
-            'sexo'             => 'M',
-            'CPF'              => 83745617509,
-        ]);
+//        $this->disableExceptionHandling();
+
+        factory(Instituicao::class)->create();
 
         $data = [
-            'CNPJ'             => 33216167000143,
-            'razaoSocial'      => 'Teste de Instituicao',
+            'CNPJ' => 16286169000190,
+            'razaoSocial' => 'Teste de Instituicao',
             'naturezaJuridica' => 2,
-            'nomeDaArea'       => 'nao sei',
-            'ddd'              => 061,
-            'telefone'         => 231546,
-            'email'            => 'mateusgalasso@yahoo.com.br',
-            'UF'               => 'DF',
-            'cidade'           => 'Brasilia',
-            'endereco'         => 'Quadra 107',
-            'bairro'           => 'Aguas Claras',
-            'CEP'              => 71920700,
-            'site'             => 'http://www.fbb.org.br',
-            'nomeCompleto'     => 'Mateus Galasso',
-            'cargo_id'         => 1,
-            'sexo'             => 'M',
-            'CPF'              => 83745617509,
+            'nomeDaArea' => 'nao sei',
+            'ddd' => 061,
+            'telefone' => 231546,
+            'email' => 'mateusgalasso@yahoo.com.br',
+            'UF' => 'DF',
+            'cidade' => 'Brasilia',
+            'endereco' => 'Quadra 107',
+            'bairro' => 'Aguas Claras',
+            'CEP' => 71920700,
+            'site' => 'http://www.fbb.org.br',
+            'nomeCompleto' => 'Mateus Galasso',
+            'cargo_id' => 1,
+            'sexo' => 'M',
+            'CPF' => 83745617509,
         ];
-
-        $response->assertStatus(302);
-        $this->assertValidationError('CNPJ');
 
         $instituição = Instituicao::find(1);
 
+
         //Campo único
-        $this->response = $this->post("/admin/instituicoes/", $instituição->toArray());
+        $this->response = $this->json('POST', "/admin/instituicoes/", $data);
+
+        $this->assertValidationError('CNPJ');
+
+
     }
 
 
