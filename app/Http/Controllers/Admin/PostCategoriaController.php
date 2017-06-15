@@ -61,7 +61,6 @@ class PostCategoriaController extends Controller
             'descricao' => 'required|unique:post_categorias',
         ]);
 
-        dd('teste');
         try {
             PostCategoria::create($request->all());
             flash('Categoria de posts atualizada com sucesso')->success();

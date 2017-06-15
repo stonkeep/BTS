@@ -64,7 +64,7 @@ class CategoriaController extends Controller
 
         Categoria::create($request->all());
         
-        return redirect('categorias');
+        return redirect(route('categorias.index'));
     }
 
 

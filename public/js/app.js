@@ -12564,13 +12564,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             // Submit the form via a POST request
             var location = window.location.href;
             if (location.indexOf("edit") > -1) {
-                this.form.put('/admin/categorias/update/' + this.id).then(function (_ref) {
+                this.form.put('/admin/categorias/' + this.id).then(function (_ref) {
                     var data = _ref.data;
 
                     window.location.href = '/admin/categorias';
                 });
             } else {
-                this.form.post('/admin/categorias/create').then(function (_ref2) {
+                this.form.post('/admin/categorias').then(function (_ref2) {
                     var data = _ref2.data;
 
                     window.location.href = '/admin/categorias';
