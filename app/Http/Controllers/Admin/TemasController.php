@@ -81,7 +81,6 @@ class TemasController extends Controller
         $data = Temas::all();
 
         return view('admin.temas.show', compact('data'));
-
     }
 
 
@@ -92,8 +91,9 @@ class TemasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Temas $tema)
+    public function edit($id)
     {
+        $tema = Temas::find($id);
         if (!$this->autorizado){
             return back();
         }

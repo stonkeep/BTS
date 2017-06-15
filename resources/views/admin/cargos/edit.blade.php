@@ -12,10 +12,7 @@
 
     @include('admin.layouts.erros')
     <div id="app">
-    <form action="/cargo/update/{{$cargo->id}}" method="PUT">
-        {{ csrf_field() }}
          <cargo id="{{$cargo->id}}" descricao="{{$cargo->descricao}}"></cargo>
-    </form>
     </div>
 
 @stop

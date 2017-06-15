@@ -2,20 +2,20 @@
 
 @extends('adminlte::page')
 
-@section('title', 'Regiões')
+@section('title', 'Temas')
 
 @section('content_header')
-    <h1>Regiões</h1>
+    <h1>Temas</h1>
 @stop
 
 @section('content')
 
     @include('admin.layouts.erros')
+    testes
+    {{$tema->nome}}
+    teste
     <div id="app">
-    <form action="/temas/update/{{$tema->id}}" method="PUT">
-        {{ csrf_field() }}
          <tema id="{{$tema->id}}" nome="{{$tema->nome}}"></tema>
-    </form>
     </div>
 
 @stop

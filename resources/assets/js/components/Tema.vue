@@ -26,7 +26,7 @@
             return {
                 // Create a new form instance
                 form: new Form({
-                    nome: '',
+                    nome:  this.nome,
 //                    remember: false
                 })
             }
@@ -34,7 +34,7 @@
         props: ['id', 'nome'],
         mounted() {
             console.log('Component mounted.');
-            this.form.nome = this.nome;
+//            this.form.nome = this.nome;
         },
         methods: {
             submit () {

@@ -12479,7 +12479,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             // Create a new form instance
             form: new __WEBPACK_IMPORTED_MODULE_0_vform__["Form"]({
-                descricao: ''
+                descricao: this.descricao
             })
         };
     },
@@ -12487,7 +12487,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     props: ['id', 'descricao'],
     mounted: function mounted() {
         console.log('Component mounted.');
-        this.form.descricao = this.descricao;
+        //            this.form.descricao = this.descricao;
     },
 
     methods: {
@@ -13833,7 +13833,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             // Create a new form instance
             form: new __WEBPACK_IMPORTED_MODULE_0_vform__["Form"]({
-                nome: ''
+                nome: this.nome
             })
         };
     },
@@ -13841,7 +13841,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     props: ['id', 'nome'],
     mounted: function mounted() {
         console.log('Component mounted.');
-        this.form.nome = this.nome;
+        //            this.form.nome = this.nome;
     },
 
     methods: {

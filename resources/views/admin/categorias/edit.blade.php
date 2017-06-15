@@ -2,10 +2,10 @@
 
 @extends('adminlte::page')
 
-@section('title', 'Regiões')
+@section('title', 'Categorias')
 
 @section('content_header')
-    <h1>Cargo</h1>
+    <h1>Cartegoria</h1>
 @stop
 
 @section('content')

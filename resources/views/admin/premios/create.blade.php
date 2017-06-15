@@ -12,7 +12,6 @@
 
     @include('admin.layouts.erros')
     <div id="app">
-        {{ csrf_field() }}
         <premio></premio>
 
     </div>
