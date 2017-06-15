@@ -50,7 +50,7 @@ class Tecnologia extends Model
 
     public function subtemasPrincipal()
     {
-        return $this->subtemas->where('tema_id', strval($this->temaPrincipal()->first()->id));
+        return SubTemas::where('tema_id', $this->temaPrincipal()->first()->id);
     }
 
     public function temaPrincipal()

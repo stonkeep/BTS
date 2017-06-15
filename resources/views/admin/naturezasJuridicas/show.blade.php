@@ -48,7 +48,7 @@
                     <td>{{$item->created_at}}</td>
                     <td>{{$item->updated_at}}</td>
                     <td><a class="btn btn-danger" href="/admin/{{$tipo}}/delete/{{$item->id}}">Excluir</a></td>
-                    <td><a class="btn btn-success" href="/admin/{{$tipo}}/edit/{{$item->id}}">Editar</a></td>
+                    <td><a class="btn btn-success" href="{{route('naturezasJuridicas.edit', $item->id)}}">Editar</a></td>
                 </tr>
             @endforeach
             </tbody>

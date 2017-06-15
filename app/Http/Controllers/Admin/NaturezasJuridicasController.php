@@ -79,8 +79,9 @@ class NaturezasJuridicasController extends Controller
      * @param  \App\NaturezasJuridicas  $naturezasJuridicas
      * @return \Illuminate\Http\Response
      */
-    public function edit(NaturezasJuridicas $natureza)
+    public function edit($id)
     {
+        $natureza = NaturezasJuridicas::find($id);
         if (!$this->autorizado){
             return back();
         }

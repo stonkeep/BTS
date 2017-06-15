@@ -86,8 +86,10 @@ class RegioesController extends Controller
      * @param  \App\Regioes  $regioes
      * @return \Illuminate\Http\Response
      */
-    public function edit(Regioes $regiao)
+    public function edit($id)
     {
+        $regiao = Regioes::find($id);
+
         if (!$this->autorizado){
             return back();
         }

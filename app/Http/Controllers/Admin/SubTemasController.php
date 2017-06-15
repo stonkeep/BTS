@@ -98,8 +98,9 @@ class SubTemasController extends Controller
      * @param  \App\SubTemas  $subTemas
      * @return \Illuminate\Http\Response
      */
-    public function edit(SubTemas $subTema)
+    public function edit($id)
     {
+        $subTema = SubTemas::find($id);
         if (!$this->autorizado){
             return back();
         }

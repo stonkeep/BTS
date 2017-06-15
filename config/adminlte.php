@@ -211,7 +211,7 @@ return [
         [
             'text' => 'Permissions',
             'url'  => '/admin/permissions',
-            'icon' => 'files-o',
+            'icon' => 'key',
             'permission' => 'Permission',
 
         ],

@@ -84,8 +84,9 @@ class PublicosAlvoController extends Controller
      * @param  \App\PublicosAlvo  $publicosAlvo
      * @return \Illuminate\Http\Response
      */
-    public function edit(PublicosAlvo $publico)
+    public function edit($id)
     {
+        $publico = PublicosAlvo::find($id);
         if (!$this->autorizado){
             return back();
         }
