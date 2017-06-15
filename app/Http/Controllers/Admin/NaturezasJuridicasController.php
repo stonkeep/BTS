@@ -42,7 +42,7 @@ class NaturezasJuridicasController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.naturezasJuridicas.create');
     }
 
     /**

@@ -12501,7 +12501,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     window.location.href = '/admin/cargos';
                 });
             } else {
-                this.form.post('/admin/cargos/create').then(function (_ref2) {
+                this.form.post('/admin/cargos').then(function (_ref2) {
                     var data = _ref2.data;
 
                     window.location.href = '/admin/cargos';
@@ -12901,16 +12901,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             // Submit the form via a POST request
             var location = window.location.href;
             if (location.indexOf("edit") > -1) {
-                this.form.put('/admin/cargos/update/' + this.id).then(function (_ref) {
+                this.form.put('/admin/naturezasJuridicas/' + this.id).then(function (_ref) {
                     var data = _ref.data;
 
-                    window.location.href = '/admin/cargos';
+                    window.location.href = '/admin/naturezasJuridicas';
                 });
             } else {
-                this.form.post('/admin/cargos/create').then(function (_ref2) {
+                this.form.post('/admin/naturezasJuridicas/').then(function (_ref2) {
                     var data = _ref2.data;
 
-                    window.location.href = '/admin/cargos';
+                    window.location.href = '/admin/naturezasJuridicas';
                 });
             }
         }

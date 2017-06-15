@@ -46,7 +46,7 @@
                             window.location.href = '/admin/cargos'
                         })
                 } else {
-                    this.form.post('/admin/cargos/create')
+                    this.form.post('/admin/cargos')
                         .then(({data}) => {
                             window.location.href = '/admin/cargos'
                         })
