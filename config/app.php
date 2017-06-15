@@ -199,6 +199,8 @@ return [
         Sofa\Eloquence\ServiceProvider::class,
         //Petty Route
         PrettyRoutes\ServiceProvider::class,
+        //CORS
+        Barryvdh\Cors\ServiceProvider::class,
 
 
     ],
