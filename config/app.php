@@ -186,8 +186,6 @@ return [
         Laracasts\Flash\FlashServiceProvider::class,
         //Tradução da svalidações para português
         LaravelLegends\PtBrValidator\ValidatorProvider::class,
-        //IDE helper
-        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         //Debugar
         Barryvdh\Debugbar\ServiceProvider::class,
         //file Manager
