@@ -52,7 +52,7 @@ class StoreTecnologia extends FormRequest
             'subtema2'              => 'required|exists:sub_temas,id',
             'responsaveis'          => 'required',
             'locaisImplantacao'     => 'required',
-            'PublicoAlvo'           => 'required',
+            'PublicosAlvo'           => 'required',
             'instituicoesParceiras' => 'required',
             'enderecosEletronicos'  => 'required',
         ];

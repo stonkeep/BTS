@@ -11,11 +11,12 @@
 @section('content')
 
     @include('admin.layouts.erros')
+
     <div id="app">
-        {{ csrf_field() }}
         <tecnologia :categorias="{{$categorias}}"
                     :propssubtemas1="{{$propssubtemas1}}"
                     :temas="{{$temas}}"
+                    :publicos="{{$publicosAlvo}}"
                     :tecnologia="{{$tecnologia}}"></tecnologia>
     </div>
 

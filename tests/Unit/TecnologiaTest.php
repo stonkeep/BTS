@@ -714,7 +714,7 @@ class TecnologiaTest extends TestCase
             'instituicao_id'        => 1,
             'responsaveis'          => $this->responsaveis,
             'locaisImplantacao'     => $this->locais,
-            'PublicoAlvo'           => [1, 2], //Como já foi criado no SetUp os públicos não preciso criar novamente
+            'PublicosAlvo'           => [1, 2], //Como já foi criado no SetUp os públicos não preciso criar novamente
             'instituicoesParceiras' => $this->instituicoesParceiras,
             'enderecosEletronicos' => $this->enderecosEletronicos,
         ]);

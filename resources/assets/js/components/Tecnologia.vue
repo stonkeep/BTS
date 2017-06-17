@@ -4,7 +4,6 @@
             <alert-error :form="form"></alert-error>
             <alert-errors :form="form" message="There were some problems with your input."></alert-errors>
 
-
             <!----------------------Título----------------------------------------------------------------------------------------->
             <div class="form-group" :class="{ 'has-error': form.errors.has('titulo') }">
                 <label for="titulo" class="col-md-3 control-label">Título</label>
@@ -314,7 +313,7 @@
                     </div>
                 </div>
             </div>
-            <has-error :form="form" field="depoimentoLivre"></has-error>
+            <has-error :form="form" field="responsaveis"></has-error>
 
             <div class="form-inline">
                 <button v-on:click.prevent="adicionaResponsavel"
@@ -366,7 +365,7 @@
                         <div class="form-group">
                             <label for="email" class="col-md-3 control-label">Bairro: </label>
                             <div class="col-md-6">
-                                <input v-model="localData.bairro" type="email" name="email" id="bairro"
+                                <input v-model="localData.bairro" type="bairro" name="email" id="bairro"
                                        class="form-control">
                             </div>
                         </div>
@@ -381,6 +380,20 @@
 
             </div>
             <!--//TODO Público e quantidade total de pessoas atendidos por uma unidade da tecnologia social:-->
+<!--------------------Publico Alvo atendido-------------------------------------------------------------------------->
+            <div class="form-group" :class="{ 'has-error': form.errors.has('PublicosAlvo') }">
+                <label for="PublicosAlvo" class="col-md-3 control-label">Publicos Alvo:</label>
+                <div class="col-md-6" id="PublicosAlvo">
+                    <select class="form-control" v-model="form.PublicosAlvo" name="PublicosAlvo" multiple>
+                        <option v-for="publico in PublicosAlvo" v-bind:value="publico.id">
+                            {{ publico.descricao }}
+                        </option>
+                    </select>
+                    <has-error :form="form" field="PublicosAlvo"></has-error>
+                    <p>Hold down the Ctrl (windows) / Command (Mac) button to select multiple options.</p>
+
+                </div>
+            </div>
             <!--//TODO Recursos humanos necessários para implantação de uma unidade da tecnologia social:-->
             <!--//TODO Instituições parceiras na tecnologia:-->
             <!--//TODO Anexos da tecnologia:-->
@@ -408,6 +421,7 @@
                 subtemas2: [],
                 temas1: [],
                 temas2: [],
+                PublicosAlvo: [],
 
                 // Create a new form instance
                 form: new Form({
@@ -451,17 +465,18 @@
                             dataImplantacao: ''
                         },
                     ],
-
+                    PublicosAlvo: [],
 //                    instituicao_id: this.tecnologia.instituicaos_id,
 //                    TODO Nao esquecer de tirar depois
                     instituicao_id: 1,
                 })
             };
         },
-        props: ['tecnologia', 'categorias', 'temas', 'propssubtemas1'],
+        props: ['tecnologia', 'categorias', 'temas', 'propssubtemas1', 'publicos'],
         mounted() {
-            this.temas1 = this.temas
-            this.temas2 = this.temas
+            this.temas1 = this.temas;
+            this.temas2 = this.temas;
+            this.PublicosAlvo = this.publicos;
 
 //            axios.get('../../api/subtemas/' + this.form.tema_id)
 //                .then(response => this.subtemas1 = response.data)

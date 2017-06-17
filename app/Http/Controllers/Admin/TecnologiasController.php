@@ -6,6 +6,7 @@ use App\Categoria;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTecnologia;
 use App\Instituicao;
+use App\PublicosAlvo;
 use App\Tecnologia;
 use App\Temas;
 use App\SubTemas;
@@ -74,12 +75,13 @@ class TecnologiasController extends Controller
 
         $categorias = Categoria::all();
         $temas = Temas::all();
+        $publicosAlvo = PublicosAlvo::all();
         $tecnologia = new Tecnologia();
         $propssubtemas1 = new SubTemas();
         $propssubtemas2 = new SubTemas();
 
         return view('admin.tecnologias.create',
-            compact('categorias', 'temas', 'tecnologia', 'propssubtemas1', 'propssubtemas2'));
+            compact('categorias', 'temas', 'tecnologia', 'propssubtemas1', 'propssubtemas2', 'publicosAlvo'));
     }
 
 

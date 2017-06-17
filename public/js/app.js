@@ -13870,6 +13870,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -13883,6 +13896,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             subtemas2: [],
             temas1: [],
             temas2: [],
+            PublicosAlvo: [],
 
             // Create a new form instance
             form: new __WEBPACK_IMPORTED_MODULE_0_vform__["Form"]({
@@ -13922,7 +13936,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     bairro: '',
                     dataImplantacao: ''
                 }],
-
+                PublicosAlvo: [],
                 //                    instituicao_id: this.tecnologia.instituicaos_id,
                 //                    TODO Nao esquecer de tirar depois
                 instituicao_id: 1
@@ -13930,10 +13944,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
 
-    props: ['tecnologia', 'categorias', 'temas', 'propssubtemas1'],
+    props: ['tecnologia', 'categorias', 'temas', 'propssubtemas1', 'publicos'],
     mounted: function mounted() {
         this.temas1 = this.temas;
         this.temas2 = this.temas;
+        this.PublicosAlvo = this.publicos;
 
         //            axios.get('../../api/subtemas/' + this.form.tema_id)
         //                .then(response => this.subtemas1 = response.data)
@@ -39324,7 +39339,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       domProps: {
         "value": categoria.id
       }
-    }, [_vm._v("\n                        " + _vm._s(categoria.descricao) + "\n                    ")])
+    }, [_vm._v("\n                            " + _vm._s(categoria.descricao) + "\n                        ")])
   })), _vm._v(" "), _c('has-error', {
     attrs: {
       "form": _vm.form,
@@ -39415,7 +39430,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       domProps: {
         "value": tema.id
       }
-    }, [_vm._v("\n                        " + _vm._s(tema.nome) + "\n                    ")])
+    }, [_vm._v("\n                            " + _vm._s(tema.nome) + "\n                        ")])
   })), _vm._v(" "), _c('has-error', {
     attrs: {
       "form": _vm.form,
@@ -39464,7 +39479,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       domProps: {
         "value": subtema1.id
       }
-    }, [_vm._v("\n                        " + _vm._s(subtema1.descricao) + "\n                    ")])
+    }, [_vm._v("\n                            " + _vm._s(subtema1.descricao) + "\n                        ")])
   })), _vm._v(" "), _c('has-error', {
     attrs: {
       "form": _vm.form,
@@ -39515,7 +39530,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       domProps: {
         "value": tema.id
       }
-    }, [_vm._v("\n                        " + _vm._s(tema.nome) + "\n                    ")])
+    }, [_vm._v("\n                            " + _vm._s(tema.nome) + "\n                        ")])
   })), _vm._v(" "), _c('has-error', {
     attrs: {
       "form": _vm.form,
@@ -39564,7 +39579,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       domProps: {
         "value": subtema2.id
       }
-    }, [_vm._v("\n                        " + _vm._s(subtema2.descricao) + "\n                    ")])
+    }, [_vm._v("\n                            " + _vm._s(subtema2.descricao) + "\n                        ")])
   })), _vm._v(" "), _c('has-error', {
     attrs: {
       "form": _vm.form,
@@ -40080,7 +40095,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }))]), _vm._v(" "), _c('has-error', {
     attrs: {
       "form": _vm.form,
-      "field": "depoimentoLivre"
+      "field": "responsaveis"
     }
   }), _vm._v(" "), _c('div', {
     staticClass: "form-inline"
@@ -40101,7 +40116,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     class: {
       'has-error': _vm.form.errors.has('locaisDatas')
     }
-  }, [_vm._v("\n                    Locais e datas onde a Tecnologia Social já foi implementada:")])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n                        Locais e datas onde a Tecnologia Social já foi implementada:")])]), _vm._v(" "), _c('div', {
     staticClass: "panel-body"
   }, _vm._l((_vm.form.locaisDatas), function(localData, index) {
     return _c('div', [_c('div', {
@@ -40233,7 +40248,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }],
       staticClass: "form-control",
       attrs: {
-        "type": "email",
+        "type": "bairro",
         "name": "email",
         "id": "bairro"
       },
@@ -40265,7 +40280,56 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.adicionaLocaisDatas($event)
       }
     }
-  })]), _vm._v(" "), _c('br'), _vm._v(" "), _c('div', {
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group",
+    class: {
+      'has-error': _vm.form.errors.has('PublicosAlvo')
+    }
+  }, [_c('label', {
+    staticClass: "col-md-3 control-label",
+    attrs: {
+      "for": "PublicosAlvo"
+    }
+  }, [_vm._v("Publicos Alvo:")]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6",
+    attrs: {
+      "id": "PublicosAlvo"
+    }
+  }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.form.PublicosAlvo),
+      expression: "form.PublicosAlvo"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "name": "PublicosAlvo",
+      "multiple": ""
+    },
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.form.PublicosAlvo = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, _vm._l((_vm.PublicosAlvo), function(publico) {
+    return _c('option', {
+      domProps: {
+        "value": publico.id
+      }
+    }, [_vm._v("\n                            " + _vm._s(publico.descricao) + "\n                        ")])
+  })), _vm._v(" "), _c('has-error', {
+    attrs: {
+      "form": _vm.form,
+      "field": "PublicosAlvo"
+    }
+  }), _vm._v(" "), _c('p', [_vm._v("Hold down the Ctrl (windows) / Command (Mac) button to select multiple options.")])], 1)]), _vm._v(" "), _c('br'), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('button', {
     staticClass: "btn btn-primary",
