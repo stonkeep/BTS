@@ -691,3 +691,257 @@ return redirect('somewhere');
 Done! You'll now see two flash messages upon redirect.
 
 
+
+
+
+# Laravel Filemanager
+[![Latest Stable Version](https://poser.pugx.org/unisharp/laravel-filemanager/v/stable)](https://packagist.org/packages/unisharp/laravel-filemanager)
+[![Total Downloads](https://poser.pugx.org/unisharp/laravel-filemanager/downloads)](https://packagist.org/packages/unisharp/laravel-filemanager)
+[![License](https://poser.pugx.org/unisharp/laravel-filemanager/license)](https://packagist.org/packages/unisharp/laravel-filemanager)
+
+ * Document : [unisharp.github.io/laravel-filemanager](http://unisharp.github.io/laravel-filemanager/)
+   * [Installation](http://unisharp.github.io/laravel-filemanager/installation)
+   * [Integration](http://unisharp.github.io/laravel-filemanager/integration)
+   * [Config](http://unisharp.github.io/laravel-filemanager/config)
+   * [Customization](http://unisharp.github.io/laravel-filemanager/customization)
+   * [Events](http://unisharp.github.io/laravel-filemanager/events)
+   * [Upgrade](http://unisharp.github.io/laravel-filemanager/upgrade)
+ * Demo : [Laravel Filemanager container](https://github.com/UniSharp/laravel-filemanager-example-5.3)
+
+## v1.7 released
+ * Please follow the intructions in [upgrade document](https://unisharp.github.io/laravel-filemanager/upgrade).
+ * Important changes :
+   * All code refactored.
+   * Fix Windows compatibility.
+   * Fix file cannot be uploaded to "File Mode".
+   * Config file is also refactored, see [config document](https://unisharp.github.io/laravel-filemanager/config).
+
+## Security
+
+It is important to note that if you use your own routes **you must protect your routes to Laravel-Filemanager in order to prevent unauthorized uploads to your server**. Fortunately, Laravel makes this very easy.
+
+If, for example, you want to ensure that only logged in users have the ability to access the Laravel-Filemanager, simply wrap the routes in a group, perhaps like this:
+
+```php
+Route::group(array('before' => 'auth'), function ()
+{
+    Route::get('/laravel-filemanager', '\Unisharp\Laravelfilemanager\controllers\LfmController@show');
+    Route::post('/laravel-filemanager/upload', '\Unisharp\Laravelfilemanager\controllers\LfmController@upload');
+    // list all lfm routes here...
+});
+```
+
+This approach ensures that only authenticated users have access to the Laravel-Filemanager. If you are using Middleware or some other approach to enforce security, modify as needed.
+
+**If you use the laravel-filemanager default route, make sure the `auth` middleware (set in config/lfm.php) is enabled and functional**.
+
+
+## Credits
+Special thanks to
+
+ * [All contibutors](https://github.com/UniSharp/laravel-filemanager/graphs/contributors) from GitHub. (issues / PR)
+ * [@taswler](https://github.com/tsawler) the original author.
+ * [@olivervogel](https://github.com/olivervogel) for the awesome [image library](https://github.com/Intervention/image).
+ * All [@UniSharp](https://github.com/UniSharp) members.
+ 
+ 
+ 
+ 
+ 
+ # CORS Middleware for Laravel 5
+ 
+ [![Latest Version on Packagist][ico-version]][link-packagist]
+ [![Software License][ico-license]](LICENSE.md)
+ [![Build Status][ico-travis]][link-travis]
+ [![Total Downloads][ico-downloads]][link-downloads]
+ 
+ Based on https://github.com/asm89/stack-cors
+ 
+ ## About
+ 
+ The `laravel-cors` package allows you to send [Cross-Origin Resource Sharing](http://enable-cors.org/)
+ headers with Laravel middleware configuration.
+ 
+ If you want to have have a global overview of CORS workflow, you can  browse
+ this [image](http://www.html5rocks.com/static/images/cors_server_flowchart.png).
+ 
+ ## Features
+ 
+ * Handles CORS pre-flight OPTIONS requests
+ * Adds CORS headers to your responses
+ 
+ ## Installation
+ 
+ Require the `barryvdh/laravel-cors` package in your `composer.json` and update your dependencies:
+ ```sh
+ $ composer require barryvdh/laravel-cors
+ ```
+ 
+ Add the Cors\ServiceProvider to your `config/app.php` providers array:
+ ```php
+ Barryvdh\Cors\ServiceProvider::class,
+ ```
+ 
+ ## Global usage
+ 
+ To allow CORS for all your routes, add the `HandleCors` middleware in the `$middleware` property of  `app/Http/Kernel.php` class:
+ 
+ ```php
+ protected $middleware = [
+     // ...
+     \Barryvdh\Cors\HandleCors::class,
+ ];
+ ```
+ 
+ ## Group middleware
+ 
+ If you want to allow CORS on a specific middleware group or route, add the `HandleCors` middleware to your group:
+ 
+ ```php
+ protected $middlewareGroups = [
+     'web' => [
+        // ...
+     ],
+ 
+     'api' => [
+         // ...
+         \Barryvdh\Cors\HandleCors::class,
+     ],
+ ];
+ ```
+ 
+ ## Configuration
+ 
+ The defaults are set in `config/cors.php`. Copy this file to your own config directory to modify the values. You can publish the config using this command:
+ ```sh
+ $ php artisan vendor:publish --provider="Barryvdh\Cors\ServiceProvider"
+ ```
+ > **Note:** When using custom headers, like `X-Auth-Token` or `X-Requested-With`, you must set the `allowedHeaders` to include those headers. You can also set it to `array('*')` to allow all custom headers.
+ 
+ > **Note:** If you are explicitly whitelisting headers, you must include `Origin` or requests will fail to be recognized as CORS.
+ 
+     
+ ```php
+ return [
+      /*
+      |--------------------------------------------------------------------------
+      | Laravel CORS
+      |--------------------------------------------------------------------------
+      |
+      | allowedOrigins, allowedHeaders and allowedMethods can be set to array('*')
+      | to accept any value.
+      |
+      */
+     'supportsCredentials' => false,
+     'allowedOrigins' => ['*'],
+     'allowedHeaders' => ['Content-Type', 'X-Requested-With'],
+     'allowedMethods' => ['*'], // ex: ['GET', 'POST', 'PUT',  'DELETE']
+     'exposedHeaders' => [],
+     'maxAge' => 0,
+ ]
+ ```
+ 
+ `allowedOrigins`, `allowedHeaders` and `allowedMethods` can be set to `array('*')` to accept any value.
+ 
+ > **Note:** Try to be a specific as possible. You can start developing with loose constraints, but it's better to be as strict as possible!
+ 
+ > **Note:** Because of [http method overriding](http://symfony.com/doc/current/reference/configuration/framework.html#http-method-override) in Laravel, allowing POST methods will also enable the API users to perform PUT and DELETE requests as well.
+ 
+ ### Lumen
+ 
+ On Laravel Lumen, load your configuration file manually in `bootstrap/app.php`:
+ ```php
+ $app->configure('cors');
+ ```
+ 
+ And register the ServiceProvider:
+ 
+ ```php
+ $app->register(Barryvdh\Cors\ServiceProvider::class);
+ ```
+ 
+ ## Global usage for Lumen
+ To allow CORS for all your routes, add the `HandleCors` middleware to the global middleware:
+ ```php
+ $app->middleware([
+     // ...
+     \Barryvdh\Cors\HandleCors::class,
+ ]);
+ ```
+ 
+ ## Group middleware for Lumen
+ If you want to allow CORS on a specific middleware group or route, add the `HandleCors` middleware to your group:
+ 
+ ```php
+ $app->routeMiddleware([
+     // ...
+     'cors' => \Barryvdh\Cors\HandleCors::class,
+ ]);
+ ```
+ 
+ ## Common problems and errors (Pre Laravel 5.3)
+ In order for the package to work, the request has to be a valid CORS request and needs to include an "Origin" header.
+ 
+ When an error occurs, the middleware isn't run completely. So when this happens, you won't see the actual result, but will get a CORS error instead.
+ 
+ This could be a CSRF token error or just a simple problem.
+ 
+ > **Note:** This should be working in Laravel 5.3+.
+ 
+ ### Disabling CSRF protection for your API
+ 
+ If possible, use a different route group with CSRF protection enabled. 
+ Otherwise you can disable CSRF for certain requests in `App\Http\Middleware\VerifyCsrfToken`:
+ 
+ ```php
+ protected $except = [
+     'api/*'
+ ];
+ ```
+     
+ ## License
+ 
+ Released under the MIT License, see [LICENSE](LICENSE).
+ 
+ [ico-version]: https://img.shields.io/packagist/v/barryvdh/laravel-cors.svg?style=flat-square
+ [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
+ [ico-travis]: https://img.shields.io/travis/barryvdh/laravel-cors/master.svg?style=flat-square
+ [ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/barryvdh/laravel-cors.svg?style=flat-square
+ [ico-code-quality]: https://img.shields.io/scrutinizer/g/barryvdh/laravel-cors.svg?style=flat-square
+ [ico-downloads]: https://img.shields.io/packagist/dt/barryvdh/laravel-cors.svg?style=flat-square
+ 
+ [link-packagist]: https://packagist.org/packages/barryvdh/laravel-cors
+ [link-travis]: https://travis-ci.org/barryvdh/laravel-cors
+ [link-scrutinizer]: https://scrutinizer-ci.com/g/barryvdh/laravel-cors/code-structure
+ [link-code-quality]: https://scrutinizer-ci.com/g/barryvdh/laravel-cors
+ [link-downloads]: https://packagist.org/packages/barryvdh/laravel-cors
+ [link-author]: https://github.com/barryvdh
+ [link-contributors]: ../../contributors
+ 
+ 
+ 
+ 
+ Pretty Routes for Laravel 5
+ ====
+ 
+ Visualise your routes in pretty format.
+ 
+ ![Pretty Routes](https://raw.githubusercontent.com/garygreen/pretty-routes/master/screenshot.png)
+ 
+ # Installation
+ 
+ ```bash
+ composer require garygreen/pretty-routes
+ ```
+ 
+ Add to your `config/app.php` providers array:
+ 
+ ```php
+ PrettyRoutes\ServiceProvider::class,
+ ```
+ 
+ By default the package exposes a `/routes` url. If you wish to configure this, publish the config.
+ 
+ ```bash
+ php artisan vendor:publish --provider="PrettyRoutes\ServiceProvider"
+ ```
