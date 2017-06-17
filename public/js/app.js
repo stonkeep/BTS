@@ -13883,6 +13883,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -13929,12 +13961,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     telefone: '',
                     email: ''
                 }],
-                locaisDatas: [{
+                locaisImplantacao: [{
                     ativo: true,
                     uf: '',
                     cidade: '',
                     bairro: '',
                     dataImplantacao: ''
+                }],
+                instituicoesParceiras: [{
+                    nome: '',
+                    atuacao: ''
                 }],
                 PublicosAlvo: [],
                 //                    instituicao_id: this.tecnologia.instituicaos_id,
@@ -13966,6 +14002,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         adicionaLocaisDatas: function adicionaLocaisDatas() {
             this.form.locaisDatas.push({ ativo: true, uf: '', cidade: '', bairro: '', dataImplantacao: '' });
+        },
+        adicionaInstituicao: function adicionaInstituicao() {
+            this.form.instituicoesParceiras.push({ nome: '', atuacao: '' });
         },
         submit: function submit() {
             // Submit the form via a POST request
@@ -38928,14 +38967,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.form.errors.clear($event.target.name)
       }
     }
-  }, [_c('alert-error', {
-    attrs: {
-      "form": _vm.form
-    }
-  }), _vm._v(" "), _c('alert-errors', {
+  }, [_c('alert-errors', {
     attrs: {
       "form": _vm.form,
-      "message": "There were some problems with your input."
+      "message": "Favor atentar para os problemas abaixo no seu formulário"
     }
   }), _vm._v(" "), _c('div', {
     staticClass: "form-group",
@@ -39808,7 +39843,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "rows": "4",
       "cols": "50",
-      "name": "recursosMateriais",
+      "name": "recursosHumanos",
       "id": "recursosHumanos"
     },
     domProps: {
@@ -39823,7 +39858,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _vm._v(" "), _c('has-error', {
     attrs: {
       "form": _vm.form,
-      "field": "recursosMateriais"
+      "field": "recursosHumanos"
     }
   })], 1)]), _vm._v(" "), _c('div', {
     staticClass: "form-group",
@@ -40118,7 +40153,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("\n                        Locais e datas onde a Tecnologia Social já foi implementada:")])]), _vm._v(" "), _c('div', {
     staticClass: "panel-body"
-  }, _vm._l((_vm.form.locaisDatas), function(localData, index) {
+  }, _vm._l((_vm.form.locaisImplantacao), function(localData, index) {
     return _c('div', [_c('div', {
       staticClass: "form-group"
     }, [_c('label', {
@@ -40266,7 +40301,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       on: {
         "click": function($event) {
           $event.preventDefault();
-          _vm.form.locaisDatas.splice(index, 1)
+          _vm.form.locaisImplantacao.splice(index, 1)
         }
       }
     })])
@@ -40329,7 +40364,97 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "form": _vm.form,
       "field": "PublicosAlvo"
     }
-  }), _vm._v(" "), _c('p', [_vm._v("Hold down the Ctrl (windows) / Command (Mac) button to select multiple options.")])], 1)]), _vm._v(" "), _c('br'), _vm._v(" "), _c('div', {
+  }), _vm._v(" "), _c('p', [_vm._v("Hold down the Ctrl (windows) / Command (Mac) button to select multiple options.")])], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "panel panel-default"
+  }, [_vm._m(1), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, _vm._l((_vm.form.instituicoesParceiras), function(instituicaoParceira, index) {
+    return _c('div', [_c('div', {
+      staticClass: "form-group"
+    }, [_c('label', {
+      staticClass: "col-md-3 control-label",
+      attrs: {
+        "for": "nome"
+      }
+    }, [_vm._v("Nome: ")]), _vm._v(" "), _c('div', {
+      staticClass: "col-md-6"
+    }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (instituicaoParceira.nome),
+        expression: "instituicaoParceira.nome"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        "type": "nome",
+        "name": "nome"
+      },
+      domProps: {
+        "value": (instituicaoParceira.nome)
+      },
+      on: {
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          instituicaoParceira.nome = $event.target.value
+        }
+      }
+    })])]), _vm._v(" "), _c('div', {
+      staticClass: "form-group"
+    }, [_c('label', {
+      staticClass: "col-md-3 control-label",
+      attrs: {
+        "for": "atuacao"
+      }
+    }, [_vm._v("Atuação: ")]), _vm._v(" "), _c('div', {
+      staticClass: "col-md-6"
+    }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (instituicaoParceira.atuacao),
+        expression: "instituicaoParceira.atuacao"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        "type": "atuacao",
+        "name": "atuacao",
+        "id": "atuacao"
+      },
+      domProps: {
+        "value": (instituicaoParceira.atuacao)
+      },
+      on: {
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          instituicaoParceira.atuacao = $event.target.value
+        }
+      }
+    })])]), _vm._v(" "), _c('button', {
+      staticClass: "btn btn-danger glyphicon glyphicon-minus",
+      on: {
+        "click": function($event) {
+          $event.preventDefault();
+          _vm.form.instituicoesParceiras.splice(index, 1)
+        }
+      }
+    })])
+  }))]), _vm._v(" "), _c('has-error', {
+    attrs: {
+      "form": _vm.form,
+      "field": "responsaveis"
+    }
+  }), _vm._v(" "), _c('div', {
+    staticClass: "form-inline"
+  }, [_c('button', {
+    staticClass: "btn btn-success glyphicon glyphicon-plus",
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.adicionaInstituicao($event)
+      }
+    }
+  })]), _vm._v(" "), _c('br'), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('button', {
     staticClass: "btn btn-primary",
@@ -40345,6 +40470,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('h3', {
     staticClass: "panel-title"
   }, [_vm._v("Responsáveis")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "panel-heading"
+  }, [_c('h3', {
+    staticClass: "panel-title"
+  }, [_vm._v("Instituições Parceiras: ")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {

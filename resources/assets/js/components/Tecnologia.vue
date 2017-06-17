@@ -1,8 +1,7 @@
 <template>
     <div class="container">
         <form @submit.prevent="submit" @keydown="form.errors.clear($event.target.name)" class="form-horizontal">
-            <alert-error :form="form"></alert-error>
-            <alert-errors :form="form" message="There were some problems with your input."></alert-errors>
+            <alert-errors :form="form" message="Favor atentar para os problemas abaixo no seu formulário"></alert-errors>
 
             <!----------------------Título----------------------------------------------------------------------------------------->
             <div class="form-group" :class="{ 'has-error': form.errors.has('titulo') }">
@@ -220,11 +219,11 @@
             <div class="form-group" :class="{ 'has-error': form.errors.has('recursosHumanos') }">
                 <label for="recursosHumanos" class="col-md-3 control-label">Recursos Humanos: </label>
                 <div class="col-md-6">
-                    <textarea rows="4" cols="50" v-model="form.recursosHumanos" name="recursosMateriais"
+                    <textarea rows="4" cols="50" v-model="form.recursosHumanos" name="recursosHumanos"
                               id="recursosHumanos"
                               class="form-control">
                     </textarea>
-                    <has-error :form="form" field="recursosMateriais"></has-error>
+                    <has-error :form="form" field="recursosHumanos"></has-error>
                 </div>
             </div>
 
@@ -321,7 +320,6 @@
             </div>
 
 
-            <!--//TODO Locais e datas onde a Tecnologia Social já foi implementada:-->
             <!----------------------Locais e datas---------------------------------------------------------------------------------->
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -330,7 +328,7 @@
                         Locais e datas onde a Tecnologia Social já foi implementada:</h3>
                 </div>
                 <div class="panel-body">
-                    <div v-for="(localData, index) in form.locaisDatas">
+                    <div v-for="(localData, index) in form.locaisImplantacao">
 
                         <div class="form-group">
                             <label for="ativo"
@@ -369,7 +367,7 @@
                                        class="form-control">
                             </div>
                         </div>
-                        <button v-on:click.prevent="form.locaisDatas.splice(index, 1)"
+                        <button v-on:click.prevent="form.locaisImplantacao.splice(index, 1)"
                                 class="btn btn-danger glyphicon glyphicon-minus"></button>
                     </div>
                 </div>
@@ -379,7 +377,7 @@
                         class="btn btn-success glyphicon glyphicon-plus"></button>
 
             </div>
-            <!--//TODO Público e quantidade total de pessoas atendidos por uma unidade da tecnologia social:-->
+
 <!--------------------Publico Alvo atendido-------------------------------------------------------------------------->
             <div class="form-group" :class="{ 'has-error': form.errors.has('PublicosAlvo') }">
                 <label for="PublicosAlvo" class="col-md-3 control-label">Publicos Alvo:</label>
@@ -394,8 +392,42 @@
 
                 </div>
             </div>
-            <!--//TODO Recursos humanos necessários para implantação de uma unidade da tecnologia social:-->
             <!--//TODO Instituições parceiras na tecnologia:-->
+
+<!--------------------Instituições parceiras-------------------------------------------------------------------------->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Instituições Parceiras: </h3>
+                </div>
+                <div class="panel-body">
+                    <div v-for="(instituicaoParceira, index) in form.instituicoesParceiras">
+                        <div class="form-group">
+                            <label for="nome" class="col-md-3 control-label">Nome: </label>
+                            <div class="col-md-6">
+                                <input v-model="instituicaoParceira.nome" type="nome" name="nome"
+                                       class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="atuacao" class="col-md-3 control-label">Atuação: </label>
+                            <div class="col-md-6">
+                                <input v-model="instituicaoParceira.atuacao" type="atuacao" name="atuacao" id="atuacao"
+                                       class="form-control">
+                            </div>
+                        </div>
+
+                        <button v-on:click.prevent="form.instituicoesParceiras.splice(index, 1)"
+                                class="btn btn-danger glyphicon glyphicon-minus"></button>
+                    </div>
+                </div>
+            </div>
+            <has-error :form="form" field="responsaveis"></has-error>
+
+            <div class="form-inline">
+                <button v-on:click.prevent="adicionaInstituicao"
+                        class="btn btn-success glyphicon glyphicon-plus"></button>
+            </div>
             <!--//TODO Anexos da tecnologia:-->
             <!--//TODO Endereços eletrônicos associados à tecnologia:-->
             <!--//TODO Banco de Imagens:-->
@@ -456,13 +488,19 @@
                             email: ''
                         },
                     ],
-                    locaisDatas: [
+                    locaisImplantacao: [
                         {
                             ativo: true,
                             uf: '',
                             cidade: '',
                             bairro: '',
                             dataImplantacao: ''
+                        },
+                    ],
+                    instituicoesParceiras: [
+                        {
+                            nome: '',
+                            atuacao: '',
                         },
                     ],
                     PublicosAlvo: [],
@@ -498,6 +536,11 @@
                 this.form.locaisDatas.push(
                     { ativo: true, uf: '', cidade: '', bairro: '', dataImplantacao: ''}
                 )
+            },
+            adicionaInstituicao () {
+                this.form.instituicoesParceiras.push(
+                    { nome: '', atuacao: '',}
+    )
             },
             submit () {
                 // Submit the form via a POST request
