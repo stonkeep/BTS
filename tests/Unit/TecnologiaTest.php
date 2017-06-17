@@ -476,7 +476,7 @@ class TecnologiaTest extends TestCase
 
 
     /** @test */
-    function teste_responsaveis()
+        function teste_responsaveis()
     {
         $this->disableExceptionHandling();
         $responsaveis = [];

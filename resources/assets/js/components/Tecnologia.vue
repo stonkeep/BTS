@@ -5,6 +5,7 @@
             <alert-errors :form="form" message="There were some problems with your input."></alert-errors>
 
 
+            <!----------------------Título----------------------------------------------------------------------------------------->
             <div class="form-group" :class="{ 'has-error': form.errors.has('titulo') }">
                 <label for="titulo" class="col-md-3 control-label">Título</label>
                 <div class="col-md-6">
@@ -15,6 +16,7 @@
                 </div>
             </div>
 
+            <!----------------------Fim lucrativo---------------------------------------------------------------------------------->
 
             <div class="form-group" :class="{ 'has-error': form.errors.has('fimLucrativo') }">
                 <label for="fimLucrativo" class="col-md-3 control-label">Fím Lucrativo</label>
@@ -28,7 +30,7 @@
                 </div>
             </div>
 
-
+            <!----------------------Tempo de Implantação--------------------------------------------------------------------------->
             <div class="form-group" :class="{ 'has-error': form.errors.has('tempoImplantacao') }">
                 <label for="tempoImplantacao" class="col-md-3 control-label">Tempo de implantação</label>
                 <div class="col-md-6">
@@ -38,7 +40,7 @@
                 </div>
             </div>
 
-
+            <!----------------------Em atividade?--------------------------------------------------------------------------->
             <div class="form-group" :class="{ 'has-error': form.errors.has('emAtividade') }">
                 <label for="emAtividade" class="col-md-3 control-label">Em Atividade:</label>
                 <div class="col-md-6" id="emAtividade">
@@ -216,6 +218,18 @@
             </div>
 
 
+            <div class="form-group" :class="{ 'has-error': form.errors.has('recursosHumanos') }">
+                <label for="recursosHumanos" class="col-md-3 control-label">Recursos Humanos: </label>
+                <div class="col-md-6">
+                    <textarea rows="4" cols="50" v-model="form.recursosHumanos" name="recursosMateriais"
+                              id="recursosHumanos"
+                              class="form-control">
+                    </textarea>
+                    <has-error :form="form" field="recursosMateriais"></has-error>
+                </div>
+            </div>
+
+
             <div class="form-group" :class="{ 'has-error': form.errors.has('recursosMateriais') }">
                 <label for="recursosMateriais" class="col-md-3 control-label">Recursos Materiais: </label>
                 <div class="col-md-6">
@@ -261,15 +275,119 @@
                     <has-error :form="form" field="depoimentoLivre"></has-error>
                 </div>
             </div>
-<!--//TODO Responsáveis pela tecnologia-->
-<!--//TODO Locais e datas onde a Tecnologia Social já foi implementada:-->
-<!--//TODO Público e quantidade total de pessoas atendidos por uma unidade da tecnologia social:-->
-<!--//TODO Recursos humanos necessários para implantação de uma unidade da tecnologia social:-->
-<!--//TODO Instituições parceiras na tecnologia:-->
-<!--//TODO Anexos da tecnologia:-->
-<!--//TODO Endereços eletrônicos associados à tecnologia:-->
-<!--//TODO Banco de Imagens:-->
-<!--//TODO -->
+
+            <!----------------------Responsáveis---------------------------------------------------------------------------------->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Responsáveis</h3>
+                </div>
+                <div class="panel-body">
+                    <!--<responsavel v-for="resp in qtdResponsaveis"></responsavel>-->
+
+                    <div v-for="(responsavel, index) in form.responsaveis">
+
+                        <div class="form-group">
+                            <label for="nome" class="col-md-3 control-label">Nome: </label>
+                            <div class="col-md-6">
+                                <input v-model="responsavel.nome" type="nome" name="nome" id="nome"
+                                       class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="telefone" class="col-md-3 control-label">Telefone: </label>
+                            <div class="col-md-6">
+                                <input v-model="responsavel.telefone" type="telefone" name="telefone" id="telefone"
+                                       class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="col-md-3 control-label">Email: </label>
+                            <div class="col-md-6">
+                                <input v-model="responsavel.email" type="email" name="email" id="email"
+                                       class="form-control">
+                            </div>
+                        </div>
+                        <button v-on:click.prevent="form.responsaveis.splice(index, 1)"
+                                class="btn btn-danger glyphicon glyphicon-minus"></button>
+                    </div>
+                </div>
+            </div>
+            <has-error :form="form" field="depoimentoLivre"></has-error>
+
+            <div class="form-inline">
+                <button v-on:click.prevent="adicionaResponsavel"
+                        class="btn btn-success glyphicon glyphicon-plus"></button>
+            </div>
+
+
+            <!--//TODO Locais e datas onde a Tecnologia Social já foi implementada:-->
+            <!----------------------Locais e datas---------------------------------------------------------------------------------->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"
+                        :class="{ 'has-error': form.errors.has('locaisDatas') }">
+                        Locais e datas onde a Tecnologia Social já foi implementada:</h3>
+                </div>
+                <div class="panel-body">
+                    <div v-for="(localData, index) in form.locaisDatas">
+
+                        <div class="form-group">
+                            <label for="ativo"
+                                   class="col-md-3 control-label">Ja contou com investimento da FBB?:</label>
+                            <div class="col-md-6" id="ativo">
+                                <input type="radio" name="ativo" id="ativoSim" value="1"
+                                       v-model="localData.ativo">
+                                <label for="ativoSim">Sim</label>
+                                <br>
+                                <input type="radio" name="ativo" id="ativoNao" value="0"
+                                       v-model="localData.ativo">
+                                <label for="ativoNao">Não</label>
+                                <has-error :form="form" field="ativo"></has-error>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="UF" class="col-md-3 control-label">UF: </label>
+                            <div class="col-md-6">
+                                <uf v-on:update="val => localData.uf = val"></uf>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="telefone" class="col-md-3 control-label">Cidade: </label>
+                            <div class="col-md-6">
+                                <input v-model="localData.cidade" type="telefone" name="telefone" id="cidade"
+                                       class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="col-md-3 control-label">Bairro: </label>
+                            <div class="col-md-6">
+                                <input v-model="localData.bairro" type="email" name="email" id="bairro"
+                                       class="form-control">
+                            </div>
+                        </div>
+                        <button v-on:click.prevent="form.locaisDatas.splice(index, 1)"
+                                class="btn btn-danger glyphicon glyphicon-minus"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-inline">
+                <button v-on:click.prevent="adicionaLocaisDatas"
+                        class="btn btn-success glyphicon glyphicon-plus"></button>
+
+            </div>
+            <!--//TODO Público e quantidade total de pessoas atendidos por uma unidade da tecnologia social:-->
+            <!--//TODO Recursos humanos necessários para implantação de uma unidade da tecnologia social:-->
+            <!--//TODO Instituições parceiras na tecnologia:-->
+            <!--//TODO Anexos da tecnologia:-->
+            <!--//TODO Endereços eletrônicos associados à tecnologia:-->
+            <!--//TODO Banco de Imagens:-->
+            <!--//TODO -->
+            <br>
             <div class="form-group">
                 <button :disabled="form.busy" type="submit" class="btn btn-primary" name="enviar">Enviar</button>
             </div>
@@ -279,7 +397,10 @@
 
 <script>
     import {Form, HasError, AlertError} from 'vform'
+    import Uf from '../components/uf.vue'
+
     export default {
+        components: {Uf},
         data () {
             return {
                 raiz: location.host,
@@ -287,6 +408,7 @@
                 subtemas2: [],
                 temas1: [],
                 temas2: [],
+
                 // Create a new form instance
                 form: new Form({
                     id: this.tecnologia.id,
@@ -300,7 +422,7 @@
                     categoria_id: this.tecnologia.categoria_id,
                     resumo: this.tecnologia.resumo,
                     tema_id: this.tecnologia.tema_id,
-                    subtema1: this.propssubtemas1,
+                    subtema1: [],
                     temaSecundario_id: this.tecnologia.temaSecundario_id,
                     subtema2: [],
                     problema: this.tecnologia.problema,
@@ -309,9 +431,27 @@
                     descricao: this.tecnologia.descricao,
                     resultadosAlcancados: this.tecnologia.resultadosAlcancados,
                     recursosMateriais: this.tecnologia.recursosMateriais,
+                    recursosHumanos: this.tecnologia.recursosHumanos,
                     valorEstimado: this.tecnologia.valorEstimado,
                     valorHumanos: this.tecnologia.valorHumanos,
                     depoimentoLivre: this.tecnologia.depoimentoLivre,
+                    responsaveis: [
+                        {
+                            nome: '',
+                            telefone: '',
+                            email: ''
+                        },
+                    ],
+                    locaisDatas: [
+                        {
+                            ativo: true,
+                            uf: '',
+                            cidade: '',
+                            bairro: '',
+                            dataImplantacao: ''
+                        },
+                    ],
+
 //                    instituicao_id: this.tecnologia.instituicaos_id,
 //                    TODO Nao esquecer de tirar depois
                     instituicao_id: 1,
@@ -321,7 +461,7 @@
         props: ['tecnologia', 'categorias', 'temas', 'propssubtemas1'],
         mounted() {
             this.temas1 = this.temas
-                this.temas2 = this.temas
+            this.temas2 = this.temas
 
 //            axios.get('../../api/subtemas/' + this.form.tema_id)
 //                .then(response => this.subtemas1 = response.data)
@@ -334,6 +474,16 @@
 
         },
         methods: {
+            adicionaResponsavel () {
+                this.form.responsaveis.push(
+                    {nome: '', telefone: '', email: ''}
+                )
+            },
+            adicionaLocaisDatas () {
+                this.form.locaisDatas.push(
+                    { ativo: true, uf: '', cidade: '', bairro: '', dataImplantacao: ''}
+                )
+            },
             submit () {
                 // Submit the form via a POST request
                 var location = window.location.href;

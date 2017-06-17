@@ -28,6 +28,7 @@ Vue.component('natureza', require('./components/NaturezaJuridica.vue'));
 Vue.component('publicoalvo', require('./components/PublicoAlvo.vue'));
 Vue.component('subtema', require('./components/SubTema.vue'));
 Vue.component('tecnologia', require('./components/Tecnologia.vue'));
+Vue.component('responsavel', require('./components/Responsavel.vue'));
 Vue.component('categoria', require('./components/Categoria.vue'));
 Vue.component('postCategoria', require('./components/PostCategoria.vue'));
 Vue.component('instituicao', require('./components/Instituicao.vue'));
