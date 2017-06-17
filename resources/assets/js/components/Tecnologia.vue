@@ -392,7 +392,6 @@
 
                 </div>
             </div>
-            <!--//TODO Instituições parceiras na tecnologia:-->
 
 <!--------------------Instituições parceiras-------------------------------------------------------------------------->
             <div class="panel panel-default">
@@ -428,8 +427,34 @@
                 <button v-on:click.prevent="adicionaInstituicao"
                         class="btn btn-success glyphicon glyphicon-plus"></button>
             </div>
-            <!--//TODO Anexos da tecnologia:-->
             <!--//TODO Endereços eletrônicos associados à tecnologia:-->
+
+            <!--------------------Instituições parceiras-------------------------------------------------------------------------->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Endereços Eletronicos: </h3>
+                </div>
+                <div class="panel-body">
+                    <div v-for="(endereco, index) in form.enderecosEletronicos">
+                        <div class="form-group">
+                            <label for="link" class="col-md-3 control-label">Link: </label>
+                            <div class="col-md-6">
+                                <input v-model="endereco.link" type="link" name="link"
+                                       class="form-control">
+                            </div>
+                        </div>
+                        <button v-on:click.prevent="form.enderecosEletronicos.splice(index, 1)"
+                                class="btn btn-danger glyphicon glyphicon-minus"></button>
+                    </div>
+                </div>
+            </div>
+            <has-error :form="form" field="responsaveis"></has-error>
+
+            <div class="form-inline">
+                <button v-on:click.prevent="adicionaEnderecoEletronico"
+                        class="btn btn-success glyphicon glyphicon-plus"></button>
+            </div>
+            <!--//TODO Anexos da tecnologia:-->
             <!--//TODO Banco de Imagens:-->
             <!--//TODO -->
             <br>
@@ -497,6 +522,9 @@
                             dataImplantacao: ''
                         },
                     ],
+                    enderecosEletronicos: [
+                        { link: ''}
+                    ],
                     instituicoesParceiras: [
                         {
                             nome: '',
@@ -538,9 +566,10 @@
                 )
             },
             adicionaInstituicao () {
-                this.form.instituicoesParceiras.push(
-                    { nome: '', atuacao: '',}
-    )
+                this.form.instituicoesParceiras.push({ nome: '', atuacao: '',})
+            },
+            adicionaEnderecoEletronico () {
+                this.form.enderecosEletronicos.push({ nome: '', atuacao: '',})
             },
             submit () {
                 // Submit the form via a POST request

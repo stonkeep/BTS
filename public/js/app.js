@@ -13915,6 +13915,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -13968,6 +13993,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     bairro: '',
                     dataImplantacao: ''
                 }],
+                enderecosEletronicos: [{ link: '' }],
                 instituicoesParceiras: [{
                     nome: '',
                     atuacao: ''
@@ -14005,6 +14031,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         adicionaInstituicao: function adicionaInstituicao() {
             this.form.instituicoesParceiras.push({ nome: '', atuacao: '' });
+        },
+        adicionaEnderecoEletronico: function adicionaEnderecoEletronico() {
+            this.form.enderecosEletronicos.push({ nome: '', atuacao: '' });
         },
         submit: function submit() {
             // Submit the form via a POST request
@@ -40454,6 +40483,65 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.adicionaInstituicao($event)
       }
     }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "panel panel-default"
+  }, [_vm._m(2), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, _vm._l((_vm.form.enderecosEletronicos), function(endereco, index) {
+    return _c('div', [_c('div', {
+      staticClass: "form-group"
+    }, [_c('label', {
+      staticClass: "col-md-3 control-label",
+      attrs: {
+        "for": "link"
+      }
+    }, [_vm._v("Link: ")]), _vm._v(" "), _c('div', {
+      staticClass: "col-md-6"
+    }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (endereco.link),
+        expression: "endereco.link"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        "type": "link",
+        "name": "link"
+      },
+      domProps: {
+        "value": (endereco.link)
+      },
+      on: {
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          endereco.link = $event.target.value
+        }
+      }
+    })])]), _vm._v(" "), _c('button', {
+      staticClass: "btn btn-danger glyphicon glyphicon-minus",
+      on: {
+        "click": function($event) {
+          $event.preventDefault();
+          _vm.form.enderecosEletronicos.splice(index, 1)
+        }
+      }
+    })])
+  }))]), _vm._v(" "), _c('has-error', {
+    attrs: {
+      "form": _vm.form,
+      "field": "responsaveis"
+    }
+  }), _vm._v(" "), _c('div', {
+    staticClass: "form-inline"
+  }, [_c('button', {
+    staticClass: "btn btn-success glyphicon glyphicon-plus",
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.adicionaEnderecoEletronico($event)
+      }
+    }
   })]), _vm._v(" "), _c('br'), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('button', {
@@ -40476,6 +40564,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('h3', {
     staticClass: "panel-title"
   }, [_vm._v("Instituições Parceiras: ")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "panel-heading"
+  }, [_c('h3', {
+    staticClass: "panel-title"
+  }, [_vm._v("Endereços Eletronicos: ")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
