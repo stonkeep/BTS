@@ -1,7 +1,8 @@
 <template>
     <div class="container">
         <form @submit.prevent="submit" @keydown="form.errors.clear($event.target.name)" class="form-horizontal">
-            <alert-errors :form="form" message="Favor atentar para os problemas abaixo no seu formulário"></alert-errors>
+            <alert-errors :form="form"
+                          message="Favor atentar para os problemas abaixo no seu formulário"></alert-errors>
 
             <!----------------------Título----------------------------------------------------------------------------------------->
             <div class="form-group" :class="{ 'has-error': form.errors.has('titulo') }">
@@ -19,10 +20,10 @@
             <div class="form-group" :class="{ 'has-error': form.errors.has('fimLucrativo') }">
                 <label for="fimLucrativo" class="col-md-3 control-label">Fím Lucrativo</label>
                 <div class="col-md-6" id="fimLucrativo">
-                    <input type="radio" name="fimLucrativo" id="fimLucrativoSim" value="0" v-model="form.fimLucrativo">
+                    <input type="radio" name="fimLucrativo" id="fimLucrativoSim" value="1" v-model="form.fimLucrativo">
                     <label for="fimLucrativoSim">Sim</label>
                     <br>
-                    <input type="radio" name="fimLucrativo" id="fimLucrativoNao" value="1" v-model="form.fimLucrativo">
+                    <input type="radio" name="fimLucrativo" id="fimLucrativoNao" value="0" v-model="form.fimLucrativo">
                     <label for="fimLucrativoNao">Não</label>
                     <has-error :form="form" field="fimLucrativo"></has-error>
                 </div>
@@ -51,7 +52,7 @@
                 </div>
             </div>
 
-
+            <!--inscricaoAnterior----------------------------------------------------------------->
             <div class="form-group" :class="{ 'has-error': form.errors.has('inscricaoAnterior') }">
                 <label for="inscricaoAnterior" class="col-md-3 control-label">Iscrições Anteriores:</label>
                 <div class="col-md-6" id="inscricaoAnterior">
@@ -66,6 +67,7 @@
                 </div>
             </div>
 
+            <!--investimentoFBB-->
             <div class="form-group" :class="{ 'has-error': form.errors.has('investimentoFBB') }">
                 <label for="investimentoFBB" class="col-md-3 control-label">Ja contou com investimento da FBB?:</label>
                 <div class="col-md-6" id="investimentoFBB">
@@ -80,7 +82,7 @@
                 </div>
             </div>
 
-
+            <!--Categoria--------------------------------------------->
             <div class="form-group" :class="{ 'has-error': form.errors.has('categoria_id') }">
                 <label for="categoria_id" class="col-md-3 control-label">Categoria: </label>
                 <div class="col-md-6" id="categoria_id">
@@ -89,12 +91,11 @@
                             {{ categoria.descricao }}
                         </option>
                     </select>
-
                     <has-error :form="form" field="categoria_id"></has-error>
                 </div>
             </div>
 
-
+            <!--resumo---------------------------------------------------------------------->
             <div class="form-group" :class="{ 'has-error': form.errors.has('resumo') }">
                 <label for="resumo" class="col-md-3 control-label">Resumo: </label>
                 <div class="col-md-6">
@@ -355,7 +356,7 @@
                         <div class="form-group">
                             <label for="telefone" class="col-md-3 control-label">Cidade: </label>
                             <div class="col-md-6">
-                                <input v-model="localData.cidade" type="telefone" name="telefone" id="cidade"
+                                <input v-model="localData.cidade" type="cidade" name="cidade" id="cidade"
                                        class="form-control">
                             </div>
                         </div>
@@ -363,7 +364,7 @@
                         <div class="form-group">
                             <label for="email" class="col-md-3 control-label">Bairro: </label>
                             <div class="col-md-6">
-                                <input v-model="localData.bairro" type="bairro" name="email" id="bairro"
+                                <input v-model="localData.bairro" type="bairro" name="bairro" id="bairro"
                                        class="form-control">
                             </div>
                         </div>
@@ -378,7 +379,7 @@
 
             </div>
 
-<!--------------------Publico Alvo atendido-------------------------------------------------------------------------->
+            <!--------------------Publico Alvo atendido-------------------------------------------------------------------------->
             <div class="form-group" :class="{ 'has-error': form.errors.has('PublicosAlvo') }">
                 <label for="PublicosAlvo" class="col-md-3 control-label">Publicos Alvo:</label>
                 <div class="col-md-6" id="PublicosAlvo">
@@ -393,7 +394,7 @@
                 </div>
             </div>
 
-<!--------------------Instituições parceiras-------------------------------------------------------------------------->
+            <!--------------------Instituições parceiras-------------------------------------------------------------------------->
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Instituições Parceiras: </h3>
@@ -403,7 +404,7 @@
                         <div class="form-group">
                             <label for="nome" class="col-md-3 control-label">Nome: </label>
                             <div class="col-md-6">
-                                <input v-model="instituicaoParceira.nome" type="nome" name="nome"
+                                <input v-model="instituicaoParceira.nome" type="instituicaoNome" name="instituicaoNome"
                                        class="form-control">
                             </div>
                         </div>
@@ -439,7 +440,7 @@
                         <div class="form-group">
                             <label for="link" class="col-md-3 control-label">Link: </label>
                             <div class="col-md-6">
-                                <input v-model="endereco.link" type="link" name="link"
+                                <input v-model="endereco.link" type="enderecoEletronico" name="enderecoEletronico"
                                        class="form-control">
                             </div>
                         </div>
@@ -523,7 +524,7 @@
                         },
                     ],
                     enderecosEletronicos: [
-                        { link: ''}
+                        {link: ''}
                     ],
                     instituicoesParceiras: [
                         {
@@ -562,23 +563,24 @@
             },
             adicionaLocaisDatas () {
                 this.form.locaisDatas.push(
-                    { ativo: true, uf: '', cidade: '', bairro: '', dataImplantacao: ''}
+                    {ativo: true, uf: '', cidade: '', bairro: '', dataImplantacao: ''}
                 )
             },
             adicionaInstituicao () {
-                this.form.instituicoesParceiras.push({ nome: '', atuacao: '',})
+                this.form.instituicoesParceiras.push({nome: '', atuacao: '',})
             },
             adicionaEnderecoEletronico () {
-                this.form.enderecosEletronicos.push({ nome: '', atuacao: '',})
+                this.form.enderecosEletronicos.push({nome: '', atuacao: '',})
             },
             submit () {
                 // Submit the form via a POST request
                 var location = window.location.href;
                 if (location.indexOf("edit") > -1) {
-                    this.form.put('/admin/tecnologias/update/' + this.tecnologia.id)
+                    this.form.put('admin/tecnologias/update/' + this.tecnologia.id)
                         .then(({data}) => {
                             window.location.href = '/admin/tecnologias'
                         })
+
                 } else {
                     this.form.post('/admin/tecnologias/create')
                         .then(({data}) => {

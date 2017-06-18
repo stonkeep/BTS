@@ -23,12 +23,10 @@ class TecnologiasController extends Controller
     public function __construct()
     {
         $user = Auth::user();
-        if ($user) {
-            if ( $user->can('Tecnologias')) {
-                $this->autorizado = true;
-            } else {
-                flash('Você não tem acesso suficiente')->error();
-            }
+        if ($user->can('Tecnologias')) {
+            $this->autorizado = true;
+        } else {
+            flash('Você não tem acesso suficiente')->error();
         }
     }
 
@@ -45,6 +43,7 @@ class TecnologiasController extends Controller
         )->get();
         dd($tecnologias);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -52,7 +51,7 @@ class TecnologiasController extends Controller
      */
     public function index()
     {
-        if ( ! $this->autorizado) {
+        if (!$this->autorizado) {
             return back();
         }
 
@@ -69,7 +68,7 @@ class TecnologiasController extends Controller
      */
     public function create()
     {
-        if ( ! $this->autorizado) {
+        if (!$this->autorizado) {
             return back();
         }
 
@@ -98,23 +97,29 @@ class TecnologiasController extends Controller
         $instituicaoId = $request['instituicao_id'];
         $instituicao = Instituicao::find($instituicaoId); //TODO tratamento de erro
 
+
         $id = Tecnologia::max('id');
         $id = ($id == null) ? 1 : $id;
         if (is_null($request['numeroInscricao'])) {
-            $request['numeroInscricao'] = Carbon::now()->year.'/'.($id + 1);
+            $request['numeroInscricao'] = Carbon::now()->year . '/' . ($id + 1);
         }
 
         $input = $request->except([
-            'subtema1', 
-            'subtema2', 
-            'instituicao_id', 
-            'responsaveis', 
+            'subtema1',
+            'subtema2',
+            'instituicao_id',
+            'responsaveis',
             'locaisImplantacao',
             'PublicoAlvo',
             'instituicoesParceiras',
             'enderecosEletronicos',
+            'PublicosAlvo',
         ]);
-        $tecnologia = $instituicao->tecnologias()->create($input);//TODO tratamento de erro
+        try {
+            $tecnologia = $instituicao->tecnologias()->create($input);//TODO tratamento de erro
+        } catch (\Exception $e) {
+            dd($e);
+        }
 
         //Grava os subtemas principais
         $inputs = $request->only('subtema1');
@@ -122,7 +127,7 @@ class TecnologiasController extends Controller
             $tecnologia->subtemas()->attach($input);//TODO tratamento de erro
         }
 
-        //Grava os subtemas secundários 
+        //Grava os subtemas secundários
         $inputs = $request->only('subtema2');
         foreach ($inputs as $input) {
             $tecnologia->subtemas()->attach($input);//TODO tratamento de erro
@@ -135,7 +140,7 @@ class TecnologiasController extends Controller
                 $tecnologia->responsaveis()->create($input);//TODO tratamento de erro
             }
         } catch (\Exception $e) {
-            flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
+            flash('Erro ' . $e->getCode() . ' ocorreu. Favor verificar com a administração do sistema')->error();
         }
 
         try {
@@ -145,7 +150,7 @@ class TecnologiasController extends Controller
                 $tecnologia->locais()->create($input);
             }
         } catch (\Exception $e) {
-            flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
+            flash('Erro ' . $e->getCode() . ' ocorreu. Favor verificar com a administração do sistema')->error();
         }
 
         try {
@@ -155,9 +160,9 @@ class TecnologiasController extends Controller
                 $tecnologia->locais()->create($input);
             }
         } catch (\Exception $e) {
-            flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
+            flash('Erro ' . $e->getCode() . ' ocorreu. Favor verificar com a administração do sistema')->error();
         }
-        
+
         try {
             $publico = $request->only('PublicoAlvo');
             $inputs = $publico['PublicoAlvo'];
@@ -165,7 +170,7 @@ class TecnologiasController extends Controller
                 $tecnologia->publicos()->attach($input);
             }
         } catch (\Exception $e) {
-            flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
+            flash('Erro ' . $e->getCode() . ' ocorreu. Favor verificar com a administração do sistema')->error();
         }
 
         try {
@@ -175,7 +180,7 @@ class TecnologiasController extends Controller
                 $tecnologia->instituicoesParceiras()->create($input);
             }
         } catch (\Exception $e) {
-            flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
+            flash('Erro ' . $e->getCode() . ' ocorreu. Favor verificar com a administração do sistema')->error();
         }
 
         try {
@@ -185,7 +190,7 @@ class TecnologiasController extends Controller
                 $tecnologia->enderecosEletronico()->create($input);
             }
         } catch (\Exception $e) {
-            flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
+            flash('Erro ' . $e->getCode() . ' ocorreu. Favor verificar com a administração do sistema')->error();
         }
 
 
@@ -216,17 +221,22 @@ class TecnologiasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Tecnologia $tecnologia)
+    public function edit($id)
     {
-        if ( ! $this->autorizado) {
+
+        if (!$this->autorizado) {
             return back();
         }
+
+        $tecnologia = Tecnologia::find($id);
 
         $categorias = Categoria::all();
         $temas = Temas::all();
 //        dd($tecnologia->temaPrincipal());
 //        dd(strval($tecnologia->temaPrincipal()->first()->id));
 //        dd($tecnologia->subtemas->where('tema_id', strval($tecnologia->temaPrincipal()->first()->id)));
+
+        dd($tecnologia->subtemas->);
         $subtemasPrincipal = $tecnologia->subtemasPrincipal();
 
 //        dd($subtemasPrincipal);
@@ -238,7 +248,7 @@ class TecnologiasController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \App\Tecnologia          $tecnologia
+     * @param  \App\Tecnologia $tecnologia
      *
      * @return \Illuminate\Http\Response
      */
@@ -252,7 +262,7 @@ class TecnologiasController extends Controller
 
         $tecnologia->update($input);
         // TODO ajustar edição com as outras tabelas
-        flash('Tecnologia '.$tecnologia->titulo.' atualizada com sucesso')->success();
+        flash('Tecnologia ' . $tecnologia->titulo . ' atualizada com sucesso')->success();
 
         //desfaz todas as ligações anteriores
         $tecnologia->subtemas()->detach();
@@ -279,11 +289,20 @@ class TecnologiasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tecnologia $tecnologia)
+    public function destroy($id)
     {
-        $tecnologia->delete();
+        try {
+            Tecnologia::find($id)->delete();
+            flash('Tecnologia deletada com sucesso')->success();
+        } catch (\Exception $e) {
+            if ($e->getCode() == "23000") { //23000 is sql code for integrity constraint violation
+                flash('Resgistro tem dependência, Favor verificar as ligaçõe')->error();
+            } else {
+                flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
+            }
 
-        flash('Tecnologia '.$tecnologia->titulo.' deletada com sucesso')->success();
+        }
+
 
         return redirect(route('indexTecnologias'));
     }

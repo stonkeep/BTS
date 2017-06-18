@@ -38,8 +38,8 @@ class CreateTecnologiasTable extends Migration
             $table->text('depoimentoLivre');
             $table->unsignedInteger('instituicao_id');
             $table->timestamps();
-            $table->foreign('instituicao_id')->references('id')->on('instituicaos')->onDelete('restrict');
-                $table->foreign('categoria_id')->references('id')->on('categorias')->onDelete('restrict');
+//            $table->foreign('instituicao_id')->references('id')->on('instituicaos')->onDelete('restrict');
+//                $table->foreign('categoria_id')->references('id')->on('categorias')->onDelete('restrict');
         });
     }
 
