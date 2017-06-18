@@ -232,12 +232,7 @@ class TecnologiasController extends Controller
 
         $categorias = Categoria::all();
         $temas = Temas::all();
-//        dd($tecnologia->temaPrincipal());
-//        dd(strval($tecnologia->temaPrincipal()->first()->id));
-//        dd($tecnologia->subtemas->where('tema_id', strval($tecnologia->temaPrincipal()->first()->id)));
-
-        dd($tecnologia->subtemas->);
-        $subtemasPrincipal = $tecnologia->subtemasPrincipal();
+        $subtemasPrincipal = $tecnologia->subtemas->where('tema_id', $tecnologia->temaPrincipal->id);
 
 //        dd($subtemasPrincipal);
         return view('admin.tecnologias.edit', compact('tecnologia', 'categorias', 'temas', 'subtemasPrincipal'));
