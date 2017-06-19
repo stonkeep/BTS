@@ -133,6 +133,7 @@ class TecnologiasController extends Controller
             $tecnologia->subtemas()->attach($input);//TODO tratamento de erro
         }
 
+        //TODO verificar se ta gravando corretamente daqui para baixo
         try {
             $responsaveis = $request->only('responsaveis');
             $inputs = $responsaveis['responsaveis'];
@@ -232,10 +233,11 @@ class TecnologiasController extends Controller
 
         $categorias = Categoria::all();
         $temas = Temas::all();
-        $subtemasPrincipal = $tecnologia->subtemas->where('tema_id', $tecnologia->temaPrincipal->id);
+        dd($tecnologia->responsaveis);
+//        $subtemasPrincipal = $tecnologia->subtemasPrincipal();
+//        $subtemasSecundario = $tecnologia->subtemasSecundario();
 
-//        dd($subtemasPrincipal);
-        return view('admin.tecnologias.edit', compact('tecnologia', 'categorias', 'temas', 'subtemasPrincipal'));
+        return view('admin.tecnologias.edit', compact('tecnologia', 'categorias', 'temas'));
     }
 
 

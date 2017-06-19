@@ -48,11 +48,6 @@ class Tecnologia extends Model
         return $this->belongsToMany(SubTemas::class);
     }
 
-    public function subtemasPrincipal()
-    {
-        return SubTemas::where('tema_id', $this->temaPrincipal()->first()->id);
-    }
-
     public function temaPrincipal()
     {
         return $this->belongsTo(Temas::class, 'tema_id', 'id');
@@ -62,6 +57,16 @@ class Tecnologia extends Model
     public function temaSecundario()
     {
         return $this->belongsTo(Temas::class, 'temaSecundario_id', 'id');
+    }
+
+    public function subtemasPrincipal()
+    {
+        return $this->subtemas->where('tema_id', $this->temaPrincipal->id);
+    }
+
+    public function subtemasSecundario()
+    {
+        return $this->subtemas->where('tema_id', $this->temaSecundario->id);
     }
 
     public function responsaveis()

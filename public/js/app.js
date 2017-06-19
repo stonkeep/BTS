@@ -14041,20 +14041,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
 
-    props: ['tecnologia', 'categorias', 'temas', 'propssubtemas1', 'publicos'],
+    props: ['tecnologia', 'categorias', 'temas', 'propsubtemaprincipal', 'publicos'],
     mounted: function mounted() {
+        var _this = this;
+
         this.temas1 = this.temas;
         this.temas2 = this.temas;
         this.PublicosAlvo = this.publicos;
 
-        //            axios.get('../../api/subtemas/' + this.form.tema_id)
-        //                .then(response => this.subtemas1 = response.data)
-        //                .catch(error => console.log(error));
+        axios.get('/api/subtemas/' + this.form.tema_id).then(function (response) {
+            return _this.subtemas1 = response.data;
+        }).catch(function (error) {
+            return console.log(error);
+        });
 
+        this.form.subtemas1 = this.propsubtemaprincipal; //TODO acertar o select
 
-        //            axios.get('../api/subtemas/' + this.form.temaSecundario_id)
-        //                .then(response => this.subtemas2 = response.data)
-        //                .catch(error => console.log(error));
+        axios.get('/api/subtemas/' + this.form.temaSecundario_id).then(function (response) {
+            return _this.subtemas2 = response.data;
+        }).catch(function (error) {
+            return console.log(error);
+        });
     },
 
     methods: {
@@ -14090,32 +14097,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     watch: {
         'form.tema_id': function formTema_id(val, oldVal) {
-            var _this = this;
+            var _this2 = this;
 
             axios.get('/api/subtemas/' + this.form.tema_id).then(function (response) {
-                return _this.subtemas1 = response.data;
+                return _this2.subtemas1 = response.data;
             }).catch(function (error) {
                 return console.log(error);
             });
-
-            //
-            //                $("#temaSecundario_id option").each(function() {
-            //                    $(this).remove();
-            //                });
-            //
-            //                this.temas.forEach(function(item, index){
-            //                    $("#temaSecundario_id").append('<option value="'+item.id+'" nome="'+tema.nome+'">'+ item.nome + '</option>');
-            //                });
-            //
-            //                let nome = $('#tema_id :selected').attr("nome");
-            //                let teste =  $('#temaSecundario_id option[nome="'+ nome +'"]').remove();
         },
 
         'form.temaSecundario_id': function formTemaSecundario_id(val, oldVal) {
-            var _this2 = this;
+            var _this3 = this;
 
             axios.get('/api/subtemas/' + this.form.temaSecundario_id).then(function (response) {
-                return _this2.subtemas2 = response.data;
+                return _this3.subtemas2 = response.data;
             }).catch(function (error) {
                 return console.log(error);
             });

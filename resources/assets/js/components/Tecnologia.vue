@@ -539,21 +539,21 @@
                 })
             };
         },
-        props: ['tecnologia', 'categorias', 'temas', 'propssubtemas1', 'publicos'],
+        props: ['tecnologia', 'categorias', 'temas', 'propsubtemaprincipal', 'publicos'],
         mounted() {
             this.temas1 = this.temas;
             this.temas2 = this.temas;
             this.PublicosAlvo = this.publicos;
 
-//            axios.get('../../api/subtemas/' + this.form.tema_id)
-//                .then(response => this.subtemas1 = response.data)
-//                .catch(error => console.log(error));
+            axios.get('/api/subtemas/' + this.form.tema_id)
+                .then(response => this.subtemas1 = response.data)
+                .catch(error => console.log(error))
 
+            this.form.subtemas1 = this.propsubtemaprincipal; //TODO acertar o select
 
-//            axios.get('../api/subtemas/' + this.form.temaSecundario_id)
-//                .then(response => this.subtemas2 = response.data)
-//                .catch(error => console.log(error));
-
+            axios.get('/api/subtemas/' + this.form.temaSecundario_id)
+                .then(response => this.subtemas2 = response.data)
+                .catch(error => console.log(error));
         },
         methods: {
             adicionaResponsavel () {
@@ -595,18 +595,6 @@
                 axios.get('/api/subtemas/' + this.form.tema_id)
                     .then(response => this.subtemas1 = response.data)
                     .catch(error => console.log(error))
-
-//
-//                $("#temaSecundario_id option").each(function() {
-//                    $(this).remove();
-//                });
-//
-//                this.temas.forEach(function(item, index){
-//                    $("#temaSecundario_id").append('<option value="'+item.id+'" nome="'+tema.nome+'">'+ item.nome + '</option>');
-//                });
-//
-//                let nome = $('#tema_id :selected').attr("nome");
-//                let teste =  $('#temaSecundario_id option[nome="'+ nome +'"]').remove();
             },
 
             'form.temaSecundario_id': function (val, oldVal) {
