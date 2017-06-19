@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestsUtil;
 use Faker\Factory as Faker;
 
-class RegioesTest extends DuskTestCase
+class TecnologiaTest extends DuskTestCase
 {
     use DatabaseMigrations;
     use TestsUtil;

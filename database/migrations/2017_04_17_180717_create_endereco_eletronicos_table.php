@@ -16,6 +16,10 @@ class CreateEnderecoEletronicosTable extends Migration
         Schema::create('endereco_eletronicos', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('tecnologia_id');
+            $table->foreign('tecnologia_id')
+                ->references('id')->on('tecnologias')
+                ->onDelete('cascade');
+
             $table->string('link');
             $table->timestamps();
         });

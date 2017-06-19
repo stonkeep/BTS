@@ -202,6 +202,8 @@ return [
         //CORS
         Barryvdh\Cors\ServiceProvider::class,
 
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+
 
     ],
 

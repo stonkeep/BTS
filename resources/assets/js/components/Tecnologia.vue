@@ -362,6 +362,14 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="telefone" class="col-md-3 control-label">Data de implatação: </label>
+                            <div class="col-md-6">
+                                <input v-model="localData.dataImplantacao" type="date" name="dataImplantacao" id="dataImplantacao"
+                                       class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label for="email" class="col-md-3 control-label">Bairro: </label>
                             <div class="col-md-6">
                                 <input v-model="localData.bairro" type="bairro" name="bairro" id="bairro"

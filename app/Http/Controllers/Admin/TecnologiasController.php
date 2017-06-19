@@ -13,11 +13,14 @@ use App\SubTemas;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TecnologiasController extends Controller
 {
 
     private $autorizado = false;
+
+    private $tecnologia;
 
 
     public function __construct()
@@ -33,16 +36,11 @@ class TecnologiasController extends Controller
 
     public function pesquisa(Request $request)
     {
-        $tecnologias = Tecnologia::search($request->texto)->with(
-            'subtemas',
-            'categoria',
-            'instituicao',
-            'publicos',
-            'temaPrincipal',
-            'temaSecundario'
-        )->get();
+        $tecnologias = Tecnologia::search($request->texto)->with('subtemas', 'categoria', 'instituicao', 'publicos',
+            'temaPrincipal', 'temaSecundario')->get();
         dd($tecnologias);
     }
+
 
     /**
      * Display a listing of the resource.
@@ -51,7 +49,7 @@ class TecnologiasController extends Controller
      */
     public function index()
     {
-        if (!$this->autorizado) {
+        if ( ! $this->autorizado) {
             return back();
         }
 
@@ -68,7 +66,7 @@ class TecnologiasController extends Controller
      */
     public function create()
     {
-        if (!$this->autorizado) {
+        if ( ! $this->autorizado) {
             return back();
         }
 
@@ -94,107 +92,84 @@ class TecnologiasController extends Controller
     public function store(StoreTecnologia $request)
     {
 
-        $instituicaoId = $request['instituicao_id'];
-        $instituicao = Instituicao::find($instituicaoId); //TODO tratamento de erro
+        DB::transaction(function () use ($request) {
 
+            $instituicaoId = $request['instituicao_id'];
+            $instituicao = Instituicao::find($instituicaoId); //TODO tratamento de erro
 
-        $id = Tecnologia::max('id');
-        $id = ($id == null) ? 1 : $id;
-        if (is_null($request['numeroInscricao'])) {
-            $request['numeroInscricao'] = Carbon::now()->year . '/' . ($id + 1);
-        }
+            $id = Tecnologia::max('id');
+            $id = ($id == null) ? 1 : $id;
+            if (is_null($request['numeroInscricao'])) {
+                $request['numeroInscricao'] = Carbon::now()->year.'/'.($id + 1);
+            }
 
-        $input = $request->except([
-            'subtema1',
-            'subtema2',
-            'instituicao_id',
-            'responsaveis',
-            'locaisImplantacao',
-            'PublicoAlvo',
-            'instituicoesParceiras',
-            'enderecosEletronicos',
-            'PublicosAlvo',
-        ]);
-        try {
-            $tecnologia = $instituicao->tecnologias()->create($input);//TODO tratamento de erro
-        } catch (\Exception $e) {
-            dd($e);
-        }
+            $input = $request->except([
+                'subtema1',
+                'subtema2',
+                'instituicao_id',
+                'responsaveis',
+                'locaisImplantacao',
+                'PublicoAlvo',
+                'instituicoesParceiras',
+                'enderecosEletronicos',
+                'PublicosAlvo',
+            ]);
 
-        //Grava os subtemas principais
-        $inputs = $request->only('subtema1');
-        foreach ($inputs as $input) {
-            $tecnologia->subtemas()->attach($input);//TODO tratamento de erro
-        }
+            $this->tecnologia = $instituicao->tecnologias()->create($input);//TODO tratamento de erro
 
-        //Grava os subtemas secundários
-        $inputs = $request->only('subtema2');
-        foreach ($inputs as $input) {
-            $tecnologia->subtemas()->attach($input);//TODO tratamento de erro
-        }
+            //Grava os subtemas principais
+            $inputs = $request->only('subtema1');
+            foreach ($inputs as $input) {
+                $this->tecnologia->subtemas()->attach($input);//TODO tratamento de erro
+            }
 
-        //TODO verificar se ta gravando corretamente daqui para baixo
-        try {
+            //Grava os subtemas secundários
+            $inputs = $request->only('subtema2');
+            foreach ($inputs as $input) {
+                $this->tecnologia->subtemas()->attach($input);//TODO tratamento de erro
+            }
+
             $responsaveis = $request->only('responsaveis');
             $inputs = $responsaveis['responsaveis'];
             foreach ($inputs as $input) {
-                $tecnologia->responsaveis()->create($input);//TODO tratamento de erro
+                $this->tecnologia->responsaveis()->create($input);//TODO tratamento de erro
             }
-        } catch (\Exception $e) {
-            flash('Erro ' . $e->getCode() . ' ocorreu. Favor verificar com a administração do sistema')->error();
-        }
 
-        try {
-            $locais = $request->only('locaisImplantacao');
-            $inputs = $locais['locaisImplantacao'];
-            foreach ($inputs as $input) {
-                $tecnologia->locais()->create($input);
-            }
-        } catch (\Exception $e) {
-            flash('Erro ' . $e->getCode() . ' ocorreu. Favor verificar com a administração do sistema')->error();
-        }
-
-        try {
-            $locais = $request->only('locaisImplantacao');
-            $inputs = $locais['locaisImplantacao'];
-            foreach ($inputs as $input) {
-                $tecnologia->locais()->create($input);
-            }
-        } catch (\Exception $e) {
-            flash('Erro ' . $e->getCode() . ' ocorreu. Favor verificar com a administração do sistema')->error();
-        }
-
-        try {
-            $publico = $request->only('PublicoAlvo');
-            $inputs = $publico['PublicoAlvo'];
-            foreach ($inputs as $input) {
-                $tecnologia->publicos()->attach($input);
-            }
-        } catch (\Exception $e) {
-            flash('Erro ' . $e->getCode() . ' ocorreu. Favor verificar com a administração do sistema')->error();
-        }
-
-        try {
-            $publico = $request->only('instituicoesParceiras');
-            $inputs = $publico['instituicoesParceiras'];
-            foreach ($inputs as $input) {
-                $tecnologia->instituicoesParceiras()->create($input);
-            }
-        } catch (\Exception $e) {
-            flash('Erro ' . $e->getCode() . ' ocorreu. Favor verificar com a administração do sistema')->error();
-        }
-
-        try {
-            $publico = $request->only('enderecosEletronicos');
-            $inputs = $publico['enderecosEletronicos'];
-            foreach ($inputs as $input) {
-                $tecnologia->enderecosEletronico()->create($input);
-            }
-        } catch (\Exception $e) {
-            flash('Erro ' . $e->getCode() . ' ocorreu. Favor verificar com a administração do sistema')->error();
-        }
+                $locais = $request->only('locaisImplantacao');
+                $inputs = $locais['locaisImplantacao'];
+                foreach ($inputs as $input) {
+                    $this->tecnologia->locais()->create($input);
+                }
 
 
+
+                $locais = $request->only('locaisImplantacao');
+                $inputs = $locais['locaisImplantacao'];
+                foreach ($inputs as $input) {
+                    $this->tecnologia->locais()->create($input);
+                }
+
+
+                $publico = $request->only('PublicosAlvo');
+                $inputs = $publico['PublicosAlvo'];
+                foreach ($inputs as $input) {
+                    $this->tecnologia->publicos()->attach($input);
+                }
+
+
+                $publico = $request->only('instituicoesParceiras');
+                $inputs = $publico['instituicoesParceiras'];
+                foreach ($inputs as $input) {
+                    $this->tecnologia->instituicoesParceiras()->create($input);
+                }
+
+                $publico = $request->only('enderecosEletronicos');
+                $inputs = $publico['enderecosEletronicos'];
+                foreach ($inputs as $input) {
+                    $this->tecnologia->enderecosEletronico()->create($input);
+                }
+
+        });
         //TODO poderia ser um tratamento de erro geral
 
         flash('Tecnologia Gravada com Sucesso')->success();
@@ -225,7 +200,7 @@ class TecnologiasController extends Controller
     public function edit($id)
     {
 
-        if (!$this->autorizado) {
+        if ( ! $this->autorizado) {
             return back();
         }
 
@@ -233,7 +208,6 @@ class TecnologiasController extends Controller
 
         $categorias = Categoria::all();
         $temas = Temas::all();
-        dd($tecnologia->responsaveis);
 //        $subtemasPrincipal = $tecnologia->subtemasPrincipal();
 //        $subtemasSecundario = $tecnologia->subtemasSecundario();
 
@@ -245,7 +219,7 @@ class TecnologiasController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \App\Tecnologia $tecnologia
+     * @param  \App\Tecnologia          $tecnologia
      *
      * @return \Illuminate\Http\Response
      */
@@ -259,7 +233,7 @@ class TecnologiasController extends Controller
 
         $tecnologia->update($input);
         // TODO ajustar edição com as outras tabelas
-        flash('Tecnologia ' . $tecnologia->titulo . ' atualizada com sucesso')->success();
+        flash('Tecnologia '.$tecnologia->titulo.' atualizada com sucesso')->success();
 
         //desfaz todas as ligações anteriores
         $tecnologia->subtemas()->detach();
@@ -299,7 +273,6 @@ class TecnologiasController extends Controller
             }
 
         }
-
 
         return redirect(route('indexTecnologias'));
     }
