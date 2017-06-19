@@ -48,7 +48,7 @@ class StoreTecnologia extends FormRequest
             'valorHumanos'          => 'required',
             'depoimentoLivre'       => 'required',
             'instituicao_id'        => 'required|exists:instituicaos,id',
-            'subtema1'              => 'required|exists:sub_temas,id',
+            'subtema1'              => 'required',
             'subtema2'              => 'required|exists:sub_temas,id',
             'responsaveis'          => 'required',
             'locaisImplantacao'     => 'required',

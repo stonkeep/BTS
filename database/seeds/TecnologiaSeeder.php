@@ -21,7 +21,9 @@ class TecnologiaSeeder extends Seeder
         $tecnologia->publicos()->attach(2);
 
         $tecnologia->subtemas()->attach(1);
+        $tecnologia->subtemas()->attach(2);
         $tecnologia->subtemas()->attach(8);
+        $tecnologia->subtemas()->attach(10);
 
         //Cria responsaveis
         $responsaveis = [];

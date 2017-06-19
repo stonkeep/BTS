@@ -14,6 +14,7 @@ use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class TecnologiasController extends Controller
 {
@@ -119,9 +120,10 @@ class TecnologiasController extends Controller
             $this->tecnologia = $instituicao->tecnologias()->create($input);
 
             //Grava os subtemas principais
-            $inputs = $request->only('subtema1');
+            $inputs = $request->only('subtema1')->toArray();
             foreach ($inputs as $input) {
-                $this->tecnologia->subtemas()->attach($input);
+                dd($input);
+                $this->tecnologia->subtemas()->attach($input->id);
             }
 
             //Grava os subtemas secundários
@@ -259,9 +261,10 @@ class TecnologiasController extends Controller
         } catch (\Exception $e) {
             if ($e->getCode() == "23000") { //23000 is sql code for integrity constraint violation
                 flash('Resgistro tem dependência, Favor verificar as ligaçõe')->error();
-                flash('Erro '.$e->getMessage().' ocorreu. Favor verificar com a administração do sistema')->error();
+                Log::error($e->getMessage());
             } else {
                 flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
+                Log::error($e->getMessage());
             }
 
         }
