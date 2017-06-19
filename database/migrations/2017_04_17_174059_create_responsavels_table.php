@@ -16,7 +16,7 @@ class CreateResponsavelsTable extends Migration
         Schema::create('responsavels', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
-            $table->integer('telefone');
+            $table->bigInteger('telefone');
             $table->string('email');
             $table->integer('tecnologia_id')->unsigned()->nullable();
             $table->foreign('tecnologia_id')

@@ -19,8 +19,8 @@ class CreateTablePublicosAlvoTecnologia extends Migration
             $table->foreign('tecnologia_id')->references('id')
                 ->on('tecnologias')->onDelete('cascade');
             $table->integer('publicos_alvo_id')->unsigned()->nullable();
-            $table->foreign('publicos_alvo_id')->references('id')
-                ->on('publicos_alvos')->onDelete('restrict');
+            //$table->foreign('publicos_alvo_id')->references('id')
+            //    ->on('publicos_alvos')->onDelete('restrict');
             $table->timestamps();
         });
     }

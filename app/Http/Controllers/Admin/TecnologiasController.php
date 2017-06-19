@@ -115,18 +115,19 @@ class TecnologiasController extends Controller
                 'PublicosAlvo',
             ]);
 
-            $this->tecnologia = $instituicao->tecnologias()->create($input);//TODO tratamento de erro
+            //Cria tecnologia
+            $this->tecnologia = $instituicao->tecnologias()->create($input);
 
             //Grava os subtemas principais
             $inputs = $request->only('subtema1');
             foreach ($inputs as $input) {
-                $this->tecnologia->subtemas()->attach($input);//TODO tratamento de erro
+                $this->tecnologia->subtemas()->attach($input);
             }
 
             //Grava os subtemas secundários
             $inputs = $request->only('subtema2');
             foreach ($inputs as $input) {
-                $this->tecnologia->subtemas()->attach($input);//TODO tratamento de erro
+                $this->tecnologia->subtemas()->attach($input);
             }
 
             $responsaveis = $request->only('responsaveis');
@@ -135,39 +136,29 @@ class TecnologiasController extends Controller
                 $this->tecnologia->responsaveis()->create($input);//TODO tratamento de erro
             }
 
-                $locais = $request->only('locaisImplantacao');
-                $inputs = $locais['locaisImplantacao'];
-                foreach ($inputs as $input) {
-                    $this->tecnologia->locais()->create($input);
-                }
+            $locais = $request->only('locaisImplantacao');
+            $inputs = $locais['locaisImplantacao'];
+            foreach ($inputs as $input) {
+                $this->tecnologia->locais()->create($input);
+            }
 
+            $publico = $request->only('PublicosAlvo');
+            $inputs = $publico['PublicosAlvo'];
+            foreach ($inputs as $input) {
+                $this->tecnologia->publicos()->attach($input);
+            }
 
+            $publico = $request->only('instituicoesParceiras');
+            $inputs = $publico['instituicoesParceiras'];
+            foreach ($inputs as $input) {
+                $this->tecnologia->instituicoesParceiras()->create($input);
+            }
 
-                $locais = $request->only('locaisImplantacao');
-                $inputs = $locais['locaisImplantacao'];
-                foreach ($inputs as $input) {
-                    $this->tecnologia->locais()->create($input);
-                }
-
-
-                $publico = $request->only('PublicosAlvo');
-                $inputs = $publico['PublicosAlvo'];
-                foreach ($inputs as $input) {
-                    $this->tecnologia->publicos()->attach($input);
-                }
-
-
-                $publico = $request->only('instituicoesParceiras');
-                $inputs = $publico['instituicoesParceiras'];
-                foreach ($inputs as $input) {
-                    $this->tecnologia->instituicoesParceiras()->create($input);
-                }
-
-                $publico = $request->only('enderecosEletronicos');
-                $inputs = $publico['enderecosEletronicos'];
-                foreach ($inputs as $input) {
-                    $this->tecnologia->enderecosEletronico()->create($input);
-                }
+            $publico = $request->only('enderecosEletronicos');
+            $inputs = $publico['enderecosEletronicos'];
+            foreach ($inputs as $input) {
+                $this->tecnologia->enderecosEletronico()->create($input);
+            }
 
         });
         //TODO poderia ser um tratamento de erro geral
@@ -268,6 +259,7 @@ class TecnologiasController extends Controller
         } catch (\Exception $e) {
             if ($e->getCode() == "23000") { //23000 is sql code for integrity constraint violation
                 flash('Resgistro tem dependência, Favor verificar as ligaçõe')->error();
+                flash('Erro '.$e->getMessage().' ocorreu. Favor verificar com a administração do sistema')->error();
             } else {
                 flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
             }
