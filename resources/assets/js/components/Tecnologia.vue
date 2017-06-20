@@ -599,7 +599,7 @@
                 )
             },
             adicionaLocaisDatas () {
-                this.form.locaisDatas.push(
+                this.form.locaisImplantacao.push(
                     {ativo: true, uf: '', cidade: '', bairro: '', dataImplantacao: ''}
                 )
             },
@@ -607,13 +607,13 @@
                 this.form.instituicoesParceiras.push({nome: '', atuacao: '',})
             },
             adicionaEnderecoEletronico () {
-                this.form.enderecosEletronicos.push({nome: '', atuacao: '',})
+                this.form.enderecosEletronicos.push({link: ''})
             },
             submit () {
                 // Submit the form via a POST request
                 var location = window.location.href;
                 if (location.indexOf("edit") > -1) {
-                    this.form.put('admin/tecnologias/update/' + this.tecnologia.id)
+                    this.form.put('/admin/tecnologias/update/' + this.tecnologia.id)
                         .then(({data}) => {
                             window.location.href = '/admin/tecnologias'
                         })

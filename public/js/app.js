@@ -14108,19 +14108,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.form.responsaveis.push({ nome: '', telefone: '', email: '' });
         },
         adicionaLocaisDatas: function adicionaLocaisDatas() {
-            this.form.locaisDatas.push({ ativo: true, uf: '', cidade: '', bairro: '', dataImplantacao: '' });
+            this.form.locaisImplantacao.push({ ativo: true, uf: '', cidade: '', bairro: '', dataImplantacao: '' });
         },
         adicionaInstituicao: function adicionaInstituicao() {
             this.form.instituicoesParceiras.push({ nome: '', atuacao: '' });
         },
         adicionaEnderecoEletronico: function adicionaEnderecoEletronico() {
-            this.form.enderecosEletronicos.push({ nome: '', atuacao: '' });
+            this.form.enderecosEletronicos.push({ link: '' });
         },
         submit: function submit() {
             // Submit the form via a POST request
             var location = window.location.href;
             if (location.indexOf("edit") > -1) {
-                this.form.put('admin/tecnologias/update/' + this.tecnologia.id).then(function (_ref) {
+                this.form.put('/admin/tecnologias/update/' + this.tecnologia.id).then(function (_ref) {
                     var data = _ref.data;
 
                     window.location.href = '/admin/tecnologias';

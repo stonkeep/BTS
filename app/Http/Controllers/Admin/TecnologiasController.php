@@ -117,50 +117,50 @@ class TecnologiasController extends Controller
             ]);
 
             //Cria tecnologia
-            $this->tecnologia = $instituicao->tecnologias()->create($input);
+            $tecnologia = $instituicao->tecnologias()->create($input);
 
             //Grava os subtemas principais
             $inputs = $request->only('subtema1');
             $inputs = $inputs['subtema1'];
             foreach ($inputs as $input) {
-                $this->tecnologia->subtemas()->attach($input['id']);
+                $tecnologia->subtemas()->attach($input['id']);
             }
 
             //Grava os subtemas secundários
             $inputs = $request->only('subtema2');
             $inputs = $inputs['subtema2'];
             foreach ($inputs as $input) {
-                $this->tecnologia->subtemas()->attach($input['id']);
+                $tecnologia->subtemas()->attach($input['id']);
             }
 
             $responsaveis = $request->only('responsaveis');
             $inputs = $responsaveis['responsaveis'];
             foreach ($inputs as $input) {
-                $this->tecnologia->responsaveis()->create($input);//TODO tratamento de erro
+                $tecnologia->responsaveis()->create($input);//TODO tratamento de erro
             }
 
             $locais = $request->only('locaisImplantacao');
             $inputs = $locais['locaisImplantacao'];
             foreach ($inputs as $input) {
-                $this->tecnologia->locais()->create($input);
+                $tecnologia->locais()->create($input);
             }
 
             $publico = $request->only('PublicosAlvo');
             $inputs = $publico['PublicosAlvo'];
             foreach ($inputs as $input) {
-                $this->tecnologia->publicos()->attach($input['id']);
+                $tecnologia->publicos()->attach($input['id']);
             }
 
             $publico = $request->only('instituicoesParceiras');
             $inputs = $publico['instituicoesParceiras'];
             foreach ($inputs as $input) {
-                $this->tecnologia->instituicoesParceiras()->create($input);
+                $tecnologia->instituicoesParceiras()->create($input);
             }
 
             $publico = $request->only('enderecosEletronicos');
             $inputs = $publico['enderecosEletronicos'];
             foreach ($inputs as $input) {
-                $this->tecnologia->enderecosEletronico()->create($input);
+                $tecnologia->enderecosEletronico()->create($input);
             }
         });
         //TODO poderia ser um tratamento de erro geral
@@ -203,6 +203,7 @@ class TecnologiasController extends Controller
         $publicosAlvo = PublicosAlvo::all();
         $categorias = Categoria::all();
         $temas = Temas::all();
+
         return view('admin.tecnologias.edit', compact('tecnologia', 'categorias', 'temas', 'publicosAlvo'));
     }
 
@@ -215,33 +216,70 @@ class TecnologiasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tecnologia $tecnologia)
+    public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'numeroInscricao' => 'required',
-        ]);
+        $tecnologia = Tecnologia::find($id);
+        //$this->validate($request, [
+        //    'numeroInscricao' => 'required',
+        //]);
 
-        $input = $request->except(['subtema1', 'subtema2', 'instituicao_id']);
+        DB::transaction(function () use ($request, $tecnologia) {
 
-        $tecnologia->update($input);
-        // TODO ajustar edição com as outras tabelas
+            $input = $request->except([
+                'subtema1',
+                'subtema2',
+                'instituicao_id',
+                'responsaveis',
+                'locaisImplantacao',
+                'PublicoAlvo',
+                'instituicoesParceiras',
+                'enderecosEletronicos',
+                'PublicosAlvo',
+            ]);
+
+
+            $tecnologia->update($input);
+
+            $subtemas = $this->retornaIdSubTemas($request);
+
+            $tecnologia->subtemas()->sync($subtemas);
+
+            $responsaveis = $request->only('responsaveis');
+            $inputs = $responsaveis['responsaveis'];
+            $tecnologia->responsaveis()->delete();
+            foreach ($inputs as $input) {
+                $tecnologia->responsaveis()->create($input);
+            }
+
+            $locais = $request->only('locaisImplantacao');
+            $inputs = $locais['locaisImplantacao'];
+            $tecnologia->locais()->delete();
+            foreach ($inputs as $input) {
+                $tecnologia->locais()->create($input);
+            }
+
+            $publico = $request->only('PublicosAlvo');
+            $inputs = $publico['PublicosAlvo'];
+            foreach ($inputs as $input) {
+                $tecnologia->publicos()->sync($input['id']);
+            }
+
+            $publico = $request->only('instituicoesParceiras');
+            $inputs = $publico['instituicoesParceiras'];
+            $tecnologia->instituicoesParceiras()->delete();
+            foreach ($inputs as $input) {
+                $tecnologia->instituicoesParceiras()->create($input);
+            }
+
+            $publico = $request->only('enderecosEletronicos');
+            $inputs = $publico['enderecosEletronicos'];
+            $tecnologia->enderecosEletronico()->delete();
+            foreach ($inputs as $input) {
+                $tecnologia->enderecosEletronico()->create($input);
+            }
+
+        });
         flash('Tecnologia '.$tecnologia->titulo.' atualizada com sucesso')->success();
-
-        //desfaz todas as ligações anteriores
-        $tecnologia->subtemas()->detach();
-
-        $inputs = array_merge($request->only('subtema1'), $request->only('subtema2'));
-
-        foreach ($inputs as $input) {
-            $tecnologia->subtemas()->sync($input);//TODO tratamento de erro
-        }
-
-        ////Grava os subtemas secundários
-        //$inputs = $request->only('subtema2');
-        //foreach ($inputs as $input) {
-        //    $tecnologia->subtemas()->attach($input);//TODO tratamento de erro
-        //}
-
     }
 
 
@@ -272,7 +310,20 @@ class TecnologiasController extends Controller
     }
 
 
-    private function DadosForm()
+    private function retornaIdSubTemas($request)
     {
+        $subtemas = [];
+        $subtemas1 = $request->only('subtema1');
+        $subtemas1 = $subtemas1['subtema1'];
+        $subtemas2 = $request->only('subtema2');
+        $subtemas2 = $subtemas2['subtema2'];
+
+        $inputs = array_merge($subtemas1, $subtemas2);
+        //Syncroniza subtemas os subtemas
+        foreach ($inputs as $item) {
+            $subtemas[] = $item['id'];
+        }
+
+        return $subtemas;
     }
 }
