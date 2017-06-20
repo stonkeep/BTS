@@ -16,7 +16,14 @@
                     :temas="{{$temas}}"
                     :propsubtemaprincipal="{{$tecnologia->subtemasPrincipal()}}"
                     :propsubtemasecundario="{{$tecnologia->subtemasSecundario()}}"
-                    :tecnologia="{{$tecnologia}}">
+                    :tecnologia="{{$tecnologia}}"
+                    :publicos="{{$publicosAlvo}}"
+                    :publicosescolhidos="{{$tecnologia->publicos}}"
+                    :responsaveis="{{$tecnologia->responsaveis}}"
+                    :locais="{{$tecnologia->locais}}"
+                    :instituicoesparceiras="{{$tecnologia->instituicoesParceiras}}"
+                    :enderecoseletronico="{{$tecnologia->enderecosEletronico}}"
+        >
 
         </tecnologia>
     </div>

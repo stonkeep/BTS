@@ -155,13 +155,15 @@
 			<div class="form-group" :class="{ 'has-error': form.errors.has('subtema2') }">
 				<label for="subtema2" class="col-md-3 control-label">Sub-Temas:</label>
 				<div class="col-md-6" id="subtema2">
-					<select class="form-control" v-model="form.subtema2" name="subtema2" multiple>
-						<option v-for="subtema2 in subtemas2" v-bind:value="subtema2.id">
-							{{ subtema2.descricao }}
-						</option>
-					</select>
+					<!--<select class="form-control" v-model="form.subtema2" name="subtema2" multiple>-->
+						<!--<option v-for="subtema2 in subtemas2" v-bind:value="subtema2.id">-->
+							<!--{{ subtema2.descricao }}-->
+						<!--</option>-->
+					<!--</select>-->
+					<multiselect name="subtema2" v-model="form.subtema2" :options="subTemaOptions2" :multiple="true" :close-on-select="true" :clear-on-select="false" :hide-selected="false" placeholder="Escolha um"
+								 label="descricao" track-by="descricao"></multiselect>
 					<has-error :form="form" field="subtema2"></has-error>
-					<p>Hold down the Ctrl (windows) / Command (Mac) button to select multiple options.</p>
+					<!--<p>Hold down the Ctrl (windows) / Command (Mac) button to select multiple options.</p>-->
 
 				</div>
 			</div>
@@ -338,11 +340,11 @@
 							<label for="ativo"
 								   class="col-md-3 control-label">Ja contou com investimento da FBB?:</label>
 							<div class="col-md-6" id="ativo">
-								<input type="radio" name="ativo" id="ativoSim" value="1"
+								<input type="radio" :name="index" id="ativoSim" value="1"
 									   v-model="localData.ativo">
 								<label for="ativoSim">Sim</label>
 								<br>
-								<input type="radio" name="ativo" id="ativoNao" value="0"
+								<input type="radio" :name="index" id="ativoNao" value="0"
 									   v-model="localData.ativo">
 								<label for="ativoNao">Não</label>
 								<has-error :form="form" field="ativo"></has-error>
@@ -352,7 +354,7 @@
 						<div class="form-group">
 							<label for="UF" class="col-md-3 control-label">UF: </label>
 							<div class="col-md-6">
-								<uf v-on:update="val => localData.uf = val"></uf>
+								<uf :uf="localData.uf" v-on:update="val => localData.uf = val"></uf>
 							</div>
 						</div>
 
@@ -395,13 +397,15 @@
 			<div class="form-group" :class="{ 'has-error': form.errors.has('PublicosAlvo') }">
 				<label for="PublicosAlvo" class="col-md-3 control-label">Publicos Alvo:</label>
 				<div class="col-md-6" id="PublicosAlvo">
-					<select class="form-control" v-model="form.PublicosAlvo" name="PublicosAlvo" multiple>
-						<option v-for="publico in PublicosAlvo" v-bind:value="publico.id">
-							{{ publico.descricao }}
-						</option>
-					</select>
+					<!--<select class="form-control" v-model="form.PublicosAlvo" name="PublicosAlvo" multiple>-->
+						<!--<option v-for="publico in PublicosAlvo" v-bind:value="publico.id">-->
+							<!--{{ publico.descricao }}-->
+						<!--</option>-->
+					<!--</select>-->
+					<multiselect name="PublicosAlvo" v-model="form.PublicosAlvo" :options="publicoAlvoOptions" :multiple="true" :close-on-select="true" :clear-on-select="false" :hide-selected="false" placeholder="Escolha um"
+								 label="descricao" track-by="descricao"></multiselect>
 					<has-error :form="form" field="PublicosAlvo"></has-error>
-					<p>Hold down the Ctrl (windows) / Command (Mac) button to select multiple options.</p>
+					<!--<p>Hold down the Ctrl (windows) / Command (Mac) button to select multiple options.</p>-->
 
 				</div>
 			</div>
@@ -440,7 +444,6 @@
 				<button v-on:click.prevent="adicionaInstituicao"
 						class="btn btn-success glyphicon glyphicon-plus"></button>
 			</div>
-			<!--//TODO Endereços eletrônicos associados à tecnologia:-->
 
 			<!--------------------Instituições parceiras-------------------------------------------------------------------------->
 			<div class="panel panel-default">
@@ -497,7 +500,8 @@
                 PublicosAlvo: [],
                 //subTemaValue: null,
 				subTemaOptions: [],
-
+				subTemaOptions2: [],
+				publicoAlvoOptions: this.publicos,
                 // Create a new form instance
                 form: new Form({
                     id: this.tecnologia.id,
@@ -511,9 +515,9 @@
                     categoria_id: this.tecnologia.categoria_id,
                     resumo: this.tecnologia.resumo,
                     tema_id: this.tecnologia.tema_id,
-                    subtema1: [],
+                    subtema1: this.propsubtemaprincipal,
                     temaSecundario_id: this.tecnologia.temaSecundario_id,
-                    subtema2: [],
+                    subtema2: this.propsubtemasecundario,
                     problema: this.tecnologia.problema,
                     objetivoGeral: this.tecnologia.objetivoGeral,
                     objetivoEspecifico: this.tecnologia.objetivoEspecifico,
@@ -549,28 +553,44 @@
                             atuacao: '',
                         },
                     ],
-                    PublicosAlvo: [],
+                    PublicosAlvo: this.publicosescolhidos,
 //                    instituicao_id: this.tecnologia.instituicaos_id,
 //                    TODO Nao esquecer de tirar depois
                     instituicao_id: 1,
                 })
             };
         },
-        props: ['tecnologia', 'categorias', 'temas', 'propsubtemaprincipal', 'publicos'],
+        props: ['tecnologia', 'categorias', 'temas',
+        'propsubtemaprincipal', 'propsubtemasecundario', 'publicos',
+        'publicosescolhidos', 'responsaveis', 'locais', 'instituicoesparceiras', 'enderecoseletronico'],
         mounted() {
             this.temas1 = this.temas;
             this.temas2 = this.temas;
             this.PublicosAlvo = this.publicos;
 
-            axios.get('/api/subtemas/' + this.form.tema_id)
-                .then(response => this.subTemaOptions = response.data)
-                .catch(error => console.log(error))
+            if (this.responsaveis)
+            this.form.responsaveis = this.responsaveis;
 
+            if(this.locais)
+            this.form.locaisImplantacao = this.locais;
 
+            if(this.instituicoesparceiras)
+            this.form.instituicoesParceiras = this.instituicoesparceiras;
 
-            axios.get('/api/subtemas/' + this.form.temaSecundario_id)
-                .then(response => this.subtemas2 = response.data)
-                .catch(error => console.log(error));
+            if(this.enderecoseletronico)
+            this.form.enderecosEletronicos = this.enderecoseletronico;
+
+			if(this.form.tema_id){
+				axios.get('/api/subtemas/' + this.form.tema_id)
+					.then(response => this.subTemaOptions = response.data)
+					.catch(error => console.log(error))
+			}
+
+			if(this.form.temaSecundario_id){
+				axios.get('/api/subtemas/' + this.form.temaSecundario_id)
+					.then(response => this.subTemaOptions2 = response.data)
+	                .catch(error => console.log(error));
+			}
         },
         methods: {
             adicionaResponsavel () {
@@ -601,7 +621,7 @@
                 } else {
                     this.form.post('/admin/tecnologias/create')
                         .then(({data}) => {
-                            //window.location.href = '/admin/tecnologias'
+                            window.location.href = '/admin/tecnologias'
                         })
                 }
             },
@@ -616,7 +636,7 @@
 
             'form.temaSecundario_id': function (val, oldVal) {
                 axios.get('/api/subtemas/' + this.form.temaSecundario_id)
-                    .then(response => this.subtemas2 = response.data)
+                    .then(response => this.subTemaOptions2 = response.data)
                     .catch(error => console.log(error));
             },
         },

@@ -11,7 +11,6 @@
 @section('content')
 
     @include('admin.layouts.erros')
-
     <div id="app">
         <tecnologia :categorias="{{$categorias}}"
                     :propssubtemas1="{{$propssubtemas1}}"

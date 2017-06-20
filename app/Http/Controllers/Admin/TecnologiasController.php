@@ -120,16 +120,17 @@ class TecnologiasController extends Controller
             $this->tecnologia = $instituicao->tecnologias()->create($input);
 
             //Grava os subtemas principais
-            $inputs = $request->only('subtema1')->toArray();
+            $inputs = $request->only('subtema1');
+            $inputs = $inputs['subtema1'];
             foreach ($inputs as $input) {
-                dd($input);
-                $this->tecnologia->subtemas()->attach($input->id);
+                $this->tecnologia->subtemas()->attach($input['id']);
             }
 
             //Grava os subtemas secundários
             $inputs = $request->only('subtema2');
+            $inputs = $inputs['subtema2'];
             foreach ($inputs as $input) {
-                $this->tecnologia->subtemas()->attach($input);
+                $this->tecnologia->subtemas()->attach($input['id']);
             }
 
             $responsaveis = $request->only('responsaveis');
@@ -147,7 +148,7 @@ class TecnologiasController extends Controller
             $publico = $request->only('PublicosAlvo');
             $inputs = $publico['PublicosAlvo'];
             foreach ($inputs as $input) {
-                $this->tecnologia->publicos()->attach($input);
+                $this->tecnologia->publicos()->attach($input['id']);
             }
 
             $publico = $request->only('instituicoesParceiras');
@@ -161,7 +162,6 @@ class TecnologiasController extends Controller
             foreach ($inputs as $input) {
                 $this->tecnologia->enderecosEletronico()->create($input);
             }
-
         });
         //TODO poderia ser um tratamento de erro geral
 
@@ -199,12 +199,11 @@ class TecnologiasController extends Controller
 
         $tecnologia = Tecnologia::find($id);
 
+        //Carrega dados nescessários para o Form
+        $publicosAlvo = PublicosAlvo::all();
         $categorias = Categoria::all();
         $temas = Temas::all();
-//        $subtemasPrincipal = $tecnologia->subtemasPrincipal();
-//        $subtemasSecundario = $tecnologia->subtemasSecundario();
-
-        return view('admin.tecnologias.edit', compact('tecnologia', 'categorias', 'temas'));
+        return view('admin.tecnologias.edit', compact('tecnologia', 'categorias', 'temas', 'publicosAlvo'));
     }
 
 
@@ -234,7 +233,7 @@ class TecnologiasController extends Controller
         $inputs = array_merge($request->only('subtema1'), $request->only('subtema2'));
 
         foreach ($inputs as $input) {
-            $tecnologia->subtemas()->attach($input);//TODO tratamento de erro
+            $tecnologia->subtemas()->sync($input);//TODO tratamento de erro
         }
 
         ////Grava os subtemas secundários
@@ -270,5 +269,10 @@ class TecnologiasController extends Controller
         }
 
         return redirect(route('indexTecnologias'));
+    }
+
+
+    private function DadosForm()
+    {
     }
 }

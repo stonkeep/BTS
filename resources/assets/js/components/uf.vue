@@ -37,9 +37,10 @@
     export default {
         data () {
             return {
-                uf: ''
+                //uf: this.ufescolhida
             }
         },
+        props:['uf'],
         mounted() {
             console.log('Component UF mounted.');
 

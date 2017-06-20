@@ -61,12 +61,22 @@ class Tecnologia extends Model
 
     public function subtemasPrincipal()
     {
-        return $this->subtemas->where('tema_id', $this->temaPrincipal->id);
+        $subtemasId = [];
+        $subtemas = $this->subtemas->where('tema_id', $this->temaPrincipal->id);
+        foreach ($subtemas as $item) {
+            $subtemasId[] = $item->id;
+        }
+        return SubTemas::find($subtemasId);
     }
 
     public function subtemasSecundario()
     {
-        return $this->subtemas->where('tema_id', $this->temaSecundario->id);
+        $subtemasId = [];
+        $subtemas = $this->subtemas->where('tema_id', $this->temaSecundario->id);
+        foreach ($subtemas as $subtema) {
+            $subtemasId[] = $subtema->id;
+        }
+        return SubTemas::find($subtemasId);
     }
 
     public function responsaveis()
