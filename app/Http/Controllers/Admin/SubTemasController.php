@@ -129,11 +129,21 @@ class SubTemasController extends Controller
      * @param  \App\SubTemas  $subTemas
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SubTemas $subTema)
+    public function destroy($id)
     {
+        $subTema = SubTemas::find($id);
+        
+        try {
+            $subTema->delete();
+            flash('Sub-Tema deletado com sucesso')->success();
+        } catch (\Exception $e) {
+            if ($e->getCode() == "23000") { //23000 is sql code for integrity constraint violation
+                flash('Resgistro tem dependência, Favor verificar as ligaçõe')->error();
+            } else {
+                flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
+            }
+        }
 
-        $subTema->delete();
-        flash('Sub-Tema deletado com sucesso')->success();
         return redirect(route('indexSubTemas'));
     }
 }

@@ -126,13 +126,17 @@ class TemasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Temas $tema)
+    public function destroy($id)
     {
+        $tema = Temas::find($id);
         try {
             $tema->delete();
+
             flash('Tema deletado com sucesso')->success();
         } catch (\Exception $e) {
             if ($e->getCode() == "23000") { //23000 is sql code for integrity constraint violation
+                flash('Registro possui pendências favor verificar')->error();
+            }else{
                 flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
             }
         }
