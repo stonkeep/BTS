@@ -30,30 +30,16 @@ Route::post(/**
  * @return \Illuminate\Http\JsonResponse
  */
     '/upload', function (Request $request) {
-    //****************************************************************************************************
-    //*****************************Retirar depois ********************************************************
-    //****************************************************************************************************
-    $tecnologia = \App\Tecnologia::find(1);
-    //****************************************************************************************************
-    //*****************************Retirar depois ********************************************************
-    //****************************************************************************************************
+
     $path = public_path(env('PATH_TECNOLOGIA', 'tecnologias/')) . $tecnologia->titulo. '/';
 
     if (!File::exists($path))
         File::makeDirectory($path);
 
-    $imagem = new Imagem();
-    //dd($request->only('images')['images']);
     $validator = Validator::make($request->only('images')['images'], [
         'file.*' => 'required|image'
     ]);
 
-    //TODO Gravar os arquivos de forma correta
-    //TODO criar diretório com nome da tecnologia
-    //TODO listar os arquivos
-    //TODO fazer o delete dos arquivos
-    //TODO pensar no update do arquivo
-    
     if ($validator->fails()) {
         return response()->json(['errors'=>$validator->errors()]);
     } else {

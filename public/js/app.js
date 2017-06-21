@@ -14001,6 +14001,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -14012,7 +14026,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     components: { Uf: __WEBPACK_IMPORTED_MODULE_1__components_uf_vue___default.a, Multiselect: __WEBPACK_IMPORTED_MODULE_2_vue_multiselect___default.a },
     data: function data() {
         return {
-            images: [],
+
             raiz: location.host,
             subtemas1: [],
             subtemas2: [],
@@ -14069,7 +14083,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 PublicosAlvo: this.publicosescolhidos,
                 //                    instituicao_id: this.tecnologia.instituicaos_id,
                 //                    TODO Nao esquecer de tirar depois
-                instituicao_id: 1
+                instituicao_id: 1,
+                images: []
             })
         };
     },
@@ -14111,15 +14126,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         onFileChange: function onFileChange(e) {
             var _this2 = this;
 
-            this.images = []; //zera array de imagem
+            this.form.images = []; //zera array de imagem
             var files = e.target.files || e.dataTransfer.files;
-            console.log(files);
             if (!files.length) return;
             Array.from(files).forEach(function (file) {
-                console.log("Filename: " + file.name);
-                console.log("Extension: " + file.name.split('.').pop());
-                console.log("Type: " + file.type);
-                console.log("Size: " + file.size + " bytes");
                 _this2.createImage(file);
             });
             //                this.createImage(files[0]);
@@ -14136,16 +14146,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             };
             reader.onload = function (e) {
                 image.file = e.target.result;
-                vm.images.push(image);
-                //                    vm.images.push(e.target.result);
+                vm.form.images.push(image);
+                //                    vm.form.images.push(e.target.result);
             };
             reader.readAsDataURL(file);
         },
-        upload: function upload() {
-            axios.post('/api/upload', { images: this.images }).then(function (response) {
-                console.log('teste');
-            });
-        },
+
+        //            upload(){
+        //                axios.post('/api/upload',{form.images: this.form.images}).then(response => {
+        //                    console.log('teste');
+        //                });
+        //            },
         adicionaResponsavel: function adicionaResponsavel() {
             this.form.responsaveis.push({ nome: '', telefone: '', email: '' });
         },
@@ -14180,6 +14191,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         'form.tema_id': function formTema_id(val, oldVal) {
             var _this3 = this;
 
+            this.form.subtema1 = []; // zera array
             axios.get('/api/subtemas/' + this.form.tema_id).then(function (response) {
                 return _this3.subTemaOptions = response.data;
             }).catch(function (error) {
@@ -14190,6 +14202,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         'form.temaSecundario_id': function formTemaSecundario_id(val, oldVal) {
             var _this4 = this;
 
+            this.form.subtema2 = []; //zera array
             axios.get('/api/subtemas/' + this.form.temaSecundario_id).then(function (response) {
                 return _this4.subTemaOptions2 = response.data;
             }).catch(function (error) {
@@ -39093,24 +39106,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.form.errors.clear($event.target.name)
       }
     }
-  }, [_c('input', {
-    staticClass: "form-control",
-    attrs: {
-      "type": "file",
-      "multiple": ""
-    },
-    on: {
-      "change": _vm.onFileChange
-    }
-  }), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-success btn-block",
-    on: {
-      "click": function($event) {
-        $event.preventDefault();
-        _vm.upload($event)
-      }
-    }
-  }, [_vm._v("Upload")]), _vm._v(" "), _c('alert-errors', {
+  }, [_c('alert-errors', {
     attrs: {
       "form": _vm.form,
       "message": "Favor atentar para os problemas abaixo no seu formulário"
@@ -39517,7 +39513,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       domProps: {
         "value": categoria.id
       }
-    }, [_vm._v("\n\t\t\t\t\t\t\t" + _vm._s(categoria.descricao) + "\n\t\t\t\t\t\t")])
+    }, [_vm._v("\n                        " + _vm._s(categoria.descricao) + "\n\n\n                    ")])
   })), _vm._v(" "), _c('has-error', {
     attrs: {
       "form": _vm.form,
@@ -39608,7 +39604,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       domProps: {
         "value": tema.id
       }
-    }, [_vm._v("\n\t\t\t\t\t\t\t" + _vm._s(tema.nome) + "\n\t\t\t\t\t\t")])
+    }, [_vm._v("\n                        " + _vm._s(tema.nome) + "\n\n\n                    ")])
   })), _vm._v(" "), _c('has-error', {
     attrs: {
       "form": _vm.form,
@@ -39698,7 +39694,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       domProps: {
         "value": tema.id
       }
-    }, [_vm._v("\n\t\t\t\t\t\t\t" + _vm._s(tema.nome) + "\n\t\t\t\t\t\t")])
+    }, [_vm._v("\n                        " + _vm._s(tema.nome) + "\n\n\n                    ")])
   })), _vm._v(" "), _c('has-error', {
     attrs: {
       "form": _vm.form,
@@ -40274,7 +40270,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     class: {
       'has-error': _vm.form.errors.has('locaisDatas')
     }
-  }, [_vm._v("\n\t\t\t\t\t\tLocais e datas onde a Tecnologia Social já foi implementada:")])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n                    Locais e datas onde a Tecnologia Social já foi implementada:")])]), _vm._v(" "), _c('div', {
     staticClass: "panel-body"
   }, _vm._l((_vm.form.locaisImplantacao), function(localData, index) {
     return _c('div', [_c('div', {
@@ -40659,6 +40655,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         $event.preventDefault();
         _vm.adicionaEnderecoEletronico($event)
       }
+    }
+  })]), _vm._v(" "), _c('br'), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('input', {
+    staticClass: "form-control",
+    attrs: {
+      "type": "file",
+      "multiple": ""
+    },
+    on: {
+      "change": _vm.onFileChange
     }
   })]), _vm._v(" "), _c('br'), _vm._v(" "), _c('div', {
     staticClass: "form-group"

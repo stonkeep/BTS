@@ -12,9 +12,12 @@ use App\Temas;
 use App\SubTemas;
 use Auth;
 use Carbon\Carbon;
+use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Image;
+use Validator;
 
 class TecnologiasController extends Controller
 {
@@ -114,6 +117,7 @@ class TecnologiasController extends Controller
                 'instituicoesParceiras',
                 'enderecosEletronicos',
                 'PublicosAlvo',
+                'images',
             ]);
 
             //Cria tecnologia
@@ -162,6 +166,39 @@ class TecnologiasController extends Controller
             foreach ($inputs as $input) {
                 $tecnologia->enderecosEletronico()->create($input);
             }
+
+
+
+
+
+
+            $path = public_path(env('PATH_TECNOLOGIA', 'tecnologias/')) . $tecnologia->titulo. '/';
+
+
+            if (!File::exists($path))
+                File::makeDirectory($path);
+
+            $validator = Validator::make($request->only('images')['images'], [
+                'file.*' => 'required|image'
+            ]);
+
+
+            if ($validator->fails()) {
+                return response()->json(['errors'=>$validator->errors()]);
+            } else {
+                $imagesDatas = $request->only('images');
+                $imagesDatas = $imagesDatas['images'];
+                foreach ($imagesDatas as $imagesData) {
+                    $fileNamePath = uniqid().$imagesData['filename'].'.'.$imagesData['extension'];
+                    $imagesData = array_add($imagesData, 'path', $path);
+                    $imagesData = array_add($imagesData, 'fileNamePath', $fileNamePath);
+                    $tecnologia->imagens()->create(array_except($imagesData, ['file']));
+                    Image::make($imagesData['file'])->save($path.$fileNamePath);
+                }
+
+                return response()->json(['error' => false]);
+            }
+
         });
         //TODO poderia ser um tratamento de erro geral
 
@@ -203,6 +240,10 @@ class TecnologiasController extends Controller
         $publicosAlvo = PublicosAlvo::all();
         $categorias = Categoria::all();
         $temas = Temas::all();
+
+        //TODO listar os arquivos
+        //TODO fazer o delete dos arquivos
+
 
         return view('admin.tecnologias.edit', compact('tecnologia', 'categorias', 'temas', 'publicosAlvo'));
     }
@@ -277,6 +318,9 @@ class TecnologiasController extends Controller
             foreach ($inputs as $input) {
                 $tecnologia->enderecosEletronico()->create($input);
             }
+
+
+            //TODO pensar no update do arquivo
 
         });
         flash('Tecnologia '.$tecnologia->titulo.' atualizada com sucesso')->success();
