@@ -189,9 +189,9 @@ class TecnologiasController extends Controller
                 $imagesDatas = $request->only('images');
                 $imagesDatas = $imagesDatas['images'];
                 foreach ($imagesDatas as $imagesData) {
-                    $fileNamePath = uniqid().$imagesData['filename'].'.'.$imagesData['extension'];
+                    $fileNamePath = uniqid().$imagesData['fileName'];
                     $imagesData = array_add($imagesData, 'path', $path);
-                    $imagesData = array_add($imagesData, 'fileNamePath', $fileNamePath);
+                    $imagesData['fileNamePath'] = $fileNamePath;
                     $tecnologia->imagens()->create(array_except($imagesData, ['file']));
                     Image::make($imagesData['file'])->save($path.$fileNamePath);
                 }
@@ -276,6 +276,7 @@ class TecnologiasController extends Controller
                 'instituicoesParceiras',
                 'enderecosEletronicos',
                 'PublicosAlvo',
+                'images',
             ]);
 
 
@@ -321,8 +322,44 @@ class TecnologiasController extends Controller
 
 
             //TODO pensar no update do arquivo
+            $path = public_path(env('PATH_TECNOLOGIA', 'tecnologias/')) . $tecnologia->titulo. '/';
+
+
+            if (!File::exists($path))
+                File::makeDirectory($path);
+
+            $validator = Validator::make($request->only('images')['images'], [
+                'file.*' => 'required|image'
+            ]);
+            if ($validator->fails()) {
+                return response()->json(['errors'=>$validator->errors()]);
+            } else {
+                $imagesDatas = $request->only('images');
+                $imagesDatas = $imagesDatas['images'];
+                $imagensDeletar = $tecnologia->imagens->whereNotIn('id', array_pluck($imagesDatas, 'id'));
+
+                foreach ($imagensDeletar as $item) {
+                    File::delete($item->path.$item->fileNamePath);
+                    $item->delete();
+                }
+
+                foreach ($imagesDatas as $imagesData) {
+                    if ( (!File::exists($path.$imagesData['fileNamePath']))
+                        || ($imagesData['fileNamePath'] == null)
+                    ){
+                        dd($imagesData);
+                        $fileNamePath = uniqid().$imagesData['fileName'];
+                        $imagesData = array_add($imagesData, 'path', $path);
+                        $imagesData['fileNamePath'] = $fileNamePath;
+                        $tecnologia->imagens()->create(array_except($imagesData, ['file']));
+                        Image::make($imagesData['file'])->save($path.$fileNamePath);
+                    }
+                }
+                return response()->json(['error' => false]);
+            }
 
         });
+
         flash('Tecnologia '.$tecnologia->titulo.' atualizada com sucesso')->success();
     }
 

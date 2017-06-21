@@ -11,6 +11,7 @@
 @section('content')
 
     @include('admin.layouts.erros')
+
     <div id="app">
         <tecnologia :categorias="{{$categorias}}"
                     :temas="{{$temas}}"
@@ -23,6 +24,7 @@
                     :locais="{{$tecnologia->locais}}"
                     :instituicoesparceiras="{{$tecnologia->instituicoesParceiras}}"
                     :enderecoseletronico="{{$tecnologia->enderecosEletronico}}"
+                    :propimagens="{{$tecnologia->imagens}}"
         >
 
         </tecnologia>

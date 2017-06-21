@@ -93,6 +93,7 @@
                             {{ categoria.descricao }}
 
 
+
                         </option>
                     </select>
                     <has-error :form="form" field="categoria_id"></has-error>
@@ -118,6 +119,7 @@
                     <select class="form-control" v-model="form.tema_id" name="tema_id">
                         <option v-for="(tema, index) in temas1" v-bind:value="tema.id" :nome="tema.nome">
                             {{ tema.nome }}
+
 
 
                         </option>
@@ -152,6 +154,7 @@
                     <select class="form-control" v-model="form.temaSecundario_id" name="temaSecundario_id">
                         <option v-for="tema in temas2" v-bind:value="tema.id" :nome="tema.nome">
                             {{ tema.nome }}
+
 
 
                         </option>
@@ -488,6 +491,13 @@
             <br>
             <div class="form-group">
                 <input type="file" multiple @change="onFileChange" class="form-control">
+                <ul>
+                    <li v-for="(image, index) in listaDeArquivos">
+                        {{image.fileName}}
+                        <button v-on:click.prevent="listaDeArquivos.splice(index, 1)">X</button>
+                    </li>
+                </ul>
+
             </div>
             <!--//TODO -->
             <br>
@@ -509,7 +519,8 @@
         components: {Uf, Multiselect},
         data () {
             return {
-
+                campoArquivos: [],
+                listaDeArquivos: this.propimagens,
                 raiz: location.host,
                 subtemas1: [],
                 subtemas2: [],
@@ -579,7 +590,7 @@
                 })
             };
         },
-        props: ['tecnologia', 'categorias', 'temas',
+        props: ['tecnologia', 'categorias', 'temas', 'propimagens',
             'propsubtemaprincipal', 'propsubtemasecundario', 'publicos',
             'publicosescolhidos', 'responsaveis', 'locais', 'instituicoesparceiras', 'enderecoseletronico'],
         mounted() {
@@ -613,7 +624,7 @@
         },
         methods: {
             onFileChange(e) {
-                this.form.images = []; //zera array de imagem
+                this.campoArquivos = []; //zera array de campoArquivos
                 let files = e.target.files || e.dataTransfer.files;
                 if (!files.length)
                     return;
@@ -627,14 +638,15 @@
                 let vm = this;
                 let image = {
                     file: '',
-                    filename: file.name,
+                    fileName: file.name,
+                    fileNamePath: '',
                     type: file.type,
                     size: file.size,
                     extension: file.name.split('.').pop(),
                 };
                 reader.onload = (e) => {
                     image.file = e.target.result;
-                    vm.form.images.push(image);
+                    this.campoArquivos.push(image);
 //                    vm.form.images.push(e.target.result);
                 };
                 reader.readAsDataURL(file);
@@ -661,12 +673,20 @@
                 this.form.enderecosEletronicos.push({link: ''})
             },
             submit () {
+                //adiciona arquivos no form
+                this.form.images = [];
+                this.listaDeArquivos.forEach(arquivo => {
+                    this.form.images.push(arquivo);
+                });
+                this.campoArquivos.forEach(arquivo => {
+                    this.form.images.push(arquivo);
+                });
                 // Submit the form via a POST request
                 let location = window.location.href;
                 if (location.indexOf("edit") > -1) {
                     this.form.put('/admin/tecnologias/update/' + this.tecnologia.id)
                         .then(({data}) => {
-                            window.location.href = '/admin/tecnologias'
+//                            window.location.href = '/admin/tecnologias'
                         })
 
                 } else {
@@ -676,11 +696,10 @@
                         })
                 }
             },
-
         },
         watch: {
             'form.tema_id': function (val, oldVal) {
-                this.form.subtema1= []; // zera array
+                this.form.subtema1 = []; // zera array
                 axios.get('/api/subtemas/' + this.form.tema_id)
                     .then(response => this.subTemaOptions = response.data)
                     .catch(error => console.log(error))

@@ -14015,6 +14015,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -14026,7 +14036,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     components: { Uf: __WEBPACK_IMPORTED_MODULE_1__components_uf_vue___default.a, Multiselect: __WEBPACK_IMPORTED_MODULE_2_vue_multiselect___default.a },
     data: function data() {
         return {
-
+            campoArquivos: [],
+            listaDeArquivos: this.propimagens,
             raiz: location.host,
             subtemas1: [],
             subtemas2: [],
@@ -14089,7 +14100,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
 
-    props: ['tecnologia', 'categorias', 'temas', 'propsubtemaprincipal', 'propsubtemasecundario', 'publicos', 'publicosescolhidos', 'responsaveis', 'locais', 'instituicoesparceiras', 'enderecoseletronico'],
+    props: ['tecnologia', 'categorias', 'temas', 'propimagens', 'propsubtemaprincipal', 'propsubtemasecundario', 'publicos', 'publicosescolhidos', 'responsaveis', 'locais', 'instituicoesparceiras', 'enderecoseletronico'],
     mounted: function mounted() {
         var _this = this;
 
@@ -14126,7 +14137,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         onFileChange: function onFileChange(e) {
             var _this2 = this;
 
-            this.form.images = []; //zera array de imagem
+            this.campoArquivos = []; //zera array de campoArquivos
             var files = e.target.files || e.dataTransfer.files;
             if (!files.length) return;
             Array.from(files).forEach(function (file) {
@@ -14135,18 +14146,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             //                this.createImage(files[0]);
         },
         createImage: function createImage(file) {
+            var _this3 = this;
+
             var reader = new FileReader();
             var vm = this;
             var image = {
                 file: '',
-                filename: file.name,
+                fileName: file.name,
+                fileNamePath: '',
                 type: file.type,
                 size: file.size,
                 extension: file.name.split('.').pop()
             };
             reader.onload = function (e) {
                 image.file = e.target.result;
-                vm.form.images.push(image);
+                _this3.campoArquivos.push(image);
                 //                    vm.form.images.push(e.target.result);
             };
             reader.readAsDataURL(file);
@@ -14170,13 +14184,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.form.enderecosEletronicos.push({ link: '' });
         },
         submit: function submit() {
+            var _this4 = this;
+
+            //adiciona arquivos no form
+            this.form.images = [];
+            this.listaDeArquivos.forEach(function (arquivo) {
+                _this4.form.images.push(arquivo);
+            });
+            this.campoArquivos.forEach(function (arquivo) {
+                _this4.form.images.push(arquivo);
+            });
             // Submit the form via a POST request
             var location = window.location.href;
             if (location.indexOf("edit") > -1) {
                 this.form.put('/admin/tecnologias/update/' + this.tecnologia.id).then(function (_ref) {
-                    var data = _ref.data;
+                    //                            window.location.href = '/admin/tecnologias'
 
-                    window.location.href = '/admin/tecnologias';
+                    var data = _ref.data;
                 });
             } else {
                 this.form.post('/admin/tecnologias/create').then(function (_ref2) {
@@ -14189,22 +14213,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     watch: {
         'form.tema_id': function formTema_id(val, oldVal) {
-            var _this3 = this;
+            var _this5 = this;
 
             this.form.subtema1 = []; // zera array
             axios.get('/api/subtemas/' + this.form.tema_id).then(function (response) {
-                return _this3.subTemaOptions = response.data;
+                return _this5.subTemaOptions = response.data;
             }).catch(function (error) {
                 return console.log(error);
             });
         },
 
         'form.temaSecundario_id': function formTemaSecundario_id(val, oldVal) {
-            var _this4 = this;
+            var _this6 = this;
 
             this.form.subtema2 = []; //zera array
             axios.get('/api/subtemas/' + this.form.temaSecundario_id).then(function (response) {
-                return _this4.subTemaOptions2 = response.data;
+                return _this6.subTemaOptions2 = response.data;
             }).catch(function (error) {
                 return console.log(error);
             });
@@ -39513,7 +39537,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       domProps: {
         "value": categoria.id
       }
-    }, [_vm._v("\n                        " + _vm._s(categoria.descricao) + "\n\n\n                    ")])
+    }, [_vm._v("\n                        " + _vm._s(categoria.descricao) + "\n\n\n\n                    ")])
   })), _vm._v(" "), _c('has-error', {
     attrs: {
       "form": _vm.form,
@@ -39604,7 +39628,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       domProps: {
         "value": tema.id
       }
-    }, [_vm._v("\n                        " + _vm._s(tema.nome) + "\n\n\n                    ")])
+    }, [_vm._v("\n                        " + _vm._s(tema.nome) + "\n\n\n\n                    ")])
   })), _vm._v(" "), _c('has-error', {
     attrs: {
       "form": _vm.form,
@@ -39694,7 +39718,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       domProps: {
         "value": tema.id
       }
-    }, [_vm._v("\n                        " + _vm._s(tema.nome) + "\n\n\n                    ")])
+    }, [_vm._v("\n                        " + _vm._s(tema.nome) + "\n\n\n\n                    ")])
   })), _vm._v(" "), _c('has-error', {
     attrs: {
       "form": _vm.form,
@@ -40667,7 +40691,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "change": _vm.onFileChange
     }
-  })]), _vm._v(" "), _c('br'), _vm._v(" "), _c('div', {
+  }), _vm._v(" "), _c('ul', _vm._l((_vm.listaDeArquivos), function(image, index) {
+    return _c('li', [_vm._v("\n                    " + _vm._s(image.fileName) + "\n                    "), _c('button', {
+      on: {
+        "click": function($event) {
+          $event.preventDefault();
+          _vm.listaDeArquivos.splice(index, 1)
+        }
+      }
+    }, [_vm._v("X")])])
+  }))]), _vm._v(" "), _c('br'), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('button', {
     staticClass: "btn btn-primary",
