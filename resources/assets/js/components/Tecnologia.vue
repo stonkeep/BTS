@@ -1,7 +1,10 @@
 <template>
 	<div class="container">
 
-		<form @submit.prevent="submit" @keydown="form.errors.clear($event.target.name)" class="form-horizontal">
+		<form enctype="multipart/form-data" @submit.prevent="submit" @keydown="form.errors.clear($event.target.name)" class="form-horizontal">
+			<input type="file" multiple @change="onFileChange" class="form-control">
+			<button class="btn btn-success btn-block" @click.prevent="upload">Upload</button>
+
 			<alert-errors :form="form"
 						  message="Favor atentar para os problemas abaixo no seu formulário"></alert-errors>
 
@@ -492,6 +495,7 @@
         components: {Uf, Multiselect},
         data () {
             return {
+                image: [],
                 raiz: location.host,
                 subtemas1: [],
                 subtemas2: [],
@@ -593,6 +597,30 @@
 			}
         },
         methods: {
+            onFileChange(e) {
+                this.image = [];
+                let files = e.target.files || e.dataTransfer.files;
+                console.log(files);
+                if (!files.length)
+                    return;
+                Array.from(files).forEach(file => {
+                    this.createImage(file);
+                });
+//                this.createImage(files[0]);
+            },
+            createImage(file) {
+                let reader = new FileReader();
+                let vm = this;
+                reader.onload = (e) => {
+                    vm.image.push(e.target.result);
+                };
+                reader.readAsDataURL(file);
+            },
+            upload(){
+                axios.post('/api/upload',{image: this.image}).then(response => {
+                    console.log('teste');
+                });
+            },
             adicionaResponsavel () {
                 this.form.responsaveis.push(
                     {nome: '', telefone: '', email: ''}

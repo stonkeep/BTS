@@ -1,5 +1,6 @@
 /node_modules/
 /public/storage
+/public/tecnologias/*
 /public/files
 /public/photos
 /public/hot
