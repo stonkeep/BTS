@@ -495,7 +495,7 @@
         components: {Uf, Multiselect},
         data () {
             return {
-                image: [],
+                images: [],
                 raiz: location.host,
                 subtemas1: [],
                 subtemas2: [],
@@ -598,12 +598,16 @@
         },
         methods: {
             onFileChange(e) {
-                this.image = [];
+                this.images = []; //zera array de imagem
                 let files = e.target.files || e.dataTransfer.files;
                 console.log(files);
                 if (!files.length)
                     return;
                 Array.from(files).forEach(file => {
+                    console.log("Filename: " + file.name);
+                    console.log("Extension: " + file.name.split('.').pop());
+                    console.log("Type: " + file.type);
+                    console.log("Size: " + file.size + " bytes");
                     this.createImage(file);
                 });
 //                this.createImage(files[0]);
@@ -611,13 +615,22 @@
             createImage(file) {
                 let reader = new FileReader();
                 let vm = this;
+                let image = {
+                    file: '',
+                    filename: file.name,
+					type: file.type,
+					size: file.size,
+					extension: file.name.split('.').pop(),
+				};
                 reader.onload = (e) => {
-                    vm.image.push(e.target.result);
+                    image.file = e.target.result;
+                    vm.images.push(image);
+//                    vm.images.push(e.target.result);
                 };
                 reader.readAsDataURL(file);
             },
             upload(){
-                axios.post('/api/upload',{image: this.image}).then(response => {
+                axios.post('/api/upload',{images: this.images}).then(response => {
                     console.log('teste');
                 });
             },

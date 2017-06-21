@@ -1,5 +1,6 @@
 <?php
 
+use App\Imagem;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -23,11 +24,28 @@ Route::get('/subtemas/{temas}', function (\App\Temas $temas) {
 });
 
 
-Route::post('/upload', function (Request $request) {
-    $path = public_path(env('PATH_TECNOLOGIA', 'tecnologias/'));
+Route::post(/**
+ * @param Request $request
+ *
+ * @return \Illuminate\Http\JsonResponse
+ */
+    '/upload', function (Request $request) {
+    //****************************************************************************************************
+    //*****************************Retirar depois ********************************************************
+    //****************************************************************************************************
+    $tecnologia = \App\Tecnologia::find(1);
+    //****************************************************************************************************
+    //*****************************Retirar depois ********************************************************
+    //****************************************************************************************************
+    $path = public_path(env('PATH_TECNOLOGIA', 'tecnologias/')) . $tecnologia->titulo. '/';
 
-    $validator = Validator::make($request->only('image')['image'], [
-        'image.*' => 'required|image'
+    if (!File::exists($path))
+        File::makeDirectory($path);
+
+    $imagem = new Imagem();
+    //dd($request->only('images')['images']);
+    $validator = Validator::make($request->only('images')['images'], [
+        'file.*' => 'required|image'
     ]);
 
     //TODO Gravar os arquivos de forma correta
@@ -39,20 +57,21 @@ Route::post('/upload', function (Request $request) {
     if ($validator->fails()) {
         return response()->json(['errors'=>$validator->errors()]);
     } else {
-        $imagesDatas = $request->only('image');
-        $imagesDatas = $imagesDatas['image'];
+        $imagesDatas = $request->only('images');
+        $imagesDatas = $imagesDatas['images'];
         foreach ($imagesDatas as $imagesData) {
-            $fileName = 'teste' . uniqid() . '.jpg';
-            $file = Image::make($imagesData)->save($path.$fileName);
+            $fileNamePath = uniqid() . $imagesData['filename'] . '.' . $imagesData['extension'];
+            $imagesData = array_add($imagesData, 'path', $path);
+            $imagesData = array_add($imagesData, 'fileNamePath', $fileNamePath);
+            $tecnologia->imagens()->create(array_except($imagesData, ['file']));
+            Image::make($imagesData['file'])->save($path.$fileNamePath);
         }
-//        $fileName = 'teste' . uniqid() . '.jpg';
-////        $fileName = Carbon::now()->timestamp . '_' . uniqid() . '.' . explode('/', explode(':', substr($imageData, 0, strpos($imageData, ';')))[1])[1];
 //        $file = Image::make($imagesData)->save(public_path('images/tecnologias/').$fileName);
 //        dd(File::files(public_path('images')));
 //        dd(File::name('storage/images/tecnologia/teste5949d5c6bf0a6.jpg'));
 
 //        dd(File::mimeType('images/tecnologias/'.$fileName));
-        dd(Storage::allDirectories('storage/images/tecnologia/'));
+        dd($tecnologia->imagens);
         return response()->json(['error'=>false]);
     }
 });
