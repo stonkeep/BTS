@@ -520,7 +520,7 @@
         data () {
             return {
                 campoArquivos: [],
-                listaDeArquivos: this.propimagens,
+                listaDeArquivos: [],
                 raiz: location.host,
                 subtemas1: [],
                 subtemas2: [],
@@ -597,6 +597,10 @@
             this.temas1 = this.temas;
             this.temas2 = this.temas;
             this.PublicosAlvo = this.publicos;
+            if(!this.propimagens.isNull){
+                this.listaDeArquivos = this.propimagens
+                console.log(this.listaDeArquivos);
+            }
 
             if (this.responsaveis)
                 this.form.responsaveis = this.responsaveis;

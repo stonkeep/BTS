@@ -324,34 +324,47 @@ class TecnologiasController extends Controller
             //TODO pensar no update do arquivo
             $path = public_path(env('PATH_TECNOLOGIA', 'tecnologias/')) . $tecnologia->titulo. '/';
 
-
+            //cria diretorio se nao existir
             if (!File::exists($path))
                 File::makeDirectory($path);
 
+            //alida se esta vindo somente imagens
             $validator = Validator::make($request->only('images')['images'], [
                 'file.*' => 'required|image'
             ]);
+
+
             if ($validator->fails()) {
                 return response()->json(['errors'=>$validator->errors()]);
             } else {
+                //busca somente as images do rquest
                 $imagesDatas = $request->only('images');
                 $imagesDatas = $imagesDatas['images'];
+
+                //Busca todas as imagens que não esta no request
                 $imagensDeletar = $tecnologia->imagens->whereNotIn('id', array_pluck($imagesDatas, 'id'));
 
+                //Deleta do banco de dados todas as imagens que nao vieram do request
+                //ou seja foram 'deletadas' no front end
                 foreach ($imagensDeletar as $item) {
                     File::delete($item->path.$item->fileNamePath);
                     $item->delete();
                 }
 
+                //para cada imagem enviada faz o processo de gravacao do banco de dados e do arquivo no disco
                 foreach ($imagesDatas as $imagesData) {
                     if ( (!File::exists($path.$imagesData['fileNamePath']))
                         || ($imagesData['fileNamePath'] == null)
                     ){
-                        dd($imagesData);
+                        //Monta os dados da imagem
                         $fileNamePath = uniqid().$imagesData['fileName'];
                         $imagesData = array_add($imagesData, 'path', $path);
                         $imagesData['fileNamePath'] = $fileNamePath;
+
+                        //grava os dados da imagem no banco de dados
                         $tecnologia->imagens()->create(array_except($imagesData, ['file']));
+
+                        //Finalmente grava a imagem no disco rigido
                         Image::make($imagesData['file'])->save($path.$fileNamePath);
                     }
                 }
