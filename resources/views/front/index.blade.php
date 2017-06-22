@@ -14,7 +14,7 @@
     <style>
         html, body {
             background-color: #fff;
-            color: #636b6f;
+            color: black;
             font-family: 'Raleway', sans-serif;
             font-weight: 100;
             height: 100vh;
@@ -50,7 +50,7 @@
         }
 
         .links > a {
-            color: #636b6f;
+            color: black;
             padding: 0 25px;
             font-size: 12px;
             font-weight: 600;
@@ -78,6 +78,9 @@
     {!! Form::close() !!}
 
 
+    {{$tecnologias}}
+
 </div>
 </body>
 </html>
+

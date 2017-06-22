@@ -195,13 +195,13 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         //Laravel Collective HTML Form builder
         Collective\Html\HtmlServiceProvider::class,
-        //Laravel searchable)
+        //Laravel searchable
         Sofa\Eloquence\ServiceProvider::class,
         //Petty Route
         PrettyRoutes\ServiceProvider::class,
         //CORS
         Barryvdh\Cors\ServiceProvider::class,
-
+        //IDE helper - Ajuda a identificar methodos nos facades
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
 

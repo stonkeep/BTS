@@ -40,9 +40,12 @@ class TecnologiasController extends Controller
 
     public function pesquisa(Request $request)
     {
-        $tecnologias = Tecnologia::search($request->texto)->with('subtemas', 'categoria', 'instituicao', 'publicos',
+
+        $tecnologias = Tecnologia::search($request->pesquisa, ['titulo', 'subtemas.descricao',])->with( 'subtemas', 'categoria', 'instituicao', 'publicos',
             'temaPrincipal', 'temaSecundario')->get();
+
         dd($tecnologias);
+        return view('front.index', compact('tecnologias'));
     }
 
 

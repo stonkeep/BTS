@@ -9,7 +9,9 @@ use Sofa\Eloquence\Eloquence;
 class Tecnologia extends Model
 {
     use Eloquence;
-    
+
+    protected $searchableColumns = ['titulo'];
+
     protected $guarded = [];
 
     public function instituicao()

@@ -192,5 +192,6 @@ Route::get('/posts/{slug}', ['as' => 'post', 'uses' => 'Admin\PostController@sho
 //Procura por tecnologia
 Route::post('/pesquisa', 'Admin\TecnologiasController@pesquisa')->name('pesquisa');
 Route::get('/pesquisa', function () {
-    return view('front.index');
+    $tecnologias = 0 ;
+    return view('front.index', compact('tecnologias'));
 })->name('insertPremios');

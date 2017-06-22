@@ -690,7 +690,7 @@
                 if (location.indexOf("edit") > -1) {
                     this.form.put('/admin/tecnologias/update/' + this.tecnologia.id)
                         .then(({data}) => {
-//                            window.location.href = '/admin/tecnologias'
+                            window.location.href = '/admin/tecnologias'
                         })
 
                 } else {
