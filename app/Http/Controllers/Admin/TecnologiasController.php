@@ -24,9 +24,6 @@ class TecnologiasController extends Controller
 
     private $autorizado = false;
 
-    private $tecnologia;
-
-
     public function __construct()
     {
         $user = Auth::user();
@@ -40,11 +37,8 @@ class TecnologiasController extends Controller
 
     public function pesquisa(Request $request)
     {
-
-        $tecnologias = Tecnologia::search($request->pesquisa, ['titulo', 'subtemas.descricao',])->with( 'subtemas', 'categoria', 'instituicao', 'publicos',
-            'temaPrincipal', 'temaSecundario')->get();
-
-        dd($tecnologias);
+        $tecnologias = Tecnologia::search($request->pesquisa)->get();
+        //dd($tecnologias);
         return view('front.index', compact('tecnologias'));
     }
 

@@ -65,7 +65,9 @@
     </style>
 </head>
 <body>
-<div class="flex-center position-ref full-height">
+<div class="flex-center">
+
+
     {!! Form::open(['url' => '/pesquisa']) !!}
 
     {{Form::token()}}
@@ -78,9 +80,17 @@
     {!! Form::close() !!}
 
 
-    {{$tecnologias}}
-
 </div>
+<br>
+<br>
+<br>
+<div class="flex-center">
+    @foreach($tecnologias as $tecnologia)
+        {{$tecnologia->titulo}}
+        <br>
+    @endforeach
+</div>
+
 </body>
 </html>
 

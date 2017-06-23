@@ -13,7 +13,7 @@ class CreateSubTemasTable extends Migration
      */
     public function up()
     {
-        Schema::create('sub_temas', function (Blueprint $table) {
+            Schema::create('sub_temas', function (Blueprint $table) {
             $table->increments('id');
             $table->string('descricao');
             $table->integer('tema_id')->unsigned();
