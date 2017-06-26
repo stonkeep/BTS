@@ -165,11 +165,8 @@ class TecnologiasController extends Controller
             }
 
 
-
-
-
-
-            $path = public_path(env('PATH_TECNOLOGIA', 'tecnologias/')) . $tecnologia->titulo. '/';
+            //Começa o processo de gravar os arquivos
+            $path = public_path(config('bts_config.PATH_TECNOLOGIA', 'tecnologias/')) . $tecnologia->titulo. '/';
 
 
             if (!File::exists($path))
