@@ -21,6 +21,7 @@ class CreateInstituicaoParceirasTable extends Migration
             $table->foreign('tecnologia_id')->references('id')->on('tecnologias')
                 ->onDelete('cascade');
             $table->timestamps();
+            $table->index('nome');
         });
     }
 

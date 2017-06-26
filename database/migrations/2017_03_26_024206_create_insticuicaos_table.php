@@ -34,6 +34,8 @@ class CreateInsticuicaosTable extends Migration
             $table->string('sexo', 1);
             $table->bigInteger('CPF');
             $table->timestamps();
+            $table->index('razaoSocial');
+            $table->index('cidade');
         });
     }
 

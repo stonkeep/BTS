@@ -40,6 +40,13 @@ class CreateTecnologiasTable extends Migration
             $table->timestamps();
 //            $table->foreign('instituicao_id')->references('id')->on('instituicaos')->onDelete('restrict');
 //                $table->foreign('categoria_id')->references('id')->on('categorias')->onDelete('restrict');
+            $table->index('titulo');
+
+            //$table->index('resumo');
+            //$table->index('problema');
+            //$table->index('objetivoGeral');
+            //$table->index('objetivoEspecifico');
+            //$table->index('descricao');
         });
     }
 

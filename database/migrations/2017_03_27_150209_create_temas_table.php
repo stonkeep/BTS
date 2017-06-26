@@ -17,6 +17,7 @@ class CreateTemasTable extends Migration
             $table->increments('id');
             $table->string('nome');
             $table->timestamps();
+            $table->index('nome');
         });
     }
 

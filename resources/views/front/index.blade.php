@@ -85,10 +85,13 @@
 <br>
 <br>
 <div class="flex-center">
-    @foreach($tecnologias as $tecnologia)
-        {{$tecnologia->titulo}}
-        <br>
-    @endforeach
+    @if($tecnologias)
+        @foreach($tecnologias as $tecnologia)
+            {{$tecnologia->titulo}}
+            <br>
+        @endforeach
+    @endif
+
 </div>
 
 </body>

@@ -6,6 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateSubTemasTable extends Migration
 {
+
     /**
      * Run the migrations.
      *
@@ -13,12 +14,13 @@ class CreateSubTemasTable extends Migration
      */
     public function up()
     {
-            Schema::create('sub_temas', function (Blueprint $table) {
+        Schema::create('sub_temas', function (Blueprint $table) {
             $table->increments('id');
             $table->string('descricao');
             $table->integer('tema_id')->unsigned();
             $table->timestamps();
             $table->foreign('tema_id')->references('id')->on('temas')->onDelete('restrict');
+            $table->index('descricao');
         });
 
         //Schema::table('sub_temas', function(Blueprint $table)
@@ -27,6 +29,7 @@ class CreateSubTemasTable extends Migration
         //
         //});
     }
+
 
     /**
      * Reverse the migrations.
