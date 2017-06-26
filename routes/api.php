@@ -23,3 +23,6 @@ Route::get('/subtemas/{temas}', function (\App\Temas $temas) {
     return $temas->subTemas()->get();
 });
 
+Route::get('/tecnologias', function (Request $request) {
+    return \App\Tecnologia::paginate($request->pagesize);
+});

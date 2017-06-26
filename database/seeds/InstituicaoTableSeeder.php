@@ -12,6 +12,9 @@ class InstituicaoTableSeeder extends Seeder
      */
     public function run()
     {
+        for ($i = 1; $i <= 10; $i++) {
+            factory(Instituicao::class)->create();
+        }
         Instituicao::create([
             'CNPJ' => 16286169000190,
             'razaoSocial' => 'Teste de Instituicao',

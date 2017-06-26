@@ -54,8 +54,9 @@ class TecnologiasController extends Controller
             return back();
         }
 
-        $data = Tecnologia::all();
+        $data = Tecnologia::all()->values('id', 'titulo' , 'created_at', 'updated_at');
 
+        //dd($data);
         return view('admin.tecnologias.show', compact('data'));
     }
 

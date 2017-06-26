@@ -70,7 +70,7 @@ class Tecnologia extends Model
         'valorHumanos'  => 2,
         'depoimentoLivre'  => 2,
         'temaPrincipal.nome'  => 8,
-        //'temaSecundario.nome',
+        //'temaSecundario.nome', //TODO criar uma tabela muitos pra muitos com a tabela temas
         'subtemas.descricao' =>9,
         'instituicao.razaoSocial' => 5,
         'instituicao.nomeDaArea',

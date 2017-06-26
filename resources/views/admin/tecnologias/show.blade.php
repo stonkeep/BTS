@@ -22,17 +22,20 @@
                data-show-columns="true"
                data-search-accent-neutralise="true"
                data-locale="pt-BR"
-               data-page-size="10"
-               data-page-list="[10, 25, 50, 100]"
-               data-pagination="true">
+               {{--data-query-params="queryParams"--}}
+               {{--data-page-size="10"--}}
+               {{--data-page-list="[10, 25, 50, 100]"--}}
+               {{--data-page-list="[10]"--}}
+        >
             <thead class="thead-inverse">
             <tr>
-                @foreach($colunas as $coluna)
-                    {{--<th data-sortable="true">ID</th>--}}
-                    {{--<th data-sortable="true">Descrição</th>--}}
-                    {{--<th data-sortable="true">Data de encerramento</th>--}}
-                    <th data-sortable="true">{{$coluna}}</th>
-                @endforeach
+{{--                @foreach($colunas as $coluna)--}}
+                    {{--<th data-sortable="true">{{$coluna}}</th>--}}
+                    <th data-sortable="true" data-field="id">ID</th>
+                    <th data-sortable="true" data-field="titulo">Título</th>
+                    <th data-sortable="true" data-field="created_at">Criado em</th>
+                    <th data-sortable="true" data-field="updated_at">Atualizado em</th>
+                {{--@endforeach--}}
 
                 <th data-sortable="false"
                     data-switchable="false"></th>
@@ -40,19 +43,20 @@
                     data-switchable="false"></th>
             </tr>
             </thead>
-            <tbody>
-            @foreach($data as $item)
-                <tr>
-                    <td>{{$item->id}}</td>
-                    <td>{{$item->titulo}}</td>
-                    <td>{{$item->created_at}}</td>
-                    <td>{{$item->updated_at}}</td>
-                    <td><a class="btn btn-danger" href="/admin/{{$tipo}}/delete/{{$item->id}}">Excluir</a></td>
-                    <td><a class="btn btn-success" href="{{route('editTecnologias', $item->id)}}">Editar</a></td>
-                </tr>
-            @endforeach
-            </tbody>
+            {{--<tbody>--}}
+            {{--@foreach($data as $item)--}}
+                {{--<tr>--}}
+                    {{--<td>{{$item->id}}</td>--}}
+                    {{--<td>{{$item->titulo}}</td>--}}
+                    {{--<td>{{$item->created_at}}</td>--}}
+                    {{--<td>{{$item->updated_at}}</td>--}}
+                    {{--<td><a class="btn btn-danger" href="/admin/{{$tipo}}/delete/{{$item->id}}">Excluir</a></td>--}}
+                    {{--<td><a class="btn btn-success" href="{{route('editTecnologias', $item->id)}}">Editar</a></td>--}}
+                {{--</tr>--}}
+            {{--@endforeach--}}
+            {{--</tbody>--}}
         </table>
+{{--            {{$data->links()}}--}}
     </div>
 
 @stop
@@ -68,11 +72,45 @@
 @section('js')
     <script src="/js/app.js"></script>
     <script>
+        var pageSize = 10;
+        var page = 1;
+        var url = '/api/tecnologias?pagesize=' + pageSize + '&page=' + page;
+
         $('#table').bootstrapTable({
             cache: false,
             height: 500,
             striped: true,
-            searchTimeOut: 10
+            searchOnEnterKey: true,
+            url: url,
+            pageSize: pageSize,
+            totalField: 'total',
+            dataField: 'data',
+            sidePagination: 'server',
+            pagination: true,
+            pageList: [10, 25, 50, 100],
+            search: true,
+            searchText: '',
+            searchTimeOut: 500,
+            silent: true
         });
+
+
+        $('#table').on('search.bs.table', function (text) {
+           console.log('testsetsetestete');
+        });
+
+        $('#table').on('page-change.bs.table', function (e, number, size) {
+            page = number;
+            pageSize = size;
+            url = '/api/tecnologias?pagesize=' + pageSize + '&page=' + page;
+            $('#table').bootstrapTable('refresh', {
+                url: url,
+                pageSize: pageSize,
+                pageNumber: page
+            });
+            console.log(url);
+
+        });
+
     </script>
 @stop
