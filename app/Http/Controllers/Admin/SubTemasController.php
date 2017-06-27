@@ -116,10 +116,10 @@ class SubTemasController extends Controller
      * @param  \App\SubTemas  $subTemas
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SubTemas $subTema)
+    public function update(Request $request, $id)
     {
         //dd($subTema);
-        $subTema->update($request->all());
+        SubTemas::find($id)->update($request->all());
         flash('Sub-Tema atualizado com sucesso')->success();
     }
 

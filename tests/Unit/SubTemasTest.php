@@ -12,6 +12,7 @@ use Tests\ValidationsFields;
 
 class SubTemasTest extends TestCase
 {
+
     use DatabaseMigrations;
     use ValidationsFields;
 
@@ -23,10 +24,11 @@ class SubTemasTest extends TestCase
         ]);
 
         $this->json('POST', "/admin/subtemas/create", [
-            'tema_id' => $tema->id,
+            'tema_id'   => $tema->id,
             'descricao' => 'Higienização dos alimentos',
         ]);
     }
+
 
     /**
      * A basic test example.
@@ -42,7 +44,7 @@ class SubTemasTest extends TestCase
         ]);
 
         $subtema = SubTemas::create([
-            'tema_id' => $tema->id,
+            'tema_id'   => $tema->id,
             'descricao' => 'Alimentação Escolar',
         ]);
 
@@ -54,13 +56,14 @@ class SubTemasTest extends TestCase
         $this->assertNotNull($tema->subtemas());
     }
 
+
     /** @test */
     function teste_create_por_post()
     {
         $this->cria_subtema();
 
         $response = $this->json('POST', "/admin/subtemas/create", [
-            'tema_id' => 1,
+            'tema_id'   => 1,
             'descricao' => 'Alimentação Escolar',
         ]);
 
@@ -83,6 +86,7 @@ class SubTemasTest extends TestCase
         $response->assertSee('Higienização dos alimentos');
     }
 
+
     /** @test */
     function teste_update()
     {
@@ -95,10 +99,13 @@ class SubTemasTest extends TestCase
         ]);
 
         $response->assertStatus(200);
+        $response = $this->get("admin/subtemas");
+        $response->assertStatus(200);
         $response->assertSee('Outro Subtema');
         $response->assertDontSee('Higienização dos alimentos');
 
     }
+
 
     /** @test */
     function teste_delete()
@@ -106,7 +113,7 @@ class SubTemasTest extends TestCase
         $this->cria_subtema();
 
         $this->json('POST', "/admin/subtemas/create", [
-            'tema_id' => 1,
+            'tema_id'   => 1,
             'descricao' => 'Alimentação Escolar',
         ]);
 
@@ -114,6 +121,8 @@ class SubTemasTest extends TestCase
 
         $response = $this->get("admin/subtemas/delete/{$subTema->id}");
 
+        $response->assertStatus(302);
+        $response = $this->get("admin/subtemas");
         $response->assertStatus(200);
         $response->assertDontSee('Higienização dos alimentos');
         $response->assertSee('Alimentação Escolar');
@@ -129,7 +138,7 @@ class SubTemasTest extends TestCase
 
         //testa validacao de id do tema
         $this->response = $this->json('POST', "/admin/subtemas/create", [
-            'tema_id' => 2,
+            'tema_id'   => 2,
             'descricao' => 'Alimentação Escolar',
         ]);
         $this->assertValidationError('tema_id');
@@ -145,12 +154,12 @@ class SubTemasTest extends TestCase
 
         //testa validacao unica da descricao
         $this->response = $this->json('POST', "/admin/subtemas/create", [
-            'tema_id' => 1,
+            'tema_id'   => 1,
             'descricao' => 'Alimentação Escolar',
         ]);
 
         $this->response = $this->json('POST', "/admin/subtemas/create", [
-            'tema_id' => 1,
+            'tema_id'   => 1,
             'descricao' => 'Alimentação Escolar',
         ]);
 
@@ -171,19 +180,19 @@ class SubTemasTest extends TestCase
         ]);
         $this->assertValidationError('tema_id');
 
-
         $this->response = $this->json('POST', "/admin/subtemas/create", [
             'tema_id' => 1,
 //            'descricao' => 'Alimentação Escolar',
         ]);
         $this->assertValidationError('descricao');
     }
-    
+
+
     /** @test */
     function teste_pesquisa()
     {
         $this->teste_de_create();
-        
+
         $subtemas = SubTemas::search('alimentacao')->get()->first();
         $this->assertEquals($subtemas->descricao, 'Alimentação Escolar');
     }
