@@ -25,8 +25,11 @@ class TecnologiaTest extends TestCase
     use ValidationsFields;
 
     private $responsaveis;
+
     private $locais;
+
     private $instituicoesParceiras;
+
     private $enderecosEletronicos;
 
 
@@ -105,7 +108,7 @@ class TecnologiaTest extends TestCase
             ]
         ];
         $this->instituicoesParceiras = $instituicoesParceiras;
-        
+
         $this->enderecosEletronicos = $enderecosEletronicos = [
             [
                 'tecnologia_id' => 1,
@@ -476,7 +479,7 @@ class TecnologiaTest extends TestCase
 
 
     /** @test */
-        function teste_responsaveis()
+    function teste_responsaveis()
     {
         $this->disableExceptionHandling();
         $responsaveis = [];
@@ -636,7 +639,7 @@ class TecnologiaTest extends TestCase
         $this->assertContains('Afrodescentes', $tecnologia->publicos[0]->toArray());
     }
 
-//TODO Instituições parceiras na tecnologia:-->
+
     /** @test */
     function teste_instituicoes_parceiras()
     {
@@ -681,7 +684,7 @@ class TecnologiaTest extends TestCase
         $this->assertContains('Universidade Federal', $tecnologia->instituicoesParceiras[0]->toArray());
     }
 
-//TODO Endereços eletrônicos associados à tecnologia:-->
+
     /** @test */
     function teste_enderecos_eletronicos()
     {
@@ -714,9 +717,9 @@ class TecnologiaTest extends TestCase
             'instituicao_id'        => 1,
             'responsaveis'          => $this->responsaveis,
             'locaisImplantacao'     => $this->locais,
-            'PublicosAlvo'           => [1, 2], //Como já foi criado no SetUp os públicos não preciso criar novamente
+            'PublicosAlvo'          => [1, 2], //Como já foi criado no SetUp os públicos não preciso criar novamente
             'instituicoesParceiras' => $this->instituicoesParceiras,
-            'enderecosEletronicos' => $this->enderecosEletronicos,
+            'enderecosEletronicos'  => $this->enderecosEletronicos,
         ]);
 
         $response->assertStatus(200);
@@ -725,7 +728,4 @@ class TecnologiaTest extends TestCase
 
         $this->assertContains('www.google.com.br', $tecnologia->enderecosEletronico[0]->toArray());
     }
-//TODO Anexos da tecnologia:-->
-//TODO Banco de Imagens:-->
-
 }

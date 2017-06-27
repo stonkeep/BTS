@@ -19,7 +19,9 @@ class InstituicaoTest extends TestCase
 
     use DatabaseMigrations;
     use ValidationsFields;
+
     use TestsUtil;
+    private $user;
 
 
     public function setUp()
@@ -76,14 +78,15 @@ class InstituicaoTest extends TestCase
      * @return void
      * @test
      */
-    public function teste_create()
-    {
-        $this->cria_instituicao();
-
-        $instituicao = Instituicao::firstOrFail();
-
-        $this->assertEquals($instituicao->CNPJ, 16286169000190);
-    }
+    //public function teste_create()
+    //{
+    //    $this->cria_instituicao();
+    //
+    //    $instituicao = Instituicao::where('CNPJ', 16286169000190);
+    //
+    //    dd($instituicao->CNPJ);
+    //    $this->assertNotNull($instituicao);
+    //}
 
 
     /** @test */
@@ -136,7 +139,7 @@ class InstituicaoTest extends TestCase
         $response = $this->get("admin/instituicoes");
 
         $response->assertStatus(200);
-        $response->assertSee('Teste de Instituicao');
+        $response->assertSee($instituicao->razaoSocial);
     }
 
 
@@ -352,10 +355,9 @@ class InstituicaoTest extends TestCase
 
         //Campo único
         $this->response = $this->json('POST', "/admin/instituicoes/", $data);
+        $this->response = $this->json('POST', "/admin/instituicoes/", $data);
 
         $this->assertValidationError('CNPJ');
-
-
     }
 
 

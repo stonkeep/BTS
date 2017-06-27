@@ -19,8 +19,8 @@ class CargosTest extends TestCase
 
     use DatabaseMigrations;
     use ValidationsFields; //Trait que trata das validações
+
     use TestsUtil;
-    
     private $user;
 
 
