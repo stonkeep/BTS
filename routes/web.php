@@ -77,21 +77,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::get('/naturezasJuridicas/delete/{categoria}', ['as' => 'categorias.delete', 'uses' => 'NaturezasJuridicasController@destroy']);
 
 
-    //
-    //Route::get('/naturezasJuridicas/insert', function () {
-    //    return view('admin.naturezasJuridicas.create');
-    //})->name('insertNaturezaJuridica');
-    //Route::post('/naturezasJuridicas/create', 'NaturezasJuridicasController@store')->name('storeNaturezaJuridica');
-    //Route::get('/naturezasJuridicas', 'NaturezasJuridicasController@index')->name('indexNaturezaJuridica');
-    //Route::get('/naturezasJuridicas/delete/{natureza}',
-    //    'NaturezasJuridicasController@destroy')->name('destroyNaturezaJuridica');
-    //Route::put('/naturezasJuridicas/update/{natureza}',
-    //    'NaturezasJuridicasController@update')->name('updateNaturezaJuridica');
-    //Route::get('/naturezasJuridicas/edit/{natureza}',
-    //    'NaturezasJuridicasController@edit')->name('editNaturezaJuridica');
-
 //Cargos
     Route::resource('/cargos', 'CargosController');
+    Route::get('/cargos/delete/{cargos}', ['as' => 'cargos.delete', 'uses' => 'CargosController@destroy']);
 
 //instituicoes
     Route::resource('/instituicoes', 'InstituicaoController');
