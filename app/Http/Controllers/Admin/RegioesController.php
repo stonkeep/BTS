@@ -15,12 +15,11 @@ class RegioesController extends Controller
     public function __construct()
     {
         $user = Auth::user();
-        if ($user) {
-            if ( ! $user->can('Regioes')) {
+            if ( ! $user->hasPermissionTo('Regioes')) {
                 flash('Você não tem acesso suficiente')->error();
                 $this->autorizado = false;
             }
-        }
+
     }
 
     /**
@@ -62,9 +61,9 @@ class RegioesController extends Controller
         ]);
             
         Regioes::create($request->all());
-        $regioes = Regioes::all();
+        $data = Regioes::all();
         
-        return view('admin.regioes.show', compact('regioes'));
+        return view('admin.regioes.show', compact('data'));
     }
 
     /**
@@ -104,14 +103,14 @@ class RegioesController extends Controller
      * @param  \App\Regioes  $regioes
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Regioes $regiao)
+    public function update(Request $request, $id)
     {
         $this->validate($request, [
             'sigla' => 'required',
             'descricao' => 'required',
         ]);
 
-        $regiao->update($request->all());
+        Regioes::find($id)->update($request->all());
         flash('Região atualizada com sucesso')->success();
 //        $regioes = Regioes::all();
 //        return view('admin.regioes.show', compact('regioes'));
@@ -123,9 +122,9 @@ class RegioesController extends Controller
      * @param  \App\Regioes  $regioes
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Regioes $regiao)
+    public function destroy($id)
     {
-        $regiao->delete();
+        Regioes::find($id)->delete();
 
         flash('Região deletada com sucesso')->success();
         return redirect(route('indexRegioes'));        

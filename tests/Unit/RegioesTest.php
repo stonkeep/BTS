@@ -8,12 +8,23 @@ use RegioesTableSeed;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\TestsUtil;
 use Tests\ValidationsFields;
 
 class RegioesTest extends TestCase
 {
     use DatabaseMigrations;
     use ValidationsFields;
+
+    use TestsUtil;
+
+    public function setUp()
+    {
+        parent::setUp();
+        $this->geraUsuario();
+    }
+
+
     /**
      *
      * @return void
@@ -51,7 +62,8 @@ class RegioesTest extends TestCase
     /** @test */
     function create_by_post_and_recive_response()
     {
-        //$this->disableExceptionHandling();
+        $this->disableExceptionHandling();
+
     	$response =  $this->json('POST', "/admin/regioes/create", [
             'sigla' => 'CO',
             'descricao' => 'Centro - Oeste',
@@ -140,6 +152,9 @@ class RegioesTest extends TestCase
         
         $response = $this->json('get', "admin/regioes/delete/{$regiao->id}");
 
+        $response->assertStatus(302);
+
+        $response = $this->get('admin/regioes');
         $response->assertStatus(200);
         $response->assertSee('NE');
         $response->assertDontSee('Centro - Oeste');
