@@ -77,9 +77,9 @@ class ResponsavelController extends Controller
      * @param  \App\Responsavel  $responsavel
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Responsavel $responsavel)
+    public function update(Request $request, $id)
     {
-        $responsavel->update($request->all());
+        Responsavel::find($id)->update($request->all());
         flash('Responsável atualizado com sucesso')->success();
     }
 
@@ -89,9 +89,9 @@ class ResponsavelController extends Controller
      * @param  \App\Responsavel  $responsavel
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Responsavel $responsavel)
+    public function destroy($id)
     {
-        $responsavel->delete();
+        Responsavel::find($id)->delete();
         flash('Responsável deletado com sucesso')->success();
     }
 }

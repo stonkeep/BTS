@@ -102,14 +102,16 @@ class ResponsavelTest extends TestCase
     /** @test */
     function teste_delete()
     {
+        $this->disableExceptionHandling();
         $responsavel = Responsavel::create([
             'nome' => 'João Carlos',
             'telefone' => '3131313131',
             'email' => 'joao@algumlugar.com.br',
         ]);
 
-        $this->json('DELETE', "responsaveis/delete/{$responsavel->id}");
-        
+        $response = $this->json('DELETE', "admin/responsaveis/delete/{$responsavel->id}");
+
+        $response->assertStatus(200);
         $response = $this->get("admin/responsaveis");
 
         $response->assertStatus(200);
