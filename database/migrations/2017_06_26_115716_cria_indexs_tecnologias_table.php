@@ -14,11 +14,14 @@ class CriaIndexsTecnologiasTable extends Migration
     public function up()
     {
         Schema::table('tecnologias', function (Blueprint $table) {
-            DB::statement('ALTER TABLE tecnologias ADD FULLTEXT INDEX resumo_index(resumo)');
-            DB::statement('ALTER TABLE tecnologias ADD FULLTEXT INDEX problema_index(problema)');
-            DB::statement('ALTER TABLE tecnologias ADD FULLTEXT INDEX objetivoGeral_index(objetivoGeral)');
-            DB::statement('ALTER TABLE tecnologias ADD FULLTEXT INDEX objetivoEspecifico_index(objetivoEspecifico)');
-            DB::statement('ALTER TABLE tecnologias ADD FULLTEXT INDEX descricao_index(descricao)');
+            if (App::environment() !== 'testing') {
+                DB::statement('ALTER TABLE tecnologias ADD FULLTEXT INDEX resumo_index(resumo)');
+                DB::statement('ALTER TABLE tecnologias ADD FULLTEXT INDEX problema_index(problema)');
+                DB::statement('ALTER TABLE tecnologias ADD FULLTEXT INDEX objetivoGeral_index(objetivoGeral)');
+                DB::statement('ALTER TABLE tecnologias ADD FULLTEXT INDEX objetivoEspecifico_index(objetivoEspecifico)');
+                DB::statement('ALTER TABLE tecnologias ADD FULLTEXT INDEX descricao_index(descricao)');
+            }
+
         });
     }
 
