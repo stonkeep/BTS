@@ -190,8 +190,6 @@ class TecnologiasController extends Controller
                     $tecnologia->imagens()->create(array_except($imagesData, ['file']));
                     Image::make($imagesData['file'])->save($path.$fileNamePath);
                 }
-
-                return response()->json(['error' => false]);
             }
 
         });
@@ -363,7 +361,6 @@ class TecnologiasController extends Controller
                         Image::make($imagesData['file'])->save($path.$fileNamePath);
                     }
                 }
-                return response()->json(['error' => false]);
             }
 
         });

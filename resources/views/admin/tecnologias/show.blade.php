@@ -22,41 +22,41 @@
                data-show-columns="true"
                data-search-accent-neutralise="true"
                data-locale="pt-BR"
-               {{--data-query-params="queryParams"--}}
-               {{--data-page-size="10"--}}
-               {{--data-page-list="[10, 25, 50, 100]"--}}
-               {{--data-page-list="[10]"--}}
+                {{--data-query-params="queryParams"--}}
+                {{--data-page-size="10"--}}
+                {{--data-page-list="[10, 25, 50, 100]"--}}
+                {{--data-page-list="[10]"--}}
         >
             <thead class="thead-inverse">
             <tr>
-{{--                @foreach($colunas as $coluna)--}}
-                    {{--<th data-sortable="true">{{$coluna}}</th>--}}
-                    <th data-sortable="true" data-field="id">ID</th>
-                    <th data-sortable="true" data-field="titulo">Título</th>
-                    <th data-sortable="true" data-field="created_at">Criado em</th>
-                    <th data-sortable="true" data-field="updated_at">Atualizado em</th>
+                {{--                @foreach($colunas as $coluna)--}}
+                {{--<th data-sortable="true">{{$coluna}}</th>--}}
+                {{--<th data-sortable="true" data-field="id">ID</th>--}}
+                {{--<th data-sortable="true" data-field="titulo">Título</th>--}}
+                {{--<th data-sortable="true" data-field="created_at">Criado em</th>--}}
+                {{--<th data-sortable="true" data-field="updated_at">Atualizado em</th>--}}
                 {{--@endforeach--}}
 
-                <th data-sortable="false"
-                    data-switchable="false"></th>
-                <th data-sortable="false"
-                    data-switchable="false"></th>
+                {{--<th data-sortable="false"--}}
+                    {{--data-switchable="false"></th>--}}
+                {{--<th data-sortable="false"--}}
+                    {{--data-switchable="false"></th>--}}
             </tr>
             </thead>
             {{--<tbody>--}}
             {{--@foreach($data as $item)--}}
-                {{--<tr>--}}
-                    {{--<td>{{$item->id}}</td>--}}
-                    {{--<td>{{$item->titulo}}</td>--}}
-                    {{--<td>{{$item->created_at}}</td>--}}
-                    {{--<td>{{$item->updated_at}}</td>--}}
-                    {{--<td><a class="btn btn-danger" href="/admin/{{$tipo}}/delete/{{$item->id}}">Excluir</a></td>--}}
-                    {{--<td><a class="btn btn-success" href="{{route('editTecnologias', $item->id)}}">Editar</a></td>--}}
-                {{--</tr>--}}
+            {{--<tr>--}}
+            {{--<td>{{$item->id}}</td>--}}
+            {{--<td>{{$item->titulo}}</td>--}}
+            {{--<td>{{$item->created_at}}</td>--}}
+            {{--<td>{{$item->updated_at}}</td>--}}
+            {{--<td><a class="btn btn-danger" href="/admin/{{$tipo}}/delete/{{$item->id}}">Excluir</a></td>--}}
+            {{--<td><a class="btn btn-success" href="{{route('editTecnologias', $item->id)}}">Editar</a></td>--}}
+            {{--</tr>--}}
             {{--@endforeach--}}
             {{--</tbody>--}}
         </table>
-{{--            {{$data->links()}}--}}
+        {{--            {{$data->links()}}--}}
     </div>
 
 @stop
@@ -77,6 +77,33 @@
         var url = '/api/tecnologias?pagesize=' + pageSize + '&page=' + page;
 
         $('#table').bootstrapTable({
+            columns: [{
+                field: 'id',
+                title: 'ID'
+            }, {
+                field: 'titulo',
+                title: 'Título'
+            }, {
+                field: 'created_at',
+                title: 'Criado em'
+            }, {
+                field: 'updated_at',
+                title: 'Atualizado em'
+            }, {
+                field: '',
+                title: '',
+                formatter : function(value,row,index) {
+                    return '<a class="btn btn-danger" href="/admin/{{$tipo}}/delete/' + row.id +  '">Excluir</a>';
+                }
+
+            }, {
+                field: '',
+                title: '',
+                formatter : function(value,row,index) {
+                    return '<a class="btn btn-success" href="/admin/{{$tipo}}/edit/' + row.id +  '">Editar</a>';
+                }
+
+            }],
             cache: false,
             height: 500,
             striped: true,
@@ -96,7 +123,7 @@
 
 
         $('#table').on('search.bs.table', function (e, text) {
-           url = '/api/tecnologias?pagesize=' + pageSize + '&page=' + page + '&text=' + text;
+            url = '/api/tecnologias?pagesize=' + pageSize + '&page=' + page + '&text=' + text;
             $('#table').bootstrapTable('refresh', {
                 url: url,
                 pageSize: pageSize,
