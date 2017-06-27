@@ -9,16 +9,17 @@ use Illuminate\Http\Request;
 
 class PublicosAlvoController extends Controller
 {
+
     private $autorizado = true;
+
     public function __construct()
     {
         $user = Auth::user();
-        if ($user) {
-            if ( ! $user->can('PublicoAlvo')) {
-                flash('Você não tem acesso suficiente')->error();
-                $this->autorizado = false;
-            }
+        if ( ! $user->hasPermissionTo('PublicoAlvo')) {
+            flash('Você não tem acesso suficiente')->error();
+            $this->autorizado = false;
         }
+
     }
 
 
@@ -29,13 +30,15 @@ class PublicosAlvoController extends Controller
      */
     public function index()
     {
-        if (!$this->autorizado){
+        if ( ! $this->autorizado) {
             return back();
         }
 
         $data = PublicosAlvo::all();
+
         return view('admin.publicosAlvo.show', compact('data'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -47,18 +50,20 @@ class PublicosAlvoController extends Controller
         //
     }
 
+
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $this->validate($request, [
-            'descricao' => 'required|unique:publicos_alvos'    
+            'descricao' => 'required|unique:publicos_alvos'
         ]);
-        
+
         PublicosAlvo::create($request->all());
 
         $data = PublicosAlvo::all();
@@ -66,58 +71,68 @@ class PublicosAlvoController extends Controller
         return view('admin.publicosAlvo.show', compact('data'));
     }
 
+
     /**
      * Display the specified resource.
      *
-     * @param  \App\PublicosAlvo  $publicosAlvo
+     * @param  \App\PublicosAlvo $publicosAlvo
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(PublicosAlvo $publicosAlvo)
     {
         $publicos = PublicosAlvo::all();
+
         return view('admin.publicosAlvo.show', compact('publicos'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\PublicosAlvo  $publicosAlvo
+     * @param  \App\PublicosAlvo $publicosAlvo
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $publico = PublicosAlvo::find($id);
-        if (!$this->autorizado){
+        if ( ! $this->autorizado) {
             return back();
         }
 
         return view('admin.publicosAlvo.edit', compact('publico'));
     }
 
+
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\PublicosAlvo  $publicosAlvo
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\PublicosAlvo        $publicosAlvo
+     *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PublicosAlvo $publico)
+    public function update(Request $request, $id)
     {
-        $publico->update($request->all());
+        PublicosAlvo::find($id)->update($request->all());
         flash('Publico Alvo atualizado com sucesso')->success();
     }
+
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\PublicosAlvo  $publicosAlvo
+     * @param  \App\PublicosAlvo $publicosAlvo
+     *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PublicosAlvo $publico)
+    public function destroy($id)
     {
-        $publico->delete();
+        PublicosAlvo::find($id)->delete();
 
         flash('Publico Alvo deletado com sucesso')->success();
-        return redirect(route('showPublicoAlvo'));
+
+        return redirect(route('indexPublicoAlvo'));
     }
 }
