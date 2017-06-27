@@ -7,12 +7,23 @@ use App\PostCategoria;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\TestsUtil;
 use Tests\ValidationsFields;
 
 class PostCategoriaTest extends TestCase
 {
     use DatabaseMigrations;
     use ValidationsFields;
+
+    use TestsUtil;
+
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->geraUsuario();
+    }
+
 
     /**
      * A basic test example.
@@ -32,9 +43,9 @@ class PostCategoriaTest extends TestCase
     /** @test */
     public function teste_create_por_post()
     {
-//        $this->disableExceptionHandling();
+        $this->disableExceptionHandling();
 
-        $this->json('POST', "/admin/post-categorias/create", [
+        $this->json('POST', "/admin/post-categorias/store", [
             'descricao' => 'Notícias',
         ]);
 
@@ -65,15 +76,17 @@ class PostCategoriaTest extends TestCase
     /** @test */
     public function teste_update()
     {
-        $this->json('POST', "/admin/post-categorias/create", [
+        $this->json('POST', "/admin/post-categorias/store", [
             'descricao' => 'Notícias',
         ]);
 
-        $categoria = PostCategoria::firstOrFail();
+        $categoria = PostCategoria::where('descricao', 'Notícias')->first();
 
-        $this->json('PUT', "admin/post-categorias/update/{$categoria->id}", [
+        $response = $this->json('PUT', "admin/post-categorias/update/{$categoria->id}", [
             'descricao' => 'Paginas internas',
         ]);
+
+        $response->assertStatus(200);
 
         $response = $this->get("admin/post-categorias");
 
@@ -85,7 +98,7 @@ class PostCategoriaTest extends TestCase
     /** @test */
     public function teste_delete()
     {
-        $this->json('POST', "/admin/post-categorias/create", [
+        $this->json('POST', "/admin/post-categorias/store", [
             'descricao' => 'Notícias',
         ]);
 
@@ -106,18 +119,19 @@ class PostCategoriaTest extends TestCase
     public function teste_validacoes()
     {
 
-        $this->response = $this->json('POST', "/admin/categorias/create", [
+        $this->response = $this->json('POST', "/admin/post-categorias/store", [
             'descricao' => '',
         ]);
 
         $this->assertValidationError('descricao');
 
-        $this->json('POST', "/admin/categorias/create", [
+        $this->json('POST', "/admin/post-categorias/store", [
             'descricao' => 'Notícias',
         ]);
-        $this->response = $this->json('POST', "/admin/categorias/create", [
-            'descricao' => 'Notícias',
-        ]);
+
+        $postCategoria = PostCategoria::first();
+
+        $this->response = $this->json('POST', "/admin/post-categorias/store", $postCategoria->toArray());
 
         $this->assertValidationError('descricao');
     }

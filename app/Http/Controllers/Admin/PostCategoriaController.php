@@ -30,7 +30,7 @@ class PostCategoriaController extends Controller
     public function index()
     {
         $user = Auth::user();
-        if (!$user->can('Post')) {
+        if (!$user->hasPermissionTo('Post')) {
             flash('Você não tem acesso suficiente')->error();
             return redirect('/');
         }
@@ -61,6 +61,7 @@ class PostCategoriaController extends Controller
             'descricao' => 'required|unique:post_categorias',
         ]);
 
+        var_dump($request->all());
         try {
             PostCategoria::create($request->all());
             flash('Categoria de posts atualizada com sucesso')->success();
@@ -105,8 +106,9 @@ class PostCategoriaController extends Controller
      * @param  \App\PostCategoria  $postCategoria
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PostCategoria $postCategoria)
+    public function update(Request $request, $id)
     {
+        $postCategoria = PostCategoria::find($id);
         $this->validate($request, [
             'descricao' => 'required',
         ]);
@@ -125,10 +127,10 @@ class PostCategoriaController extends Controller
      * @param  \App\PostCategoria  $postCategoria
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PostCategoria $postCategoria)
+    public function destroy($id)
     {
         try {
-            $postCategoria->delete();
+            PostCategoria::find($id)->delete();
             flash('Categoria deletado com sucesso')->success();
         } catch (\Exception $e) {
             flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
