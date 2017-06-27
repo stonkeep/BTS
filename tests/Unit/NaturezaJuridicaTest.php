@@ -75,11 +75,8 @@ class NaturezaJuridica extends TestCase
         $this->criaListaDeNaturezas();
 
         //carrega dados repetidos para testar a validação
-        $this->response = $this->post('/admin/naturezasJuridicas/', [
-            'descricao'  => 'Autarquia Federal',
-            'created_at' => '2017-03-31 19:27:54',
-            'updated_at' => '2017-03-31 19:27:55'
-        ]);
+
+        $this->response = $this->json('POST', '/admin/naturezasJuridicas/', NaturezasJuridicas::firstOrFail()->toArray());
 
         $this->assertValidationError('descricao');
 
@@ -91,10 +88,6 @@ class NaturezaJuridica extends TestCase
         $response->assertSee('Autarquia Estadual');
         $response->assertSee('1');
         $response->assertSee('2');
-        $response->assertSee('2017-03-31 19:27:54');
-        $response->assertSee('2017-03-31 19:37:54');
-        $response->assertSee('2017-03-31 19:27:55');
-        $response->assertSee('2017-03-31 19:47:55');
     }
 
     /** @test */
