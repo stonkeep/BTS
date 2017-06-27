@@ -95,8 +95,13 @@
         });
 
 
-        $('#table').on('search.bs.table', function (text) {
-           console.log('testsetsetestete');
+        $('#table').on('search.bs.table', function (e, text) {
+           url = '/api/tecnologias?pagesize=' + pageSize + '&page=' + page + '&text=' + text;
+            $('#table').bootstrapTable('refresh', {
+                url: url,
+                pageSize: pageSize,
+                pageNumber: page
+            });
         });
 
         $('#table').on('page-change.bs.table', function (e, number, size) {

@@ -37,8 +37,8 @@ class TecnologiasController extends Controller
 
     public function pesquisa(Request $request)
     {
-        $tecnologias = Tecnologia::search($request->pesquisa)->get();
-        //dd($tecnologias);
+        $tecnologias = Tecnologia::where('titulo', 'LIKE', '%' . $request->pesquisa . '%')->get();
+//        dd($tecnologias);
         return view('front.index', compact('tecnologias'));
     }
 

@@ -24,5 +24,5 @@ Route::get('/subtemas/{temas}', function (\App\Temas $temas) {
 });
 
 Route::get('/tecnologias', function (Request $request) {
-    return \App\Tecnologia::paginate($request->pagesize);
+    return \App\Tecnologia::where('titulo', 'LIKE', '%' . $request->search . '%')->paginate($request->pagesize);
 });
