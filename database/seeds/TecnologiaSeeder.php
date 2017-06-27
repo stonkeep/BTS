@@ -17,7 +17,7 @@ class TecnologiaSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
-        for ($i = 1; $i <= 1000; $i++) {
+        for ($i = 1; $i <= env('QTD_TEC_DESENV'); $i++) {
 //        factory(Instituicao::class)->create();
             $tecnologia = factory(Tecnologia::class)->create();
             $tecnologia->instituicao_id = rand(1, 10);
