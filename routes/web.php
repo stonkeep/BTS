@@ -23,9 +23,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
 //Route::group(['middleware' => 'auth'], function () {
 //Premios
-    Route::get('/premios/insert', function () {
-        return view('admin.premios.create');
-    })->name('insertPremios');
+    Route::get('/premios/insert', 'VigenciasPremioController@create')->name('insertPremios');
     Route::post('/premios/create', 'VigenciasPremioController@store')->name('storePremios');
     Route::get('/premios/', 'VigenciasPremioController@index')->name('indexPremios');
     Route::get('/premios/delete/{premio}', 'VigenciasPremioController@destroy')->name('destroyPremios');

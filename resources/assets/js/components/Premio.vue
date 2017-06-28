@@ -73,7 +73,7 @@
         methods: {
             submit () {
                 // Submit the form via a POST request
-                var location = window.location.href;
+                let location = window.location.href;
                 if (location.indexOf("edit") > -1) {
                     console.log(this.form.id);
                     this.form.put('/admin/premios/update/'+ this.form.id)

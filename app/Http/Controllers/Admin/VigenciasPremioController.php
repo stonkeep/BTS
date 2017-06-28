@@ -48,6 +48,8 @@ class VigenciasPremioController extends Controller
      */
     public function create()
     {
+        $premio = new VigenciasPremio();
+        return view('admin.premios.create', compact('premio'));
     }
 
 
