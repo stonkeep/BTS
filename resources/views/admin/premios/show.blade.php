@@ -10,7 +10,7 @@
 
 @section('content')
     @php
-        $colunas = collect(['id', 'Edição', 'Data de Criação', 'Data de Atualização']);
+        $colunas = collect(['id', 'Edição', 'Data de Abertura', 'Data de Encerramento']);
      $tipo = 'premios' ;
     @endphp
     <div id="app">
@@ -45,8 +45,8 @@
                 <tr>
                     <td>{{$item->id}}</td>
                     <td>{{$item->edicao}}</td>
-                    <td>{{$item->created_at}}</td>
-                    <td>{{$item->updated_at}}</td>
+                    <td>{{$item->data_abertura}}</td>
+                    <td>{{$item->data_encerramento}}</td>
                     <td><a class="btn btn-danger" href="/admin/{{$tipo}}/delete/{{$item->id}}">Excluir</a></td>
                     <td><a class="btn btn-success" href="/admin/{{$tipo}}/edit/{{$item->id}}">Editar</a></td>
                 </tr>
