@@ -16,13 +16,15 @@ use Carbon\Carbon;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\TestsUtil;
 use Tests\ValidationsFields;
-
+use Faker\Factory as Faker;
 class TecnologiaTest extends TestCase
 {
 
     use DatabaseMigrations;
     use ValidationsFields;
+    use TestsUtil;
 
     private $responsaveis;
 
@@ -36,6 +38,8 @@ class TecnologiaTest extends TestCase
     public function setUp()
     {
         parent::setUp();
+        $this->geraUsuario();
+
         $temasSeed = new \TemaTableSeeder();
         $temasSeed->run();
 
@@ -135,33 +139,11 @@ class TecnologiaTest extends TestCase
     }
 
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     * @test
-     */
-    public function teste_create_tecnologia()
+    public function criaTecnologia()
     {
-        factory(Tecnologia::class)->create();
-        $tecnologia = Tecnologia::firstOrFail();
-
-        self::assertEquals($tecnologia->titulo, 'Teste GEPEM');
-    }
-
-
-    /** @test */
-    public function teste_store_por_http()
-    {
-        $temasSeed = new \TemaTableSeeder();
-        $temasSeed->run();
-
-        //factory(Instituicao::class)->create();
-        factory(Tecnologia::class)->create();
-
-        $response = $this->json('POST', "/admin/tecnologias/create", [
-//            'numeroInscricao' => '2017/0002',
-            'titulo'               => 'Teste GEPEM2',
+        return Tecnologia::create([
+            'numeroInscricao'      => '2017/0002',
+            'titulo'               => 'Teste GEPEM',
             'fimLucrativo'         => false,
             'tempoImplantacao'     => 2,
             'emAtividade'          => true,
@@ -171,18 +153,77 @@ class TecnologiaTest extends TestCase
             'resumo'               => 'Resumao',
             'tema_id'              => 1,
             'temaSecundario_id'    => 2,
-            "subtema1"             => [1],
-            "subtema2"             => [1, 2],
             'problema'             => 'Problemao',
             'objetivoGeral'        => 'objetivo  Geral',
             'objetivoEspecifico'   => 'objetivo  Especifico',
             'descricao'            => 'descricao descricao descricao descricao descricao descricao ',
             'resultadosAlcancados' => 'Muitos resultados alcancados',
             'recursosMateriais'    => 'Recursos Materiais',
+            'recursosHumanos'      => 'Recursos Materiais',
             'valorEstimado'        => ' valor Estimado ',
             'valorHumanos'         => 'valor Humanos',
-            'depoimentoLivre'      => ' depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',
+            'depoimentoLivre'      => 'depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',
             'instituicao_id'       => 1,
+        ]);
+
+    }
+
+    /**
+     * A basic test example.
+     *
+     * @return void
+     * @test
+     */
+    public function teste_create_tecnologia()
+    {
+        //factory(Tecnologia::class)->create();
+        $this->criaTecnologia();
+        $tecnologia = Tecnologia::firstOrFail();
+
+        self::assertEquals($tecnologia->titulo, 'Teste GEPEM');
+    }
+
+
+    /** @test */
+    public function teste_store_por_http()
+    {
+        $this->disableExceptionHandling();
+        $temasSeed = new \TemaTableSeeder();
+        $temasSeed->run();
+
+        //factory(Instituicao::class)->create();
+        $this->criaTecnologia();;
+
+        $response = $this->json('POST', "/admin/tecnologias/create", [
+//            'numeroInscricao' => '2017/0002',
+            'titulo'                => 'Teste GEPEM2',
+            'fimLucrativo'          => false,
+            'tempoImplantacao'      => 2,
+            'emAtividade'           => true,
+            'inscricaoAnterior'     => false,
+            'investimentoFBB'       => true,
+            'categoria_id'          => 1,
+            'resumo'                => 'Resumao',
+            'tema_id'               => 1,
+            'temaSecundario_id'     => 2,
+            "subtema1"              => [1],
+            "subtema2"              => [1, 2],
+            'problema'              => 'Problemao',
+            'objetivoGeral'         => 'objetivo  Geral',
+            'objetivoEspecifico'    => 'objetivo  Especifico',
+            'descricao'             => 'descricao descricao descricao descricao descricao descricao ',
+            'resultadosAlcancados'  => 'Muitos resultados alcancados',
+            'recursosMateriais'     => 'Recursos Materiais',
+            'recursosHumanos'       => 'Recursos Materiais',
+            'valorEstimado'         => ' valor Estimado ',
+            'valorHumanos'          => 'valor Humanos',
+            'depoimentoLivre'       => ' depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',
+            'instituicao_id'        => 1,
+            'responsaveis'          => $this->responsaveis,
+            'locaisImplantacao'     => $this->locais,
+            'PublicosAlvo'          => [1, 2], //Como já foi criado no SetUp os públicos não preciso criar novamente
+            'instituicoesParceiras' => $this->instituicoesParceiras,
+            'enderecosEletronicos'  => $this->enderecosEletronicos,
         ]);
 
         //$this->assertValidationError('numeroInscricao');
@@ -198,12 +239,12 @@ class TecnologiaTest extends TestCase
     {
 //        $this->disableExceptionHandling();
 //        factory(Instituicao::class)->create();
-        factory(Tecnologia::class)->create();
+        $this->criaTecnologia();;
 
         $response = $this->get('admin/tecnologias');
 
         $response->assertStatus(200);
-        $response->assertSee('Teste GEPEM');
+        //$response->assertSee('Teste GEPEM');
     }
 
 
@@ -211,35 +252,41 @@ class TecnologiaTest extends TestCase
     public function teste_update()
     {
         $this->disableExceptionHandling();
-        //TODO verificar se no teste faz o update nas outras tabelas também
-        $tecnologia = factory(Tecnologia::class)->create();
+
+        $tecnologia = $this->criaTecnologia();
 
         $data = [
-            'numeroInscricao'      => '2017/0002',
-            'titulo'               => 'Outro teste',
-            'fimLucrativo'         => false,
-            'tempoImplantacao'     => 2,
-            'emAtividade'          => true,
-            'inscricaoAnterior'    => false,
-            'investimentoFBB'      => true,
-            'categoria_id'         => 1,
-            'resumo'               => 'Resumao',
-            'tema_id'              => 3,
-            'temaSecundario_id'    => 4,
-            "subtema1"             => [1],
-            "subtema2"             => [20, 21],
-            'problema'             => 'Problemao',
-            'objetivoGeral'        => 'objetivo  Geral',
-            'objetivoEspecifico'   => 'objetivo  Especifico',
-            'descricao'            => 'descricao descricao descricao descricao descricao descricao ',
-            'resultadosAlcancados' => 'Muitos resultados alcancados',
-            'recursosMateriais'    => 'Recursos Materiais',
-            'valorEstimado'        => ' valor Estimado ',
-            'valorHumanos'         => 'valor Humanos',
-            'depoimentoLivre'      => ' depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',
-            'instituicao_id'       => 1,
+            'titulo'                => 'Outro teste',
+            'fimLucrativo'          => false,
+            'tempoImplantacao'      => 2,
+            'emAtividade'           => true,
+            'inscricaoAnterior'     => false,
+            'investimentoFBB'       => true,
+            'categoria_id'          => 1,
+            'resumo'                => 'Resumao',
+            'tema_id'               => 2,
+            'temaSecundario_id'     => 3,
+            "subtema1"              => [1],
+            "subtema2"              => [1, 2],
+            'problema'              => 'Problemao',
+            'objetivoGeral'         => 'objetivo  Geral',
+            'objetivoEspecifico'    => 'objetivo  Especifico',
+            'descricao'             => 'descricao descricao descricao descricao descricao descricao ',
+            'resultadosAlcancados'  => 'Muitos resultados alcancados',
+            'recursosMateriais'     => 'Recursos Materiais',
+            'recursosHumanos'       => 'Recursos Materiais',
+            'valorEstimado'         => ' valor Estimado ',
+            'valorHumanos'          => 'valor Humanos',
+            'depoimentoLivre'       => ' depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',
+            'instituicao_id'        => 1,
+            'responsaveis'          => $this->responsaveis,
+            'locaisImplantacao'     => $this->locais,
+            'PublicosAlvo'          => [1, 2], //Como já foi criado no SetUp os públicos não preciso criar novamente
+            'instituicoesParceiras' => $this->instituicoesParceiras,
+            'enderecosEletronicos'  => $this->enderecosEletronicos,
         ];
-        $this->response = $response = $this->json('PUT', "admin/tecnologias/update/{$tecnologia->id}", $data);
+
+        $response = $this->json('PUT', "admin/tecnologias/update/{$tecnologia->id}", $data);
 
         $response->assertStatus(200);
 
@@ -247,8 +294,8 @@ class TecnologiaTest extends TestCase
 
         self::assertEquals($tecnologia->titulo, 'Outro teste');
 
-        self::assertEquals($tecnologia->temaPrincipal()->id, $data['tema_id']);
-        self::assertEquals($tecnologia->temaSecundario()->id, $data['temaSecundario_id']);
+        self::assertEquals($tecnologia->temaPrincipal->id, $data['tema_id']);
+        self::assertEquals($tecnologia->temaSecundario->id, $data['temaSecundario_id']);
 
     }
 
@@ -256,12 +303,12 @@ class TecnologiaTest extends TestCase
     /** @test */
     public function teste_delete()
     {
-        $this->disableExceptionHandling();
-        $tecnologia = factory(Tecnologia::class)->create();
+        //$this->disableExceptionHandling();
+        $tecnologia = $this->criaTecnologia();;
 
         $response = $this->get("admin/tecnologias/delete/{$tecnologia->id}");
 
-        $response->assertStatus(200);
+        $response->assertStatus(302);
 
         $tecnologia = Tecnologia::first();
 
@@ -324,7 +371,7 @@ class TecnologiaTest extends TestCase
     /** @test */
     public function teste_validacoes_em_gerais()
     {
-        $tecnologia = factory(Tecnologia::class)->create();
+        $tecnologia = $this->criaTecnologia();;
 
         //Testa campo unico
         $this->response = $this->json('POST', "/admin/tecnologias/create", $tecnologia->toArray());
@@ -344,7 +391,7 @@ class TecnologiaTest extends TestCase
     /** @test */
     public function teste_ligacao_tecnologia_com_subtemas()
     {
-        $tecnologia = factory(Tecnologia::class)->create();
+        $tecnologia = $this->criaTecnologia();;
         $this->cria_subtema();
         $tecnologia->subtemas()->attach(1);
 
@@ -357,39 +404,45 @@ class TecnologiaTest extends TestCase
     {
         $this->disableExceptionHandling();
         $data = [
-            "titulo"               => "dasdas",
-            "fimLucrativo"         => "1",
-            "tempoImplantacao"     => "1",
-            "emAtividade"          => "0",
-            "inscricaoAnterior"    => "0",
-            "investimentoFBB"      => "1",
-            "categoria_id"         => 1,
-            "resumo"               => "dasd",
-            "tema_id"              => 1,
-            "subtema1"             => [1],
-            "temaSecundario_id"    => 2,
-            "subtema2"             => [1, 2],
-            "problema"             => "das",
-            "objetivoGeral"        => "das",
-            "objetivoEspecifico"   => "dasdas",
-            "descricao"            => "dasd",
-            "resultadosAlcancados" => "asd",
-            "recursosMateriais"    => "s",
-            "valorEstimado"        => "sdasdsa",
-            "valorHumanos"         => "asd",
-            "depoimentoLivre"      => "asda",
-            "instituicao_id"       => 1
+            'titulo'                => 'Outro teste',
+            'fimLucrativo'          => false,
+            'tempoImplantacao'      => 2,
+            'emAtividade'           => true,
+            'inscricaoAnterior'     => false,
+            'investimentoFBB'       => true,
+            'categoria_id'          => 1,
+            'resumo'                => 'Resumao',
+            'tema_id'               => 2,
+            'temaSecundario_id'     => 3,
+            "subtema1"              => [1],
+            "subtema2"              => [1, 2],
+            'problema'              => 'Problemao',
+            'objetivoGeral'         => 'objetivo  Geral',
+            'objetivoEspecifico'    => 'objetivo  Especifico',
+            'descricao'             => 'descricao descricao descricao descricao descricao descricao ',
+            'resultadosAlcancados'  => 'Muitos resultados alcancados',
+            'recursosMateriais'     => 'Recursos Materiais',
+            'recursosHumanos'       => 'Recursos Materiais',
+            'valorEstimado'         => ' valor Estimado ',
+            'valorHumanos'          => 'valor Humanos',
+            'depoimentoLivre'       => ' depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',
+            'instituicao_id'        => 1,
+            'responsaveis'          => $this->responsaveis,
+            'locaisImplantacao'     => $this->locais,
+            'PublicosAlvo'          => [1, 2], //Como já foi criado no SetUp os públicos não preciso criar novamente
+            'instituicoesParceiras' => $this->instituicoesParceiras,
+            'enderecosEletronicos'  => $this->enderecosEletronicos,
         ];
 
         $response = $this->json('POST', "/admin/tecnologias/create", $data);
         $response->assertStatus(200);
 
-        $tecnologia = Tecnologia::where('titulo', 'dasdas')->first();
-        $this->assertEquals('dasdas', $tecnologia->titulo);
+        $tecnologia = Tecnologia::where('titulo', 'Outro teste')->first();
+        $this->assertEquals('Outro teste', $tecnologia->titulo);
 
-        $subtemas = $tecnologia->subtemas;
-        $this->assertEquals('Alimentação Escolar', $subtemas->find(1)->descricao);
-        $this->assertEquals('Higienização dos Alimentos', $subtemas->find(2)->descricao);
+
+        $this->assertEquals('Educação', $tecnologia->temaPrincipal->nome);
+        $this->assertEquals('Energia', $tecnologia->temaSecundario->nome);
     }
 
 
@@ -446,28 +499,34 @@ class TecnologiaTest extends TestCase
 
         $response = $this->json('POST', "/admin/tecnologias/create", [
 //            'numeroInscricao' => '2017/0002',
-            'titulo'               => 'Teste GEPEM2',
-            'fimLucrativo'         => false,
-            'tempoImplantacao'     => 2,
-            'emAtividade'          => true,
-            'inscricaoAnterior'    => false,
-            'investimentoFBB'      => true,
-            'categoria_id'         => 1,
-            'resumo'               => 'Resumao',
-            'tema_id'              => 1,
-            'temaSecundario_id'    => 2,
-            "subtema1"             => [1],
-            "subtema2"             => [1, 2],
-            'problema'             => 'Problemao',
-            'objetivoGeral'        => 'objetivo  Geral',
-            'objetivoEspecifico'   => 'objetivo  Especifico',
-            'descricao'            => 'descricao descricao descricao descricao descricao descricao ',
-            'resultadosAlcancados' => 'Muitos resultados alcancados',
-            'recursosMateriais'    => 'Recursos Materiais',
-            'valorEstimado'        => ' valor Estimado ',
-            'valorHumanos'         => 'valor Humanos',
-            'depoimentoLivre'      => ' depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',
-            'instituicao_id'       => $instituicao->id,
+            'titulo'                => 'Teste GEPEM2',
+            'fimLucrativo'          => false,
+            'tempoImplantacao'      => 2,
+            'emAtividade'           => true,
+            'inscricaoAnterior'     => false,
+            'investimentoFBB'       => true,
+            'categoria_id'          => 1,
+            'resumo'                => 'Resumao',
+            'tema_id'               => 2,
+            'temaSecundario_id'     => 3,
+            "subtema1"              => [1],
+            "subtema2"              => [1, 2],
+            'problema'              => 'Problemao',
+            'objetivoGeral'         => 'objetivo  Geral',
+            'objetivoEspecifico'    => 'objetivo  Especifico',
+            'descricao'             => 'descricao descricao descricao descricao descricao descricao ',
+            'resultadosAlcancados'  => 'Muitos resultados alcancados',
+            'recursosMateriais'     => 'Recursos Materiais',
+            'recursosHumanos'       => 'Recursos Materiais',
+            'valorEstimado'         => ' valor Estimado ',
+            'valorHumanos'          => 'valor Humanos',
+            'depoimentoLivre'       => ' depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',
+            'instituicao_id'        => 1,
+            'responsaveis'          => $this->responsaveis,
+            'locaisImplantacao'     => $this->locais,
+            'PublicosAlvo'          => [1, 2], //Como já foi criado no SetUp os públicos não preciso criar novamente
+            'instituicoesParceiras' => $this->instituicoesParceiras,
+            'enderecosEletronicos'  => $this->enderecosEletronicos,
         ]);
 
         $response->assertStatus(200);
@@ -499,29 +558,34 @@ class TecnologiaTest extends TestCase
 
         $response = $this->json('POST', "/admin/tecnologias/create", [
 //            'numeroInscricao' => '2017/0002',
-            'titulo'               => 'Teste GEPEM2',
-            'fimLucrativo'         => false,
-            'tempoImplantacao'     => 2,
-            'emAtividade'          => true,
-            'inscricaoAnterior'    => false,
-            'investimentoFBB'      => true,
-            'categoria_id'         => 1,
-            'resumo'               => 'Resumao',
-            'tema_id'              => 1,
-            'temaSecundario_id'    => 2,
-            "subtema1"             => [1],
-            "subtema2"             => [1, 2],
-            'problema'             => 'Problemao',
-            'objetivoGeral'        => 'objetivo  Geral',
-            'objetivoEspecifico'   => 'objetivo  Especifico',
-            'descricao'            => 'descricao descricao descricao descricao descricao descricao ',
-            'resultadosAlcancados' => 'Muitos resultados alcancados',
-            'recursosMateriais'    => 'Recursos Materiais',
-            'valorEstimado'        => ' valor Estimado ',
-            'valorHumanos'         => 'valor Humanos',
-            'depoimentoLivre'      => ' depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',
-            'instituicao_id'       => 1,
-            'responsaveis'         => $responsaveis,
+            'titulo'                => 'Teste GEPEM2',
+            'fimLucrativo'          => false,
+            'tempoImplantacao'      => 2,
+            'emAtividade'           => true,
+            'inscricaoAnterior'     => false,
+            'investimentoFBB'       => true,
+            'categoria_id'          => 1,
+            'resumo'                => 'Resumao',
+            'tema_id'               => 2,
+            'temaSecundario_id'     => 3,
+            "subtema1"              => [1],
+            "subtema2"              => [1, 2],
+            'problema'              => 'Problemao',
+            'objetivoGeral'         => 'objetivo  Geral',
+            'objetivoEspecifico'    => 'objetivo  Especifico',
+            'descricao'             => 'descricao descricao descricao descricao descricao descricao ',
+            'resultadosAlcancados'  => 'Muitos resultados alcancados',
+            'recursosMateriais'     => 'Recursos Materiais',
+            'recursosHumanos'       => 'Recursos Materiais',
+            'valorEstimado'         => ' valor Estimado ',
+            'valorHumanos'          => 'valor Humanos',
+            'depoimentoLivre'       => ' depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',
+            'instituicao_id'        => 1,
+            'responsaveis'          => $this->responsaveis,
+            'locaisImplantacao'     => $this->locais,
+            'PublicosAlvo'          => [1, 2], //Como já foi criado no SetUp os públicos não preciso criar novamente
+            'instituicoesParceiras' => $this->instituicoesParceiras,
+            'enderecosEletronicos'  => $this->enderecosEletronicos,
         ]);
 
         $response->assertStatus(200);
@@ -559,30 +623,34 @@ class TecnologiaTest extends TestCase
 
         $response = $this->json('POST', "/admin/tecnologias/create", [
 //            'numeroInscricao' => '2017/0002',
-            'titulo'               => 'Teste GEPEM2',
-            'fimLucrativo'         => false,
-            'tempoImplantacao'     => 2,
-            'emAtividade'          => true,
-            'inscricaoAnterior'    => false,
-            'investimentoFBB'      => true,
-            'categoria_id'         => 1,
-            'resumo'               => 'Resumao',
-            'tema_id'              => 1,
-            'temaSecundario_id'    => 2,
-            "subtema1"             => [1],
-            "subtema2"             => [1, 2],
-            'problema'             => 'Problemao',
-            'objetivoGeral'        => 'objetivo  Geral',
-            'objetivoEspecifico'   => 'objetivo  Especifico',
-            'descricao'            => 'descricao descricao descricao descricao descricao descricao ',
-            'resultadosAlcancados' => 'Muitos resultados alcancados',
-            'recursosMateriais'    => 'Recursos Materiais',
-            'valorEstimado'        => ' valor Estimado ',
-            'valorHumanos'         => 'valor Humanos',
-            'depoimentoLivre'      => ' depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',
-            'instituicao_id'       => 1,
-            'responsaveis'         => $this->responsaveis,
-            'locaisImplantacao'    => $locais,
+            'titulo'                => 'Teste GEPEM2',
+            'fimLucrativo'          => false,
+            'tempoImplantacao'      => 2,
+            'emAtividade'           => true,
+            'inscricaoAnterior'     => false,
+            'investimentoFBB'       => true,
+            'categoria_id'          => 1,
+            'resumo'                => 'Resumao',
+            'tema_id'               => 2,
+            'temaSecundario_id'     => 3,
+            "subtema1"              => [1],
+            "subtema2"              => [1, 2],
+            'problema'              => 'Problemao',
+            'objetivoGeral'         => 'objetivo  Geral',
+            'objetivoEspecifico'    => 'objetivo  Especifico',
+            'descricao'             => 'descricao descricao descricao descricao descricao descricao ',
+            'resultadosAlcancados'  => 'Muitos resultados alcancados',
+            'recursosMateriais'     => 'Recursos Materiais',
+            'recursosHumanos'       => 'Recursos Materiais',
+            'valorEstimado'         => ' valor Estimado ',
+            'valorHumanos'          => 'valor Humanos',
+            'depoimentoLivre'       => ' depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',
+            'instituicao_id'        => 1,
+            'responsaveis'          => $this->responsaveis,
+            'locaisImplantacao'     => $this->locais,
+            'PublicosAlvo'          => [1, 2], //Como já foi criado no SetUp os públicos não preciso criar novamente
+            'instituicoesParceiras' => $this->instituicoesParceiras,
+            'enderecosEletronicos'  => $this->enderecosEletronicos,
         ]);
 
         $response->assertStatus(200);
@@ -603,32 +671,34 @@ class TecnologiaTest extends TestCase
 
         $response = $this->json('POST', "/admin/tecnologias/create", [
 //            'numeroInscricao' => '2017/0002',
-            'titulo'               => 'Teste GEPEM2',
-            'fimLucrativo'         => false,
-            'tempoImplantacao'     => 2,
-            'emAtividade'          => true,
-            'inscricaoAnterior'    => false,
-            'investimentoFBB'      => true,
-            'categoria_id'         => 1,
-            'resumo'               => 'Resumao',
-            'tema_id'              => 1,
-            'temaSecundario_id'    => 2,
-            "subtema1"             => [1],
-            "subtema2"             => [1, 2],
-            'problema'             => 'Problemao',
-            'objetivoGeral'        => 'objetivo  Geral',
-            'objetivoEspecifico'   => 'objetivo  Especifico',
-            'descricao'            => 'descricao descricao descricao descricao descricao descricao ',
-            'resultadosAlcancados' => 'Muitos resultados alcancados',
-            'recursosMateriais'    => 'Recursos Materiais',
-            'recursosHumanos'      => 'Recursos Materiais',
-            'valorEstimado'        => ' valor Estimado ',
-            'valorHumanos'         => 'valor Humanos',
-            'depoimentoLivre'      => ' depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',
-            'instituicao_id'       => 1,
-            'responsaveis'         => $this->responsaveis,
-            'locaisImplantacao'    => $this->locais,
-            'PublicoAlvo'          => [1, 2], //Como já foi criado no SetUp os públicos não preciso criar novamente
+            'titulo'                => 'Teste GEPEM2',
+            'fimLucrativo'          => false,
+            'tempoImplantacao'      => 2,
+            'emAtividade'           => true,
+            'inscricaoAnterior'     => false,
+            'investimentoFBB'       => true,
+            'categoria_id'          => 1,
+            'resumo'                => 'Resumao',
+            'tema_id'               => 2,
+            'temaSecundario_id'     => 3,
+            "subtema1"              => [1],
+            "subtema2"              => [1, 2],
+            'problema'              => 'Problemao',
+            'objetivoGeral'         => 'objetivo  Geral',
+            'objetivoEspecifico'    => 'objetivo  Especifico',
+            'descricao'             => 'descricao descricao descricao descricao descricao descricao ',
+            'resultadosAlcancados'  => 'Muitos resultados alcancados',
+            'recursosMateriais'     => 'Recursos Materiais',
+            'recursosHumanos'       => 'Recursos Materiais',
+            'valorEstimado'         => ' valor Estimado ',
+            'valorHumanos'          => 'valor Humanos',
+            'depoimentoLivre'       => ' depoimentoLivre depoimentoLivre depoimentoLivre depoimentoLivre',
+            'instituicao_id'        => 1,
+            'responsaveis'          => $this->responsaveis,
+            'locaisImplantacao'     => $this->locais,
+            'PublicosAlvo'          => [ ['id' => 1] , ['id' => 2]], //Como já foi criado no SetUp os públicos não preciso criar novamente
+            'instituicoesParceiras' => $this->instituicoesParceiras,
+            'enderecosEletronicos'  => $this->enderecosEletronicos,
 
         ]);
 
@@ -656,8 +726,8 @@ class TecnologiaTest extends TestCase
             'investimentoFBB'       => true,
             'categoria_id'          => 1,
             'resumo'                => 'Resumao',
-            'tema_id'               => 1,
-            'temaSecundario_id'     => 2,
+            'tema_id'               => 2,
+            'temaSecundario_id'     => 3,
             "subtema1"              => [1],
             "subtema2"              => [1, 2],
             'problema'              => 'Problemao',
@@ -673,8 +743,9 @@ class TecnologiaTest extends TestCase
             'instituicao_id'        => 1,
             'responsaveis'          => $this->responsaveis,
             'locaisImplantacao'     => $this->locais,
-            'PublicoAlvo'           => [1, 2], //Como já foi criado no SetUp os públicos não preciso criar novamente
+            'PublicosAlvo'          => [ ['id' => 1] , ['id' => 2]], //Como já foi criado no SetUp os públicos não preciso criar novamente
             'instituicoesParceiras' => $this->instituicoesParceiras,
+            'enderecosEletronicos'  => $this->enderecosEletronicos,
         ]);
 
         $response->assertStatus(200);
@@ -689,7 +760,7 @@ class TecnologiaTest extends TestCase
     function teste_enderecos_eletronicos()
     {
         $this->disableExceptionHandling();
-
+        $faker = Faker::create();
         $response = $this->json('POST', "/admin/tecnologias/create", [
 //            'numeroInscricao' => '2017/0002',
             'titulo'                => 'Teste GEPEM2',
@@ -700,8 +771,8 @@ class TecnologiaTest extends TestCase
             'investimentoFBB'       => true,
             'categoria_id'          => 1,
             'resumo'                => 'Resumao',
-            'tema_id'               => 1,
-            'temaSecundario_id'     => 2,
+            'tema_id'               => 2,
+            'temaSecundario_id'     => 3,
             "subtema1"              => [1],
             "subtema2"              => [1, 2],
             'problema'              => 'Problemao',
@@ -717,7 +788,7 @@ class TecnologiaTest extends TestCase
             'instituicao_id'        => 1,
             'responsaveis'          => $this->responsaveis,
             'locaisImplantacao'     => $this->locais,
-            'PublicosAlvo'          => [1, 2], //Como já foi criado no SetUp os públicos não preciso criar novamente
+            'PublicosAlvo'          => [ ['id' => 1] , ['id' => 2]], //Como já foi criado no SetUp os públicos não preciso criar novamente
             'instituicoesParceiras' => $this->instituicoesParceiras,
             'enderecosEletronicos'  => $this->enderecosEletronicos,
         ]);

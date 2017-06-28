@@ -108,7 +108,6 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
 //Tecnologias
     Route::get('/tecnologias/insert', 'TecnologiasController@create')->name('insertTecnologias');
-
     Route::post('/tecnologias/create', 'TecnologiasController@store')->name('storeTecnologias');
     Route::get('/tecnologias', 'TecnologiasController@index')->name('indexTecnologias');
     Route::get('/tecnologias/delete/{tecnologia}', 'TecnologiasController@destroy')->name('destroyTecnologias');

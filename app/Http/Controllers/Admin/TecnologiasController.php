@@ -24,10 +24,11 @@ class TecnologiasController extends Controller
 
     private $autorizado = false;
 
+
     public function __construct()
     {
         $user = Auth::user();
-        if ($user->can('Tecnologias')) {
+        if ($user->hasPermissionTo('Tecnologias')) {
             $this->autorizado = true;
         } else {
             flash('Você não tem acesso suficiente')->error();
@@ -37,7 +38,8 @@ class TecnologiasController extends Controller
 
     public function pesquisa(Request $request)
     {
-        $tecnologias = Tecnologia::where('titulo', 'LIKE', '%' . $request->pesquisa . '%')->get();
+        $tecnologias = Tecnologia::where('titulo', 'LIKE', '%'.$request->pesquisa.'%')->get();
+
 //        dd($tecnologias);
         return view('front.index', compact('tecnologias'));
     }
@@ -54,7 +56,7 @@ class TecnologiasController extends Controller
             return back();
         }
 
-        $data = Tecnologia::all()->values('id', 'titulo' , 'created_at', 'updated_at');
+        $data = Tecnologia::all()->values('id', 'titulo', 'created_at', 'updated_at');
 
         //dd($data);
         return view('admin.tecnologias.show', compact('data'));
@@ -153,42 +155,42 @@ class TecnologiasController extends Controller
                 $tecnologia->publicos()->attach($input['id']);
             }
 
-            $publico = $request->only('instituicoesParceiras');
-            $inputs = $publico['instituicoesParceiras'];
+            $instituicoesParceiras = $request->only('instituicoesParceiras');
+            $inputs = $instituicoesParceiras['instituicoesParceiras'];
             foreach ($inputs as $input) {
                 $tecnologia->instituicoesParceiras()->create($input);
             }
 
-            $publico = $request->only('enderecosEletronicos');
-            $inputs = $publico['enderecosEletronicos'];
+            $enderecosEletronicos = $request->only('enderecosEletronicos');
+            $inputs = $enderecosEletronicos['enderecosEletronicos'];
             foreach ($inputs as $input) {
                 $tecnologia->enderecosEletronico()->create($input);
             }
 
-
             //Começa o processo de gravar os arquivos
-            $path = public_path(config('bts_config.PATH_TECNOLOGIA', 'tecnologias/')) . $tecnologia->titulo. '/';
+            if ($request->only('images')['images']) {
 
+                $path = public_path(config('bts_config.PATH_TECNOLOGIA', 'tecnologias/')).$tecnologia->titulo.'/';
+                if ( ! File::exists($path)) {
+                    File::makeDirectory($path);
+                }
 
-            if (!File::exists($path))
-                File::makeDirectory($path);
+                $validator = Validator::make($request->only('images')['images'], [
+                    'file.*' => 'required|image'
+                ]);
 
-            $validator = Validator::make($request->only('images')['images'], [
-                'file.*' => 'required|image'
-            ]);
-
-
-            if ($validator->fails()) {
-                return response()->json(['errors'=>$validator->errors()]);
-            } else {
-                $imagesDatas = $request->only('images');
-                $imagesDatas = $imagesDatas['images'];
-                foreach ($imagesDatas as $imagesData) {
-                    $fileNamePath = uniqid().$imagesData['fileName'];
-                    $imagesData = array_add($imagesData, 'path', $path);
-                    $imagesData['fileNamePath'] = $fileNamePath;
-                    $tecnologia->imagens()->create(array_except($imagesData, ['file']));
-                    Image::make($imagesData['file'])->save($path.$fileNamePath);
+                if ($validator->fails()) {
+                    return response()->json(['errors' => $validator->errors()]);
+                } else {
+                    $imagesDatas = $request->only('images');
+                    $imagesDatas = $imagesDatas['images'];
+                    foreach ($imagesDatas as $imagesData) {
+                        $fileNamePath = uniqid().$imagesData['fileName'];
+                        $imagesData = array_add($imagesData, 'path', $path);
+                        $imagesData['fileNamePath'] = $fileNamePath;
+                        $tecnologia->imagens()->create(array_except($imagesData, ['file']));
+                        Image::make($imagesData['file'])->save($path.$fileNamePath);
+                    }
                 }
             }
 
@@ -237,7 +239,6 @@ class TecnologiasController extends Controller
         //TODO listar os arquivos
         //TODO fazer o delete dos arquivos
 
-
         return view('admin.tecnologias.edit', compact('tecnologia', 'categorias', 'temas', 'publicosAlvo'));
     }
 
@@ -252,6 +253,7 @@ class TecnologiasController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $tecnologia = Tecnologia::find($id);
         //$this->validate($request, [
         //    'numeroInscricao' => 'required',
@@ -271,7 +273,6 @@ class TecnologiasController extends Controller
                 'PublicosAlvo',
                 'images',
             ]);
-
 
             $tecnologia->update($input);
 
@@ -295,9 +296,11 @@ class TecnologiasController extends Controller
 
             $publico = $request->only('PublicosAlvo');
             $inputs = $publico['PublicosAlvo'];
-            foreach ($inputs as $input) {
-                $tecnologia->publicos()->sync($input['id']);
-            }
+            //foreach ($inputs as $input) {
+            //    $tecnologia->publicos()->sync($input['id']);
+            //}
+            $tecnologia->publicos()->sync(array_pluck($inputs, 'id'));
+
 
             $publico = $request->only('instituicoesParceiras');
             $inputs = $publico['instituicoesParceiras'];
@@ -313,52 +316,51 @@ class TecnologiasController extends Controller
                 $tecnologia->enderecosEletronico()->create($input);
             }
 
+            if ($request->only('images')['images']) {
+                //Começa o processo de gravar os arquivos
+                $path = public_path(config('bts_config.PATH_TECNOLOGIA', 'tecnologias/')).$tecnologia->titulo.'/';
 
-            //Começa o processo de gravar os arquivos
-            $path = public_path(config('bts_config.PATH_TECNOLOGIA', 'tecnologias/')) . $tecnologia->titulo. '/';
-
-            //cria diretorio se nao existir
-            if (!File::exists($path))
-                File::makeDirectory($path);
-
-            //alida se esta vindo somente imagens
-            $validator = Validator::make($request->only('images')['images'], [
-                'file.*' => 'required|image'
-            ]);
-
-
-            if ($validator->fails()) {
-                return response()->json(['errors'=>$validator->errors()]);
-            } else {
-                //busca somente as images do rquest
-                $imagesDatas = $request->only('images');
-                $imagesDatas = $imagesDatas['images'];
-
-                //Busca todas as imagens que não esta no request
-                $imagensDeletar = $tecnologia->imagens->whereNotIn('id', array_pluck($imagesDatas, 'id'));
-
-                //Deleta do banco de dados todas as imagens que nao vieram do request
-                //ou seja foram 'deletadas' no front end
-                foreach ($imagensDeletar as $item) {
-                    File::delete($item->path.$item->fileNamePath);
-                    $item->delete();
+                //cria diretorio se nao existir
+                if ( ! File::exists($path)) {
+                    File::makeDirectory($path);
                 }
 
-                //para cada imagem enviada faz o processo de gravacao do banco de dados e do arquivo no disco
-                foreach ($imagesDatas as $imagesData) {
-                    if ( (!File::exists($path.$imagesData['fileNamePath']))
-                        || ($imagesData['fileNamePath'] == null)
-                    ){
-                        //Monta os dados da imagem
-                        $fileNamePath = uniqid().$imagesData['fileName'];
-                        $imagesData = array_add($imagesData, 'path', $path);
-                        $imagesData['fileNamePath'] = $fileNamePath;
+                //alida se esta vindo somente imagens
+                $validator = Validator::make($request->only('images')['images'], [
+                    'file.*' => 'required|image'
+                ]);
 
-                        //grava os dados da imagem no banco de dados
-                        $tecnologia->imagens()->create(array_except($imagesData, ['file']));
+                if ($validator->fails()) {
+                    return response()->json(['errors' => $validator->errors()]);
+                } else {
+                    //busca somente as images do rquest
+                    $imagesDatas = $request->only('images');
+                    $imagesDatas = $imagesDatas['images'];
 
-                        //Finalmente grava a imagem no disco rigido
-                        Image::make($imagesData['file'])->save($path.$fileNamePath);
+                    //Busca todas as imagens que não esta no request
+                    $imagensDeletar = $tecnologia->imagens->whereNotIn('id', array_pluck($imagesDatas, 'id'));
+
+                    //Deleta do banco de dados todas as imagens que nao vieram do request
+                    //ou seja foram 'deletadas' no front end
+                    foreach ($imagensDeletar as $item) {
+                        File::delete($item->path.$item->fileNamePath);
+                        $item->delete();
+                    }
+
+                    //para cada imagem enviada faz o processo de gravacao do banco de dados e do arquivo no disco
+                    foreach ($imagesDatas as $imagesData) {
+                        if (( ! File::exists($path.$imagesData['fileNamePath'])) || ($imagesData['fileNamePath'] == null)) {
+                            //Monta os dados da imagem
+                            $fileNamePath = uniqid().$imagesData['fileName'];
+                            $imagesData = array_add($imagesData, 'path', $path);
+                            $imagesData['fileNamePath'] = $fileNamePath;
+
+                            //grava os dados da imagem no banco de dados
+                            $tecnologia->imagens()->create(array_except($imagesData, ['file']));
+
+                            //Finalmente grava a imagem no disco rigido
+                            Image::make($imagesData['file'])->save($path.$fileNamePath);
+                        }
                     }
                 }
             }
