@@ -8,6 +8,7 @@ use TemaTableSeeder;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\TestsUtil;
 use Tests\ValidationsFields;
 
 class SubTemasTest extends TestCase
@@ -15,6 +16,14 @@ class SubTemasTest extends TestCase
 
     use DatabaseMigrations;
     use ValidationsFields;
+    use TestsUtil;
+
+
+    public function setUp()
+    {
+        parent::setUp();
+        $this->geraUsuario();
+    }
 
 
     public function cria_subtema()
