@@ -201,7 +201,8 @@
                     naturezaJuridica: this.naturezajuridicaoptions[this.instituicao.naturezaJuridica - 1],
                     nomeDaArea: this.instituicao.nomeDaArea,
                     ddd: this.instituicao.ddd,
-                    telefone: this.instituicao.telefone.toString(),
+                    telefone: (this.instituicao.telefone == undefined) ? '' :
+                        this.instituicao.telefone.toString(),
                     email: this.instituicao.email,
                     UF: this.instituicao.UF,
                     cidade: this.instituicao.cidade,

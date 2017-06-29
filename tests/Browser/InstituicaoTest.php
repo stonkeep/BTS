@@ -6,6 +6,7 @@ use App\Regioes;
 use App\User;
 use Faker\Generator;
 use function foo\func;
+use function PHPSTORM_META\type;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -26,8 +27,9 @@ class InstituicaoTestTest extends DuskTestCase
         $this->geraUsuario();
         $user = User::firstOrFail();
         $faker = Faker::create();
+        $razaoSocial = $faker->company;
 
-        $this->browse(function ($browser) use ($faker, $user) {
+        $this->browse(function ($browser) use ($faker, $user, $razaoSocial) {
             $browser
                 //->loginAs($user)
                 ->visit('http://127.0.0.1:8000/login')
@@ -43,8 +45,8 @@ class InstituicaoTestTest extends DuskTestCase
                     $multi->click('.multiselect__option--highlight');
                 })
 
-                ->type('CNPJ', $faker->shuffle('46723520000123'))
-                ->type('razaoSocial', $faker->company)
+                ->type('CNPJ', '81138095000106')
+                ->type('razaoSocial', $razaoSocial)
                 ->type('nomeDaArea'      , $faker->sentence)
                 ->type('ddd'             , 61)
                 ->type('telefone'        , $faker->randomNumber(9))
@@ -63,12 +65,13 @@ class InstituicaoTestTest extends DuskTestCase
                     $multi->click('.multiselect__option--highlight');
                 })
 
-                ->type('sexo'            , $faker->randomElement(($array = array ('M','F'))))
-                ->type('CPF'             , $faker->shuffle('35753747833'))
+                ->select('sexo', 'M')
+                ->type('CPF', '75238385293')
                 ->click('button[name=enviar]')
 
-            ->visit('http://127.0.0.1:8000/admin/instituicoes');
-
+                ->visit('http://127.0.0.1:8000/admin/instituicoes')
+                ->type('input[placeholder="Pesquisar"]', $razaoSocial)
+                ->assertSee($razaoSocial);
         });
     }
 

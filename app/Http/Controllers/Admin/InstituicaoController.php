@@ -54,10 +54,11 @@ class InstituicaoController extends Controller
      */
     public function create()
     {
+        $instituicao = new Instituicao();
         $naturezaJuridicaOptions = NaturezasJuridicas::all();
         $cargooptions = Cargos::all();
 
-        return view('admin.instituicoes.create', compact('naturezaJuridicaOptions', 'cargooptions'));
+        return view('admin.instituicoes.create', compact('naturezaJuridicaOptions', 'cargooptions', 'instituicao'));
     }
 
 

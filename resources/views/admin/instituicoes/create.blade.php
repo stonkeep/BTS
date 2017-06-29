@@ -12,9 +12,9 @@
 
     <div id="app">
 
-        <instituicao
-                :naturezajuridicaoptions="{{$naturezaJuridicaOptions}}"
-                :cargooptions="{{$cargooptions}}">
+        <instituicao :instituicao="{{$instituicao}}"
+                     :naturezajuridicaoptions="{{$naturezaJuridicaOptions}}"
+                     :cargooptions="{{$cargooptions}}">
         </instituicao>
 
 
