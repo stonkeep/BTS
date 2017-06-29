@@ -7,12 +7,22 @@ use TemaTableSeeder;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\TestsUtil;
 use Tests\ValidationsFields;
 
 class TemaTest extends TestCase
 {
     use DatabaseMigrations;
     use ValidationsFields;
+
+    use TestsUtil;
+
+    public function setUp()
+    {
+        parent::setUp();
+        $this->geraUsuario();
+    }
+
 
     private function cria_lista_de_temas()
     {
@@ -125,11 +135,13 @@ class TemaTest extends TestCase
 
         
         $response = $this->get("admin/temas/delete/{$tema->id}");
-        
+        $response->assertStatus(302);
+
+        $response = $this->get('admin/temas');
         $response->assertStatus(200);
+
         $response->assertDontSee('Alimentação');
         $response->assertSee('Educação');
-        
     }
     
     /** @test */

@@ -25,7 +25,9 @@ class UserTest extends TestCase
     {
         factory(User::class)->create();
         $user = User::first();
-        factory(Instituicao::class)->create();
+        factory(Instituicao::class)->create([
+            'razaoSocial' => 'Teste de Instituicao'
+        ]);
         $instituicao = Instituicao::first();
         //$user->instituicoes()->save($instituicao);
         $user->instituicoes()->attach($instituicao);

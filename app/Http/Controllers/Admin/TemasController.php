@@ -10,17 +10,19 @@ use Mockery\CountValidator\Exception;
 
 class TemasController extends Controller
 {
+
     private $autorizado = true;
+
+
     public function __construct()
     {
         $user = Auth::user();
-        if ($user) {
-            if ( ! $user->can('Temas')) {
-                flash('Você não tem acesso suficiente')->error();
-                $this->autorizado = false;
-            }
+        if ( ! $user->hasPermissionTo('Temas')) {
+            flash('Você não tem acesso suficiente')->error();
+            $this->autorizado = false;
         }
     }
+
 
     /**
      * Display a listing of the resource.
@@ -29,11 +31,12 @@ class TemasController extends Controller
      */
     public function index()
     {
-        if (!$this->autorizado){
+        if ( ! $this->autorizado) {
             return back();
         }
 
         $data = Temas::all();
+
         return view('admin.temas.show', compact('data'));
     }
 
@@ -94,9 +97,10 @@ class TemasController extends Controller
     public function edit($id)
     {
         $tema = Temas::find($id);
-        if (!$this->autorizado){
+        if ( ! $this->autorizado) {
             return back();
         }
+
         return view('admin.temas.edit', compact('tema'));
     }
 
@@ -136,7 +140,7 @@ class TemasController extends Controller
         } catch (\Exception $e) {
             if ($e->getCode() == "23000") { //23000 is sql code for integrity constraint violation
                 flash('Registro possui pendências favor verificar')->error();
-            }else{
+            } else {
                 flash('Erro '.$e->getCode().' ocorreu. Favor verificar com a administração do sistema')->error();
             }
         }
