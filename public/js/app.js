@@ -12848,6 +12848,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -12859,29 +12861,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             // Create a new form instance
             form: new __WEBPACK_IMPORTED_MODULE_0_vform__["Form"]({
-                CNPJ: '',
-                razaoSocial: '',
-                naturezaJuridica: '',
-                nomeDaArea: '',
-                ddd: '',
-                telefone: '',
-                email: '',
-                UF: '',
-                cidade: '',
-                endereco: '',
-                bairro: '',
-                CEP: '',
-                nomeCompleto: '',
-                sexo: '',
-                CPF: '',
-                cargo_id: ''
+                CNPJ: this.instituicao.CNPJ,
+                razaoSocial: this.instituicao.razaoSocial,
+                naturezaJuridica: this.naturezajuridicaoptions[this.instituicao.naturezaJuridica],
+                nomeDaArea: this.instituicao.nomeDaArea,
+                ddd: this.instituicao.ddd,
+                telefone: this.instituicao.telefone.toString(),
+                email: this.instituicao.email,
+                UF: this.instituicao.UF,
+                cidade: this.instituicao.cidade,
+                endereco: this.instituicao.endereco,
+                bairro: this.instituicao.bairro,
+                CEP: this.instituicao.CEP,
+                site: this.instituicao.site,
+                nomeCompleto: this.instituicao.nomeCompleto,
+                sexo: this.instituicao.sexo,
+                CPF: this.instituicao.CPF,
+                cargo_id: this.cargooptions[this.instituicao.cargo_id]
             })
         };
     },
 
-    props: ['id', 'descricao', 'naturezajuridicaoptions', 'cargooptions'],
+    props: ['instituicao', 'naturezajuridicaoptions', 'cargooptions'],
     mounted: function mounted() {
-        this.form.descricao = this.descricao;
+        this.form.id = this.instituicao.id;
     },
 
     methods: {
@@ -12889,7 +12892,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             // Submit the form via a POST request
             var location = window.location.href;
             if (location.indexOf("edit") > -1) {
-                this.form.put('/admin/instituicoes/update/' + this.id).then(function (_ref) {
+                this.form.put('/admin/instituicoes/' + this.form.id).then(function (_ref) {
                     var data = _ref.data;
 
                     window.location.href = '/admin/instituicoes';
@@ -38153,7 +38156,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "type": "telefone",
       "name": "telefone",
       "id": "telefone",
-      "mask": ['(##)####-####', '(##)####-####'],
+      "mask": ['####-####', '#####-####'],
       "masked": false
     },
     model: {
@@ -38208,10 +38211,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "field": "email"
     }
   })], 1)]), _vm._v(" "), _c('div', {
-    staticClass: "form-group",
-    class: {
-      'has-error': _vm.form.errors.has('UF')
-    }
+    staticClass: "form-group"
   }, [_c('label', {
     staticClass: "col-md-3 control-label",
     attrs: {
@@ -38220,13 +38220,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("UF: ")]), _vm._v(" "), _c('div', {
     staticClass: "col-md-6"
   }, [_c('uf', {
+    attrs: {
+      "uf": _vm.form.UF
+    },
     on: {
       "update": function (val) { return _vm.form.UF = val; }
-    }
-  }), _vm._v(" "), _c('has-error', {
-    attrs: {
-      "form": _vm.form,
-      "field": "UF"
     }
   })], 1)]), _vm._v(" "), _c('div', {
     staticClass: "form-group",
@@ -38407,7 +38405,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "type": "site",
       "name": "site",
-      "id": "site"
+      "id": "site",
+      "placeholder": "http://www.fbb.org.br"
     },
     domProps: {
       "value": (_vm.form.site)
@@ -38510,29 +38509,41 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("sexo: ")]), _vm._v(" "), _c('div', {
     staticClass: "col-md-6"
-  }, [_c('input', {
+  }, [_c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
       value: (_vm.form.sexo),
       expression: "form.sexo"
     }],
-    staticClass: "form-control",
     attrs: {
-      "type": "sexo",
       "name": "sexo",
       "id": "sexo"
     },
-    domProps: {
-      "value": (_vm.form.sexo)
-    },
     on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.form.sexo = $event.target.value
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.form.sexo = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
-  }), _vm._v(" "), _c('has-error', {
+  }, [_c('option', {
+    attrs: {
+      "value": ""
+    }
+  }, [_vm._v("Selecione")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "M"
+    }
+  }, [_vm._v("M")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "F"
+    }
+  }, [_vm._v("F")])]), _vm._v(" "), _c('has-error', {
     attrs: {
       "form": _vm.form,
       "field": "sexo"

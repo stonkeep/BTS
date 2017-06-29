@@ -12,8 +12,10 @@
 
     @include('admin.layouts.erros')
     <div id="app">
-        {{ csrf_field() }}
-         <instituicao id="{{$instituicao->id}}" descricao="{{$instituicao->descricao}}"></instituicao>
+         <instituicao :instituicao="{{$instituicao}}"
+                      :naturezajuridicaoptions="{{$naturezaJuridicaOptions}}"
+                      :cargooptions="{{$cargooptions}}">
+         </instituicao>
     </div>
 
 @stop

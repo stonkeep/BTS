@@ -24,9 +24,9 @@ class StoreInstituicoesRequest extends FormRequest
     public function rules()
     {
         return [
-            'CNPJ'             => 'required|unique:instituicaos|numeric|cnpj',
+            //'CNPJ'             => 'required|unique:instituicaos|numeric|cnpj',
             'razaoSocial'      => 'required',
-            'naturezaJuridica' => 'required|exists:naturezas_juridicas,id',
+            'naturezaJuridica' => 'required',
             'nomeDaArea'       => 'required',
             'ddd'              => 'required|numeric',
             'telefone'         => 'required',
@@ -38,7 +38,7 @@ class StoreInstituicoesRequest extends FormRequest
             'CEP'              => 'required|numeric',
             'site'             => 'required|url',
             'nomeCompleto'     => 'required',
-            'cargo_id'         => 'required|exists:cargos,id',
+            'cargo_id'         => 'required',
             'sexo'             => 'required|string|size:1',
             'CPF'              => 'required|numeric|cpf',
         ];

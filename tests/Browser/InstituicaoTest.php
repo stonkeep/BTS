@@ -65,7 +65,10 @@ class InstituicaoTestTest extends DuskTestCase
 
                 ->type('sexo'            , $faker->randomElement(($array = array ('M','F'))))
                 ->type('CPF'             , $faker->shuffle('35753747833'))
-                ->click('button[name=enviar]');
+                ->click('button[name=enviar]')
+
+            ->visit('http://127.0.0.1:8000/admin/instituicoes');
+
         });
     }
 

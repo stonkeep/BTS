@@ -10,6 +10,7 @@ use App\NaturezasJuridicas;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\In;
+use Tests\Unit\InstituicaoTest;
 use Validator;
 
 class InstituicaoController extends Controller
@@ -55,6 +56,7 @@ class InstituicaoController extends Controller
     {
         $naturezaJuridicaOptions = NaturezasJuridicas::all();
         $cargooptions = Cargos::all();
+
         return view('admin.instituicoes.create', compact('naturezaJuridicaOptions', 'cargooptions'));
     }
 
@@ -69,13 +71,18 @@ class InstituicaoController extends Controller
     public function store(StoreInstituicoesRequest $request)
     {
         //Valida dados para criacao de instituicao
-        //Validator::make($request->all(), [
-        //    'CNPJ' => 'required|numeric|cnpj|unique:instituicaos',
-        //])->validate();
+        Validator::make($request->all(), [
+            'CNPJ' => 'required|unique:instituicaos|numeric|cnpj',
+        ])->validate();
 
         try {
-            $instituicao = Instituicao::create($request->all());
+            $inputs = $request->except('cargo_id', 'naturezaJuridica');
+            $inputs = array_add($inputs, 'cargo_id', $request->only('cargo_id')['cargo_id']['id']);
+            $inputs = array_add($inputs, 'naturezaJuridica',
+                $request->only('naturezaJuridica')['naturezaJuridica']['id']);
+            $instituicao = Instituicao::create($inputs);
             flash('Instituição '.$instituicao->razaoSocial.' criada com sucesso')->success();
+
             return redirect(route('instituicoes.index'));
         } catch (\Exception $e) {
             if ($e->getCode() == "23000") { //23000 is sql code for integrity constraint violation
@@ -110,13 +117,16 @@ class InstituicaoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Instituicao $instituicao)
+    public function edit($id)
     {
         if ( ! $this->autorizado) {
             return back();
         }
+        $naturezaJuridicaOptions = NaturezasJuridicas::all();
+        $cargooptions = Cargos::all();
+        $instituicao = Instituicao::find($id);
 
-        return view('admin.instituicoes.edit', compact('instituicao'));
+        return view('admin.instituicoes.edit', compact('instituicao', 'cargooptions', 'naturezaJuridicaOptions'));
     }
 
 
@@ -132,12 +142,16 @@ class InstituicaoController extends Controller
     {
         //Valida dados para atualização
         $this->validate($request, [
-            'CNPJ' => 'required|numeric|cnpj',
+            'CNPJ' => 'required|cnpj',
         ]);
 
         try {
             $instituicao = Instituicao::find($id);
-            $instituicao->update($request->all());
+            $inputs = $request->except('cargo_id', 'naturezaJuridica');
+            $inputs = array_add($inputs, 'cargo_id', $request->only('cargo_id')['cargo_id']['id']);
+            $inputs = array_add($inputs, 'naturezaJuridica',
+                $request->only('naturezaJuridica')['naturezaJuridica']['id']);
+            $instituicao->update($inputs);
             flash('Instituição '.$instituicao->razaoSocial.' atualizada com sucesso')->success();
         } catch (\Exception $e) {
             if ($e->getCode() == "23000") { //23000 is sql code for integrity constraint violation

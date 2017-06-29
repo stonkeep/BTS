@@ -15,7 +15,6 @@
         <instituicao
                 :naturezajuridicaoptions="{{$naturezaJuridicaOptions}}"
                 :cargooptions="{{$cargooptions}}">
-
         </instituicao>
 
 

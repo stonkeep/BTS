@@ -57,7 +57,7 @@
                 <label for="telefone" class="col-md-3 control-label">Telefone: </label>
                 <div class="col-md-6">
                     <the-mask masked="true" v-model="form.telefone" type="telefone" name="telefone" id="telefone"
-                              class="form-control" :mask="['(##)####-####', '(##)####-####']" :masked="false"/>
+                              class="form-control" :mask="['####-####', '#####-####']" :masked="false"/>
                     <has-error :form="form" field="telefone"></has-error>
                 </div>
             </div>
@@ -71,11 +71,10 @@
                 </div>
             </div>
 
-            <div class="form-group" :class="{ 'has-error': form.errors.has('UF') }">
+            <div class="form-group">
                 <label for="UF" class="col-md-3 control-label">UF: </label>
                 <div class="col-md-6">
-                    <uf v-on:update="val => form.UF = val"></uf>
-                    <has-error :form="form" field="UF"></has-error>
+                    <uf :uf="form.UF" v-on:update="val => form.UF = val"></uf>
                 </div>
             </div>
 
@@ -131,7 +130,7 @@
                 <label for="site" class="col-md-3 control-label">site: </label>
                 <div class="col-md-6">
                     <input v-model="form.site" type="site" name="site" id="site"
-                           class="form-control">
+                           class="form-control" placeholder="http://www.fbb.org.br">
                     <has-error :form="form" field="site"></has-error>
                 </div>
             </div>
@@ -159,8 +158,11 @@
             <div class="form-group" :class="{ 'has-error': form.errors.has('sexo') }">
                 <label for="sexo" class="col-md-3 control-label">sexo: </label>
                 <div class="col-md-6">
-                    <input v-model="form.sexo" type="sexo" name="sexo" id="sexo"
-                           class="form-control">
+                    <select v-model="form.sexo" name="sexo" id="sexo">
+                        <option value="">Selecione</option>
+                        <option value="M">M</option>
+                        <option value="F">F</option>
+                    </select>
                     <has-error :form="form" field="sexo"></has-error>
                 </div>
             </div>
@@ -194,35 +196,36 @@
             return {
                 // Create a new form instance
                 form: new Form({
-                    CNPJ: '',
-                    razaoSocial: '',
-                    naturezaJuridica: '',
-                    nomeDaArea: '',
-                    ddd: '',
-                    telefone: '',
-                    email: '',
-                    UF: '',
-                    cidade: '',
-                    endereco: '',
-                    bairro: '',
-                    CEP: '',
-                    nomeCompleto: '',
-                    sexo: '',
-                    CPF: '',
-                    cargo_id: '',
+                    CNPJ: this.instituicao.CNPJ,
+                    razaoSocial: this.instituicao.razaoSocial,
+                    naturezaJuridica: this.naturezajuridicaoptions[this.instituicao.naturezaJuridica],
+                    nomeDaArea: this.instituicao.nomeDaArea,
+                    ddd: this.instituicao.ddd,
+                    telefone: this.instituicao.telefone.toString(),
+                    email: this.instituicao.email,
+                    UF: this.instituicao.UF,
+                    cidade: this.instituicao.cidade,
+                    endereco: this.instituicao.endereco,
+                    bairro: this.instituicao.bairro,
+                    CEP: this.instituicao.CEP,
+                    site: this.instituicao.site,
+                    nomeCompleto: this.instituicao.nomeCompleto,
+                    sexo: this.instituicao.sexo,
+                    CPF: this.instituicao.CPF,
+                    cargo_id: this.cargooptions[this.instituicao.cargo_id],
                 })
             }
         },
-        props: ['id', 'descricao', 'naturezajuridicaoptions', 'cargooptions'],
+        props: ['instituicao', 'naturezajuridicaoptions', 'cargooptions'],
         mounted() {
-            this.form.descricao = this.descricao;
+            this.form.id = this.instituicao.id;
         },
         methods: {
             submit () {
                 // Submit the form via a POST request
                 let location = window.location.href;
                 if (location.indexOf("edit") > -1) {
-                    this.form.put('/admin/instituicoes/update/' + this.id)
+                    this.form.put('/admin/instituicoes/' + this.form.id)
                         .then(({data}) => {
                             window.location.href = '/admin/instituicoes'
                         })
