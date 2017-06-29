@@ -27,19 +27,22 @@ class InstituicaoTestTest extends DuskTestCase
         $this->geraUsuario();
         $user = User::firstOrFail();
         $faker = Faker::create();
-        $razaoSocial = $faker->company;
+        $razaoSocial = 'cadastro automatizado1';
 
         $this->browse(function ($browser) use ($faker, $user, $razaoSocial) {
             $browser
-                //->loginAs($user)
+                //Faz o login
+                //TODO transformar o login em page
                 ->visit('http://127.0.0.1:8000/login')
                 ->type('email', 'admin@admin.com.br')
                 ->type('password', '123456')
                 ->press('Assinar')
                 ->assertPathIs('/admin')
                 ->pause(1000)
-                ->visit('http://127.0.0.1:8000/admin/instituicoes/create')
 
+
+                //Abre a tela de cadastro de instituicao
+                ->visit('http://127.0.0.1:8000/admin/instituicoes/create')
                 ->click('div[name=naturezaJuridica]')
                 ->with('div[name=naturezaJuridica]', function ($multi){
                     $multi->click('.multiselect__option--highlight');
@@ -67,11 +70,37 @@ class InstituicaoTestTest extends DuskTestCase
 
                 ->select('sexo', 'M')
                 ->type('CPF', '75238385293')
-                ->click('button[name=enviar]')
 
+                //desce a tela para poder clicar no botão enviar
+                ->driver->executeScript('window.scrollTo(0, 500);');
+
+                //depois de executar o script não posso mais encadear comandos - logo tenho que instanciar de novo o browser
+                $browser->click('button[name=enviar]')
                 ->visit('http://127.0.0.1:8000/admin/instituicoes')
-                ->type('input[placeholder="Pesquisar"]', $razaoSocial)
-                ->assertSee($razaoSocial);
+                ->type('input[placeholder="Pesquisar"]', substr($razaoSocial, 0, strpos($razaoSocial, " ")))
+                ->assertSee($razaoSocial)
+
+                //editao resgistro para fazer um próximo teste
+                ->click('.btn-success')
+                ->pause(1000)
+                ->clear('razaoSocial')
+                ->type('razaoSocial', '2')
+
+                //desce a tela para poder clicar no botão enviar
+                ->driver->executeScript('window.scrollTo(0, 500);');
+
+                //depois de executar o script não posso mais encadear comandos - logo tenho que instanciar de novo o browser
+                $browser->click('button[name=enviar]')
+                ->visit('http://127.0.0.1:8000/admin/instituicoes')
+                ->type('input[placeholder="Pesquisar"]', substr($razaoSocial, 0,strpos($razaoSocial, " ")))
+                ->assertSee($razaoSocial . '2')
+
+                //Apaga o resgistro para fazer um próximo teste
+                ->click('.btn-danger')
+                ->pause(1000)
+                ->type('input[placeholder="Pesquisar"]', substr($razaoSocial, 0,strpos($razaoSocial, " ")))
+                ->assertDontSee($razaoSocial . '2')
+                    ;
         });
     }
 
