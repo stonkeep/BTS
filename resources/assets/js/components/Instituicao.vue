@@ -198,7 +198,7 @@
                 form: new Form({
                     CNPJ: this.instituicao.CNPJ,
                     razaoSocial: this.instituicao.razaoSocial,
-                    naturezaJuridica: this.naturezajuridicaoptions[this.instituicao.naturezaJuridica],
+                    naturezaJuridica: this.naturezajuridicaoptions[this.instituicao.naturezaJuridica - 1],
                     nomeDaArea: this.instituicao.nomeDaArea,
                     ddd: this.instituicao.ddd,
                     telefone: this.instituicao.telefone.toString(),
@@ -212,7 +212,7 @@
                     nomeCompleto: this.instituicao.nomeCompleto,
                     sexo: this.instituicao.sexo,
                     CPF: this.instituicao.CPF,
-                    cargo_id: this.cargooptions[this.instituicao.cargo_id],
+                    cargo_id: this.cargooptions[this.instituicao.cargo_id - 1],
                 })
             }
         },
