@@ -53,7 +53,9 @@ class InstituicaoController extends Controller
      */
     public function create()
     {
-        return view('admin.instituicoes.create');
+        $naturezaJuridicaOptions = NaturezasJuridicas::all();
+        $cargooptions = Cargos::all();
+        return view('admin.instituicoes.create', compact('naturezaJuridicaOptions', 'cargooptions'));
     }
 
 
@@ -67,9 +69,9 @@ class InstituicaoController extends Controller
     public function store(StoreInstituicoesRequest $request)
     {
         //Valida dados para criacao de instituicao
-        Validator::make($request->all(), [
-            'CNPJ' => 'required|numeric|cnpj|unique:instituicaos',
-        ])->validate();
+        //Validator::make($request->all(), [
+        //    'CNPJ' => 'required|numeric|cnpj|unique:instituicaos',
+        //])->validate();
 
         try {
             $instituicao = Instituicao::create($request->all());

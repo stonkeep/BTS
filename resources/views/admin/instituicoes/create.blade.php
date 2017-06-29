@@ -11,18 +11,20 @@
 @section('content')
 
     <div id="app">
-    <form action="/categorias/create" method="POST">
-        {{ csrf_field() }}
-        <instituicao></instituicao>
 
-    </form>
+        <instituicao
+                :naturezajuridicaoptions="{{$naturezaJuridicaOptions}}"
+                :cargooptions="{{$cargooptions}}">
+
+        </instituicao>
+
+
     </div>
 
 @stop
 
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
 @stop
 
 @section('js')

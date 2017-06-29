@@ -24,7 +24,7 @@ class StoreInstituicoesRequest extends FormRequest
     public function rules()
     {
         return [
-            //'CNPJ'             => 'required|unique:instituicaos|numeric|cnpj',
+            'CNPJ'             => 'required|unique:instituicaos|numeric|cnpj',
             'razaoSocial'      => 'required',
             'naturezaJuridica' => 'required|exists:naturezas_juridicas,id',
             'nomeDaArea'       => 'required',

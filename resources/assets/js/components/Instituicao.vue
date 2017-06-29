@@ -8,7 +8,7 @@
                 <label for="CNPJ" class="col-md-3 control-label">CNPJ: </label>
                 <div class="col-md-6">
                     <the-mask v-model="form.CNPJ" type="CNPJ" name="CNPJ" id="CNPJ"
-                              class="form-control" :mask="'##.###.###/####-##'"/>
+                              class="form-control" :mask="'##.###.###/####-##'" :masked="false"/>
                     <has-error :form="form" field="CNPJ"></has-error>
                 </div>
             </div>
@@ -26,9 +26,10 @@
             <div class="form-group" :class="{ 'has-error': form.errors.has('naturezaJuridica') }">
                 <label for="naturezaJuridica" class="col-md-3 control-label">Natureza Juridica: </label>
                 <div class="col-md-6">
-                    <input v-model="form.naturezaJuridica" type="naturezaJuridica" name="naturezaJuridica"
-                           id="naturezaJuridica"
-                           class="form-control">
+                    <multiselect name="naturezaJuridica" v-model="form.naturezaJuridica" :options="naturezajuridicaoptions"
+                                 :multiple="false" :close-on-select="true" :clear-on-select="false"
+                                 :hide-selected="false" placeholder="Escolha um"
+                                 label="descricao" track-by="descricao"></multiselect>
                     <has-error :form="form" field="naturezaJuridica"></has-error>
                 </div>
             </div>
@@ -56,7 +57,7 @@
                 <label for="telefone" class="col-md-3 control-label">Telefone: </label>
                 <div class="col-md-6">
                     <the-mask masked="true" v-model="form.telefone" type="telefone" name="telefone" id="telefone"
-                              class="form-control" :mask="['(##)####-####', '(##)####-####']"/>
+                              class="form-control" :mask="['(##)####-####', '(##)####-####']" :masked="false"/>
                     <has-error :form="form" field="telefone"></has-error>
                 </div>
             </div>
@@ -64,7 +65,7 @@
             <div class="form-group" :class="{ 'has-error': form.errors.has('email') }">
                 <label for="email" class="col-md-3 control-label">Email: </label>
                 <div class="col-md-6">
-                    <the-mask v-model="form.email" type="email" name="email" id="email"
+                    <input v-model="form.email" type="email" name="email" id="email"
                               class="form-control"/>
                     <has-error :form="form" field="email"></has-error>
                 </div>
@@ -135,8 +136,24 @@
                 </div>
             </div>
 
-            <div>
-                <cargo-select>Aqui vai a selecção do cargo</cargo-select>
+             <div class="form-group" :class="{ 'has-error': form.errors.has('nomeCompleto') }">
+            <label for="nomeCompleto" class="col-md-3 control-label">Nome Completo: </label>
+            <div class="col-md-6">
+                <input v-model="form.nomeCompleto" type="nomeCompleto" name="nomeCompleto" id="nomeCompleto"
+                       class="form-control">
+                <has-error :form="form" field="nomeCompleto"></has-error>
+            </div>
+        </div>
+
+                        <div class="form-group" :class="{ 'has-error': form.errors.has('cargo_id') }">
+                <label for="cargo_id" class="col-md-3 control-label">Cargo: </label>
+                <div class="col-md-6">
+                    <multiselect name="cargo_id" v-model="form.cargo_id" :options="cargooptions"
+                                 :multiple="false" :close-on-select="true" :clear-on-select="false"
+                                 :hide-selected="false" placeholder="Escolha um"
+                                 label="descricao" track-by="descricao"></multiselect>
+                    <has-error :form="form" field="cargo_id"></has-error>
+                </div>
             </div>
 
             <div class="form-group" :class="{ 'has-error': form.errors.has('sexo') }">
@@ -169,9 +186,10 @@
 <script>
     import {Form, HasError, AlertError} from 'vform'
     import Uf from '../components/uf.vue'
+    import Multiselect from 'vue-multiselect'
 
     export default {
-        components: {Uf},
+        components: {Uf, Multiselect},
         data () {
             return {
                 // Create a new form instance
@@ -188,29 +206,28 @@
                     endereco: '',
                     bairro: '',
                     CEP: '',
-                    site: '',
                     nomeCompleto: '',
                     sexo: '',
                     CPF: '',
+                    cargo_id: '',
                 })
             }
         },
-        props: ['id', 'descricao'],
+        props: ['id', 'descricao', 'naturezajuridicaoptions', 'cargooptions'],
         mounted() {
-            console.log('Component mounted.');
             this.form.descricao = this.descricao;
         },
         methods: {
             submit () {
                 // Submit the form via a POST request
-                var location = window.location.href;
+                let location = window.location.href;
                 if (location.indexOf("edit") > -1) {
                     this.form.put('/admin/instituicoes/update/' + this.id)
                         .then(({data}) => {
                             window.location.href = '/admin/instituicoes'
                         })
                 } else {
-                    this.form.post('/admin/instituicoes/create')
+                    this.form.post('/admin/instituicoes')
                         .then(({data}) => {
                             window.location.href = '/admin/instituicoes'
                         })
@@ -224,3 +241,5 @@
 
     };
 </script>
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
