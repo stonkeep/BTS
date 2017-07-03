@@ -28,7 +28,7 @@ class TecnologiaTest extends DuskTestCase
 
         $this->browse(function ($browser) use ($faker, $user) {
             $browser->visit('http://127.0.0.1:8000/login')
-                ->type('email', 'mateusgalasso@yahoo.com.br')
+                ->type('email', 'admin@admin.com.br')
                 ->type('password', '123456')
                 ->press('Assinar')
 //                ->assertPathIs('/admin')
@@ -43,9 +43,23 @@ class TecnologiaTest extends DuskTestCase
                 ->select('categoria_id')
                 ->type('resumo', $faker->text($maxNbChars = 200))
                 ->select('tema_id')
-                ->select('subtema1')
+                //->select('subtema1')
+
+                //Seleciona Subtema principal
+                ->click('div[name=subtema1]')
+                ->with('div[name=subtema1]', function ($multi){
+                    $multi->click('.multiselect__option--highlight');
+                })
+
                 ->select('temaSecundario_id')
-                ->select('subtema2')
+                //->select('subtema2')
+
+                //Seleciona Subtema principal
+                ->click('div[name=subtema2]')
+                ->with('div[name=subtema2]', function ($multi){
+                    $multi->click('.multiselect__option--highlight');
+                })
+
                 ->type('problema', $faker->text($maxNbChars = 200))
                 ->type('objetivoGeral', $faker->text($maxNbChars = 200))
                 ->type('objetivoEspecifico', $faker->text($maxNbChars = 200))

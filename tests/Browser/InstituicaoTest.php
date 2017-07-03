@@ -7,6 +7,7 @@ use App\User;
 use Faker\Generator;
 use function foo\func;
 use function PHPSTORM_META\type;
+use Tests\Browser\Pages\Login;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -30,19 +31,13 @@ class InstituicaoTestTest extends DuskTestCase
         $razaoSocial = 'cadastro automatizado1';
 
         $this->browse(function ($browser) use ($faker, $user, $razaoSocial) {
-            $browser
-                //Faz o login
-                //TODO transformar o login em page
-                ->visit('http://127.0.0.1:8000/login')
-                ->type('email', 'admin@admin.com.br')
-                ->type('password', '123456')
-                ->press('Assinar')
-                ->assertPathIs('/admin')
-                ->pause(1000)
 
+                //Faz o login
+                $browser->visit(new Login)
+                ->realizaLogin();
 
                 //Abre a tela de cadastro de instituicao
-                ->visit('http://127.0.0.1:8000/admin/instituicoes/create')
+                $browser->visit('/admin/instituicoes/create')
                 ->click('div[name=naturezaJuridica]')
                 ->with('div[name=naturezaJuridica]', function ($multi){
                     $multi->click('.multiselect__option--highlight');
@@ -99,8 +94,7 @@ class InstituicaoTestTest extends DuskTestCase
                 ->click('.btn-danger')
                 ->pause(1000)
                 ->type('input[placeholder="Pesquisar"]', substr($razaoSocial, 0,strpos($razaoSocial, " ")))
-                ->assertDontSee($razaoSocial . '2')
-                    ;
+                ->assertDontSee($razaoSocial . '2');
         });
     }
 

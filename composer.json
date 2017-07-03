@@ -12,13 +12,12 @@
         "jeroennoten/laravel-adminlte": "^1.19",
         "laracasts/flash": "^3.0",
         "laracasts/utilities": "~2.0",
-        "laravel/dusk": "^1.0",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4",
         "laravellegends/pt-br-validator": "5.1.*",
-        "sofa/eloquence": "~5.4",
         "nicolaslopezj/searchable": "1.*",
+        "sofa/eloquence": "~5.4",
         "spatie/laravel-permission": "^2.1",
         "unisharp/laravel-filemanager": "^1.7"
     },
@@ -26,6 +25,7 @@
         "barryvdh/laravel-ide-helper": "^2.3",
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
+        "laravel/dusk": "^1.1",
         "phpunit/phpunit": "~5.7"
     },
     "autoload": {
