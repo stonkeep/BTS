@@ -12850,6 +12850,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -12860,6 +12868,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             // Create a new form instance
+            CEP: '',
+            rua: '',
+            bairro: '',
+            cidade: '',
+            estado: '',
+            numero: '',
+            complemento: '',
+
             form: new __WEBPACK_IMPORTED_MODULE_0_vform__["Form"]({
                 CNPJ: this.instituicao.CNPJ,
                 razaoSocial: this.instituicao.razaoSocial,
@@ -12907,9 +12923,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         update: function update() {
             console.log('teste');
+        },
+
+        viacepURL: function viacepURL(cep) {
+            return 'https://viacep.com.br/ws/' + cep + '/json/';
+        }
+    },
+    watch: {
+        'form.CEP': function formCEP(val, oldVal) {
+            var _this = this;
+
+            if (!/^[0-9]{8}$/.test(this.form.CEP)) return;
+            this.rua = '';
+            window.axios.defaults.headers.common = {
+                'X-Requested-With': 'XMLHttpRequest'
+            };
+            axios.get('https://viacep.com.br/ws/' + this.form.CEP + '/json/').then(function (response) {
+                console.log(response.data.logradouro);
+                _this.form.endereco = response.data.logradouro;
+                _this.form.bairro = response.data.bairro;
+                _this.form.UF = response.data.uf;
+                _this.form.cidade = response.data.localidade;
+            }).catch(function (error) {
+                return console.log(error);
+            });
         }
     }
-
 });
 
 /***/ }),
@@ -38218,6 +38257,45 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "field": "email"
     }
   })], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "form-group",
+    class: {
+      'has-error': _vm.form.errors.has('CEP')
+    }
+  }, [_c('label', {
+    staticClass: "col-md-3 control-label",
+    attrs: {
+      "for": "CEP"
+    }
+  }, [_vm._v("CEP: ")]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.form.CEP),
+      expression: "form.CEP"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "maxlength": "8",
+      "type": "text",
+      "id": "CEP"
+    },
+    domProps: {
+      "value": (_vm.form.CEP)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.form.CEP = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('has-error', {
+    attrs: {
+      "form": _vm.form,
+      "field": "CEP"
+    }
+  })], 1)]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     staticClass: "col-md-3 control-label",
@@ -38349,45 +38427,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "form": _vm.form,
       "field": "bairro"
-    }
-  })], 1)]), _vm._v(" "), _c('div', {
-    staticClass: "form-group",
-    class: {
-      'has-error': _vm.form.errors.has('CEP')
-    }
-  }, [_c('label', {
-    staticClass: "col-md-3 control-label",
-    attrs: {
-      "for": "CEP"
-    }
-  }, [_vm._v("CEP: ")]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-6"
-  }, [_c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.form.CEP),
-      expression: "form.CEP"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "type": "CEP",
-      "name": "CEP",
-      "id": "CEP"
-    },
-    domProps: {
-      "value": (_vm.form.CEP)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.form.CEP = $event.target.value
-      }
-    }
-  }), _vm._v(" "), _c('has-error', {
-    attrs: {
-      "form": _vm.form,
-      "field": "CEP"
     }
   })], 1)]), _vm._v(" "), _c('div', {
     staticClass: "form-group",

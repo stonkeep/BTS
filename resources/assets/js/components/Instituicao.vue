@@ -26,7 +26,8 @@
             <div class="form-group" :class="{ 'has-error': form.errors.has('naturezaJuridica') }">
                 <label for="naturezaJuridica" class="col-md-3 control-label">Natureza Juridica: </label>
                 <div class="col-md-6">
-                    <multiselect name="naturezaJuridica" v-model="form.naturezaJuridica" :options="naturezajuridicaoptions"
+                    <multiselect name="naturezaJuridica" v-model="form.naturezaJuridica"
+                                 :options="naturezajuridicaoptions"
                                  :multiple="false" :close-on-select="true" :clear-on-select="false"
                                  :hide-selected="false" placeholder="Escolha um"
                                  label="descricao" track-by="descricao"></multiselect>
@@ -66,10 +67,26 @@
                 <label for="email" class="col-md-3 control-label">Email: </label>
                 <div class="col-md-6">
                     <input v-model="form.email" type="email" name="email" id="email"
-                              class="form-control"/>
+                           class="form-control"/>
                     <has-error :form="form" field="email"></has-error>
                 </div>
             </div>
+
+
+            <div class="form-group" :class="{ 'has-error': form.errors.has('CEP') }">
+                <label for="CEP" class="col-md-3 control-label">CEP: </label>
+                <div class="col-md-6">
+                    <input class="form-control" maxlength="8" type="text" v-model="form.CEP"
+
+                           id="CEP"/>
+                    <!--@keyup="onKeyup" @keydown="onKeydown($event)"-->
+                    <!--<input v-model="form.CEP" type="CEP" name="CEP" id="CEP"-->
+                    <!--class="form-control">-->
+                    <!--TODO Fazer um buscador de CEP-->
+                    <has-error :form="form" field="CEP"></has-error>
+                </div>
+            </div>
+
 
             <div class="form-group">
                 <label for="UF" class="col-md-3 control-label">UF: </label>
@@ -117,15 +134,6 @@
             </div>
 
 
-            <div class="form-group" :class="{ 'has-error': form.errors.has('CEP') }">
-                <label for="CEP" class="col-md-3 control-label">CEP: </label>
-                <div class="col-md-6">
-                    <input v-model="form.CEP" type="CEP" name="CEP" id="CEP"
-                           class="form-control">
-                    <has-error :form="form" field="CEP"></has-error>
-                </div>
-            </div>
-
             <div class="form-group" :class="{ 'has-error': form.errors.has('site') }">
                 <label for="site" class="col-md-3 control-label">site: </label>
                 <div class="col-md-6">
@@ -135,16 +143,16 @@
                 </div>
             </div>
 
-             <div class="form-group" :class="{ 'has-error': form.errors.has('nomeCompleto') }">
-            <label for="nomeCompleto" class="col-md-3 control-label">Nome Completo: </label>
-            <div class="col-md-6">
-                <input v-model="form.nomeCompleto" type="nomeCompleto" name="nomeCompleto" id="nomeCompleto"
-                       class="form-control">
-                <has-error :form="form" field="nomeCompleto"></has-error>
+            <div class="form-group" :class="{ 'has-error': form.errors.has('nomeCompleto') }">
+                <label for="nomeCompleto" class="col-md-3 control-label">Nome Completo: </label>
+                <div class="col-md-6">
+                    <input v-model="form.nomeCompleto" type="nomeCompleto" name="nomeCompleto" id="nomeCompleto"
+                           class="form-control">
+                    <has-error :form="form" field="nomeCompleto"></has-error>
+                </div>
             </div>
-        </div>
 
-                        <div class="form-group" :class="{ 'has-error': form.errors.has('cargo_id') }">
+            <div class="form-group" :class="{ 'has-error': form.errors.has('cargo_id') }">
                 <label for="cargo_id" class="col-md-3 control-label">Cargo: </label>
                 <div class="col-md-6">
                     <multiselect name="cargo_id" v-model="form.cargo_id" :options="cargooptions"
@@ -195,6 +203,15 @@
         data () {
             return {
                 // Create a new form instance
+                CEP: '',
+                rua: '',
+                bairro: '',
+                cidade: '',
+                estado: '',
+                numero: '',
+                complemento: '',
+
+
                 form: new Form({
                     CNPJ: this.instituicao.CNPJ,
                     razaoSocial: this.instituicao.razaoSocial,
@@ -241,8 +258,29 @@
             update(){
                 console.log('teste');
             },
-        }
-
+            viacepURL: function(cep) {
+                return 'https://viacep.com.br/ws/'+cep+'/json/';
+            },
+        },
+        watch: {
+          'form.CEP' : function (val, oldVal) {
+              if ( !(/^[0-9]{8}$/).test(this.form.CEP)) return;
+              this.rua = '';
+              window.axios.defaults.headers.common = {
+                  'X-Requested-With': 'XMLHttpRequest',
+              };
+              axios.get('https://viacep.com.br/ws/'+ this.form.CEP +'/json/')
+                  .then(response => {
+                      console.log(response.data.logradouro);
+                      this.form.endereco = response.data.logradouro;
+                      this.form.bairro = response.data.bairro;
+                      this.form.UF = response.data.uf;
+                      this.form.cidade = response.data.localidade;
+                      }
+                  )
+                  .catch(error => console.log(error));
+          }
+        },
     };
 </script>
 
