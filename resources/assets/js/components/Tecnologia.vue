@@ -354,11 +354,11 @@
                             <label for="ativo"
                                    class="col-md-3 control-label">Ja contou com investimento da FBB?:</label>
                             <div class="col-md-6" id="ativo">
-                                <input type="radio" :name="index" id="ativoSim" value="1"
+                                <input type="radio" name="ativo" id="ativoSim" value="1"
                                        v-model="localData.ativo">
                                 <label for="ativoSim">Sim</label>
                                 <br>
-                                <input type="radio" :name="index" id="ativoNao" value="0"
+                                <input type="radio" name="ativo" id="ativoNao" value="0"
                                        v-model="localData.ativo">
                                 <label for="ativoNao">Não</label>
                                 <has-error :form="form" field="ativo"></has-error>

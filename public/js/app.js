@@ -40445,7 +40445,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }],
       attrs: {
         "type": "radio",
-        "name": index,
+        "name": "ativo",
         "id": "ativoSim",
         "value": "1"
       },
@@ -40470,7 +40470,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }],
       attrs: {
         "type": "radio",
-        "name": index,
+        "name": "ativo",
         "id": "ativoNao",
         "value": "0"
       },
