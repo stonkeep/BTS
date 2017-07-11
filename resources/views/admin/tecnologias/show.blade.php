@@ -80,10 +80,10 @@
         $('#table').bootstrapTable({
             columns: [{
                 field: 'id',
-                title: 'ID'
+                title: 'ID',
             }, {
                 field: 'titulo',
-                title: 'Título'
+                title: 'Título',
             }, {
                 field: 'created_at',
                 title: 'Criado em'
@@ -93,6 +93,7 @@
             }, {
                 field: '',
                 title: '',
+                switchable: false,
                 formatter : function(value,row,index) {
                     return '<a class="btn btn-danger" href="/admin/{{$tipo}}/delete/' + row.id +  '">Excluir</a>';
                 }
@@ -100,6 +101,7 @@
             }, {
                 field: '',
                 title: '',
+                switchable: false,
                 formatter : function(value,row,index) {
                     return '<a class="btn btn-success" href="/admin/{{$tipo}}/edit/' + row.id +  '">Editar</a>';
                 }
@@ -118,6 +120,7 @@
             pageList: [10, 25, 50, 100],
             search: true,
             searchText: '',
+            sortable: "true",
             searchTimeOut: 500,
             silent: true
         });
