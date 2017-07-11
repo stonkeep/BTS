@@ -24,5 +24,9 @@ Route::get('/subtemas/{temas}', function (\App\Temas $temas) {
 });
 
 Route::get('/tecnologias', function (Request $request) {
-    return \App\Tecnologia::where('titulo', 'LIKE', '%' . $request->search . '%')->paginate($request->pagesize);
+    return \App\Tecnologia::select('id', 'titulo', 'created_at', 'updated_at')
+        ->where('titulo', 'LIKE', '%' . $request->search . '%')
+        ->paginate($request->pagesize)
+        ->toJson();
+
 });

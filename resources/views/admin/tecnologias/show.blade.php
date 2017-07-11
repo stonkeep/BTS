@@ -17,7 +17,8 @@
         <div>
             <a href="/admin/{{$tipo}}/insert" class="btn btn-primary">NOVO</a>
         </div>
-        <table id="table" data-toggle="table"
+        <table id="table"
+               {{--data-toggle="table"--}}
                data-search="true"
                data-show-columns="true"
                data-search-accent-neutralise="true"
@@ -72,9 +73,9 @@
 @section('js')
     <script src="/js/app.js"></script>
     <script>
-        var pageSize = 10;
-        var page = 1;
-        var url = '/api/tecnologias?pagesize=' + pageSize + '&page=' + page;
+        let pageSize = 10;
+        let page = 1;
+        let url = '/api/tecnologias?pagesize=' + pageSize + '&page=' + page;
 
         $('#table').bootstrapTable({
             columns: [{
@@ -140,7 +141,7 @@
                 pageSize: pageSize,
                 pageNumber: page
             });
-            console.log(url);
+//            console.log(url);
 
         });
 
