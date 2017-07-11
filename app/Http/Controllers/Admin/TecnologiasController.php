@@ -27,12 +27,22 @@ class TecnologiasController extends Controller
 
     public function __construct()
     {
-        $user = Auth::user();
-        if ($user->hasPermissionTo('Tecnologias')) {
-            $this->autorizado = true;
-        } else {
-            flash('Você não tem acesso suficiente')->error();
+
+        if (Auth::check()) {
+            if (Auth::user()->hasRole('Admin')) {
+                config(['debugbar.enabled' => true]);
+                \Debugbar::enable();
+
+            }
+
+            if (Auth::user()->hasPermissionTo('Tecnologias')) {
+                $this->autorizado = true;
+            } else {
+                flash('Você não tem acesso suficiente')->error();
+            }
         }
+
+
     }
 
 
@@ -300,7 +310,6 @@ class TecnologiasController extends Controller
             //    $tecnologia->publicos()->sync($input['id']);
             //}
             $tecnologia->publicos()->sync(array_pluck($inputs, 'id'));
-
 
             $publico = $request->only('instituicoesParceiras');
             $inputs = $publico['instituicoesParceiras'];
