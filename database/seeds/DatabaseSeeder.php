@@ -20,13 +20,15 @@ class DatabaseSeeder extends Seeder
         $this->call(PublicoTableSeeder::class);
         $this->call(TemaTableSeeder::class);
         $this->call(UFTableSeeder::class);
-        $this->call(InstituicaoTableSeeder::class);
         $this->call(CategoriasSeeder::class);
         $this->call(SubTemaTableSeeder::class);
         $this->call(PermissionsTableSeeder::class);
         $this->call(RolesTableSeeder::class);
-        $this->call(PostCategoriasTableSeeder::class);
-        $this->call(UsersTableSeed::class);
-        $this->call(TecnologiaSeeder::class);
+        if (App::environment('local')) {
+            $this->call(UsersTableSeed::class);
+            $this->call(PostCategoriasTableSeeder::class);
+            $this->call(InstituicaoTableSeeder::class);
+            $this->call(TecnologiaSeeder::class);
+        }
     }
 }
