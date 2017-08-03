@@ -29,11 +29,13 @@ class TecnologiasController extends Controller
     {
 
         if (Auth::check()) {
-            if (Auth::user()->hasRole('Admin')) {
-                config(['debugbar.enabled' => true]);
-                \Debugbar::enable();
-
-            }
+            //TODO tentar fazer um debug para Admins
+            //*******************************************************************************
+            //if (Auth::user()->hasRole('Admin')) {
+            //    config(['debugbar.enabled' => true]);
+            //    \Debugbar::enable();
+            //}
+            //*******************************************************************************
 
             if (Auth::user()->hasPermissionTo('Tecnologias')) {
                 $this->autorizado = true;
