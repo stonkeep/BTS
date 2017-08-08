@@ -18,7 +18,7 @@ class UserTest extends TestCase
 
     /**
      * A basic test example.
-     *
+     
      * @return void
      */
     public function teste_vincula_instituicao_e_usuario()
