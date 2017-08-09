@@ -337,6 +337,7 @@ class TecnologiasController extends Controller
                 }
 
                 //alida se esta vindo somente imagens
+                //TODO fazer Parametrização de MIME TYPE
                 $validator = Validator::make($request->only('images')['images'], [
                     'file.*' => 'required|image'
                 ]);
