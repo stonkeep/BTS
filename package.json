@@ -13,20 +13,20 @@
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-stage-2": "^6.24.1",
     "bootstrap-sass": "^3.3.7",
+    "bootstrap-table": "^1.11.2",
     "cross-env": "^3.2.3",
     "jquery": "^3.1.1",
     "laravel-mix": "^0.8.3",
     "lodash": "^4.17.4",
     "moment": "^2.17.1",
-    "vue": "^2.1.10",
+    "vue": "^2.4.2",
     "vue-events": "^3.0.0",
-    "vuetable-2": "^1.6.0",
-    "bootstrap-table": "^1.11.2"
+    "vuetable-2": "^1.6.5"
   },
   "dependencies": {
     "axios": "^0.15.3",
-    "vform": "^0.7.4",
-    "vue-multiselect": "^2.0.0-beta.15",
+    "vform": "^0.7.7",
+    "vue-multiselect": "^2.0.2",
     "vue-the-mask": "^0.7.0"
   }
 }
